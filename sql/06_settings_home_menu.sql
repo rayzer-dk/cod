@@ -203,6 +203,113 @@ html.ccp-dark-theme .ccp-pd__chips li{color:#9fc6ff;border-color:#334155}
 
 /* заголовки внутри тёмно-синих блоков должны оставаться белыми */
 body.ccp-theme .ccp-pd__demo h3,body.ccp-theme .hero h2,body.ccp-theme .ccdl .hero h2{color:#fff}
+
+/* ==========================================================================
+   16. Исправления: всплывающая корзина, окно «Купить в 1 клик», оформление заказа, карточка товара
+   (в теме 8.7.5 много слоёв правил с !important — поэтому здесь селекторы усилены)
+   ========================================================================== */
+
+/* --- 16.1 Окно «Кошик» после добавления товара --- */
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__product{background:none!important;box-shadow:none!important;border-radius:0!important;border-width:0 0 1px 0!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__product{background:none!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__header{background:linear-gradient(135deg,#0649b3,#0a66f0)!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__title{color:#fff!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary{background:none!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary-label{color:#b8c9ea!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__checkout{padding:0 14px!important;font-size:15px!important}
+html body.ccp-theme #ccp-cart-popup.is-visible{display:flex!important;align-items:center;justify-content:center;padding:16px}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__backdrop{background:rgba(8,27,70,.55)!important;backdrop-filter:blur(5px)}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__dialog{margin:0!important;width:min(800px,100%)!important;max-width:800px;max-height:calc(100vh - 32px);overflow:auto;border-radius:24px!important;background:var(--cc-card,#fff)!important;border:1px solid var(--cc-line)!important;box-shadow:0 30px 80px rgba(8,40,120,.35)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__header{padding:20px 26px!important;background:linear-gradient(135deg,#0649b3,#0a66f0)!important;border-bottom:0!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__title{color:#fff!important;font-size:21px!important;font-weight:850!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__close{width:38px!important;height:38px!important;border-radius:50%!important;background:rgba(255,255,255,.18)!important;color:#fff!important;font-size:24px!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__close:hover{background:rgba(255,255,255,.3)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__body{padding:24px 26px 26px!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__product{grid-template-columns:84px minmax(0,1fr) 128px 90px 110px!important;gap:18px!important;align-items:center;padding:0 0 22px!important;border-bottom:1px solid var(--cc-line)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__image-wrap{width:84px!important;height:84px!important;border-radius:16px!important;background:var(--cc-soft)!important;border:1px solid var(--cc-line)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__name{color:var(--cc-text)!important;font-size:15px!important;line-height:1.4;font-weight:800!important;display:block;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__name:hover{color:var(--cc-blue-2)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__meta-label{font-size:11px!important;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cc-muted)!important;margin-bottom:6px!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__qty{height:40px!important;grid-template-columns:34px 1fr 34px!important;border-radius:12px!important;background:var(--cc-soft)!important;border:1px solid var(--cc-line)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__qty-btn{background:transparent!important;color:var(--cc-blue-2)!important;font-size:18px}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__price,html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__total{white-space:nowrap;font-size:16px!important;font-weight:850!important;color:var(--cc-text)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__total{color:var(--cc-blue-2)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__footer-row{display:block!important;padding-top:22px!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary{display:flex!important;align-items:baseline;justify-content:flex-end;gap:10px;margin:0 0 18px!important;padding:0!important;border:0!important;background:none!important;font-size:18px!important;color:var(--cc-text)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary-label{font-weight:700!important;color:var(--cc-muted)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary-value{font-size:26px;font-weight:900!important;color:var(--cc-blue-2)!important;white-space:nowrap}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__actions{display:grid!important;grid-template-columns:1fr 1.4fr;gap:12px!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__continue,html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__checkout{min-width:0!important;width:100%;height:52px!important;border-radius:14px!important;font-size:16px!important;white-space:normal;line-height:1.2;text-align:center}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__continue{background:var(--cc-card)!important;border:2px solid var(--cc-blue-2)!important;color:var(--cc-blue-2)!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__continue:hover{background:var(--cc-blue-2)!important;color:#fff!important}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__checkout{background:linear-gradient(165deg,#ffe07a,#ffc21a 58%,#f0a000)!important;border:0!important;color:var(--cc-navy)!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 10px 24px rgba(240,160,0,.3)}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__checkout:hover{filter:brightness(1.05);color:var(--cc-navy)!important;background:linear-gradient(165deg,#ffe07a,#ffc21a 58%,#f0a000)!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__dialog{background:#12274d!important;border-color:#27406e!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__image-wrap,html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__qty{background:#0b1b3a!important;border-color:#27406e!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__continue{background:transparent!important;color:#9fc6ff!important;border-color:#4d8dff!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__total,html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary-value{color:#7db4ff!important}
+html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__name{color:#fff!important}
+@media(max-width:767px){
+ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__product{grid-template-columns:68px minmax(0,1fr)!important;gap:12px!important}
+ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__image-wrap{width:68px!important;height:68px!important}
+ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__actions{grid-template-columns:1fr}
+ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__summary{justify-content:space-between}
+}
+
+/* --- 16.2 Окно «Купить в 1 клик» --- */
+html body.ccp-theme .ccp-quick-order-modal.in,html body.ccp-theme .ccp-quick-order-modal.show{display:flex!important;align-items:center;justify-content:center;padding:16px}
+html body.ccp-theme .ccp-quick-order-modal .modal-dialog{margin:0!important;width:min(520px,100%)!important;max-width:520px}
+html body.ccp-theme .ccp-quick-order-modal .modal-content{border:1px solid var(--cc-line)!important;border-radius:24px!important;background:var(--cc-card)!important;box-shadow:0 30px 80px rgba(8,40,120,.35)!important;overflow:hidden}
+html body.ccp-theme .ccp-quick-order-modal .modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px!important;background:linear-gradient(135deg,#0649b3,#0a66f0)!important;border:0!important}
+html body.ccp-theme .ccp-quick-order-modal .modal-title{margin:0;font-size:19px;font-weight:850;color:#fff!important;line-height:1.2}
+html body.ccp-theme .ccp-quick-order-modal .modal-title .fa{color:#ffc21a;margin-right:6px}
+html body.ccp-theme .ccp-quick-order-modal .modal-header .close{float:none;margin:0;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff!important;opacity:1;text-shadow:none;font-size:22px;line-height:1}
+html body.ccp-theme .ccp-quick-order-modal .modal-body{padding:22px!important;background:var(--cc-card)!important}
+html body.ccp-theme .ccp-quick-order-product{background:var(--cc-soft)!important;border:1px solid var(--cc-line)!important;border-radius:14px!important;padding:12px 14px!important;color:var(--cc-text)!important}
+html body.ccp-theme .ccp-quick-order-modal label{font-size:13px;font-weight:700;color:var(--cc-text)!important}
+html body.ccp-theme .ccp-quick-order-modal .form-control{height:46px;border-radius:12px!important;background:var(--cc-card)!important;color:var(--cc-text)!important;border:2px solid var(--cc-line)!important;box-shadow:none}
+html body.ccp-theme .ccp-quick-order-modal textarea.form-control{height:auto}
+html body.ccp-theme .ccp-quick-order-modal .form-control:focus{border-color:var(--cc-blue-2)!important;box-shadow:0 0 0 4px rgba(10,102,240,.16)!important}
+html body.ccp-theme .ccp-quick-order-modal .ccp-quick-privacy{font-size:12px;color:var(--cc-muted)!important}
+html body.ccp-theme .ccp-quick-order-modal .modal-footer{display:flex;gap:10px;padding:0 22px 22px!important;background:var(--cc-card)!important;border:0!important}
+html body.ccp-theme .ccp-quick-order-modal .modal-footer .btn{margin:0;height:48px;border-radius:14px;font-weight:800}
+html body.ccp-theme .ccp-quick-order-modal .modal-footer .btn-default{flex:0 0 auto;background:transparent;border:2px solid var(--cc-line);color:var(--cc-muted)}
+html body.ccp-theme .ccp-quick-order-modal .modal-footer .ccp-btn{flex:1;background:linear-gradient(165deg,#ffe07a,#ffc21a 58%,#f0a000)!important;border:0!important;color:var(--cc-navy)!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 10px 24px rgba(240,160,0,.3)}
+html.ccp-dark-theme body.ccp-theme .ccp-quick-order-modal .modal-content{background:#12274d!important;border-color:#27406e!important}
+html.ccp-dark-theme body.ccp-theme .ccp-quick-order-modal .modal-body,html.ccp-dark-theme body.ccp-theme .ccp-quick-order-modal .modal-footer{background:#12274d!important}
+html.ccp-dark-theme body.ccp-theme .ccp-quick-order-modal .form-control{background:#0b1b3a!important;border-color:#27406e!important}
+html.ccp-dark-theme body.ccp-theme .ccp-quick-order-product{background:#0b1b3a!important;border-color:#27406e!important}
+html.ccp-dark-theme body.ccp-theme .ccp-quick-order-modal .modal-footer .btn-default{color:#cfe0ff;border-color:#27406e}
+
+/* --- 16.3 Оформление заказа: согласие и кнопка «Продовжити» --- */
+html body.ccp-theme #ccp-step-payment .buttons{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:14px;margin:18px 0 0!important;padding:0!important;overflow:visible}
+html body.ccp-theme #ccp-step-payment .buttons .pull-right,html body.ccp-theme #ccp-step-payment .buttons .pull-left{float:none!important;display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:14px}
+html body.ccp-theme #ccp-step-payment .buttons input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:#0a66f0}
+html body.ccp-theme #ccp-step-payment .buttons .btn{min-height:48px;padding:0 28px}
+html body.ccp-theme #ccp-step-payment{overflow:visible}
+html body.ccp-theme #ccp-step-payment .alert{border-radius:14px}
+
+/* --- 16.4 Карточка товара: заголовки блоков не вылезают за рамки, плавающие кнопки не закрывают контент --- */
+html body.ccp-theme .ccp-commerce-card__title{display:flex;align-items:center;gap:10px;min-width:0}
+html body.ccp-theme .ccp-commerce-card__title span{min-width:0;font-size:clamp(15px,1.3vw,18px);line-height:1.25;overflow-wrap:anywhere}
+html body.ccp-theme .ccp-floating-contacts{bottom:90px}
+@media(max-width:991px){html body.ccp-theme .ccp-floating-contacts{bottom:84px}}
+
+/* --- 16.1b добивка: кнопки окна корзины на всю ширину, кнопка закрытия --- */
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__actions{width:100%!important;justify-content:stretch!important;align-items:stretch}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__continue,html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__checkout{width:100%!important;max-width:none!important;white-space:normal!important;overflow:visible!important;box-sizing:border-box}
+html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__close,html.ccp-dark-theme body.ccp-theme #ccp-cart-popup .ccp-cart-popup__close{background:rgba(255,255,255,.2)!important;color:#fff!important;border:0!important}
+@media(max-width:767px){
+ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__actions{grid-template-columns:1fr!important}
+ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__dialog{max-height:calc(100vh - 90px)}
+ html body.ccp-theme .ccp-quick-order-modal.in{align-items:flex-start;overflow-y:auto!important;padding:12px 12px 90px}
+ html body.ccp-theme .ccp-quick-order-modal .modal-dialog{margin:0 auto!important}
+}
+@media(max-width:767px){
+ html body.ccp-theme .ccp-quick-order-modal .modal-footer{flex-direction:column!important;gap:10px}
+ html body.ccp-theme .ccp-quick-order-modal .modal-footer .ccp-btn{order:-1;width:100%;flex:none;display:flex;align-items:center;justify-content:center;gap:8px}
+ html body.ccp-theme .ccp-quick-order-modal .modal-footer .btn-default{width:100%;flex:none}
+}
 ' WHERE `store_id`=0 AND `key`='theme_codecart_pro_custom_css_global';
 UPDATE `oc_setting` SET `value`='1' WHERE `store_id`=0 AND `key`='theme_codecart_pro_enable_custom_css';
 COMMIT;

@@ -1,0 +1,2026 @@
+{
+ "prods": [
+  {
+   "id": 51,
+   "model": "CCP-001",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/order-email-pro.webp",
+   "cat": 68,
+   "names": {
+    "1": {
+     "name": "Order Email Pro — професійні листи про замовлення",
+     "mt": "Order Email Pro — професійні листи про замовлення для OpenCart | CodeCart PRO",
+     "md": "🚀 Order Email Pro — професійні листи про замовлення. Замінює прості системні листи на акуратні HTML-повідомлення про замовлення з товарами, підсумками, логотипом і фірмовим..."
+    },
+    "2": {
+     "name": "Order Email Pro — professional order emails",
+     "mt": "Order Email Pro — professional order emails",
+     "md": "Order Email PRO replaces plain default order notifications with controlled HTML email templates for customers and administrators."
+    },
+    "3": {
+     "name": "Order Email Pro — профессиональные письма о заказах",
+     "mt": "Order Email Pro — профессиональные письма о заказах",
+     "md": "Order Email PRO заменяет простые стандартные письма о заказах управляемыми HTML-шаблонами для клиента и администратора."
+    }
+   }
+  },
+  {
+   "id": 52,
+   "model": "CCP-002",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/utf8mb4-converter-pro.webp",
+   "cat": 71,
+   "names": {
+    "1": {
+     "name": "UTF8MB4 Converter Pro — конвертація бази OpenCart",
+     "mt": "UTF8MB4 Converter Pro — конвертація бази OpenCart для OpenCart | CodeCart PRO",
+     "md": "🚀 UTF8MB4 Converter Pro — конвертація бази OpenCart. Перевіряє та переводить таблиці магазину на utf8mb4 і InnoDB, допомагаючи коректно зберігати Unicode та сучасний..."
+    },
+    "2": {
+     "name": "UTF8MB4 Converter Pro — OpenCart database conversion",
+     "mt": "UTF8MB4 Converter Pro — OpenCart database conversion",
+     "md": "UTF8MB4 Converter PRO audits the OpenCart/ocStore database and helps migrate legacy character sets to utf8mb4 and tables to InnoDB in a controlled way."
+    },
+    "3": {
+     "name": "UTF8MB4 Converter Pro — конвертация базы OpenCart",
+     "mt": "UTF8MB4 Converter Pro — конвертация базы OpenCart",
+     "md": "UTF8MB4 Converter PRO проверяет базу OpenCart/ocStore и помогает контролируемо перевести старые кодировки в utf8mb4, а таблицы — в InnoDB."
+    }
+   }
+  },
+  {
+   "id": 53,
+   "model": "CCP-003",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/product-reviews-writer-pro.webp",
+   "cat": 70,
+   "names": {
+    "1": {
+     "name": "Product Reviews Writer PRO — AI-чернетки відгуків для товарів OpenCart та ocStore",
+     "mt": "Product Reviews Writer PRO — AI-чернетки відгуків для OpenCart",
+     "md": "Product Reviews Writer PRO — AI-чернетки відгуків для demo/test, модерації та контрольованого використання в OpenCart/ocStore. Черга, шаблони, UA/RU/EN."
+    },
+    "2": {
+     "name": "Product Reviews Writer PRO - AI review generator for OpenCart and ocStore products",
+     "mt": "Product Reviews Writer PRO - AI review generator for OpenCart",
+     "md": "Product Reviews Writer PRO generates review drafts for OpenCart products through AI or local templates, with queue processing, language control and…"
+    },
+    "3": {
+     "name": "Product Reviews Writer PRO — AI генератор отзывов для товаров OpenCart и ocStore",
+     "mt": "Product Reviews Writer PRO — AI генератор отзывов для товаров",
+     "md": "Product Reviews Writer PRO создаёт черновики отзывов к товарам OpenCart через AI или локальные шаблоны, с очередью, языками и проверкой администратором до…"
+    }
+   }
+  },
+  {
+   "id": 54,
+   "model": "CCP-004",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/image-manager-pro.webp",
+   "cat": 63,
+   "names": {
+    "1": {
+     "name": "Image Manager PRO для OpenCart — керування зображеннями товарів",
+     "mt": "Image Manager PRO для OpenCart — керування зображеннями товарів",
+     "md": "🖼️ Image Manager PRO для OpenCart та ocStore: збільшення фото при наведенні, контроль зображень товарів, no-image, зручна робота з фото в адмінці. ⚡ OCMOD, PHP 8.1."
+    },
+    "2": {
+     "name": "Image Manager PRO for OpenCart — product image management",
+     "mt": "Image Manager PRO for OpenCart — product image management",
+     "md": "Image Manager PRO simplifies daily work with product images in the OpenCart admin area: visual checks, missing-image control and standard image management…"
+    },
+    "3": {
+     "name": "Image Manager PRO для OpenCart — управление изображениями товаров",
+     "mt": "Image Manager PRO для OpenCart — управление изображениями товаров",
+     "md": "Image Manager PRO упрощает ежедневную работу с изображениями товаров в админке OpenCart: визуальную проверку, контроль отсутствующих фото и работу со…"
+    }
+   }
+  },
+  {
+   "id": 55,
+   "model": "CCP-03",
+   "price": 25.0,
+   "status": 0,
+   "image": "catalog/products/abandoned-cart-pro-abandoned-cart-module-for-codecartpro-com.png",
+   "cat": 64,
+   "names": {
+    "1": {
+     "name": "Abandoned Cart Pro — модуль покинутих кошиків для OpenCart та ocStore",
+     "mt": "Abandoned Cart Pro — модуль покинутих кошиків для OpenCart та ocStore",
+     "md": "🛒 Abandoned Cart Pro для OpenCart та ocStore повертає клієнтів до покинутих кошиків, надсилає email-нагадування, підтримує UniShop2, купони, cron і статистику продажів."
+    },
+    "2": {
+     "name": "Abandoned Cart Pro — abandoned cart module for OpenCart and ocStore",
+     "mt": "Abandoned Cart Pro — abandoned cart module for OpenCart and ocStore",
+     "md": "🛒 Abandoned Cart Pro for OpenCart and ocStore returns customers to abandoned carts, sends email reminders, supports UniShop2, coupons, cron, and sales statistics."
+    },
+    "3": {
+     "name": "Abandoned Cart Pro — модуль заброшенных корзин для OpenCart и ocStore",
+     "mt": "Abandoned Cart Pro — модуль заброшенных корзин для OpenCart и ocStore",
+     "md": "🛒 Abandoned Cart Pro для OpenCart и ocStore возвращает клиентов в заброшенные корзины, посылает email-напоминания, поддерживает UniShop2, купоны, cron и статистику продаж."
+    }
+   }
+  },
+  {
+   "id": 59,
+   "model": "CCP-005",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/translate-expert-pro.webp",
+   "cat": 73,
+   "names": {
+    "1": {
+     "name": "Translate Expert Pro — переклад контенту OpenCart",
+     "mt": "Translate Expert Pro — переклад контенту OpenCart для OpenCart | CodeCart PRO",
+     "md": "🚀 Translate Expert Pro — переклад контенту OpenCart. Прискорює переклад багатомовних полів товарів, категорій, статей і language-файлів та допомагає знаходити пропущені..."
+    },
+    "2": {
+     "name": "Translate Expert Pro — OpenCart content translation",
+     "mt": "Translate Expert Pro — OpenCart content translation",
+     "md": "Translate Expert PRO accelerates multilingual OpenCart administration by translating supported text fields, rich editors, database language rows and PHP…"
+    },
+    "3": {
+     "name": "Translate Expert Pro — перевод контента OpenCart",
+     "mt": "Translate Expert Pro — перевод контента OpenCart",
+     "md": "Translate Expert PRO ускоряет мультиязычную работу в админке OpenCart: переводит поддерживаемые поля, rich editors, language_id строки БД и PHP language-файлы…"
+    }
+   }
+  },
+  {
+   "id": 60,
+   "model": "CCP-006",
+   "price": 50.0,
+   "status": 0,
+   "image": "catalog/25.5.26/14_50_59.png",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Store Assistant PRO — AI-консультант для OpenCart",
+     "mt": "AI Store Assistant PRO — AI-консультант для OpenCart",
+     "md": "🤖 Умный AI-консультант для OpenCart и ocStore: поиск и сравнение товаров, проверка характеристик, карточки, корзина, база знаний, лиды и аналитика."
+    },
+    "2": {
+     "name": "AI Store Assistant PRO — an AI-powered assistant for OpenCart",
+     "mt": "AI Store Assistant PRO — an AI-powered assistant for OpenCart",
+     "md": "🤖 A smart AI assistant for OpenCart and ocStore: product search and comparison, specification checks, product pages, shopping basket, knowledge base, leads and analytics."
+    },
+    "3": {
+     "name": "AI Store Assistant PRO — ИИ-консультант для OpenCart",
+     "mt": "AI Store Assistant PRO — ИИ-консультант для OpenCart",
+     "md": "🤖 Умный AI-консультант для OpenCart и ocStore: поиск и сравнение товаров, проверка характеристик, карточки, корзина, база знаний, лиды и аналитика."
+    }
+   }
+  },
+  {
+   "id": 61,
+   "model": "CDCTP-001",
+   "price": 15.0,
+   "status": 0,
+   "image": "catalog/19_39_54.png",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": " Image Manager PRO для OpenCart — керування зображеннями товарів",
+     "mt": "Image Manager PRO для OpenCart — керування зображеннями товарів",
+     "md": "🖼️ Image Manager PRO для OpenCart та ocStore: збільшення фото при наведенні, контроль зображень товарів, no-image, зручна робота з фото в адмінці. ⚡ OCMOD, PHP 7.4–8.5."
+    },
+    "2": {
+     "name": "Image Manager PRO for OpenCart — product image management",
+     "mt": "Image Manager PRO for OpenCart — product image management",
+     "md": "🖼️ Image Manager PRO for OpenCart and ocStore: photo zoom on hover, product image control, no-image, convenient work with photos in the admin. ⚡ OCMOD, PHP 7.4–8.5."
+    },
+    "3": {
+     "name": " Image Manager PRO для OpenCart — управление изображениями товаров",
+     "mt": "Image Manager PRO для OpenCart — управление изображениями товаров",
+     "md": "🖼️ Image Manager PRO для OpenCart и ocStore: увеличение фото при наведении, контроль изображений товаров, no-image, удобная работа с фото в админке. ⚡ OCMOD, PHP 7.4–8.5."
+    }
+   }
+  },
+  {
+   "id": 62,
+   "model": "CCP-006",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/sitemap-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Sitemap Pro — SEO карта сайту для OpenCart",
+     "mt": "Sitemap Pro — SEO карта сайту для OpenCart для OpenCart | CodeCart PRO",
+     "md": "🚀 Sitemap Pro — SEO карта сайту для OpenCart. Створює керовану XML-карту сайту для товарів, категорій та інших важливих сторінок, допомагаючи пошуковим системам обходити..."
+    },
+    "2": {
+     "name": "Sitemap Pro — SEO sitemap for OpenCart",
+     "mt": "Sitemap Pro — SEO sitemap for OpenCart",
+     "md": "Sitemap PRO builds a configurable SEO sitemap for products, categories, manufacturers, information content, blog pages, images and multilingual URLs."
+    },
+    "3": {
+     "name": "Sitemap Pro — SEO карта сайта для OpenCart",
+     "mt": "Sitemap Pro — SEO карта сайта для OpenCart",
+     "md": "Sitemap PRO формирует управляемую SEO-карту сайта для товаров, категорий, производителей, информации, блога, изображений и мультиязычных URL."
+    }
+   }
+  },
+  {
+   "id": 63,
+   "model": "CCP-007",
+   "price": 39.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/ai-store-assistant-pro.webp",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Store Assistant PRO  — умный продавец-консультант для OpenCart и ocStore",
+     "mt": "AI Store Assistant PRO — AI-консультант для OpenCart та ocStore",
+     "md": "🤖 AI-консультант для OpenCart: розумний пошук товарів, рекомендації, картки товарів, порівняння, ліди, Telegram і передача клієнта менеджеру."
+    },
+    "2": {
+     "name": "AI Store Assistant PRO is a smart seller-consultant for OpenCart and ocStore",
+     "mt": "AI Store Assistant PRO is a smart seller-consultant for",
+     "md": "AI Store Assistant PRO is a storefront sales consultant that understands natural-language questions, searches the real catalog and verifies current product…"
+    },
+    "3": {
+     "name": "AI Store Assistant PRO — умный продавец-консультант для OpenCart и ocStore",
+     "mt": "AI Store Assistant PRO — умный продавец-консультант для",
+     "md": "AI Store Assistant PRO — витринный продавец-консультант, который понимает вопросы обычным языком, ищет товары в реальном каталоге и проверяет актуальные…"
+    }
+   }
+  },
+  {
+   "id": 64,
+   "model": "CCP-008",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/abandoned-cart-pro.webp",
+   "cat": 64,
+   "names": {
+    "1": {
+     "name": "Abandoned Cart Pro — відновлення покинутих кошиків",
+     "mt": "Abandoned Cart Pro — відновлення покинутих кошиків для OpenCart | CodeCart PRO",
+     "md": "🚀 Abandoned Cart Pro — відновлення покинутих кошиків. Автоматично зберігає покинуті кошики, надсилає персоналізовані email-нагадування та повертає покупця до готового кошика...."
+    },
+    "2": {
+     "name": "Abandoned Cart Pro — abandoned cart recovery",
+     "mt": "Abandoned Cart Pro — abandoned cart recovery",
+     "md": "Abandoned Cart PRO records incomplete carts, sends scheduled reminders and helps a customer return to the same cart through a personal recovery link."
+    },
+    "3": {
+     "name": "Abandoned Cart Pro — восстановление брошенных корзин",
+     "mt": "Abandoned Cart Pro — восстановление брошенных корзин",
+     "md": "Abandoned Cart PRO сохраняет незавершённые корзины, отправляет напоминания по расписанию и возвращает покупателя в его корзину по персональной ссылке."
+    }
+   }
+  },
+  {
+   "id": 65,
+   "model": "CCP-009",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/attribute-manager-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Attribute Manager Pro — шаблони характеристик товарів",
+     "mt": "Attribute Manager Pro — шаблони характеристик товарів для OpenCart | CodeCart PRO",
+     "md": "🚀 Attribute Manager Pro — шаблони характеристик товарів. Прискорює заповнення характеристик товарів: шаблони атрибутів, імпорт із готового товару та контрольоване застосування..."
+    },
+    "2": {
+     "name": "Attribute Manager Pro — product attribute templates",
+     "mt": "Attribute Manager Pro — product attribute templates",
+     "md": "Attribute Manager PRO turns repeated product characteristics into reusable attribute templates and bulk catalog workflows."
+    },
+    "3": {
+     "name": "Attribute Manager Pro — шаблоны характеристик товаров",
+     "mt": "Attribute Manager Pro — шаблоны характеристик товаров",
+     "md": "Attribute Manager PRO превращает повторяющиеся характеристики товаров в шаблоны и управляемые массовые операции."
+    }
+   }
+  },
+  {
+   "id": 66,
+   "model": "CCP-010",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/avif-webp-image-pro.webp",
+   "cat": 63,
+   "names": {
+    "1": {
+     "name": "AVIF WebP Image Pro — оптимізація зображень",
+     "mt": "AVIF WebP Image Pro — оптимізація зображень для OpenCart | CodeCart PRO",
+     "md": "🚀 AVIF WebP Image Pro — оптимізація зображень. Створює сучасні WebP та AVIF-копії зображень, зберігає оригінали, підтримує fallback, діагностику та прогрів кешу. OpenCart..."
+    },
+    "2": {
+     "name": "AVIF WebP Image Pro — image optimization",
+     "mt": "AVIF WebP Image Pro — image optimization",
+     "md": "AVIF WebP Image PRO integrates modern WebP/AVIF image generation into the OpenCart image pipeline with server diagnostics, caching and controlled processing."
+    },
+    "3": {
+     "name": "AVIF WebP Image Pro — оптимизация изображений",
+     "mt": "AVIF WebP Image Pro — оптимизация изображений",
+     "md": "AVIF WebP Image PRO интегрирует WebP/AVIF в стандартный процесс изображений OpenCart с диагностикой сервера, кешированием и контролируемой обработкой."
+    }
+   }
+  },
+  {
+   "id": 67,
+   "model": "CCP-011",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/catalog-quality-audit-pro.webp",
+   "cat": 71,
+   "names": {
+    "1": {
+     "name": "Catalog Quality Audit Pro — аудит якості каталогу",
+     "mt": "Catalog Quality Audit Pro — аудит якості каталогу для OpenCart | CodeCart PRO",
+     "md": "🚀 Catalog Quality Audit Pro — аудит якості каталогу. Знаходить слабкі місця каталогу: порожні SEO-поля, дублікати, відсутні зображення, нульові ціни та інші проблеми контенту...."
+    },
+    "2": {
+     "name": "Catalog Quality Audit Pro — catalog quality audit",
+     "mt": "Catalog Quality Audit Pro — catalog quality audit",
+     "md": "Catalog Quality Audit PRO checks product, category and manufacturer data for missing, duplicated or weakly populated fields before those problems reach…"
+    },
+    "3": {
+     "name": "Catalog Quality Audit Pro — аудит качества каталога",
+     "mt": "Catalog Quality Audit Pro — аудит качества каталога",
+     "md": "Catalog Quality Audit PRO проверяет товары, категории и производителей на отсутствующие, дублированные и слабо заполненные данные."
+    }
+   }
+  },
+  {
+   "id": 68,
+   "model": "CCP-012",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/checkout-simple-pro.webp",
+   "cat": 64,
+   "names": {
+    "1": {
+     "name": "Checkout Simple Pro — спрощене оформлення замовлення",
+     "mt": "Checkout Simple Pro — спрощене оформлення замовлення для OpenCart | CodeCart PRO",
+     "md": "🚀 Checkout Simple Pro — спрощене оформлення замовлення. Робить checkout коротшим і зрозумілішим: керування полями, компактна форма, адаптивність і менше зайвих кроків перед..."
+    },
+    "2": {
+     "name": "Checkout Simple Pro — simplified checkout",
+     "mt": "Checkout Simple Pro — simplified checkout",
+     "md": "Checkout Simple PRO shortens the OpenCart checkout flow by keeping only the required fields and updating totals, shipping and payment without unnecessary…"
+    },
+    "3": {
+     "name": "Checkout Simple Pro — упрощённое оформление заказа",
+     "mt": "Checkout Simple Pro — упрощённое оформление заказа",
+     "md": "Checkout Simple PRO сокращает оформление OpenCart: оставляет нужные поля и обновляет итоги, доставку и оплату без лишних полноэкранных шагов."
+    }
+   }
+  },
+  {
+   "id": 69,
+   "model": "CCP-013",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/eu-cookie-consent-pro.webp",
+   "cat": 69,
+   "names": {
+    "1": {
+     "name": "EU Cookie Consent Pro — керування згодою cookies",
+     "mt": "EU Cookie Consent Pro — керування згодою cookies для OpenCart | CodeCart PRO",
+     "md": "🚀 EU Cookie Consent Pro — керування згодою cookies. Додає професійну панель згоди cookies з категоріями, налаштуваннями приватності та контрольованим запуском необов’язкових..."
+    },
+    "2": {
+     "name": "EU Cookie Consent Pro — cookie consent management",
+     "mt": "EU Cookie Consent Pro — cookie consent management",
+     "md": "EU Cookie Consent PRO manages cookie consent categories and Google Consent Mode v2 so analytics/advertising behavior can follow the visitor's choice."
+    },
+    "3": {
+     "name": "EU Cookie Consent Pro — управление согласием cookies",
+     "mt": "EU Cookie Consent Pro — управление согласием cookies",
+     "md": "EU Cookie Consent PRO управляет категориями cookie и Google Consent Mode v2, чтобы аналитика и реклама учитывали выбор посетителя."
+    }
+   }
+  },
+  {
+   "id": 70,
+   "model": "CCP-014",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/expert-author-schema-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Expert Author Schema Pro — авторство та Schema.org",
+     "mt": "Expert Author Schema Pro — авторство та Schema.org для OpenCart | CodeCart PRO",
+     "md": "🚀 Expert Author Schema Pro — авторство та Schema.org. Підсилює експертність контенту: профілі авторів, блоки авторства та структуровані дані Schema.org для статей і сторінок...."
+    },
+    "2": {
+     "name": "Expert Author Schema Pro — authorship and Schema.org",
+     "mt": "Expert Author Schema Pro — authorship and Schema.org",
+     "md": "Expert Author Schema PRO adds visible author/expert information and corresponding Schema.org data to supported content pages."
+    },
+    "3": {
+     "name": "Expert Author Schema Pro — авторство и Schema.org",
+     "mt": "Expert Author Schema Pro — авторство и Schema.org",
+     "md": "Expert Author Schema PRO добавляет видимый блок автора/эксперта и соответствующие Schema.org данные на поддерживаемые контентные страницы."
+    }
+   }
+  },
+  {
+   "id": 71,
+   "model": "CCP-015",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/google-reviews-pro.webp",
+   "cat": 70,
+   "names": {
+    "1": {
+     "name": "Google Reviews Pro — відгуки Google у магазині",
+     "mt": "Google Reviews Pro — відгуки Google у магазині для OpenCart | CodeCart PRO",
+     "md": "🚀 Google Reviews Pro — відгуки Google у магазині. Виводить відгуки Google у магазині, допомагає показати соціальний доказ і підвищити довіру до бренду та покупки. OpenCart..."
+    },
+    "2": {
+     "name": "Google Reviews Pro — Google reviews for your store",
+     "mt": "Google Reviews Pro — Google reviews for your store",
+     "md": "Google Reviews PRO integrates the official Google Customer Reviews opt-in flow and related store-rating elements after a completed order."
+    },
+    "3": {
+     "name": "Google Reviews Pro — отзывы Google в магазине",
+     "mt": "Google Reviews Pro — отзывы Google в магазине",
+     "md": "Google Reviews PRO подключает официальный Google Customer Reviews opt-in и связанные рейтинговые элементы после завершённого заказа."
+    }
+   }
+  },
+  {
+   "id": 72,
+   "model": "CCP-016",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/nova-poshta-pro.webp",
+   "cat": 66,
+   "names": {
+    "1": {
+     "name": "Nova Poshta Pro — доставка Новою поштою",
+     "mt": "Nova Poshta Pro — доставка Новою поштою для OpenCart | CodeCart PRO",
+     "md": "🚀 Nova Poshta Pro — доставка Новою поштою. Інтегрує доставку Нової пошти в OpenCart: вибір населеного пункту й відділення, актуальні довідники та зручне оформлення доставки...."
+    },
+    "2": {
+     "name": "Nova Poshta Pro — Nova Poshta shipping",
+     "mt": "Nova Poshta Pro — Nova Poshta shipping",
+     "md": "Nova Poshta PRO connects OpenCart checkout and order management with Nova Poshta city/branch data and shipment workflows."
+    },
+    "3": {
+     "name": "Nova Poshta Pro — доставка Новой Почтой",
+     "mt": "Nova Poshta Pro — доставка Новой Почтой",
+     "md": "Nova Poshta PRO связывает checkout OpenCart и работу менеджера с городами/отделениями Новой почты и сценариями отправки."
+    }
+   }
+  },
+  {
+   "id": 73,
+   "model": "CCP-017",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/import-export-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "Import Export Pro — імпорт та експорт каталогу",
+     "mt": "Import Export Pro — імпорт та експорт каталогу для OpenCart | CodeCart PRO",
+     "md": "🚀 Import Export Pro — імпорт та експорт каталогу. Допомагає масово переносити та оновлювати дані каталогу через керований імпорт і експорт без ручного редагування сотень..."
+    },
+    "2": {
+     "name": "Import Export Pro — catalog import and export",
+     "mt": "Import Export Pro — catalog import and export",
+     "md": "Import Export PRO performs bulk import, update and export of product catalog data from common supplier and exchange formats."
+    },
+    "3": {
+     "name": "Import Export Pro — импорт и экспорт каталога",
+     "mt": "Import Export Pro — импорт и экспорт каталога",
+     "md": "Import Export PRO выполняет массовый импорт, обновление и экспорт каталога из распространённых форматов поставщиков и обмена."
+    }
+   }
+  },
+  {
+   "id": 74,
+   "model": "CCP-018",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/language-suggest-pro.webp",
+   "cat": 73,
+   "names": {
+    "1": {
+     "name": "Language Suggest Pro — підказка вибору мови",
+     "mt": "Language Suggest Pro — підказка вибору мови для OpenCart | CodeCart PRO",
+     "md": "🚀 Language Suggest Pro — підказка вибору мови. Допомагає відвідувачу перейти на відповідну мовну версію сайту через акуратну підказку без примусового перенаправлення. OpenCart..."
+    },
+    "2": {
+     "name": "Language Suggest Pro — language suggestion",
+     "mt": "Language Suggest Pro — language suggestion",
+     "md": "Language Suggest PRO detects that another storefront language may be more convenient and politely suggests switching without forcing a redirect."
+    },
+    "3": {
+     "name": "Language Suggest Pro — подсказка выбора языка",
+     "mt": "Language Suggest Pro — подсказка выбора языка",
+     "md": "Language Suggest PRO определяет, что посетителю может быть удобнее другая языковая версия, и аккуратно предлагает переключиться без принудительного редиректа."
+    }
+   }
+  },
+  {
+   "id": 75,
+   "model": "CCP-019",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/link-checker-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Link Checker Pro — пошук битих посилань",
+     "mt": "Link Checker Pro — пошук битих посилань для OpenCart | CodeCart PRO",
+     "md": "🚀 Link Checker Pro — пошук битих посилань. Сканує посилання магазину, знаходить 404 та інші проблемні URL і допомагає підтримувати чисту структуру сайту без ручної перевірки...."
+    },
+    "2": {
+     "name": "Link Checker Pro — broken link checker",
+     "mt": "Link Checker Pro — broken link checker",
+     "md": "Link Checker PRO crawls configured site URLs to find broken internal links, HTTP errors, redirects, inaccessible images and other URL problems."
+    },
+    "3": {
+     "name": "Link Checker Pro — поиск битых ссылок",
+     "mt": "Link Checker Pro — поиск битых ссылок",
+     "md": "Link Checker PRO сканирует сайт и ищет битые внутренние ссылки, HTTP-ошибки, редиректы, недоступные изображения и другие URL-проблемы."
+    }
+   }
+  },
+  {
+   "id": 76,
+   "model": "CCP-020",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/live-alt-title-image-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Live ALT TITLE Image Pro — SEO атрибути зображень",
+     "mt": "Live ALT TITLE Image Pro — SEO атрибути зображень для OpenCart | CodeCart PRO",
+     "md": "🚀 Live ALT TITLE Image Pro — SEO атрибути зображень. Автоматично додає змістовні ALT і TITLE до зображень за шаблонами та мовою сторінки без масової перезапису файлів. OpenCart..."
+    },
+    "2": {
+     "name": "Live ALT TITLE Image Pro — image ALT and TITLE SEO",
+     "mt": "Live ALT TITLE Image Pro — image ALT and TITLE SEO",
+     "md": "Live ALT TITLE Image PRO adds missing alt/title attributes to supported storefront images from language-aware templates without mass-rewriting product records."
+    },
+    "3": {
+     "name": "Live ALT TITLE Image Pro — SEO атрибуты изображений",
+     "mt": "Live ALT TITLE Image Pro — SEO атрибуты изображений",
+     "md": "Live ALT TITLE Image PRO добавляет отсутствующие alt/title к поддерживаемым изображениям витрины по мультиязычным шаблонам без массовой перезаписи товаров."
+    }
+   }
+  },
+  {
+   "id": 77,
+   "model": "CCP-021",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/payment-pro-hub.webp",
+   "cat": 67,
+   "names": {
+    "1": {
+     "name": "Payment Pro Hub — керування оплатами OpenCart",
+     "mt": "Payment Pro Hub — керування оплатами OpenCart для OpenCart | CodeCart PRO",
+     "md": "🚀 Payment Pro Hub — керування оплатами OpenCart. Об’єднує керування способами оплати, оформленням платіжного блоку, журналами та діагностикою в одному модулі. OpenCart 3.0.x,..."
+    },
+    "2": {
+     "name": "Payment Pro Hub — OpenCart payment management",
+     "mt": "Payment Pro Hub — OpenCart payment management",
+     "md": "Payment PRO Hub centralizes several payment methods, availability rules, fees, callbacks and diagnostics in one OpenCart payment module."
+    },
+    "3": {
+     "name": "Payment Pro Hub — управление оплатами OpenCart",
+     "mt": "Payment Pro Hub — управление оплатами OpenCart",
+     "md": "Payment PRO Hub объединяет несколько способов оплаты, правила доступности, комиссии, callback и диагностику в одном платёжном модуле OpenCart."
+    }
+   }
+  },
+  {
+   "id": 78,
+   "model": "CCP-022",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/product-currency-input-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Product Currency Input Pro — ціна товару у валюті",
+     "mt": "Product Currency Input Pro — ціна товару у валюті для OpenCart | CodeCart PRO",
+     "md": "🚀 Product Currency Input Pro — ціна товару у валюті. Дозволяє вводити закупівельну або вихідну ціну у валюті постачальника та автоматично перераховувати стандартну ціну товару..."
+    },
+    "2": {
+     "name": "Product Currency Input Pro — product price in supplier currency",
+     "mt": "Product Currency Input Pro — product price in supplier currency",
+     "md": "Product Currency Input PRO stores a supplier/source price in another active currency and calculates the standard OpenCart product.price in the store base…"
+    },
+    "3": {
+     "name": "Product Currency Input Pro — цена товара в валюте",
+     "mt": "Product Currency Input Pro — цена товара в валюте",
+     "md": "Product Currency Input PRO хранит исходную цену поставщика в другой активной валюте и рассчитывает стандартный product.price в базовой валюте магазина."
+    }
+   }
+  },
+  {
+   "id": 79,
+   "model": "CCP-023",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/seo-meta-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "SEO Meta Pro — генерація метатегів OpenCart",
+     "mt": "SEO Meta Pro — генерація метатегів OpenCart для OpenCart | CodeCart PRO",
+     "md": "🚀 SEO Meta Pro — генерація метатегів OpenCart. Допомагає масово створювати й оновлювати meta title, meta description та H1 за керованими шаблонами для каталогу. OpenCart 3.0.x,..."
+    },
+    "2": {
+     "name": "SEO Meta Pro — OpenCart meta tag generator",
+     "mt": "SEO Meta Pro — OpenCart meta tag generator",
+     "md": "SEO Meta PRO generates Meta Title, Meta Description, Meta Keywords and H1 for products, categories and manufacturers from language-aware templates with…"
+    },
+    "3": {
+     "name": "SEO Meta Pro — генерация метатегов OpenCart",
+     "mt": "SEO Meta Pro — генерация метатегов OpenCart",
+     "md": "SEO Meta PRO генерирует Meta Title, Meta Description, Meta Keywords и H1 для товаров, категорий и производителей по мультиязычным шаблонам с preview и…"
+    }
+   }
+  },
+  {
+   "id": 80,
+   "model": "CCP-024",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/seo-url-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "SEO URL Pro — генератор ЧПУ та 301 редиректів",
+     "mt": "SEO URL Pro — генератор ЧПУ та 301 редиректів для OpenCart | CodeCart PRO",
+     "md": "🚀 SEO URL Pro — генератор ЧПУ та 301 редиректів. Створює чисті SEO URL для каталогу та контенту, підтримує масову генерацію, історію адрес і 301-редиректи. OpenCart 3.0.x,..."
+    },
+    "2": {
+     "name": "SEO URL Pro — SEO URL generator and 301 redirects",
+     "mt": "SEO URL Pro — SEO URL generator and 301 redirects",
+     "md": "SEO URL PRO generates clean slugs for OpenCart entities and keeps URL history/301 redirects so intentional URL changes do not simply break old addresses."
+    },
+    "3": {
+     "name": "SEO URL Pro — генератор ЧПУ и 301 редиректов",
+     "mt": "SEO URL Pro — генератор ЧПУ и 301 редиректов",
+     "md": "SEO URL PRO генерирует чистые slug для сущностей OpenCart и хранит историю/301-редиректы, чтобы осознанная смена URL не обрывала старые адреса."
+    }
+   }
+  },
+  {
+   "id": 81,
+   "model": "CCP-025",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/smart-filter-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Smart Filter Pro SEO — AJAX-фільтр товарів",
+     "mt": "Smart Filter Pro SEO — AJAX-фільтр товарів для OpenCart | CodeCart PRO",
+     "md": "🚀 Smart Filter Pro SEO — AJAX-фільтр товарів. Додає швидкий AJAX-фільтр за ціною, виробником, наявністю, атрибутами та опціями з SEO-логікою для посадкових сторінок. OpenCart..."
+    },
+    "2": {
+     "name": "Smart Filter Pro SEO — AJAX product filter",
+     "mt": "Smart Filter Pro SEO — AJAX product filter",
+     "md": "Smart Filter PRO SEO provides fast AJAX filtering by price, manufacturer, stock, attributes and options while separately controlling the SEO behavior of…"
+    },
+    "3": {
+     "name": "Smart Filter Pro SEO — AJAX-фильтр товаров",
+     "mt": "Smart Filter Pro SEO — AJAX-фильтр товаров",
+     "md": "Smart Filter PRO SEO фильтрует товары по цене, бренду, наличию, атрибутам и опциям через AJAX и отдельно управляет SEO-поведением фильтрованных URL."
+    }
+   }
+  },
+  {
+   "id": 82,
+   "model": "CCP-026",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/telegram-notify-pro.webp",
+   "cat": 68,
+   "names": {
+    "1": {
+     "name": "Telegram Notify Pro — сповіщення про замовлення",
+     "mt": "Telegram Notify Pro — сповіщення про замовлення для OpenCart | CodeCart PRO",
+     "md": "🚀 Telegram Notify Pro — сповіщення про замовлення. Надсилає оперативні Telegram-сповіщення про нові замовлення та важливі події магазину, щоб менеджер швидше реагував. OpenCart..."
+    },
+    "2": {
+     "name": "Telegram Notify Pro — order notifications",
+     "mt": "Telegram Notify Pro — order notifications",
+     "md": "Telegram Notify PRO sends new-order, quick-order and status-change notifications to configured Telegram chats/topics using multilingual templates."
+    },
+    "3": {
+     "name": "Telegram Notify Pro — уведомления о заказах",
+     "mt": "Telegram Notify Pro — уведомления о заказах",
+     "md": "Telegram Notify PRO отправляет новые заказы, быстрые заявки и изменения статуса в настроенные Telegram-чаты/топики по мультиязычным шаблонам."
+    }
+   }
+  },
+  {
+   "id": 83,
+   "model": "CCP-027",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/uni-dark-theme-pro.webp",
+   "cat": 72,
+   "names": {
+    "1": {
+     "name": "Uni Dark Theme Pro — темна тема для UniShop2",
+     "mt": "Uni Dark Theme Pro — темна тема для UniShop2 для OpenCart | CodeCart PRO",
+     "md": "🚀 Uni Dark Theme Pro — темна тема для UniShop2. Додає продуману темну тему та перемикач режимів для UniShop2 з lazy-завантаженням стилів і збереженням вибору користувача...."
+    },
+    "2": {
+     "name": "Uni Dark Theme Pro — dark mode for UniShop2",
+     "mt": "Uni Dark Theme Pro — dark mode for UniShop2",
+     "md": "Uni Dark Theme PRO adds Light, Dark and System modes to UniShop2 with saved user preference, configurable colors and dedicated adaptation of key storefront…"
+    },
+    "3": {
+     "name": "Uni Dark Theme Pro — тёмная тема для UniShop2",
+     "mt": "Uni Dark Theme Pro — тёмная тема для UniShop2",
+     "md": "Uni Dark Theme PRO добавляет в UniShop2 режимы Light, Dark и System с сохранением выбора пользователя, настройкой цветов и адаптацией ключевых блоков витрины."
+    }
+   }
+  },
+  {
+   "id": 84,
+   "model": "CCP-028",
+   "price": 0.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/codecart-pro-3-0-6.webp",
+   "cat": 74,
+   "names": {
+    "1": {
+     "name": "CodeCart PRO 3.0.6 — система для OpenCart та ocStore",
+     "mt": "CodeCart PRO 3.0.6 — безкоштовна система для сучасного",
+     "md": "CodeCart PRO 3.0.6 — безкоштовна open-source система для створення й розвитку інтернет-магазину на базі екосистеми OpenCart/ocStore 3.x. Вона орієнтована на…"
+    },
+    "2": {
+     "name": "CodeCart PRO 3.0.6 — OpenCart/ocStore system",
+     "mt": "CodeCart PRO 3.0.6 — OpenCart/ocStore system",
+     "md": "CodeCart PRO 3.0.6 is a free open-source e-commerce system built on the OpenCart/ocStore 3.x ecosystem with a modernized technical base for current PHP,…"
+    },
+    "3": {
+     "name": "CodeCart PRO 3.0.6 — система для OpenCart и ocStore",
+     "mt": "CodeCart PRO 3.0.6 — система для OpenCart и ocStore",
+     "md": "CodeCart PRO 3.0.6 — бесплатная open-source система интернет-магазина на экосистеме OpenCart/ocStore 3.x с модернизированной технической базой для актуальных…"
+    }
+   }
+  },
+  {
+   "id": 85,
+   "model": "CCP-029",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/language-inspector-pro.webp",
+   "cat": 73,
+   "names": {
+    "1": {
+     "name": "Language Inspector PRO — візуальний редактор перекладів з точним джерелом",
+     "mt": "Language Inspector PRO — редагування текстів витрини з точним",
+     "md": "Language Inspector PRO додає для авторизованого адміністратора візуальний інспектор текстів прямо на витрині. Редагувати можна тільки той текст, походження…"
+    },
+    "2": {
+     "name": "Language Inspector PRO — visual translation editor with exact provenance",
+     "mt": "Language Inspector PRO — visual translation editor with exact",
+     "md": "Language Inspector PRO lets an authorized administrator edit storefront translations from the storefront while preserving exact provenance of the text source."
+    },
+    "3": {
+     "name": "Language Inspector PRO — визуальный редактор переводов с точным источником",
+     "mt": "Language Inspector PRO — визуальный редактор переводов с точным",
+     "md": "Language Inspector PRO позволяет авторизованному администратору исправлять переводы с витрины, сохраняя точное происхождение каждой редактируемой строки."
+    }
+   }
+  },
+  {
+   "id": 86,
+   "model": "CCP-030",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/multi-store-crm-connector-pro.webp",
+   "cat": 77,
+   "names": {
+    "1": {
+     "name": "Multi Store CRM Connector PRO — безпечний конектор магазинів до CRM лише для читання",
+     "mt": "Multi Store CRM Connector PRO — read-only підключення магазинів",
+     "md": "Multi Store CRM Connector PRO надає центральній Multi-Store CRM захищений API тільки для читання клієнтів, їх основної компанії/міста/країни та замовлень із…"
+    },
+    "2": {
+     "name": "Multi Store CRM Connector PRO — secure read-only store connector for CRM",
+     "mt": "Multi Store CRM Connector PRO — secure read-only store",
+     "md": "Multi Store CRM Connector PRO provides a read-only API layer that lets a Windows CRM import customers, orders and store-source information from several…"
+    },
+    "3": {
+     "name": "Multi Store CRM Connector PRO — безопасный read-only коннектор магазинов к CRM",
+     "mt": "Multi Store CRM Connector PRO — безопасный read-only коннектор",
+     "md": "Multi Store CRM Connector PRO создаёт read-only API-слой, через который Windows CRM импортирует клиентов, заказы и источник данных из нескольких…"
+    }
+   }
+  },
+  {
+   "id": 87,
+   "model": "CCP-031",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/smart-search-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Smart Search PRO — швидкий індексований пошук товарів",
+     "mt": "Smart Search PRO — релевантний пошук товарів із індексом,",
+     "md": "Smart Search PRO посилює стандартний пошук OpenCart, але не замінює тему, картки товарів, ціни, сортування або пагінацію. Модуль визначає релевантні…"
+    },
+    "2": {
+     "name": "Smart Search PRO — fast indexed product search",
+     "mt": "Smart Search PRO — fast indexed product search",
+     "md": "Smart Search PRO replaces slow broad catalog matching with an indexed product-search layer that understands exact identifiers, words, transliteration,…"
+    },
+    "3": {
+     "name": "Smart Search PRO — быстрый индексированный поиск товаров",
+     "mt": "Smart Search PRO — быстрый индексированный поиск товаров",
+     "md": "Smart Search PRO добавляет индексированный поиск товаров, который учитывает точные идентификаторы, слова, транслитерацию, синонимы и технические запросы."
+    }
+   }
+  },
+  {
+   "id": 88,
+   "model": "CCP-032",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/quick-price-edit-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Quick Price Edit PRO — швидке редагування стандартної ціни у списку товарів",
+     "mt": "Quick Price Edit PRO — швидке редагування стандартної ціни у",
+     "md": "Quick Price Edit PRO дозволяє змінити стандартне поле product.price безпосередньо в Каталог → Товари — через іконку олівця або подвійний клік по ціні."
+    },
+    "2": {
+     "name": "Quick Price Edit PRO — quick standard price editing in product list",
+     "mt": "Quick Price Edit PRO — quick standard price editing in product",
+     "md": "Quick Price Edit PRO lets an administrator change the standard product.price directly in the OpenCart product list without opening every product card."
+    },
+    "3": {
+     "name": "Quick Price Edit PRO — быстрое редактирование стандартной цены в списке товаров",
+     "mt": "Quick Price Edit PRO — быстрое редактирование стандартной цены",
+     "md": "Quick Price Edit PRO позволяет менять стандартное поле product.price прямо в списке товаров OpenCart без открытия каждой карточки."
+    }
+   }
+  },
+  {
+   "id": 89,
+   "model": "CCP-033",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/phone-verification-pro.webp",
+   "cat": 76,
+   "names": {
+    "1": {
+     "name": "Phone Verification PRO — OTP-підтвердження номера телефону",
+     "mt": "Phone Verification PRO — OTP-перевірка номера перед реєстрацією",
+     "md": "Phone Verification PRO підтверджує, що клієнт контролює вказаний номер телефону, за допомогою одноразового коду OTP перед вибраними діями магазину."
+    },
+    "2": {
+     "name": "Phone Verification PRO — OTP phone number verification",
+     "mt": "Phone Verification PRO — OTP phone number verification",
+     "md": "Phone Verification PRO confirms a customer phone number with a one-time code and can protect selected registration, account or checkout scenarios from invalid…"
+    },
+    "3": {
+     "name": "Phone Verification PRO — OTP-подтверждение номера телефона",
+     "mt": "Phone Verification PRO — OTP-подтверждение номера телефона",
+     "md": "Phone Verification PRO подтверждает номер телефона одноразовым кодом и может защищать выбранные сценарии регистрации, аккаунта или checkout от неверных и…"
+    }
+   }
+  },
+  {
+   "id": 90,
+   "model": "CCP-034",
+   "price": 9.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/google-product-category-field-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "Google Product Category Field PRO — поле Google Product Category ID для категорій",
+     "mt": "Google Product Category Field PRO — поле Google Product",
+     "md": "Google Product Category Field PRO додає до категорії OpenCart числове поле Google Product Category ID для використання у Merchant Center і товарних фідах."
+    },
+    "2": {
+     "name": "Google Product Category Field PRO — Google Product Category ID field for categories",
+     "mt": "Google Product Category Field PRO — Google Product Category ID",
+     "md": "Google Product Category Field PRO adds a dedicated numeric Google Product Category ID field to OpenCart categories for feeds and Merchant integrations."
+    },
+    "3": {
+     "name": "Google Product Category Field PRO — поле Google Product Category ID для категорий",
+     "mt": "Google Product Category Field PRO — поле Google Product",
+     "md": "Google Product Category Field PRO добавляет отдельное числовое поле Google Product Category ID в категории OpenCart для фидов и Merchant-интеграций."
+    }
+   }
+  },
+  {
+   "id": 91,
+   "model": "CCP-035",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/ai-ready-pro.webp",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Ready PRO — AI-доступність каталогу: llms, AI sitemap, MCP та WebMCP",
+     "mt": "AI Ready PRO — llms.txt, AI Sitemap, MCP/WebMCP та",
+     "md": "AI Ready PRO готує магазин до роботи з AI-агентами й LLM: створює спеціальні AI-файли, індекс каталогу та інструменти WebMCP для пошуку й отримання реальних…"
+    },
+    "2": {
+     "name": "AI Ready PRO — AI-ready catalog: llms, AI sitemap, MCP and WebMCP",
+     "mt": "AI Ready PRO — AI-ready catalog: llms, AI sitemap, MCP and WebMCP",
+     "md": "AI Ready PRO prepares an OpenCart catalog for machine-readable AI discovery through llms files, AI sitemap data, MCP/WebMCP tools and a structured product…"
+    },
+    "3": {
+     "name": "AI Ready PRO — AI-доступность каталога: llms, AI sitemap, MCP и WebMCP",
+     "mt": "AI Ready PRO — AI-доступность каталога: llms, AI sitemap, MCP и",
+     "md": "AI Ready PRO подготавливает каталог OpenCart к машинному чтению через llms-файлы, AI sitemap, MCP/WebMCP инструменты и структурированный индекс товаров."
+    }
+   }
+  },
+  {
+   "id": 92,
+   "model": "CCP-036",
+   "price": 35.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/opencart-theme-pro.webp",
+   "cat": 72,
+   "names": {
+    "1": {
+     "name": "OpenCart Theme PRO — комерційна тема для OpenCart/ocStore 3.x",
+     "mt": "OpenCart Theme PRO — сучасна витрина, блог, відгуки, SEO та",
+     "md": "OpenCart Theme PRO — самостійна тема-вітрина й набір інтегрованих інструментів для OpenCart/ocStore 3.x. Вона формує сучасні картки товарів, галерею,…"
+    },
+    "2": {
+     "name": "OpenCart Theme PRO — commercial theme for OpenCart/ocStore 3.x",
+     "mt": "OpenCart Theme PRO — commercial theme for OpenCart/ocStore 3.x",
+     "md": "OpenCart Theme PRO is a commercial storefront theme for OpenCart/ocStore 3.x with a responsive catalog, product cards, navigation, promotional blocks and…"
+    },
+    "3": {
+     "name": "OpenCart Theme PRO — коммерческая тема для OpenCart/ocStore 3.x",
+     "mt": "OpenCart Theme PRO — коммерческая тема для OpenCart/ocStore 3.x",
+     "md": "OpenCart Theme PRO — коммерческая витринная тема для OpenCart/ocStore 3.x с адаптивным каталогом, карточками товаров, навигацией, промо-блоками и настройками…"
+    }
+   }
+  },
+  {
+   "id": 93,
+   "model": "CCP-037",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/vat-price-input-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "VAT Price Input PRO — введення цін з ПДВ для ФОП/ТОВ і стандартної податкової логіки",
+     "mt": "VAT Price Input PRO — введення кінцевої ціни з ПДВ у стандартну",
+     "md": "VAT Price Input PRO дозволяє для товарів VAT-компанії вводити в адмінці кінцеву ціну для покупця з ПДВ, а модуль розраховує й зберігає правильну net price…"
+    },
+    "2": {
+     "name": "VAT Price Input PRO — VAT-inclusive price input for business modes and native tax logic",
+     "mt": "VAT Price Input PRO — VAT-inclusive price input for business",
+     "md": "VAT Price Input PRO lets administrators enter a VAT-inclusive or business-facing price while preserving the native OpenCart tax and price model used on the…"
+    },
+    "3": {
+     "name": "VAT Price Input PRO — ввод цен с НДС для ФОП/ООО и штатной налоговой логики",
+     "mt": "VAT Price Input PRO — ввод цен с НДС для ФОП/ООО и штатной",
+     "md": "VAT Price Input PRO позволяет администратору вводить цену с НДС в удобном бизнес-формате, сохраняя штатную налоговую и ценовую модель OpenCart на витрине."
+    }
+   }
+  },
+  {
+   "id": 94,
+   "model": "CCP-038",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/supplier-sync-parser-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "Supplier Sync Parser PRO — збір і синхронізація товарів із сайтів постачальників",
+     "mt": "Supplier Sync Parser PRO — ціни, залишки й нові товари з сайтів",
+     "md": "Supplier Sync Parser PRO призначений для постачальників, які не надають XML, CSV або API. Модуль читає HTML сторінок за XPath-правилами, збирає ціни,…"
+    },
+    "2": {
+     "name": "Supplier Sync Parser PRO — supplier website parsing and catalog synchronization",
+     "mt": "Supplier Sync Parser PRO — supplier website parsing and catalog",
+     "md": "Supplier Sync Parser PRO parses supplier websites or structured sources and synchronizes linked catalog data through its own supplier profiles, mappings,…"
+    },
+    "3": {
+     "name": "Supplier Sync Parser PRO — парсинг сайтов поставщиков и синхронизация каталога",
+     "mt": "Supplier Sync Parser PRO — парсинг сайтов поставщиков и",
+     "md": "Supplier Sync Parser PRO получает данные с сайтов/источников поставщиков и синхронизирует связанные товары через профили, mapping, очередь и историю запусков."
+    }
+   }
+  },
+  {
+   "id": 95,
+   "model": "CCP-039",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/source-copy-protection-pro.webp",
+   "cat": 69,
+   "names": {
+    "1": {
+     "name": "Source Copy Protection PRO — захист контенту від простого копіювання з посиланням на джерело",
+     "mt": "Source Copy Protection PRO — атрибуція копій і базовий захист",
+     "md": "Source Copy Protection PRO допомагає зменшити побутове копіювання контенту й зберегти посилання на джерело: може додавати source URL у clipboard або…"
+    },
+    "2": {
+     "name": "Source Copy Protection PRO — basic copy protection with source attribution",
+     "mt": "Source Copy Protection PRO — basic copy protection with source",
+     "md": "Source Copy Protection PRO adds basic storefront copy deterrence and source attribution when visitors copy text from the store."
+    },
+    "3": {
+     "name": "Source Copy Protection PRO — защита контента от простого копирования со ссылкой на источник",
+     "mt": "Source Copy Protection PRO — защита контента от простого",
+     "md": "Source Copy Protection PRO добавляет базовую защиту от простого копирования на витрине и может автоматически добавлять ссылку на источник к скопированному…"
+    }
+   }
+  },
+  {
+   "id": 96,
+   "model": "CCP-040",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/social-login-pro.webp",
+   "cat": 76,
+   "names": {
+    "1": {
+     "name": "Social Login PRO — авторизація клієнтів через соціальні провайдери",
+     "mt": "Social Login PRO — вхід і прив’язка акаунтів через Google,",
+     "md": "Social Login PRO додає вхід, реєстрацію та прив’язку облікових записів покупця через Google, Apple, Facebook, Microsoft, PayPal, LinkedIn, Яндекс, Telegram…"
+    },
+    "2": {
+     "name": "Social Login PRO — customer login through social providers",
+     "mt": "Social Login PRO — customer login through social providers",
+     "md": "Social Login PRO lets customers authenticate through supported social identity providers and safely link a social identity to an OpenCart customer account."
+    },
+    "3": {
+     "name": "Social Login PRO — авторизация клиентов через социальные провайдеры",
+     "mt": "Social Login PRO — авторизация клиентов через социальные",
+     "md": "Social Login PRO позволяет клиентам входить через поддерживаемых социальных провайдеров и безопасно связывать внешнюю identity с обычным аккаунтом OpenCart."
+    }
+   }
+  },
+  {
+   "id": 97,
+   "model": "CCP-041",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/smsfly-order-pro.webp",
+   "cat": 68,
+   "names": {
+    "1": {
+     "name": "SMSfly Order PRO — SMS/Viber сповіщення про замовлення та швидкі заявки",
+     "mt": "SMSfly Order PRO — SMS/Viber сповіщення про замовлення та Quick",
+     "md": "SMSfly Order PRO надсилає SMS/Viber повідомлення по замовленнях OpenCart/ocStore, дозволяє вручну відправити повідомлення зі сторінки замовлення та має…"
+    },
+    "2": {
+     "name": "SMSfly Order PRO — SMS/Viber order and quick-order notifications",
+     "mt": "SMSfly Order PRO — SMS/Viber order and quick-order notifications",
+     "md": "SMSfly Order PRO sends order and quick-order notifications through SMS/Viber using configurable templates and order variables."
+    },
+    "3": {
+     "name": "SMSfly Order PRO — SMS/Viber уведомления о заказах и быстрых заявках",
+     "mt": "SMSfly Order PRO — SMS/Viber уведомления о заказах и быстрых",
+     "md": "SMSfly Order PRO отправляет уведомления о заказах и быстрых заявках через SMS/Viber по настраиваемым шаблонам и данным заказа."
+    }
+   }
+  },
+  {
+   "id": 98,
+   "model": "CCP-042",
+   "price": 0.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/seo-url-generator-free.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "SEO URL Generator FREE — безкоштовна генерація SEO URL",
+     "mt": "SEO URL Generator FREE — безкоштовна генерація SEO URL і",
+     "md": "SEO URL Generator FREE — безкоштовний генератор чистих slug для OpenCart/ocStore 3.x. Актуальні адреси залишаються у стандартній таблиці seo_url, а старі…"
+    },
+    "2": {
+     "name": "SEO URL Generator FREE — free SEO URL generation",
+     "mt": "SEO URL Generator FREE — free SEO URL generation",
+     "md": "SEO URL Generator FREE provides a free basic workflow for generating clean SEO URLs and maintaining selected redirects in OpenCart/ocStore."
+    },
+    "3": {
+     "name": "SEO URL Generator FREE — бесплатная генерация SEO URL",
+     "mt": "SEO URL Generator FREE — бесплатная генерация SEO URL",
+     "md": "SEO URL Generator FREE — бесплатный базовый инструмент генерации понятных SEO URL и отдельных редиректов в OpenCart/ocStore."
+    }
+   }
+  },
+  {
+   "id": 99,
+   "model": "CCP-043",
+   "price": 9.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/seo-meta-character-counter-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "SEO Meta Character Counter PRO — лічильник довжини SEO-полів у формах",
+     "mt": "SEO Meta Character Counter PRO — лічильники довжини SEO-полів в",
+     "md": "SEO Meta Character Counter PRO показує живі лічильники символів біля назви/H1, Meta Title, Meta Description, Meta Keywords і повних описів у формах…"
+    },
+    "2": {
+     "name": "SEO Meta Character Counter PRO — SEO field length counter in admin forms",
+     "mt": "SEO Meta Character Counter PRO — SEO field length counter in",
+     "md": "SEO Meta Character Counter PRO adds live character counters and length hints next to SEO fields in supported OpenCart admin forms."
+    },
+    "3": {
+     "name": "SEO Meta Character Counter PRO — счетчик длины SEO-полей в формах",
+     "mt": "SEO Meta Character Counter PRO — счетчик длины SEO-полей в формах",
+     "md": "SEO Meta Character Counter PRO добавляет живые счётчики символов и подсказки длины рядом с SEO-полями в поддерживаемых формах OpenCart."
+    }
+   }
+  },
+  {
+   "id": 100,
+   "model": "CCP-044",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/recaptcha-security-pro.webp",
+   "cat": 69,
+   "names": {
+    "1": {
+     "name": "reCAPTCHA Security PRO — серверний захист форм від спаму та автоматичних POST/AJAX",
+     "mt": "reCAPTCHA Security PRO — серверний захист форм від спаму та",
+     "md": "reCAPTCHA Security PRO захищає форми OpenCart/ocStore не лише JavaScript-віджетом, а серверною перевіркою token для Google reCAPTCHA, reCAPTCHA Enterprise…"
+    },
+    "2": {
+     "name": "reCAPTCHA Security PRO — server-side form protection from spam and automated POST/AJAX",
+     "mt": "reCAPTCHA Security PRO — server-side form protection from spam",
+     "md": "reCAPTCHA Security PRO performs server-side reCAPTCHA validation for selected OpenCart forms and protects direct POST/AJAX submissions, not only the visible…"
+    },
+    "3": {
+     "name": "reCAPTCHA Security PRO — серверная защита форм от спама и автоматических POST/AJAX",
+     "mt": "reCAPTCHA Security PRO — серверная защита форм от спама и",
+     "md": "reCAPTCHA Security PRO выполняет серверную проверку reCAPTCHA для выбранных форм OpenCart и защищает прямые POST/AJAX запросы, а не только показывает виджет в…"
+    }
+   }
+  },
+  {
+   "id": 101,
+   "model": "CCP-045",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/product-video-gallery-pro.webp",
+   "cat": 63,
+   "names": {
+    "1": {
+     "name": "Product Video Gallery PRO — відео у галереї товару",
+     "mt": "Product Video Gallery PRO — відео в галереї товару та",
+     "md": "Product Video Gallery PRO додає відео поруч із фотографіями товару: відео показується як мініатюра Play, відкривається у popup і не завантажує важкий iframe…"
+    },
+    "2": {
+     "name": "Product Video Gallery PRO — product videos inside the product gallery",
+     "mt": "Product Video Gallery PRO — product videos inside the product",
+     "md": "Product Video Gallery PRO adds product videos to the normal product media gallery so photos and video can be presented in one storefront experience."
+    },
+    "3": {
+     "name": "Product Video Gallery PRO — видео в галерее товара",
+     "mt": "Product Video Gallery PRO — видео в галерее товара",
+     "md": "Product Video Gallery PRO добавляет видео в обычную медиагалерею товара, чтобы фотографии и видеодемонстрации работали в одном интерфейсе карточки."
+    }
+   }
+  },
+  {
+   "id": 102,
+   "model": "CCP-046",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/product-stats-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Product Stats PRO — статистика та контроль цілісності каталогу",
+     "mt": "Product Stats PRO — клікабельна статистика цілісності каталогу",
+     "md": "Product Stats PRO показує в адмінці компактні показники стану каталогу й відкриває стандартний список товарів уже з відповідним серверним фільтром."
+    },
+    "2": {
+     "name": "Product Stats PRO — catalog statistics and integrity control",
+     "mt": "Product Stats PRO — catalog statistics and integrity control",
+     "md": "Product Stats PRO provides compact clickable catalog-health statistics and dedicated image auditing without modifying product data."
+    },
+    "3": {
+     "name": "Product Stats PRO — статистика и контроль целостности каталога",
+     "mt": "Product Stats PRO — статистика и контроль целостности каталога",
+     "md": "Product Stats PRO показывает компактную кликабельную статистику состояния каталога и отдельный аудит изображений, не изменяя сами товары."
+    }
+   }
+  },
+  {
+   "id": 103,
+   "model": "CCP-047",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/product-unit-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Product Unit PRO — одиниці продажу та дробова кількість товару",
+     "mt": "Product Unit PRO — одиниці виміру та дробовий продаж 0.5 кг /",
+     "md": "Product Unit PRO додає одиницю продажу поруч із ціною й, за окремого ввімкнення, дозволяє реальні дробові кількості: 0.5 кг, 1.2 м, 2.75 л, 3.5 пог. м тощо."
+    },
+    "2": {
+     "name": "Product Unit PRO — sales units and fractional product quantity",
+     "mt": "Product Unit PRO — sales units and fractional product quantity",
+     "md": "Product Unit PRO adds a sales unit to the product price and optionally enables fractional quantity with per-product step, minimum, maximum and stock handling."
+    },
+    "3": {
+     "name": "Product Unit PRO — единицы продажи и дробное количество товара",
+     "mt": "Product Unit PRO — единицы продажи и дробное количество товара",
+     "md": "Product Unit PRO показывает единицу продажи рядом с ценой и при необходимости включает дробное количество с индивидуальными шагом, минимумом, максимумом и…"
+    }
+   }
+  },
+  {
+   "id": 104,
+   "model": "CCP-048",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/product-manager-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Product Manager PRO — масове керування товарами та аудит заповнення",
+     "mt": "Product Manager PRO — масове керування товарами, аудит і",
+     "md": "Product Manager PRO поєднує швидку таблицю керування товарами з Product Completeness Audit: адміністратор може редагувати безпечні поля inline, виконувати…"
+    },
+    "2": {
+     "name": "Product Manager PRO — bulk product management and completeness audit",
+     "mt": "Product Manager PRO — bulk product management and completeness",
+     "md": "Product Manager PRO combines bulk product management with catalog-completeness, SEO and image diagnostics from one administrative workspace."
+    },
+    "3": {
+     "name": "Product Manager PRO — массовое управление товарами и аудит заполнения",
+     "mt": "Product Manager PRO — массовое управление товарами и аудит",
+     "md": "Product Manager PRO объединяет массовое управление товарами с аудитом заполнения, SEO и изображений в одном административном интерфейсе."
+    }
+   }
+  },
+  {
+   "id": 105,
+   "model": "CCP-049",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/popup-banner-pro.webp",
+   "cat": 72,
+   "names": {
+    "1": {
+     "name": "Popup Banner PRO — багатомовні popup-кампанії та промо",
+     "mt": "Popup Banner PRO — таргетовані popup-кампанії без прив’язки до",
+     "md": "Popup Banner PRO створює незалежні рекламні popup-кампанії для конкретних сторінок, категорій, товарів, пристроїв і часових сценаріїв. Модуль не залежить…"
+    },
+    "2": {
+     "name": "Popup Banner PRO — multilingual popup campaigns and promotions",
+     "mt": "Popup Banner PRO — multilingual popup campaigns and promotions",
+     "md": "Popup Banner PRO is a multilingual campaign manager for scheduled storefront popups targeted by page, category, product, language, device and customer behavior."
+    },
+    "3": {
+     "name": "Popup Banner PRO — мультиязычные popup-кампании и промо",
+     "mt": "Popup Banner PRO — мультиязычные popup-кампании и промо",
+     "md": "Popup Banner PRO — менеджер мультиязычных popup-кампаний с таргетингом по страницам, категориям, товарам, языкам, устройствам и поведению посетителя."
+    }
+   }
+  },
+  {
+   "id": 106,
+   "model": "CCP-050",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/php-8-compatibility-pro.webp",
+   "cat": 71,
+   "names": {
+    "1": {
+     "name": "PHP 8 Compatibility PRO — аудит реальної сумісності коду з PHP 7.4–8.5",
+     "mt": "PHP 8 Compatibility PRO — аудит готовності OpenCart до PHP 7.4",
+     "md": "PHP 8 Compatibility PRO виконує один повний діагностичний прохід по магазину й показує, які проблеми реально впливають на вибрану версію PHP: ядро, модулі,…"
+    },
+    "2": {
+     "name": "PHP 8 Compatibility PRO — real code compatibility audit for PHP 7.4–8.5",
+     "mt": "PHP 8 Compatibility PRO — real code compatibility audit for PHP",
+     "md": "PHP 8 Compatibility PRO audits real source-code compatibility against PHP 7.4–8.5 profiles and separates confirmed blockers from items that only require review."
+    },
+    "3": {
+     "name": "PHP 8 Compatibility PRO — аудит реальной совместимости кода с PHP 7.4–8.5",
+     "mt": "PHP 8 Compatibility PRO — аудит реальной совместимости кода с",
+     "md": "PHP 8 Compatibility PRO проверяет реальную совместимость исходного кода по профилям PHP 7.4–8.5 и отделяет подтверждённые блокеры от пунктов, которые требуют…"
+    }
+   }
+  },
+  {
+   "id": 107,
+   "model": "CCP-051",
+   "price": 9.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/option-price-equal-prefix-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Option Price Equal Prefix PRO — префікс = для заміни базової ціни опцією",
+     "mt": "Option Price Equal Prefix PRO — абсолютна ціна опції через",
+     "md": "Option Price Equal Prefix PRO додає до значень опцій третю логіку ціни: крім стандартних + і − з’являється префікс = , який замінює базову ціну товару…"
+    },
+    "2": {
+     "name": "Option Price Equal Prefix PRO — equals prefix to replace base product price by option",
+     "mt": "Option Price Equal Prefix PRO — equals prefix to replace base",
+     "md": "Option Price Equal Prefix PRO adds an '=' price prefix for OpenCart option values, allowing a selected option value to replace the product's base price…"
+    },
+    "3": {
+     "name": "Option Price Equal Prefix PRO — префикс = для замены базовой цены опцией",
+     "mt": "Option Price Equal Prefix PRO — префикс = для замены базовой",
+     "md": "Option Price Equal Prefix PRO добавляет префикс цены '=' для значений опций OpenCart, позволяя выбранной опции заменить базовую цену товара вместо обычного…"
+    }
+   }
+  },
+  {
+   "id": 108,
+   "model": "CCP-052",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/option-manager-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Option Manager PRO — шаблони, масові дії та контроль опцій",
+     "mt": "Option Manager PRO — шаблони, дублікати, масове застосування та",
+     "md": "Option Manager PRO керує саме опціями OpenCart — кольором, розміром, довжиною, комплектацією, напругою або іншим вибором покупця, який може впливати на…"
+    },
+    "2": {
+     "name": "Option Manager PRO — option templates, bulk actions and control",
+     "mt": "Option Manager PRO — option templates, bulk actions and control",
+     "md": "Option Manager PRO centralizes OpenCart option templates, names, values, ordering, duplicate control, bulk actions and CSV exchange."
+    },
+    "3": {
+     "name": "Option Manager PRO — шаблоны, массовые действия и контроль опций",
+     "mt": "Option Manager PRO — шаблоны, массовые действия и контроль опций",
+     "md": "Option Manager PRO централизует шаблоны опций OpenCart, названия, значения, сортировку, контроль дублей, массовые действия и CSV-обмен."
+    }
+   }
+  },
+  {
+   "id": 109,
+   "model": "CCP-053",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/new-year-decor-pro.webp",
+   "cat": 72,
+   "names": {
+    "1": {
+     "name": "New Year Decor PRO — сезонне новорічне оформлення вітрини",
+     "mt": "New Year Decor PRO — гірлянди, сніг і сезонне оформлення витрини",
+     "md": "New Year Decor PRO додає святкове оформлення без зміни ядра: інтерактивну гірлянду, класичну світлову гірлянду, п’ять графічних варіантів і окремий Canvas…"
+    },
+    "2": {
+     "name": "New Year Decor PRO — seasonal New Year storefront decoration",
+     "mt": "New Year Decor PRO — seasonal New Year storefront decoration",
+     "md": "New Year Decor PRO adds lightweight seasonal storefront effects such as garlands and Canvas snow without changing products, checkout, prices or SEO data."
+    },
+    "3": {
+     "name": "New Year Decor PRO — сезонное новогоднее оформление витрины",
+     "mt": "New Year Decor PRO — сезонное новогоднее оформление витрины",
+     "md": "New Year Decor PRO добавляет лёгкие сезонные эффекты витрины — гирлянды и Canvas Snow — не меняя товары, checkout, цены и SEO-данные."
+    }
+   }
+  },
+  {
+   "id": 110,
+   "model": "CCP-054",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/module-preflight-pro.webp",
+   "cat": 78,
+   "names": {
+    "1": {
+     "name": "Module Preflight PRO — Windows-аудит архівів модулів до встановлення",
+     "mt": "Module Preflight PRO — portable-аудит ZIP/OCMOD до встановлення",
+     "md": "Module Preflight PRO — portable-програма для Windows, яка перевіряє ZIP/.ocmod.zip модуль OpenCart/ocStore до його встановлення на сайт і не змінює вихідний…"
+    },
+    "2": {
+     "name": "Module Preflight PRO — Windows audit of module archives before installation",
+     "mt": "Module Preflight PRO — Windows audit of module archives before",
+     "md": "Module Preflight PRO is a portable Windows utility for static security and compatibility auditing of OpenCart/ocStore extension ZIP archives before…"
+    },
+    "3": {
+     "name": "Module Preflight PRO — Windows-аудит архивов модулей до установки",
+     "mt": "Module Preflight PRO — Windows-аудит архивов модулей до установки",
+     "md": "Module Preflight PRO — portable Windows-утилита для статического security/compatibility аудита ZIP-архивов OpenCart/ocStore до установки."
+    }
+   }
+  },
+  {
+   "id": 111,
+   "model": "CCP-055",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/merchant-feed-simple-xml-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "Merchant Feed Simple XML PRO — XML-фід Google Merchant з категоріями та зображеннями",
+     "mt": "Merchant Feed Simple XML PRO — XML-фід для Google Merchant Center",
+     "md": "⚙️ Merchant Feed Simple XML PRO формує готовий XML-фід товарів OpenCart/ocStore для Google Merchant Center через окремий feed-маршрут. Модуль орієнтований на…"
+    },
+    "2": {
+     "name": "Merchant Feed Simple XML PRO — Google Merchant XML feed with categories and images",
+     "mt": "Merchant Feed Simple XML PRO — Google Merchant XML feed with",
+     "md": "Merchant Feed Simple XML PRO generates a controlled Google Merchant Center XML feed from real OpenCart catalog data: prices, availability, categories,…"
+    },
+    "3": {
+     "name": "Merchant Feed Simple XML PRO — XML-фид Google Merchant с категориями и изображениями",
+     "mt": "Merchant Feed Simple XML PRO — XML-фид Google Merchant с",
+     "md": "Merchant Feed Simple XML PRO формирует управляемый XML-фид Google Merchant Center из реальных данных OpenCart: цен, наличия, категорий, идентификаторов и…"
+    }
+   }
+  },
+  {
+   "id": 112,
+   "model": "CCP-056",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/merchant-schema-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Merchant Schema PRO — merchant shipping/return structured data",
+     "mt": "Merchant Schema PRO — Product, Offer та Merchant structured",
+     "md": "⚙️ Merchant Schema PRO керує комерційною JSON-LD розміткою магазину: Product, Offer, OnlineStore, поверненнями, доставкою, рейтингами, варіантами товарів і…"
+    },
+    "2": {
+     "name": "Merchant Schema PRO — merchant shipping/return structured data",
+     "mt": "Merchant Schema PRO — merchant shipping/return structured data",
+     "md": "Merchant Schema PRO manages commerce-focused JSON-LD for OpenCart: Product/Offer, store identity, returns, shipping, ratings, product variants and Google…"
+    },
+    "3": {
+     "name": "Merchant Schema PRO — merchant structured data для доставки/возвратов",
+     "mt": "Merchant Schema PRO — merchant structured data для",
+     "md": "Merchant Schema PRO управляет коммерческой JSON-LD разметкой OpenCart: Product/Offer, данными магазина, возвратами, доставкой, рейтингами, вариантами товара и…"
+    }
+   }
+  },
+  {
+   "id": 113,
+   "model": "CCP-057",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/link-attributes-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Link Attributes PRO — керування rel-атрибутами посилань у контенті",
+     "mt": "Link Attributes PRO — rel=nofollow, sponsored, ugc та аудит",
+     "md": "⚙️ Link Attributes PRO додає керування семантикою посилань безпосередньо в Summernote та допомагає привести внутрішні, зовнішні, рекламні, партнерські й…"
+    },
+    "2": {
+     "name": "Link Attributes PRO — rel attribute management for content links",
+     "mt": "Link Attributes PRO — rel attribute management for content links",
+     "md": "Link Attributes PRO manages link semantics in Summernote and helps keep internal, external, sponsored, affiliate and user-generated links under one consistent…"
+    },
+    "3": {
+     "name": "Link Attributes PRO — управление rel-атрибутами ссылок в контенте",
+     "mt": "Link Attributes PRO — управление rel-атрибутами ссылок в контенте",
+     "md": "Link Attributes PRO управляет семантикой ссылок в Summernote и помогает привести внутренние, внешние, рекламные, партнёрские и пользовательские ссылки к…"
+    }
+   }
+  },
+  {
+   "id": 114,
+   "model": "CCP-058",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/importxml-clean-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "ImportXML Clean PRO — безпечний імпорт XML-каталогу з preview",
+     "mt": "ImportXML Clean PRO — безпечний імпорт XML/YML, CSV/TXT та XLSX",
+     "md": "⚙️ ImportXML Clean PRO імпортує каталоги постачальників у OpenCart/ocStore з обов’язковим preview перед записом. Основний сценарій — ручний контрольований…"
+    },
+    "2": {
+     "name": "ImportXML Clean PRO — safe XML catalog import with preview",
+     "mt": "ImportXML Clean PRO — safe XML catalog import with preview",
+     "md": "ImportXML Clean PRO imports supplier catalogs from XML/YML, CSV/TXT and XLSX with a preview-first workflow before database changes."
+    },
+    "3": {
+     "name": "ImportXML Clean PRO — безопасный импорт XML-каталога с preview",
+     "mt": "ImportXML Clean PRO — безопасный импорт XML-каталога с preview",
+     "md": "ImportXML Clean PRO импортирует каталоги поставщиков из XML/YML, CSV/TXT и XLSX с обязательным preview перед записью в базу."
+    }
+   }
+  },
+  {
+   "id": 115,
+   "model": "CCP-059",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/google-maps-reviews-pro.webp",
+   "cat": 70,
+   "names": {
+    "1": {
+     "name": "Google Maps Reviews PRO — відгуки Google Maps/Business на вітрині",
+     "mt": "Google Maps Reviews PRO — збір реальних відгуків Google після",
+     "md": "⚙️ Google Maps Reviews PRO допомагає запросити реального покупця залишити відгук у Google Maps / Google Business Profile після завершеного замовлення."
+    },
+    "2": {
+     "name": "Google Maps Reviews PRO — Google Maps/Business reviews on storefront",
+     "mt": "Google Maps Reviews PRO — Google Maps/Business reviews on",
+     "md": "Google Maps Reviews PRO helps invite real customers to leave a review in Google Maps / Google Business Profile after a completed purchase."
+    },
+    "3": {
+     "name": "Google Maps Reviews PRO — отзывы Google Maps/Business на витрине",
+     "mt": "Google Maps Reviews PRO — отзывы Google Maps/Business на витрине",
+     "md": "Google Maps Reviews PRO помогает приглашать реальных покупателей оставить отзыв в Google Maps / Google Business Profile после завершённой покупки."
+    }
+   }
+  },
+  {
+   "id": 116,
+   "model": "CCP-060",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/free-shipping-progress-pro.webp",
+   "cat": 75,
+   "names": {
+    "1": {
+     "name": "Free Shipping Progress PRO — прогрес до безкоштовної доставки",
+     "mt": "Free Shipping Progress PRO — прогрес до штатної безкоштовної",
+     "md": "⚙️ Free Shipping Progress PRO показує покупцю, скільки ще потрібно додати в кошик до порога стандартної безкоштовної доставки OpenCart."
+    },
+    "2": {
+     "name": "Free Shipping Progress PRO — progress bar toward free shipping threshold",
+     "mt": "Free Shipping Progress PRO — progress bar toward free shipping",
+     "md": "Free Shipping Progress PRO shows how much more a customer needs to add to the cart to reach the store's native OpenCart free-shipping threshold."
+    },
+    "3": {
+     "name": "Free Shipping Progress PRO — прогресс до бесплатной доставки",
+     "mt": "Free Shipping Progress PRO — прогресс до бесплатной доставки",
+     "md": "Free Shipping Progress PRO показывает покупателю, сколько осталось добавить в корзину до штатного порога бесплатной доставки OpenCart."
+    }
+   }
+  },
+  {
+   "id": 117,
+   "model": "CCP-061",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/geoip-city-pro.webp",
+   "cat": 77,
+   "names": {
+    "1": {
+     "name": "GeoIP City PRO — локальне визначення країни та міста за GeoIP",
+     "mt": "GeoIP City PRO — локальне визначення міста та країни за IP",
+     "md": "⚙️ GeoIP City PRO визначає приблизне місцезнаходження відвідувача за IP через локальну MMDB-базу DB-IP або MaxMind і може використати результат для підказки…"
+    },
+    "2": {
+     "name": "GeoIP City PRO — local GeoIP country/city detection",
+     "mt": "GeoIP City PRO — local GeoIP country/city detection",
+     "md": "GeoIP City PRO performs approximate country and city detection from an IP address using a local DB-IP or MaxMind MMDB database."
+    },
+    "3": {
+     "name": "GeoIP City PRO — локальное определение страны и города по GeoIP",
+     "mt": "GeoIP City PRO — локальное определение страны и города по GeoIP",
+     "md": "GeoIP City PRO определяет примерную страну и город по IP через локальную MMDB-базу DB-IP или MaxMind."
+    }
+   }
+  },
+  {
+   "id": 118,
+   "model": "CCP-062",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/extension-cleanup-pro.webp",
+   "cat": 78,
+   "names": {
+    "1": {
+     "name": "Extension Cleanup PRO — безпечне очищення залишків розширень",
+     "mt": "Extension Cleanup PRO — безпечний аналіз і видалення розширень",
+     "md": "⚙️ Extension Cleanup PRO допомагає зрозуміти, які файли й записи належать розширенню OpenCart/ocStore, виконати штатний uninstall і лише після перевірки —…"
+    },
+    "2": {
+     "name": "Extension Cleanup PRO — safe cleanup of extension leftovers",
+     "mt": "Extension Cleanup PRO — safe cleanup of extension leftovers",
+     "md": "Extension Cleanup PRO audits what belongs to an OpenCart/ocStore extension, performs the native uninstall workflow and only then allows confirmed leftovers to…"
+    },
+    "3": {
+     "name": "Extension Cleanup PRO — безопасная очистка остатков расширений",
+     "mt": "Extension Cleanup PRO — безопасная очистка остатков расширений",
+     "md": "Extension Cleanup PRO определяет, какие файлы и записи действительно принадлежат расширению OpenCart/ocStore, выполняет штатный uninstall и только после…"
+    }
+   }
+  },
+  {
+   "id": 119,
+   "model": "CCP-063",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/feed-export-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "Feed Export PRO — профілі фідів Google, Meta, YML, CSV та XML",
+     "mt": "Feed Export PRO — багатопрофільний експорт товарних фідів",
+     "md": "⚙️ Feed Export PRO створює окремі профілі товарних фідів для різних мов, валют, країн і рекламних систем та дозволяє точно контролювати, які товари й дані…"
+    },
+    "2": {
+     "name": "Feed Export PRO — feed profiles for Google, Meta, YML, CSV and XML",
+     "mt": "Feed Export PRO — feed profiles for Google, Meta, YML, CSV and",
+     "md": "Feed Export PRO creates separate catalog-feed profiles for different languages, currencies, countries and advertising systems."
+    },
+    "3": {
+     "name": "Feed Export PRO — профили фидов Google, Meta, YML, CSV и XML",
+     "mt": "Feed Export PRO — профили фидов Google, Meta, YML, CSV и XML",
+     "md": "Feed Export PRO создаёт отдельные профили товарных фидов для разных языков, валют, стран и рекламных систем."
+    }
+   }
+  },
+  {
+   "id": 120,
+   "model": "CCP-064",
+   "price": 12.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/duplicate-cleaner-pro.webp",
+   "cat": 61,
+   "names": {
+    "1": {
+     "name": "Duplicate Cleaner PRO — пошук і контроль дублів каталогу",
+     "mt": "Duplicate Cleaner PRO — аудит дублів товарів, SEO та зв’язків",
+     "md": "⚙️ Duplicate Cleaner PRO знаходить підозрілі дублікати й структурні помилки в каталозі OpenCart/ocStore, щоб адміністратор міг перевірити їх до видалення або…"
+    },
+    "2": {
+     "name": "Duplicate Cleaner PRO — catalog duplicate detection and controlled cleanup",
+     "mt": "Duplicate Cleaner PRO — catalog duplicate detection and",
+     "md": "Duplicate Cleaner PRO finds suspicious duplicate products and structural catalog problems so an administrator can review them before any cleanup."
+    },
+    "3": {
+     "name": "Duplicate Cleaner PRO — поиск и контроль дублей каталога",
+     "mt": "Duplicate Cleaner PRO — поиск и контроль дублей каталога",
+     "md": "Duplicate Cleaner PRO находит подозрительные дубли товаров и структурные проблемы каталога, чтобы администратор проверил их до очистки."
+    }
+   }
+  },
+  {
+   "id": 121,
+   "model": "CCP-065",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/denmark-delivery-pro.webp",
+   "cat": 66,
+   "names": {
+    "1": {
+     "name": "Denmark Delivery PRO — доставка Данією з кількома провайдерами",
+     "mt": "Denmark Delivery PRO — доставка Данією та міжнародні відправлення",
+     "md": "⚙️ Denmark Delivery PRO — менеджер доставки для OpenCart/ocStore з реальними перевізниками, pickup points, тарифами, підготовкою відправлень, labels і tracking."
+    },
+    "2": {
+     "name": "Denmark Delivery PRO — multi-provider shipping for Denmark",
+     "mt": "Denmark Delivery PRO — multi-provider shipping for Denmark",
+     "md": "Denmark Delivery PRO manages checkout shipping and post-order shipment preparation for Denmark and international destinations with real carriers and…"
+    },
+    "3": {
+     "name": "Denmark Delivery PRO — доставка по Дании с несколькими провайдерами",
+     "mt": "Denmark Delivery PRO — доставка по Дании с несколькими",
+     "md": "Denmark Delivery PRO управляет доставкой в checkout и подготовкой отправлений после заказа для Дании и международных направлений с реальными перевозчиками и…"
+    }
+   }
+  },
+  {
+   "id": 122,
+   "model": "CCP-066",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/bot-security-pro.webp",
+   "cat": 69,
+   "names": {
+    "1": {
+     "name": "Bot Security PRO — багаторівневий захист від ботів і зловживань",
+     "mt": "Bot Security PRO — багаторівневий захист магазину від ботів і",
+     "md": "⚙️ Bot Security PRO поєднує кілька рівнів захисту OpenCart: політики ботів, WAF-перевірки, rate limit, репутацію, блокування IP/країн, журнал подій і окрему…"
+    },
+    "2": {
+     "name": "Bot Security PRO — multi-layer bot and abuse protection",
+     "mt": "Bot Security PRO — multi-layer bot and abuse protection",
+     "md": "Bot Security PRO combines several security layers for OpenCart: bot policy, WAF checks, rate limiting, reputation, IP/country rules, a security journal and…"
+    },
+    "3": {
+     "name": "Bot Security PRO — многоуровневая защита от ботов и злоупотреблений",
+     "mt": "Bot Security PRO — многоуровневая защита от ботов и",
+     "md": "Bot Security PRO объединяет несколько уровней защиты OpenCart: политики ботов, WAF, rate limit, репутацию, IP/страны, журнал безопасности и отдельную…"
+    }
+   }
+  },
+  {
+   "id": 123,
+   "model": "CCP-067",
+   "price": 25.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/catalog-import-pro.webp",
+   "cat": 62,
+   "names": {
+    "1": {
+     "name": "Catalog Import PRO — пакетний імпорт та потоковий експорт каталогу",
+     "mt": "Catalog Import PRO — керований імпорт і синхронізація каталогу",
+     "md": "⚙️ Catalog Import PRO — інструмент для контрольованого масового імпорту каталогу з чітким ключем зіставлення, dry-run, построковим review і транзакційною…"
+    },
+    "2": {
+     "name": "Catalog Import PRO — batch import and streaming catalog export",
+     "mt": "Catalog Import PRO — batch import and streaming catalog export",
+     "md": "Catalog Import PRO provides controlled bulk catalog import with an explicit matching key, dry-run, per-row review and a persistent transactional queue."
+    },
+    "3": {
+     "name": "Catalog Import PRO — пакетный импорт и streaming-экспорт каталога",
+     "mt": "Catalog Import PRO — пакетный импорт и streaming-экспорт каталога",
+     "md": "Catalog Import PRO выполняет контролируемый массовый импорт каталога с явным ключом сопоставления, dry-run, построчным review и постоянной транзакционной…"
+    }
+   }
+  },
+  {
+   "id": 124,
+   "model": "CCP-068",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/ai-article-writer-pro.webp",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Article Writer PRO — SEO-план, статті та зображення на основі каталогу",
+     "mt": "AI Article Writer PRO — SEO-теми, статті, зображення та",
+     "md": "⚙️ AI Article Writer PRO автоматизує повний цикл контенту: аналіз тематики магазину, SEO-ключі, ідеї статей, написання, зображення, чернетки, внутрішні…"
+    },
+    "2": {
+     "name": "AI Article Writer PRO — SEO plan, articles and images based on catalog data",
+     "mt": "AI Article Writer PRO — SEO plan, articles and images based on",
+     "md": "AI Article Writer PRO automates the content workflow from catalog-based topic research to SEO keywords, article drafts, images, internal links and publication…"
+    },
+    "3": {
+     "name": "AI Article Writer PRO — SEO-план, статьи и изображения на основе каталога",
+     "mt": "AI Article Writer PRO — SEO-план, статьи и изображения на",
+     "md": "AI Article Writer PRO автоматизирует цикл контента: анализ тематики каталога, SEO-ключи, идеи статей, написание, изображения, внутренние ссылки и публикацию в…"
+    }
+   }
+  },
+  {
+   "id": 125,
+   "model": "CCP-069",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/auto-seo-title-pro.webp",
+   "cat": 59,
+   "names": {
+    "1": {
+     "name": "Auto SEO Title PRO — автоматизація SEO title та пов’язаних полів",
+     "mt": "Auto SEO Title PRO — динамічні та постійні SEO-поля за шаблонами",
+     "md": "⚙️ Auto SEO Title PRO формує H1, Meta Title, Meta Description і Meta Keywords за керованими шаблонами. Назву товару, категорії або статті модуль не змінює —…"
+    },
+    "2": {
+     "name": "Auto SEO Title PRO — automation of SEO titles and related fields",
+     "mt": "Auto SEO Title PRO — automation of SEO titles and related fields",
+     "md": "Auto SEO Title PRO creates H1, Meta Title, Meta Description and Meta Keywords from controlled templates without changing the entity name itself."
+    },
+    "3": {
+     "name": "Auto SEO Title PRO — автоматизация SEO title и связанных полей",
+     "mt": "Auto SEO Title PRO — автоматизация SEO title и связанных полей",
+     "md": "Auto SEO Title PRO формирует H1, Meta Title, Meta Description и Meta Keywords по управляемым шаблонам, не изменяя само название товара, категории или статьи."
+    }
+   }
+  },
+  {
+   "id": 126,
+   "model": "CCP-070",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/ai-newsletter-pro.webp",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Newsletter PRO — автономні товарні та ручні email-розсилки",
+     "mt": "AI Newsletter PRO — товарні та ручні email-розсилки з AI",
+     "md": "⚙️ AI Newsletter PRO — автономний модуль email-маркетингу для OpenCart/ocStore. Він підтримує автоматизовані товарні випуски й повністю ручні «Вільні листи»,…"
+    },
+    "2": {
+     "name": "AI Newsletter PRO — autonomous product and manual email campaigns",
+     "mt": "AI Newsletter PRO — autonomous product and manual email campaigns",
+     "md": "AI Newsletter PRO is a standalone email-marketing module for OpenCart/ocStore that supports both automated product newsletters and fully manual free-form…"
+    },
+    "3": {
+     "name": "AI Newsletter PRO — автономные товарные и ручные email-рассылки",
+     "mt": "AI Newsletter PRO — автономные товарные и ручные email-рассылки",
+     "md": "AI Newsletter PRO — автономный модуль email-маркетинга для OpenCart/ocStore с автоматическими товарными выпусками и полностью ручными свободными письмами."
+    }
+   }
+  },
+  {
+   "id": 127,
+   "model": "CCP-071",
+   "price": 35.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/ai-content-pro.webp",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Content PRO — AI SEO-контент для товарів, категорій та сторінок",
+     "mt": "AI Content PRO — генерація, переклад і SEO-аудит контенту",
+     "md": "⚙️ AI Content PRO створює, покращує, перекладає та перевіряє контент магазину через зовнішніх AI-провайдерів. Модуль працює з товарами, категоріями,…"
+    },
+    "2": {
+     "name": "AI Content PRO — AI SEO content for products, categories and pages",
+     "mt": "AI Content PRO — AI SEO content for products, categories and",
+     "md": "AI Content PRO generates, improves, translates and audits OpenCart content through external AI providers while keeping normal OpenCart saving under…"
+    },
+    "3": {
+     "name": "AI Content PRO — AI SEO-контент для товаров, категорий и страниц",
+     "mt": "AI Content PRO — AI SEO-контент для товаров, категорий и страниц",
+     "md": "AI Content PRO создаёт, улучшает, переводит и проверяет контент OpenCart через внешних AI-провайдеров, сохраняя стандартное сохранение OpenCart под контролем…"
+    }
+   }
+  },
+  {
+   "id": 128,
+   "model": "CCP-072",
+   "price": 29.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/ai-image-studio-pro.webp",
+   "cat": 60,
+   "names": {
+    "1": {
+     "name": "AI Image Studio PRO — AI-обробка та контроль товарних зображень",
+     "mt": "AI Image Studio PRO — AI-обробка, аудит і чернетки зображень",
+     "md": "⚙️ AI Image Studio PRO аналізує зображення OpenCart, знаходить маленькі, важкі, пошкоджені й дубльовані файли та створює контрольовані AI-чернетки для…"
+    },
+    "2": {
+     "name": "AI Image Studio PRO — AI processing and quality control for product images",
+     "mt": "AI Image Studio PRO — AI processing and quality control for",
+     "md": "AI Image Studio PRO audits OpenCart images and creates controlled AI drafts for background removal, enhancement, commercial packshots, generation and…"
+    },
+    "3": {
+     "name": "AI Image Studio PRO — AI-обработка и контроль товарных изображений",
+     "mt": "AI Image Studio PRO — AI-обработка и контроль товарных",
+     "md": "AI Image Studio PRO проверяет изображения OpenCart и создаёт контролируемые AI-черновики для удаления/замены фона, улучшения, коммерческих packshot, генерации…"
+    }
+   }
+  },
+  {
+   "id": 129,
+   "model": "CCP-073",
+   "price": 15.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/currency-rates-pro.webp",
+   "cat": 71,
+   "names": {
+    "1": {
+     "name": "Currency Rates PRO — автоматичне оновлення стандартних курсів валют",
+     "mt": "Currency Rates PRO — офіційні курси валют для стандартної",
+     "md": "⚙️ Currency Rates PRO отримує курси з офіційних джерел і оновлює стандартну таблицю currency OpenCart/ocStore. Модуль не створює окрему систему цін і не…"
+    },
+    "2": {
+     "name": "Currency Rates PRO — automatic update of native OpenCart exchange rates",
+     "mt": "Currency Rates PRO — automatic update of native OpenCart",
+     "md": "Currency Rates PRO downloads exchange rates from official sources and updates the native OpenCart currency table without creating a parallel pricing system."
+    },
+    "3": {
+     "name": "Currency Rates PRO — автоматическое обновление стандартных курсов валют",
+     "mt": "Currency Rates PRO — автоматическое обновление стандартных",
+     "md": "Currency Rates PRO получает курсы из официальных источников и обновляет стандартную таблицу currency OpenCart, не создавая отдельную систему цен."
+    }
+   }
+  },
+  {
+   "id": 130,
+   "model": "CCP-074",
+   "price": 19.0,
+   "status": 1,
+   "image": "catalog/codecartpro/products/database-index-optimizer-pro.webp",
+   "cat": 71,
+   "names": {
+    "1": {
+     "name": "Database Index Optimizer PRO — аудит і кероване створення індексів бази",
+     "mt": "Database Index Optimizer PRO — аудит і кероване створення",
+     "md": "⚙️ Database Index Optimizer PRO аналізує індекси MySQL/MariaDB, показує перевірені кандидати й створює лише ті індекси, які адміністратор явно вибрав і…"
+    },
+    "2": {
+     "name": "Database Index Optimizer PRO — database index audit and controlled optimization",
+     "mt": "Database Index Optimizer PRO — database index audit and",
+     "md": "Database Index Optimizer PRO audits MySQL/MariaDB indexes and creates only explicitly selected indexes through a persistent controlled queue."
+    },
+    "3": {
+     "name": "Database Index Optimizer PRO — аудит и управляемое создание индексов базы",
+     "mt": "Database Index Optimizer PRO — аудит и управляемое создание",
+     "md": "Database Index Optimizer PRO анализирует индексы MySQL/MariaDB и создаёт только явно выбранные индексы через постоянную управляемую очередь."
+    }
+   }
+  }
+ ],
+ "cats": {
+  "60": {
+   "2": "AI Modules",
+   "3": "AI-модули",
+   "1": "AI-модулі"
+  },
+  "61": {
+   "2": "Catalog Modules",
+   "3": "Модули для каталога",
+   "1": "Модулі для каталогу"
+  },
+  "74": {
+   "1": "CodeCart PRO 3.0.6",
+   "2": "CodeCart PRO 3.0.6",
+   "3": "CodeCart PRO 3.0.6"
+  },
+  "76": {
+   "2": "Customers &amp; Authentication",
+   "3": "Клиенты и авторизация",
+   "1": "Клієнти та авторизація"
+  },
+  "78": {
+   "2": "Developer &amp; Admin Tools",
+   "3": "Инструменты разработчика и администратора",
+   "1": "Інструменти розробника та адміністратора"
+  },
+  "68": {
+   "2": "Email, SMS & Notifications",
+   "3": "Email, SMS и уведомления",
+   "1": "Email, SMS та сповіщення"
+  },
+  "63": {
+   "2": "Image Modules",
+   "3": "Модули для изображений",
+   "1": "Модулі для зображень"
+  },
+  "62": {
+   "2": "Import & Export",
+   "3": "Импорт и экспорт",
+   "1": "Імпорт та експорт"
+  },
+  "77": {
+   "2": "Integrations & CRM",
+   "3": "Интеграции и CRM",
+   "1": "Інтеграції та CRM"
+  },
+  "73": {
+   "2": "Languages &amp; Localization",
+   "1": "Мови та локалізація",
+   "3": "Языки и локализация"
+  },
+  "75": {
+   "2": "Marketing &amp; Conversion",
+   "3": "Маркетинг и конверсия",
+   "1": "Маркетинг та конверсія"
+  },
+  "64": {
+   "2": "Orders & Sales",
+   "3": "Заказы и продажи",
+   "1": "Замовлення та продажі"
+  },
+  "67": {
+   "2": "Payment Modules",
+   "3": "Модули оплаты",
+   "1": "Модулі оплати"
+  },
+  "71": {
+   "2": "Performance &amp; Diagnostics",
+   "1": "Продуктивність та діагностика",
+   "3": "Производительность и диагностика"
+  },
+  "70": {
+   "2": "Reviews & Trust",
+   "1": "Відгуки та довіра",
+   "3": "Отзывы и доверие"
+  },
+  "69": {
+   "2": "Security & Privacy",
+   "3": "Безопасность и приватность",
+   "1": "Безпека та приватність"
+  },
+  "59": {
+   "2": "SEO Modules",
+   "3": "SEO-модули",
+   "1": "SEO-модулі"
+  },
+  "66": {
+   "2": "Shipping Modules",
+   "3": "Модули доставки",
+   "1": "Модулі доставки"
+  },
+  "72": {
+   "2": "Themes & Design",
+   "1": "Теми та оформлення",
+   "3": "Темы и оформление"
+  }
+ }
+}

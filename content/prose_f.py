@@ -335,3 +335,174 @@ P[107] = dict(
     kpis=[("Опций с =", "18"), ("Товаров", "42"), ("Вариантов", "126")],
   ),
 )
+
+P[109] = dict(
+  ru=dict(
+    intro=[
+      "К праздникам витрина обычно остаётся прежней, а переделывать из-за гирлянды всю тему никто не хочет. New Year Decor PRO добавляет сезонное оформление поверх существующего сайта: над страницей зажигаются гирлянды, а по экрану тихо падает снег.",
+      "Эффекты намеренно лёгкие и изолированные. Модуль не касается товаров, корзины, цен и SEO, а когда он выключен, на страницы не подгружается ни CSS, ни JS, ни HTML. Праздник включается и выключается одним переключателем."
+    ],
+    sections=[
+      dict(h="🎄 Две гирлянды на выбор", p=[
+        "Первая — интерактивная гирлянда с игрушками: с ней можно взаимодействовать, она оживляет верх страницы. Вторая — классическая световая гирлянда из мерцающих огоньков для тех, кому нужен более сдержанный вид.",
+        "Выбирайте то, что подходит стилю магазина: игрушки хорошо смотрятся в детских и подарочных каталогах, а световая нить — почти везде."]),
+      dict(h="🖼️ Пять графических вариантов", p=[
+        "Для графической гирлянды предусмотрено пять вариантов оформления. Все они строятся на одном бесшовном локальном WebP-тайле, то есть картинка повторяется без стыков и лежит на вашем сервере, а не подгружается со сторонних ресурсов.",
+        "Такой подход экономит трафик и не делает витрину зависимой от внешних сервисов в самый загруженный сезон."]),
+      dict(h="🎉 «Праздник» без ёлки", p=[
+        "Есть два варианта «Праздник», в которых нет новогодней ёлки. Они сделаны для дней рождения магазина, распродаж и акций в течение года, когда нужен нарядный вид, но не новогодняя символика."]),
+      dict(h="❄️ Снег на Canvas", p=[
+        "Снег рисуется на Canvas и не должен утяжелять страницу. Если стандартных снежинок мало, включите режим «Своя WebP-снежинка»: загрузите прозрачное изображение, и вместо обычных хлопьев будет падать ваш логотип или любой другой символ.",
+        "Гирлянду и снег можно включать отдельно или вместе — в зависимости от настроения праздничной кампании."]),
+      dict(h="🛡️ Что модуль не трогает", p=[
+        "Список неприкосновенного длинный: товары, оформление заказа, изображения и их кеш, SEO, цены, валюты и сами заказы остаются без изменений. Для магазина это значит, что праздничная надстройка не может испортить продажи или сломать расчёты."]),
+      dict(h="🔑 Лицензия и окончание сезона", p=[
+        "Чтобы запустить оформление, установите модуль и активируйте лицензию, затем выберите гирлянду и снег и включите модуль на период праздников. Без активной лицензии статус остаётся выключенным.",
+        "После праздников не забудьте отключить оформление: иначе зимние эффекты останутся на сайте в июле."])
+    ]),
+  uk=dict(
+    intro=[
+      "До свят вітрина зазвичай лишається незмінною, а переробляти через гірлянду всю тему ніхто не хоче. New Year Decor PRO додає сезонне оформлення поверх наявного сайту: над сторінкою запалюються гірлянди, а екраном тихо падає сніг.",
+      "Ефекти навмисно легкі й ізольовані. Модуль не зачіпає товарів, кошика, цін і SEO, а коли він вимкнений, на сторінки не підвантажується ні CSS, ні JS, ні HTML. Свято вмикається й вимикається одним перемикачем."
+    ],
+    sections=[
+      dict(h="🎄 Дві гірлянди на вибір", p=[
+        "Перша — інтерактивна гірлянда з іграшками: з нею можна взаємодіяти, вона пожвавлює верх сторінки. Друга — класична світлова гірлянда з мерехтливих вогників для тих, кому потрібен стриманіший вигляд.",
+        "Обирайте те, що пасує стилю магазину: іграшки добре виглядають у дитячих і подарункових каталогах, а світлова нитка — майже скрізь."]),
+      dict(h="🖼️ П’ять графічних варіантів", p=[
+        "Для графічної гірлянди передбачено п’ять варіантів оформлення. Усі вони будуються на одному безшовному локальному WebP-тайлі, тобто картинка повторюється без швів і лежить на вашому сервері, а не підвантажується зі сторонніх ресурсів.",
+        "Такий підхід заощаджує трафік і не робить вітрину залежною від зовнішніх сервісів у найзавантаженіший сезон."]),
+      dict(h="🎉 «Свято» без ялинки", p=[
+        "Є два варіанти «Свято», у яких немає новорічної ялинки. Вони зроблені для днів народження магазину, розпродажів і акцій упродовж року, коли потрібен святковий вигляд, але не новорічна символіка."]),
+      dict(h="❄️ Сніг на Canvas", p=[
+        "Сніг малюється на Canvas і не повинен обтяжувати сторінку. Якщо стандартних сніжинок замало, ввімкніть режим «Своя WebP-сніжинка»: завантажте прозоре зображення, і замість звичайних пластівців падатиме ваш логотип чи будь-який інший символ.",
+        "Гірлянду й сніг можна вмикати окремо або разом — залежно від настрою святкової кампанії."]),
+      dict(h="🛡️ Чого модуль не чіпає", p=[
+        "Список недоторканого довгий: товари, оформлення замовлення, зображення та їхній кеш, SEO, ціни, валюти й самі замовлення лишаються без змін. Для магазину це означає, що святкова надбудова не може зіпсувати продажі чи зламати розрахунки."]),
+      dict(h="🔑 Ліцензія і завершення сезону", p=[
+        "Щоб запустити оформлення, встановіть модуль і активуйте ліцензію, потім оберіть гірлянду та сніг і ввімкніть модуль на період свят. Без активної ліцензії статус лишається вимкненим.",
+        "Після свят не забудьте вимкнути оформлення: інакше зимові ефекти залишаться на сайті й у липні."])
+    ]),
+  en=dict(
+    intro=[
+      "For the holidays the storefront usually stays as it is, and nobody wants to redo the whole theme for the sake of a garland. New Year Decor PRO adds seasonal decoration on top of the existing site: garlands light up across the page while snow quietly drifts down the screen.",
+      "The effects are deliberately light and self-contained. The module does not touch products, the cart, prices or SEO, and when it is off, no CSS, JS or HTML is loaded onto the pages. The holiday mood is switched on and off with a single toggle."
+    ],
+    sections=[
+      dict(h="🎄 Two garlands to choose from", p=[
+        "The first is an interactive garland with ornaments: you can interact with it, and it brings the top of the page to life. The second is a classic string-light garland of twinkling bulbs for those who prefer a more restrained look.",
+        "Pick whichever fits the store style: ornaments suit children's and gift catalogs, while a string of lights works almost anywhere."]),
+      dict(h="🖼️ Five graphic variants", p=[
+        "The graphic garland comes in five variants. All are built from one seamless local WebP tile, so the picture repeats without visible joins and lives on your own server rather than being fetched from third-party resources.",
+        "This saves traffic and keeps the storefront independent of outside services during the busiest season."]),
+      dict(h="🎉 Celebration, no tree", p=[
+        "There are two ‘Celebration’ variants without a Christmas tree. They are meant for store anniversaries, sales and promotions throughout the year, when you want a festive look without New Year symbolism."]),
+      dict(h="❄️ Snow on Canvas", p=[
+        "Snow is drawn on a Canvas element and is designed not to weigh the page down. If the standard flakes are not enough, switch on the ‘custom WebP snowflake’ mode: upload a transparent image and your logo or any other symbol falls instead of ordinary flakes.",
+        "The garland and snow can run separately or together, depending on the mood of the holiday campaign."]),
+      dict(h="🛡️ What the module leaves alone", p=[
+        "The list of untouched things is long: products, checkout, images and the image cache, SEO, prices, currencies and the orders themselves stay unchanged. For a store this means the holiday layer cannot spoil sales or break calculations."]),
+      dict(h="🔑 License and the end of the season", p=[
+        "To launch the decoration, install the module and activate the license, then choose the garland and snow and enable the module for the holiday period. Without an active license the status stays off.",
+        "After the holidays, remember to turn the decoration off; otherwise the winter effects will still be on the site in July."])
+    ]),
+  cover=dict(
+    tagline="Гирлянды и снег для праздничной витрины",
+    items=["Интерактивная гирлянда", "Световая гирлянда", "Пять вариантов гирлянды", "Режим Праздник", "Снег на Canvas", "Своя снежинка WebP"],
+    cards=[("Две гирлянды", "С игрушками или классическая световая"),
+           ("Локальный WebP", "Бесшовный тайл лежит на вашем сервере"),
+           ("Без ёлки", "Два варианта Праздник для акций и дней рождения"),
+           ("Лёгкий снег", "Рисуется на Canvas, есть своя снежинка"),
+           ("Не трогает продажи", "Товары, цены, заказы и SEO без изменений"),
+           ("Чистое выключение", "При OFF не грузятся CSS, JS и HTML")],
+    tabs=["Общие", "Гирлянда", "Снег", "Лицензия"],
+    kpis=[("Гирлянда", "Включена"), ("Снег", "Canvas"), ("Вариантов", "5")],
+  ),
+)
+
+P[110] = dict(
+  ru=dict(
+    intro=[
+      "Сторонний модуль для магазина — это чужой код, который вы собираетесь запустить на рабочем сайте с базой клиентов и заказов. Module Preflight PRO даёт возможность посмотреть на него заранее: это portable-программа для Windows, проверяющая ZIP-архив модуля OpenCart или ocStore до установки.",
+      "Принцип работы строится на осторожности. Проверяемый код никогда не выполняется, а исходный архив остаётся нетронутым, и программа это подтверждает: SHA-256 архива сравнивается до и после проверки."
+    ],
+    sections=[
+      dict(h="💾 Запустил и проверил: без установки", p=[
+        "Это portable-версия, поэтому ничего устанавливать не нужно: запускаете программу, перетаскиваете в окно архив с модулем, и анализ начинается. Подходят обычные ZIP и пакеты .ocmod.zip.",
+        "Сайт, сервер и база данных не участвуют — всё происходит на вашем компьютере, ещё до того как модуль окажется рядом с магазином."]),
+      dict(h="🔒 Read-only и контроль целостности", p=[
+        "Архив открывается только на чтение. Чтобы не оставалось сомнений, что проверка ничего не подменила, программа считает SHA-256 архива до анализа и после него и сравнивает значения.",
+        "Код модуля при этом не запускается ни в каком виде: анализ статический, то есть программа читает файлы, а не исполняет их."]),
+      dict(h="🕵️ Что ищет статический аудит безопасности", p=[
+        "Аудит ищет признаки, по которым в чужом коде обычно прячутся проблемы:"],
+        ul=["опасные вызовы функций", "паттерны web-shell", "tainted-потоки данных", "remote include", "разрушительные операции"]),
+      dict(h="🧠 Динамический SQL без паники", p=[
+        "Многие сканеры считают ошибкой любой SQL-запрос, в котором имя таблицы или колонки собирается на лету. Preflight так не делает: динамические SQL-идентификаторы оцениваются по taint и white-list. Если имя собрано из проверенного списка, это не повод для тревоги, а если в него попадают пользовательские данные, отчёт отметит риск.",
+        "Это уменьшает число ложных срабатываний, и в отчёте остаётся то, на что действительно стоит посмотреть."]),
+      dict(h="🧪 PHP lint без установки PHP", p=[
+        "Встроен portable PHP lint для версий 7.4 и 8.1–8.5. Он проверяет синтаксис файлов модуля под разные версии языка, и вы заранее видите, не споткнётся ли модуль на PHP вашего хостинга.",
+        "Дополнительно, только для сведения, показывается статус стороннего антивируса из Windows Security Center."]),
+      dict(h="📋 Отчёт — повод для решения, а не гарантия", p=[
+        "После проверки вы изучаете отчёт и сами решаете, ставить ли модуль. Важно помнить, что это статический анализ: он снижает риск, но не заменяет резервную копию и проверку на тестовой копии сайта."])
+    ]),
+  uk=dict(
+    intro=[
+      "Сторонній модуль для магазину — це чужий код, який ви збираєтеся запустити на робочому сайті з базою клієнтів і замовлень. Module Preflight PRO дає змогу подивитися на нього заздалегідь: це portable-програма для Windows, що перевіряє ZIP-архів модуля OpenCart чи ocStore до встановлення.",
+      "Принцип роботи побудований на обережності. Код, що перевіряється, ніколи не виконується, а вихідний архів лишається недоторканим, і програма це підтверджує: SHA-256 архіву порівнюється до та після перевірки."
+    ],
+    sections=[
+      dict(h="💾 Запустив і перевірив: без встановлення", p=[
+        "Це portable-версія, тож нічого встановлювати не потрібно: запускаєте програму, перетягуєте у вікно архів із модулем, і аналіз починається. Підходять звичайні ZIP та пакети .ocmod.zip.",
+        "Сайт, сервер і база даних не беруть участі — усе відбувається на вашому комп’ютері, ще до того, як модуль опиниться поруч із магазином."]),
+      dict(h="🔒 Read-only і контроль цілісності", p=[
+        "Архів відкривається лише на читання. Щоб не лишалося сумнівів, що перевірка нічого не підмінила, програма рахує SHA-256 архіву до аналізу й після нього та порівнює значення.",
+        "Код модуля при цьому не запускається в жодному вигляді: аналіз статичний, тобто програма читає файли, а не виконує їх."]),
+      dict(h="🕵️ Що шукає статичний аудит безпеки", p=[
+        "Аудит шукає ознаки, за якими в чужому коді зазвичай ховаються проблеми:"],
+        ul=["небезпечні виклики функцій", "патерни web-shell", "tainted-потоки даних", "remote include", "руйнівні операції"]),
+      dict(h="🧠 Динамічний SQL без паніки", p=[
+        "Багато сканерів вважають помилкою будь-який SQL-запит, у якому назва таблиці чи колонки збирається на льоту. Preflight так не робить: динамічні SQL-ідентифікатори оцінюються за taint і white-list. Якщо ім’я зібране з перевіреного списку, це не привід для тривоги, а якщо в нього потрапляють дані користувача, звіт позначить ризик.",
+        "Це зменшує кількість хибних спрацювань, і у звіті лишається те, на що справді варто глянути."]),
+      dict(h="🧪 PHP lint без встановлення PHP", p=[
+        "Вбудовано portable PHP lint для версій 7.4 та 8.1–8.5. Він перевіряє синтаксис файлів модуля під різні версії мови, і ви заздалегідь бачите, чи не спіткнеться модуль на PHP вашого хостингу.",
+        "Додатково, лише для відомості, показується статус стороннього антивіруса з Windows Security Center."]),
+      dict(h="📋 Звіт — привід для рішення, а не гарантія", p=[
+        "Після перевірки ви вивчаєте звіт і самі вирішуєте, чи ставити модуль. Важливо пам’ятати, що це статичний аналіз: він знижує ризик, але не замінює резервну копію та перевірку на тестовій копії сайту."])
+    ]),
+  en=dict(
+    intro=[
+      "A third-party module is someone else's code that you are about to run on a live site holding customers and orders. Module Preflight PRO lets you look at it first: it is a portable Windows program that checks an OpenCart or ocStore module ZIP before installation.",
+      "Its approach is built on caution. The inspected code is never executed and the source archive is left untouched, and the program proves it: the archive SHA-256 is compared before and after the check."
+    ],
+    sections=[
+      dict(h="💾 Run and inspect: no installation", p=[
+        "This is a portable build, so there is nothing to install: start the program, drop the module archive into the window and the analysis begins. Ordinary ZIP files and .ocmod.zip packages are both accepted.",
+        "Your site, server and database are not involved at all; everything happens on your own computer, before the module gets anywhere near the store."]),
+      dict(h="🔒 Read-only with an integrity check", p=[
+        "The archive is opened for reading only. To remove any doubt that the check replaced something, the program computes the archive SHA-256 before the analysis and after it, then compares the two.",
+        "The module code is not run in any form: the analysis is static, meaning the program reads the files rather than executing them."]),
+      dict(h="🕵️ What the static security audit looks for", p=[
+        "The audit looks for the signs under which problems usually hide in someone else's code:"],
+        ul=["dangerous function calls", "web-shell patterns", "tainted data flows", "remote include", "destructive operations"]),
+      dict(h="🧠 Dynamic SQL without the panic", p=[
+        "Many scanners treat any SQL query whose table or column name is assembled on the fly as an error. Preflight does not: dynamic SQL identifiers are judged by taint and whitelist. A name built from a vetted list is no cause for alarm, while one that takes in user data will be flagged in the report.",
+        "This reduces false alarms, so the report keeps what is genuinely worth a look."]),
+      dict(h="🧪 PHP lint without installing PHP", p=[
+        "A portable PHP lint is built in for versions 7.4 and 8.1 to 8.5. It checks the syntax of the module files against different language versions, so you can see in advance whether the module will stumble on your hosting PHP.",
+        "For information only, the status of a third-party antivirus from Windows Security Center is also shown."]),
+      dict(h="📋 A report to decide with, not a guarantee", p=[
+        "After the check you read the report and decide for yourself whether to install the module. Remember that this is static analysis: it lowers risk but does not replace a backup and a test on a staging copy of the site."])
+    ]),
+  cover=dict(
+    tagline="Проверка ZIP модуля до установки на сайт",
+    items=["Portable для Windows", "Код не выполняется", "SHA-256 до и после", "Аудит безопасности", "Анализ taint и SQL", "PHP lint 7.4–8.5"],
+    cards=[("Без установки", "Запустил программу и перетащил ZIP"),
+           ("Read-only", "Исходный архив не изменяется"),
+           ("Хеш SHA-256", "Сравнение до и после проверки"),
+           ("Опасные паттерны", "web-shell, remote include, destructive"),
+           ("Умный SQL", "Идентификаторы оцениваются по taint и whitelist"),
+           ("PHP lint", "Синтаксис для PHP 7.4 и 8.1–8.5")],
+    tabs=["Архив", "Безопасность", "PHP lint", "Отчёт"],
+    kpis=[("Файлов", "184"), ("Критичных", "0"), ("Замечаний", "7")],
+  ),
+)

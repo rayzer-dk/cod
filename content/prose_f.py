@@ -506,3 +506,264 @@ P[110] = dict(
     kpis=[("Файлов", "184"), ("Критичных", "0"), ("Замечаний", "7")],
   ),
 )
+
+P[111] = dict(
+  ru=dict(
+    intro=[
+      "Google Merchant Center быстро замечает, когда в фиде что-то не так: идентификатор выдуман, картинка в неподдерживаемом формате, категория не сопоставлена. Merchant Feed Simple XML PRO формирует управляемый XML-фид из реальных данных магазина — цен, наличия, категорий, идентификаторов и изображений.",
+      "Задача модуля шире, чем просто выгрузить XML. Он старается не передавать Google выдуманные идентификаторы и некорректные данные, а то, чего в карточке нет, не появляется и в фиде."
+    ],
+    sections=[
+      dict(h="🔗 Отдельный адрес фида", p=[
+        "Модуль создаёт отдельный feed-маршрут, который отдаёт готовый XML для Merchant Center. Этот адрес вы просто добавляете в настройках фида в Google, и дальше Merchant сам забирает данные.",
+        "Фид строится на лету из данных витрины, поэтому он отражает актуальные цены и наличие, а не залежавшуюся выгрузку."]),
+      dict(h="🗂️ Категории Google и product_type", p=[
+        "В форме категории магазина появляется поле Google Product Category, куда вносится числовой ID категории Google. Из него формируется соответствующий атрибут фида.",
+        "Отдельно из пути категории в магазине собирается product_type, так что структура каталога передаётся Google в том виде, в котором её видит покупатель."]),
+      dict(h="🖼️ Изображения: безопасная логика только для фида", p=[
+        "Для Merchant сделана отдельная безопасная логика работы с картинками, которая не влияет на витрину: то, как фото обработаны для Google, не меняет, как они показываются посетителям.",
+        "Формат AVIF из фида исключён, потому что Google его не принимает. Поддерживаются JPEG, WebP, PNG, GIF, BMP и TIFF. Маленькие оригиналы искусственно не увеличиваются, чтобы не получить размытую картинку."]),
+      dict(h="🩺 Окно диагностики", p=[
+        "Прежде чем отправлять фид в Google, его можно разобрать по полочкам в окне диагностики. Для каждого товара видны ID в фиде, model, SKU, название, бренд, количество, категории и Google Product Category ID, а рядом находятся быстрые ссылки на нужные страницы.",
+        "Так легко найти товары, у которых не заполнено что-то важное, не дожидаясь отклонений в Merchant Center."]),
+      dict(h="🚀 Порядок запуска", p=[
+        "Сначала заполните Google Product Category ID в категориях, затем откройте адрес фида и просмотрите диагностику, и только после этого добавьте фид в Merchant Center."],
+        ul=["Заполнить Google Product Category ID", "Проверить диагностику", "Добавить адрес фида в Merchant Center"]),
+      dict(h="⚠️ Данные должны быть настоящими", p=[
+        "Google рекомендует исходные фото не менее 500×500 пикселей, и это требование вступает в силу 31.01.2027. Идентификаторы тоже нужно заполнять реальными данными: модуль их не придумывает, и это его преимущество, а не недостаток."])
+    ]),
+  uk=dict(
+    intro=[
+      "Google Merchant Center швидко помічає, коли у фіді щось не так: ідентифікатор вигаданий, картинка в непідтримуваному форматі, категорія не зіставлена. Merchant Feed Simple XML PRO формує кероване XML-фід з реальних даних магазину — цін, наявності, категорій, ідентифікаторів і зображень.",
+      "Завдання модуля ширше, ніж просто вивантажити XML. Він намагається не передавати Google вигаданих ідентифікаторів і некоректних даних, а чого в картці немає, того не з’являється і у фіді."
+    ],
+    sections=[
+      dict(h="🔗 Окрема адреса фіда", p=[
+        "Модуль створює окремий feed-маршрут, який віддає готовий XML для Merchant Center. Цю адресу ви просто додаєте в налаштуваннях фіда в Google, і далі Merchant сам забирає дані.",
+        "Фід будується на льоту з даних вітрини, тому він відображає актуальні ціни й наявність, а не застарілу вивантажку."]),
+      dict(h="🗂️ Категорії Google і product_type", p=[
+        "У формі категорії магазину з’являється поле Google Product Category, куди вноситься числовий ID категорії Google. З нього формується відповідний атрибут фіда.",
+        "Окремо зі шляху категорії в магазині збирається product_type, тож структура каталогу передається Google у тому вигляді, в якому її бачить покупець."]),
+      dict(h="🖼️ Зображення: безпечна логіка лише для фіда", p=[
+        "Для Merchant зроблено окрему безпечну логіку роботи із зображеннями, яка не впливає на вітрину: те, як фото оброблені для Google, не змінює, як вони показуються відвідувачам.",
+        "Формат AVIF із фіда виключено, бо Google його не приймає. Підтримуються JPEG, WebP, PNG, GIF, BMP і TIFF. Малі оригінали штучно не збільшуються, щоб не отримати розмиту картинку."]),
+      dict(h="🩺 Вікно діагностики", p=[
+        "Перш ніж надсилати фід до Google, його можна розібрати по поличках у вікні діагностики. Для кожного товару видно ID у фіді, model, SKU, назву, бренд, кількість, категорії та Google Product Category ID, а поруч містяться швидкі посилання на потрібні сторінки.",
+        "Так легко знайти товари, в яких не заповнено щось важливе, не чекаючи відхилень у Merchant Center."]),
+      dict(h="🚀 Порядок запуску", p=[
+        "Спершу заповніть Google Product Category ID у категоріях, потім відкрийте адресу фіда й перегляньте діагностику, і лише після цього додайте фід до Merchant Center."],
+        ul=["Заповнити Google Product Category ID", "Перевірити діагностику", "Додати адресу фіда до Merchant Center"]),
+      dict(h="⚠️ Дані мають бути справжніми", p=[
+        "Google рекомендує вихідні фото не менше ніж 500×500 пікселів, і ця вимога набуває чинності 31.01.2027. Ідентифікатори теж потрібно заповнювати реальними даними: модуль їх не вигадує, і це його перевага, а не недолік."])
+    ]),
+  en=dict(
+    intro=[
+      "Google Merchant Center quickly notices when something in a feed is off: an invented identifier, an image in an unsupported format, an unmapped category. Merchant Feed Simple XML PRO builds a managed XML feed from the real data in your store: prices, stock, categories, identifiers and images.",
+      "The module's job is wider than just dumping XML. It tries not to pass Google invented identifiers or incorrect data, and what a product card lacks does not show up in the feed either."
+    ],
+    sections=[
+      dict(h="🔗 A dedicated feed address", p=[
+        "The module creates a separate feed route that serves ready XML for Merchant Center. You add that address in the feed settings on the Google side, and Merchant fetches the data from there.",
+        "The feed is built on the fly from storefront data, so it reflects current prices and stock rather than a stale export."]),
+      dict(h="🗂️ Google categories and product_type", p=[
+        "The store category form gains a Google Product Category field where you enter the numeric Google category ID. The matching feed attribute is built from it.",
+        "Separately, product_type is assembled from the category path in your store, so the catalog structure reaches Google as your shoppers see it."]),
+      dict(h="🖼️ Images: safe handling for the feed only", p=[
+        "Merchant gets its own safe image logic that does not affect the storefront: how photos are processed for Google does not change how they are shown to visitors.",
+        "AVIF is excluded from the feed because Google does not accept it. JPEG, WebP, PNG, GIF, BMP and TIFF are supported. Small originals are not artificially enlarged, so you do not end up with a blurry picture."]),
+      dict(h="🩺 The diagnostics window", p=[
+        "Before sending the feed to Google you can go through it item by item in the diagnostics window. For each product you see the feed ID, model, SKU, name, brand, quantity, categories and the Google Product Category ID, with quick links to the relevant pages alongside.",
+        "It makes it easy to find products with something important missing, without waiting for rejections in Merchant Center."]),
+      dict(h="🚀 Launch order", p=[
+        "First fill in the Google Product Category ID in your categories, then open the feed address and review the diagnostics, and only after that add the feed to Merchant Center."],
+        ul=["Fill in the Google Product Category ID", "Review the diagnostics", "Add the feed address to Merchant Center"]),
+      dict(h="⚠️ The data has to be real", p=[
+        "Google recommends source photos of at least 500×500 pixels, a requirement that takes effect on 31.01.2027. Identifiers likewise must be filled with real data: the module does not make them up, which is its strength rather than a flaw."])
+    ]),
+  cover=dict(
+    tagline="XML-фид Google Merchant из реальных данных",
+    items=["Готовый XML-фид", "Google Product Category", "product_type из пути", "Безопасные изображения", "Без AVIF в фиде", "Окно диагностики"],
+    cards=[("Отдельный маршрут", "Адрес фида для Merchant Center"),
+           ("ID категории Google", "Поле в категории магазина"),
+           ("product_type", "Собирается из пути категории"),
+           ("Картинки для Merchant", "Не влияют на изображения витрины"),
+           ("Форматы", "JPEG, WebP, PNG, GIF, BMP, TIFF"),
+           ("Диагностика", "ID, model, SKU, бренд, количество")],
+    tabs=["Фид", "Категории", "Изображения", "Диагностика"],
+    kpis=[("Товаров", "1 482"), ("С категорией", "1 390"), ("Без фото", "6")],
+  ),
+)
+
+P[129] = dict(
+  ru=dict(
+    intro=[
+      "Если курсы валют в магазине вносятся вручную, рано или поздно наступает день, когда цена в гривнах или злотых отстаёт от рынка. Currency Rates PRO берёт эту рутину на себя и обновляет стандартную таблицу валют OpenCart или ocStore по данным официальных источников.",
+      "Новой системы цен при этом не появляется. Магазин считает так же, как раньше, а модуль только вовремя приносит свежие числа в привычную таблицу. Цены товаров, заказов, налогов, оплаты и доставки он не изменяет."
+    ],
+    sections=[
+      dict(h="🏦 Пять официальных источников", p=[
+        "Курсы можно получать из ECB, НБУ, ЦБ РФ, NBP и PrivatBank. Можно указать и собственный URL, но только официальный HTTPS-хост: локальные адреса, частные и зарезервированные IP, учётные данные в ссылке и нестандартные порты блокируются.",
+        "Это защита от ситуации, когда в настройки кто-то случайно или намеренно вписывает адрес внутренней сети."]),
+      dict(h="👀 Предпросмотр перед записью", p=[
+        "Ручное обновление начинается с предпросмотра. Вы видите, какие курсы изменятся и на сколько, и только потом подтверждаете запись. Это удобный способ первый раз убедиться, что выбранный источник даёт то, что вы ожидаете."]),
+      dict(h="🛟 Если что-то пошло не так", p=[
+        "Модуль проверяет возраст данных и максимально допустимое изменение курса. Если источник недоступен, ответ повреждён, дата слишком старая или скачок превышает порог, остаётся прежний курс, и витрина не получает случайных чисел.",
+        "Параллельные обновления блокируются MySQL-блокировкой, поэтому два запуска сразу не перезапишут друг друга."]),
+      dict(h="➗ Наценка и выбор валют", p=[
+        "Для каждой валюты можно задать индивидуальную процентную коррекцию, например запас на банковскую маржу. Обновляются только включённые валюты. Популярные валюты можно добавить в список, но они добавляются выключенными, чтобы временное значение 1.0 не попало на витрину до первого успешного обновления.",
+        "Курс основной валюты магазина всегда равен единице."]),
+      dict(h="⏰ Cron и журнал", p=[
+        "Автоматическое обновление запускается защищённым cron с секретным ключом, и в документации есть пример для Mirohost. Журнал разбит на страницы и содержит диагностику источников, а размер журнала безопасно ограничен.",
+        "В порядок запуска входит выбор источника и валют, просмотр предпросмотра и порогов, включение модуля и добавление cron на удобное время."]),
+      dict(h="🧮 Что модуль не делает", p=[
+        "После установки модуль выключен и не обращается к внешним API. Цены товаров он не пересчитывает: для товаров, у которых цена задана в исходной валюте, нужен Product Currency Input PRO.",
+        "Есть и необязательная опция «Не показывать копейки, если они равны 00». Она меняет только итоговую строку цены на витрине: 1000.50 остаётся 1000.50, а расчёты, корзина и заказы не затрагиваются."])
+    ]),
+  uk=dict(
+    intro=[
+      "Якщо курси валют у магазині вносяться вручну, рано чи пізно настає день, коли ціна в гривнях чи злотих відстає від ринку. Currency Rates PRO бере цю рутину на себе й оновлює стандартну таблицю валют OpenCart чи ocStore за даними офіційних джерел.",
+      "Нової системи цін при цьому не з’являється. Магазин рахує так само, як раніше, а модуль лише вчасно приносить свіжі числа до звичної таблиці. Ціни товарів, замовлень, податків, оплати та доставки він не змінює."
+    ],
+    sections=[
+      dict(h="🏦 П’ять офіційних джерел", p=[
+        "Курси можна отримувати з ECB, НБУ, ЦБ РФ, NBP та PrivatBank. Можна вказати й власний URL, але лише офіційний HTTPS-хост: локальні адреси, приватні й зарезервовані IP, облікові дані в посиланні та нестандартні порти блокуються.",
+        "Це захист від ситуації, коли в налаштування хтось випадково або навмисно вписує адресу внутрішньої мережі."]),
+      dict(h="👀 Попередній перегляд перед записом", p=[
+        "Ручне оновлення починається з попереднього перегляду. Ви бачите, які курси зміняться і наскільки, і лише потім підтверджуєте запис. Це зручний спосіб уперше переконатися, що обране джерело дає те, чого ви чекаєте."]),
+      dict(h="🛟 Якщо щось пішло не так", p=[
+        "Модуль перевіряє вік даних і максимально допустиму зміну курсу. Якщо джерело недоступне, відповідь пошкоджена, дата надто стара або стрибок перевищує поріг, лишається попередній курс, і вітрина не отримує випадкових чисел.",
+        "Паралельні оновлення блокуються MySQL-блокуванням, тож два запуски одразу не перезапишуть один одного."]),
+      dict(h="➗ Націнка і вибір валют", p=[
+        "Для кожної валюти можна задати індивідуальну відсоткову корекцію, наприклад запас на банківську маржу. Оновлюються лише ввімкнені валюти. Популярні валюти можна додати до списку, але вони додаються вимкненими, щоб тимчасове значення 1.0 не потрапило на вітрину до першого успішного оновлення.",
+        "Курс основної валюти магазину завжди дорівнює одиниці."]),
+      dict(h="⏰ Cron і журнал", p=[
+        "Автоматичне оновлення запускається захищеним cron із секретним ключем, і в документації є приклад для Mirohost. Журнал розбито на сторінки, він містить діагностику джерел, а розмір журналу безпечно обмежений.",
+        "У порядок запуску входить вибір джерела й валют, перегляд попереднього перегляду та порогів, вмикання модуля й додавання cron на зручний час."]),
+      dict(h="🧮 Чого модуль не робить", p=[
+        "Після встановлення модуль вимкнений і не звертається до зовнішніх API. Ціни товарів він не перераховує: для товарів, у яких ціну задано у вихідній валюті, потрібен Product Currency Input PRO.",
+        "Є й необов’язкова опція «Не показувати копійки, якщо вони дорівнюють 00». Вона змінює лише підсумковий рядок ціни на вітрині: 1000.50 лишається 1000.50, а розрахунки, кошик і замовлення не зачіпаються."])
+    ]),
+  en=dict(
+    intro=[
+      "When currency rates in a store are typed in by hand, sooner or later comes the day when the price in hryvnia or zloty lags behind the market. Currency Rates PRO takes over that routine and updates the standard OpenCart or ocStore currency table from official sources.",
+      "No new pricing system appears as a result. The store calculates just as before, and the module merely brings fresh numbers to the familiar table on time. It does not change product, order, tax, payment or shipping prices."
+    ],
+    sections=[
+      dict(h="🏦 Five official sources", p=[
+        "Rates can be fetched from ECB, the National Bank of Ukraine, the Central Bank of Russia, NBP and PrivatBank. You can specify a custom URL too, but only an official HTTPS host: local addresses, private and reserved IPs, credentials in the link and non-standard ports are blocked.",
+        "This protects against someone, by accident or on purpose, entering an internal network address in the settings."]),
+      dict(h="👀 Preview before anything is written", p=[
+        "A manual update starts with a preview. You see which rates will change and by how much, and only then confirm the write. It is a convenient way to check, the first time, that the chosen source returns what you expect."]),
+      dict(h="🛟 When something goes wrong", p=[
+        "The module checks the age of the data and the maximum allowed rate change. If the source is unreachable, the response is damaged, the date is too old or the jump exceeds the threshold, the previous rate is kept and the storefront never receives random numbers.",
+        "Parallel updates are blocked with a MySQL lock, so two runs at once cannot overwrite each other."]),
+      dict(h="➗ Markup and choice of currencies", p=[
+        "Each currency can have its own percentage adjustment, for example a cushion for the bank margin. Only enabled currencies are updated. Popular currencies can be added to the list, but they are added switched off, so that the temporary value of 1.0 never reaches the storefront before the first successful update.",
+        "The store main currency rate is always exactly one."]),
+      dict(h="⏰ Cron and the log", p=[
+        "Automatic updates run through a protected cron with a secret key, and the documentation includes an example for Mirohost. The log is paginated and carries source diagnostics, and its size is safely capped.",
+        "The launch sequence is to choose the source and currencies, review the preview and thresholds, enable the module and add the cron at a convenient time."]),
+      dict(h="🧮 What the module does not do", p=[
+        "After installation the module is off and makes no calls to external APIs. It does not recalculate product prices: for products priced in a source currency you need Product Currency Input PRO.",
+        "There is also an optional setting to hide the cents when they equal 00. It changes only the final price string on the storefront: 1000.50 stays 1000.50, and calculations, the cart and orders are not affected."])
+    ]),
+  cover=dict(
+    tagline="Автообновление курсов в таблице валют",
+    items=["Пять источников", "Предпросмотр курсов", "Защита от скачков", "Наценка по валюте", "Защищённый cron", "Журнал и диагностика"],
+    cards=[("Источники", "ECB, НБУ, ЦБ РФ, NBP, PrivatBank"),
+           ("Предпросмотр", "Видно, какие курсы изменятся до записи"),
+           ("Пороги", "Возраст данных и макс. изменение курса"),
+           ("Наценка", "Индивидуальная коррекция в процентах"),
+           ("Cron с ключом", "Блокировка параллельных запусков"),
+           ("Без копеек .00", "Меняется только строка цены на витрине")],
+    tabs=["Источники", "Валюты", "Cron", "Журнал"],
+    kpis=[("Валют", "4"), ("Обновлено", "08:15"), ("Порог", "5%")],
+  ),
+)
+
+P[130] = dict(
+  ru=dict(
+    intro=[
+      "Ускорять базу «на глаз» опасно: лишний индекс замедляет запись, а ALTER TABLE на огромной таблице может надолго заблокировать магазин. Database Index Optimizer PRO анализирует индексы MySQL и MariaDB и создаёт только те проверенные индексы, которые вы выбрали сами.",
+      "Никакой автомагии здесь нет: есть сканирование, понятный отчёт, постоянная очередь заданий, откат и контроль размера таблиц. Модуль не заявляет, что заменяет профессиональный разбор всех запросов, и для нестандартных случаев по-прежнему нужны EXPLAIN и проверка на копии."
+    ],
+    sections=[
+      dict(h="🔍 Сканирование и отчёт", p=[
+        "Сканер просматривает таблицы, колонки, индексы, движки, кодировки и первичные ключи, затем сравнивает их с ограниченным белым списком обоснованных рекомендаций для стандартных связей OpenCart. Отсутствующие индексы выделены, а карточки результата работают как быстрые фильтры по статусу и источнику.",
+        "Чужие потенциально перекрывающиеся индексы только показываются в отчёте. Модуль их не удаляет."]),
+      dict(h="📬 Очередь: создание только по выбору", p=[
+        "Индекс появляется не потому, что модуль так решил, а потому что вы отметили его и поставили в очередь. Очередь постоянная: каждый ALTER TABLE, ANALYZE или OPTIMIZE выполняется отдельным шагом, задачу можно остановить и затем продолжить.",
+        "Не допускается одновременный запуск двух тяжёлых задач, а для таблиц выше сохранённого безопасного лимита размера ADD INDEX не запускается вообще."]),
+      dict(h="↩️ Откат без разрушения чужого", p=[
+        "Для каждого созданного индекса модуль хранит запись с HMAC-подписью определения. При откате удаляется только индекс, созданный самим модулем, и только если подпись и фактическое определение индекса полностью совпадают. Чужие индексы под откат не попадают."]),
+      dict(h="🧩 Собственные профили индексов", p=[
+        "Встроенный список консервативен и не гадает про сторонние таблицы. Для своих и чужих модулей предусмотрены проверенные JSON-профили без произвольного SQL, а во вкладке профилей есть конструктор собственного индекса:"],
+        ul=["таблица без DB_PREFIX и имя ccp_*", "колонки, приоритет и риск", "минимальное число строк и причина"]),
+      dict(h="📈 Вкладка «Продуктивность»", p=[
+        "Эта вкладка запускается только вручную. Она показывает данные Performance Schema, горячие таблицы, рост таблиц и состояние сервера: uptime, нагрузку SQL в секунду, медленные запросы в час и сутки. Для детальной аналитики Performance Schema должна быть включена на сервере.",
+        "Модуль сам не включает ни Performance Schema, ни slow query log и не правит my.cnf."]),
+      dict(h="🛑 Выключен по умолчанию", p=[
+        "После установки модуль выключен. В режиме OFF не выполняются сканирование, очередь, ALTER, ANALYZE, OPTIMIZE и cron. Операция OPTIMIZE дополнительно выключена по умолчанию и требует отдельного разрешения и лимита размера.",
+        "Перед любой работой с индексами нужна полная резервная копия файлов и базы данных."])
+    ]),
+  uk=dict(
+    intro=[
+      "Прискорювати базу «на око» небезпечно: зайвий індекс уповільнює запис, а ALTER TABLE на величезній таблиці може надовго заблокувати магазин. Database Index Optimizer PRO аналізує індекси MySQL і MariaDB та створює лише ті перевірені індекси, які ви обрали самі.",
+      "Жодної автомагії тут немає: є сканування, зрозумілий звіт, постійна черга завдань, відкат і контроль розміру таблиць. Модуль не заявляє, що замінює професійний розбір усіх запитів, і для нестандартних випадків і далі потрібні EXPLAIN та перевірка на копії."
+    ],
+    sections=[
+      dict(h="🔍 Сканування й звіт", p=[
+        "Сканер переглядає таблиці, колонки, індекси, рушії, кодування та первинні ключі, потім порівнює їх з обмеженим білим списком обґрунтованих рекомендацій для стандартних зв’язків OpenCart. Відсутні індекси виділено, а картки результату працюють як швидкі фільтри за статусом і джерелом.",
+        "Чужі потенційно перекривні індекси лише показуються у звіті. Модуль їх не видаляє."]),
+      dict(h="📬 Черга: створення лише за вибором", p=[
+        "Індекс з’являється не тому, що модуль так вирішив, а тому, що ви його позначили й поставили в чергу. Черга постійна: кожен ALTER TABLE, ANALYZE чи OPTIMIZE виконується окремим кроком, завдання можна зупинити й потім продовжити.",
+        "Не допускається одночасний запуск двох важких завдань, а для таблиць вище збереженого безпечного ліміту розміру ADD INDEX не запускається взагалі."]),
+      dict(h="↩️ Відкат без руйнування чужого", p=[
+        "Для кожного створеного індексу модуль зберігає запис із HMAC-підписом визначення. Під час відкату видаляється лише індекс, створений самим модулем, і лише якщо підпис та фактичне визначення індексу повністю збігаються. Чужі індекси під відкат не потрапляють."]),
+      dict(h="🧩 Власні профілі індексів", p=[
+        "Вбудований список консервативний і не вгадує щодо сторонніх таблиць. Для власних і чужих модулів передбачено перевірені JSON-профілі без довільного SQL, а у вкладці профілів є конструктор власного індексу:"],
+        ul=["таблиця без DB_PREFIX та ім’я ccp_*", "колонки, пріоритет і ризик", "мінімальна кількість рядків і причина"]),
+      dict(h="📈 Вкладка «Продуктивність»", p=[
+        "Ця вкладка запускається лише вручну. Вона показує дані Performance Schema, гарячі таблиці, зростання таблиць і стан сервера: uptime, навантаження SQL за секунду, повільні запити за годину й добу. Для детальної аналітики Performance Schema має бути ввімкнена на сервері.",
+        "Модуль сам не вмикає ні Performance Schema, ні slow query log і не править my.cnf."]),
+      dict(h="🛑 Вимкнений за замовчуванням", p=[
+        "Після встановлення модуль вимкнений. У режимі OFF не виконуються сканування, черга, ALTER, ANALYZE, OPTIMIZE і cron. Операція OPTIMIZE додатково вимкнена за замовчуванням і потребує окремого дозволу та ліміту розміру.",
+        "Перед будь-якою роботою з індексами потрібна повна резервна копія файлів і бази даних."])
+    ]),
+  en=dict(
+    intro=[
+      "Speeding up a database by eye is risky: an extra index slows down writes, and an ALTER TABLE on a huge table can block the store for a long time. Database Index Optimizer PRO analyzes MySQL and MariaDB indexes and creates only the vetted indexes you chose yourself.",
+      "There is no auto-magic here: there is a scan, a readable report, a persistent job queue, rollback and table-size control. The module does not claim to replace a professional review of all queries, and unusual cases still call for EXPLAIN and testing on a copy."
+    ],
+    sections=[
+      dict(h="🔍 Scan and report", p=[
+        "The scanner reads tables, columns, indexes, engines, character sets and primary keys, then compares them with a limited whitelist of well-founded recommendations for standard OpenCart relations. Missing indexes are highlighted, and the result cards work as quick filters by status and source.",
+        "Third-party indexes that may overlap are only shown in the report. The module never deletes them."]),
+      dict(h="📬 The queue: creation only by choice", p=[
+        "An index appears not because the module decided so but because you ticked it and queued it. The queue is persistent: every ALTER TABLE, ANALYZE or OPTIMIZE runs as a separate step, and a job can be stopped and later resumed.",
+        "Two heavy jobs cannot run at once, and ADD INDEX is not started at all for tables above the saved safe size limit."]),
+      dict(h="↩️ Rollback that leaves others' work alone", p=[
+        "For every index it creates, the module keeps a record carrying an HMAC signature of the definition. On rollback only an index created by the module itself is dropped, and only when the signature and the actual index definition match exactly. Foreign indexes are never part of a rollback."]),
+      dict(h="🧩 Custom index profiles", p=[
+        "The built-in list is conservative and does not guess about third-party tables. For your own and other modules there are vetted JSON profiles with no arbitrary SQL, and the profiles tab has a builder for a custom index:"],
+        ul=["table without DB_PREFIX and a ccp_* name", "columns, priority and risk", "minimum row count and a reason"]),
+      dict(h="📈 The Productivity tab", p=[
+        "This tab runs only on manual request. It shows Performance Schema data, hot tables, table growth and server state: uptime, SQL load per second, slow queries per hour and per day. Detailed analytics require Performance Schema to be enabled on the server.",
+        "The module itself enables neither Performance Schema nor the slow query log and does not edit my.cnf."]),
+      dict(h="🛑 Off by default", p=[
+        "After installation the module is off. In OFF mode there is no scanning, queue, ALTER, ANALYZE, OPTIMIZE or cron. OPTIMIZE is additionally disabled by default and needs its own permission and size limit.",
+        "A full backup of files and database is required before any index work."])
+    ]),
+  cover=dict(
+    tagline="Управляемое создание индексов базы данных",
+    items=["Сканирование индексов", "Постоянная очередь", "Откат по HMAC", "Лимит размера таблиц", "Профили индексов", "Вкладка Продуктивность"],
+    cards=[("Сканер", "Отсутствующие индексы выделены, есть фильтры"),
+           ("Очередь", "ALTER, ANALYZE, OPTIMIZE по одному шагу"),
+           ("Откат", "Удаляется только индекс, созданный модулем"),
+           ("Лимит размера", "Крупные таблицы не затрагиваются"),
+           ("JSON-профили", "Без произвольного SQL, свой индекс ccp_*"),
+           ("Performance Schema", "Горячие таблицы, рост, медленные запросы")],
+    tabs=["Сканирование", "Очередь", "Профили", "Продуктивность"],
+    kpis=[("Отсутствует", "9"), ("В очереди", "3"), ("Создано", "14")],
+  ),
+)

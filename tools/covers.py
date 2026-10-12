@@ -50,51 +50,77 @@ body{font-family:'Inter',Arial,sans-serif;-webkit-font-smoothing:antialiased;col
 .tile{display:flex;align-items:center;justify-content:center;background:linear-gradient(165deg,#5aa6ff,#0a66f0 52%,#0649b3);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -6px 14px rgba(0,30,110,.4),0 14px 30px rgba(0,60,200,.45)}
 """
 
-def product_html(p):
+ICON_CYCLE = ['catalog','notify','security','speed','reviews','orders','import','tools','marketing','images','lang','plug']
+
+def poster_html(p, cv):
+    """Постер-обложка в духе прежних обложек: логотип, название, пункты слева, коробка, макет админки, карточки «что делает», плашка совместимости."""
     ru = p['names']['3']['name']
     t, s = split_name(ru)
     cid = p['cat']; icon, _ = CAT[cid]
-    label = CAT_LANG[cid][0]
-    free = p['price'] == 0
-    badge = '<span class="pill y">Бесплатно</span>' if free else f'<span class="pill">{label}</span>'
     short = re.sub(r'\s*PRO$', '', t, flags=re.I)
-    items = ''.join(f'<div class="it"><i class="tile">{svg(["notify","security","speed","reviews"][k%4] if False else icon,30,"#fff",1.8)}</i><span>{html.escape(x)}</span></div>' for k, x in enumerate(chips_for(p['id'])))
-    fs = 86 if len(short) <= 14 else 70 if len(short) <= 22 else 58
+    head = (s or short)
+    head = head[:1].upper() + head[1:]
+    fs = 70 if len(head) <= 20 else 58 if len(head) <= 30 else 48
+    ic = lambda k, n=28: svg(ICON_CYCLE[(k + p['id']) % len(ICON_CYCLE)], n, '#fff', 1.8)
+    items = ''.join(f'<div class="it"><i class="tile">{ic(k)}</i><span>{html.escape(x)}</span></div>' for k, x in enumerate(cv['items'][:6]))
+    cards = ''.join(f'<div class="cd"><i class="tile">{ic(k+3, 24)}</i><div><b>{html.escape(a)}</b><small>{html.escape(d)}</small></div></div>' for k, (a, d) in enumerate(cv['cards'][:6]))
+    tabs = ''.join(f'<span class="{"on" if k == 0 else ""}">{html.escape(x)}</span>' for k, x in enumerate(cv['tabs'][:4]))
+    kp = ''.join(f'<div><small>{html.escape(a)}</small><b>{html.escape(b)}</b></div>' for a, b in cv['kpis'][:3])
+    rows = ''.join(f'<div class="r"><u>{100 + k * 7}</u><i></i><em class="{["g","y","g","g","b"][k]}"></em></div>' for k in range(5))
     return f"""<html><head><meta charset="utf-8"><style>{DARK}
-    html,body{{width:900px;height:900px;overflow:hidden;position:relative}}
-    .top{{position:absolute;left:0;right:0;top:34px;display:flex;justify-content:center}}
-    .lg{{background:#fff;border-radius:22px;padding:10px 26px;box-shadow:0 12px 34px rgba(0,0,0,.35)}}
-    .pill{{position:absolute;right:40px;top:44px;font-size:22px;font-weight:800;padding:9px 22px;border-radius:99px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.35)}}
-    .pill.y{{background:#ffc21a;color:#0b1b3a;border-color:#ffc21a}}
-    .ttl{{position:absolute;left:44px;right:44px;top:138px}}
-    h1{{font-size:{fs}px;line-height:1;font-weight:850;letter-spacing:-.03em}}
-    h1 b{{display:inline-block;margin-left:14px;font-size:.5em;vertical-align:.5em;padding:.04em .3em;border-radius:.3em;border:3px solid #ffc21a;color:#ffc21a}}
-    .sub{{margin-top:14px;font-size:34px;line-height:1.2;font-weight:600;color:#b7cdf5;max-width:760px}}
-    .left{{position:absolute;left:40px;top:400px;display:grid;gap:18px;width:285px}}
-    .it{{display:flex;align-items:center;gap:13px;font-size:19px;font-weight:700;line-height:1.15;color:#e8f0ff}}
-    .it i{{flex:none;width:54px;height:54px;border-radius:15px}}
-    .box{{position:absolute;left:338px;top:395px;width:236px;height:350px;transform:perspective(900px) rotateY(-24deg) rotateX(2deg);border-radius:10px;background:linear-gradient(160deg,#0b2a6e,#04122e);border:2px solid rgba(120,170,255,.55);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 50px rgba(40,120,255,.5);padding:20px 18px}}
-    .box .bl{{height:26px}}.box .bl img{{height:26px}}
-    .box h4{{margin-top:34px;font-size:32px;line-height:1.05;font-weight:850}}
-    .box h4 em{{font-style:normal;color:#ffc21a}}
-    .box .tile{{position:absolute;left:18px;bottom:26px;width:96px;height:96px;border-radius:24px}}
-    .box small{{position:absolute;right:16px;bottom:26px;font-size:13px;font-weight:700;color:#ffc21a;text-align:right;width:90px;line-height:1.25}}
-    .win{{position:absolute;right:26px;top:395px;width:318px;border-radius:16px;background:#f4f8ff;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 3px rgba(255,255,255,.12);transform:perspective(1000px) rotateY(-10deg)}}
-    .wt{{background:linear-gradient(90deg,#0649b3,#0a66f0);display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:14px;font-weight:800}}
-    .wt i{{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.55)}}
-    .wb{{padding:14px;color:#0b1b3a}}
-    .kp{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}}.kp div{{background:#fff;border:1px solid #d6e3f8;border-radius:10px;padding:8px 10px;font-size:11px;color:#5b6f8a}}.kp b{{display:block;font-size:20px;color:#0a66f0}}
-    .rows{{margin-top:10px;display:grid;gap:7px}}.rows div{{height:30px;border-radius:7px;background:#fff;border:1px solid #d6e3f8;display:flex;align-items:center;gap:8px;padding:0 8px}}.rows i{{height:7px;border-radius:4px;background:#c9d9f2;flex:1}}.rows span{{width:46px;height:12px;border-radius:6px;background:#17b26a}}.rows div:nth-child(2) span{{background:#ffc21a}}
-    .bar{{position:absolute;left:30px;right:30px;bottom:26px;height:74px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:space-around;color:#0b1b3a;font-size:21px;font-weight:700;box-shadow:0 14px 40px rgba(0,0,0,.35)}}
-    .bar span{{display:flex;align-items:center;gap:10px}}.bar span:before{{content:'';width:12px;height:12px;border-radius:50%;background:#0a66f0;box-shadow:0 0 0 4px rgba(10,102,240,.18)}}
+    html,body{{width:1000px;height:1000px;overflow:hidden;position:relative}}
+    .top{{position:absolute;left:0;right:0;top:22px;display:flex;justify-content:center}}
+    .ttl{{position:absolute;left:34px;right:34px;top:110px}}
+    h1{{font-size:{fs}px;line-height:1;font-weight:850;letter-spacing:-.03em;color:#fff}}
+    h1 b{{display:inline-block;margin-left:14px;font-size:.52em;vertical-align:.45em;padding:.03em .3em;border-radius:.3em;border:3px solid #ffc21a;color:#ffc21a}}
+    .en{{margin-top:8px;font-size:34px;font-weight:800;color:#ffc21a;letter-spacing:-.01em}}
+    .sub{{margin-top:10px;font-size:29px;line-height:1.22;font-weight:500;color:#b7cdf5;max-width:760px}}
+    .left{{position:absolute;left:34px;top:392px;display:grid;gap:12px;width:262px}}
+    .it{{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:700;line-height:1.12;color:#e8f0ff;height:60px}}
+    .it i{{flex:none;width:56px;height:56px;border-radius:15px}}
+    .box{{position:absolute;left:290px;top:560px;width:212px;height:290px;transform:perspective(900px) rotateY(-24deg);border-radius:10px;background:linear-gradient(160deg,#0b2a6e,#04122e);border:2px solid rgba(120,170,255,.55);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 50px rgba(40,120,255,.5);padding:16px 15px}}
+    .box h4{{margin-top:16px;font-size:26px;line-height:1.05;font-weight:850}}.box h4 em{{font-style:normal;color:#ffc21a}}
+    .box .tile{{position:absolute;left:15px;bottom:92px;width:70px;height:70px;border-radius:20px}}
+    .box small{{position:absolute;left:15px;right:12px;bottom:16px;font-size:13px;font-weight:700;color:#ffc21a;line-height:1.25}}
+    .lap{{position:absolute;right:26px;top:372px;width:560px;transform:perspective(1200px) rotateY(-9deg)}}
+    .scr{{background:#0b1226;border:6px solid #1c2640;border-radius:14px 14px 4px 4px;box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 2px rgba(150,190,255,.25);overflow:hidden}}
+    .ui{{background:#f4f8ff;color:#0b1b3a}}
+    .ut{{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#0649b3,#0a66f0);color:#fff;padding:7px 12px;font-size:13px;font-weight:800}}
+    .ut i{{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.6)}}
+    .tb{{display:flex;gap:6px;padding:7px 10px 0;background:#e6eefb}}.tb span{{font-size:11px;font-weight:700;padding:5px 10px;border-radius:7px 7px 0 0;color:#4a5f82}}.tb span.on{{background:#f4f8ff;color:#0a66f0}}
+    .ub{{padding:9px 10px}}.kp{{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}}.kp div{{background:#fff;border:1px solid #d6e3f8;border-radius:9px;padding:6px 9px}}.kp small{{display:block;font-size:10px;color:#5b6f8a}}.kp b{{font-size:19px;color:#0a66f0}}
+    .tbl{{margin-top:8px;display:grid;gap:5px}}.r{{display:flex;align-items:center;gap:8px;height:22px;background:#fff;border:1px solid #d6e3f8;border-radius:6px;padding:0 8px}}.r u{{text-decoration:none;font-size:10px;color:#5b6f8a;width:26px}}.r i{{flex:1;height:6px;border-radius:3px;background:#c9d9f2}}.r em{{width:44px;height:11px;border-radius:6px}}.g{{background:#17b26a}}.y{{background:#ffc21a}}.b{{background:#0a66f0}}
+    .base{{height:14px;margin:0 -22px;border-radius:0 0 18px 18px;background:linear-gradient(#cfd7e6,#8e9bb4)}}
+    .panel{{position:absolute;left:520px;right:26px;top:660px;border-radius:16px;background:rgba(10,30,80,.78);border:2px solid rgba(120,170,255,.4);padding:10px 12px;backdrop-filter:blur(3px)}}
+    .panel h5{{font-size:16px;font-weight:800;margin-bottom:7px}}.panel h5 span{{color:#ffc21a}}
+    .cds{{display:grid;grid-template-columns:1fr 1fr;gap:6px}}
+    .cd{{display:flex;gap:8px;align-items:center;background:rgba(20,60,150,.45);border:1px solid rgba(120,170,255,.35);border-radius:10px;padding:5px 7px}}
+    .cd i{{flex:none;width:34px;height:34px;border-radius:10px}}.cd b{{display:block;font-size:12.5px;line-height:1.1}}.cd small{{display:block;font-size:10.5px;line-height:1.15;color:#b7cdf5;margin-top:1px}}
+    .bar{{position:absolute;left:26px;right:26px;bottom:20px;height:66px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:space-around;color:#0b1b3a;font-size:20px;font-weight:700;box-shadow:0 14px 40px rgba(0,0,0,.35)}}
+    .bar span{{display:flex;align-items:center;gap:9px}}.bar span:before{{content:'';width:11px;height:11px;border-radius:50%;background:#0a66f0;box-shadow:0 0 0 4px rgba(10,102,240,.18)}}
     </style></head><body><div class="bg"></div><div class="grid"></div>
-    <div class="top"><div class="lg">{logo(54)}</div></div>{badge}
-    <div class="ttl"><h1>{html.escape(short)}<b>PRO</b></h1><div class="sub">{html.escape(s)}</div></div>
+    <div class="top">{logo(66)}</div>
+    <div class="ttl"><h1>{html.escape(head)}<b>PRO</b></h1><div class="en">{html.escape(split_en(p))}</div><div class="sub">{html.escape(cv['tagline'])}</div></div>
     <div class="left">{items}</div>
-    <div class="box"><div class="bl">{logo(26)}</div><h4>{html.escape(short)} <em>PRO</em></h4><i class="tile">{svg(icon,48,'#fff',1.7)}</i><small>Модуль для OpenCart</small></div>
-    <div class="win"><div class="wt"><i></i><i></i><i></i><span style="margin-left:6px">{html.escape(short)}</span></div><div class="wb"><div class="kp"><div>Статус<b>ON</b></div><div>Записей<b>128</b></div><div>Версия<b>PRO</b></div></div><div class="rows"><div><i></i><span></span></div><div><i></i><span></span></div><div><i></i><span></span></div><div><i></i><span></span></div><div><i></i><span></span></div></div></div></div>
+    <div class="box">{logo(22)}<h4>{html.escape(short)} <em>PRO</em></h4><i class="tile">{svg(icon,44,'#fff',1.7)}</i><small>Модуль для OpenCart<br>Повышайте эффективность магазина</small></div>
+    <div class="lap"><div class="scr"><div class="ui"><div class="ut"><i></i><i></i><i></i><span style="margin-left:6px">{html.escape(short)} PRO</span></div><div class="tb">{tabs}</div><div class="ub"><div class="kp">{kp}</div><div class="tbl">{rows}</div></div></div></div><div class="base"></div></div>
+    <div class="panel"><h5>Что делает <span>{html.escape(short)} PRO</span></h5><div class="cds">{cards}</div></div>
     <div class="bar"><span>OpenCart 3.x</span><span>ocStore 3.0.4.1</span><span>PHP 7.4–8.5</span><span>RU / UA / EN</span></div>
     </body></html>"""
+
+def split_en(p):
+    n = html.unescape(p['names']['2']['name']).split(' — ')[0].split(' - ')[0]
+    n = re.sub(r'\s+for OpenCart.*$', '', n.strip())
+    return re.sub(r'\bPro\b', 'PRO', n)
+
+def product_html(p):
+    from prodtext import PROSE
+    cv = PROSE.get(p['id'], {}).get('cover')
+    if not cv:
+        c = chips_for(p['id'])
+        cv = dict(tagline=split_name(p['names']['3']['name'])[1] or '', items=(c * 2)[:6], cards=[(x, 'Подробности в описании модуля') for x in (c * 2)[:6]],
+                  tabs=['Настройки', 'Журнал', 'Шаблоны', 'О модуле'], kpis=[('Статус', 'ON'), ('Записей', '128'), ('Версия', 'PRO')])
+    return poster_html(p, cv)
 
 def category_html(cid):  # 800x800, без текста: тема сама накладывает название категории на нужном языке
     icon, _ = CAT[cid]
@@ -122,7 +148,7 @@ def save(page, htmltxt, w, h, path, q=84):
     im.save(path, 'WEBP', quality=q, method=6)
 
 if __name__ == '__main__':
-    what = sys.argv[1:] or ['products','categories']
+    what = sys.argv[1:] or ['products']
     with sync_playwright() as pw:
         b = pw.chromium.launch(executable_path='/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args=['--no-sandbox']); page = b.new_page()
         if 'products' in what:

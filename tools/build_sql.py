@@ -18,8 +18,6 @@ def sql_images():
         if p['image'].startswith('catalog/codecartpro/products/'):
             fn = p['image'].split('/')[-1]
             o.append(f"UPDATE `oc_product` SET `image`='catalog/codecartpro/v4/products/{fn}', `date_modified`=NOW() WHERE `product_id`={p['id']};")
-    for cid in CAT_IDS:
-        o.append(f"UPDATE `oc_category` SET `image`='catalog/codecartpro/v4/categories/cat-{cid}.webp', `date_modified`=NOW() WHERE `category_id`={cid};")
     o.append("COMMIT;")
     return '\n'.join(o) + '\n'
 
@@ -86,7 +84,16 @@ def sql_categories():
     o.append("COMMIT;")
     return '\n'.join(o) + '\n'
 
+def sql_restore_cats():
+    orig = json.load(open(SCR/'work/cat_images_original.json'))
+    o = ['-- Возвращает ваши исходные фото категорий (если вы уже выполняли 02 из версий 3.0–3.2, где категории были заменены).','SET NAMES utf8mb4;','START TRANSACTION;']
+    for cid, img in orig.items():
+        o.append(f"UPDATE `oc_category` SET `image`={q(img)} WHERE `category_id`={cid};")
+    o.append('COMMIT;')
+    return '\n'.join(o) + '\n'
+
 if __name__ == '__main__':
+    (OUT/'sql/02b_restore_category_images.sql').write_text(sql_restore_cats(), encoding='utf8')
     (OUT/'sql/02_images.sql').write_text(sql_images(), encoding='utf8')
     (OUT/'sql/03_banners.sql').write_text(sql_banners(), encoding='utf8')
     (OUT/'sql/05_categories.sql').write_text(sql_categories(), encoding='utf8')

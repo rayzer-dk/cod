@@ -6,6 +6,11 @@ sys.path.insert(0, str(OUT/'content'))
 C = {}
 for _i in range(1, 8):
     C.update(importlib.import_module('modules_0%d' % _i).C)
+PROSE = {}
+import glob as _glob, os as _os
+for _f in sorted(_glob.glob(str(OUT/'content/prose_*.py'))):
+    _m = importlib.import_module(_os.path.basename(_f)[:-3])
+    PROSE.update(_m.P)
 ORIG = {int(k): {int(l): v for l, v in d.items()} for k, d in json.load(open(SCR/'work/desc.json')).items()}
 ACTIVE = [p for p in DATA['prods'] if p['status'] and p['id'] != 84]
 LANG = {1: 'uk', 2: 'en', 3: 'ru'}
@@ -64,7 +69,7 @@ def _short_name(pid):
 def _sentences(t):
     return [x.strip() for x in _re.split(r'(?<=[.!?])\s+(?=[A-ZА-ЯІЇЄҐ0-9«])', t) if x.strip()]
 
-def build(pid, l):
+def build_old(pid, l):
     k = LANG[l]; c = C[pid][k]; L = H[k]; nm = _short_name(pid)
     lead = c['lead']
     sents = _sentences(lead)
@@ -94,11 +99,42 @@ def build(pid, l):
     o.append(f'<h3>{L["win"]}</h3><p><strong>{e(nm)}</strong> {L["win_p"]}</p></div>')
     if pid not in NO_DEMO:
         o.append(f'<div class="ccp-demo" style="background:#eef7ff;border:1px solid #bfdbfe;border-radius:14px;padding:18px 20px;margin-top:24px;color:#0b1b3a"><h3 style="margin:0 0 10px;color:#0b4fa5;">{L["demo_h"]}</h3><p>{L["demo_p"]}</p><p><strong>{L["demo_a"]}</strong> <a href="https://demo.codecartpro.com/admin/" target="_blank" rel="noopener">https://demo.codecartpro.com/admin/</a><br>👤 <strong>{L["login"]}</strong> Demo<br>🔑 <strong>{L["pwd"]}</strong> Demo</p><p style="margin-bottom:0;"><small>{L["demo_s"]}</small></p></div>')
-    o.append(f'<div class="ccp-buy-channels" style="background:#fff8e6;border:1px solid #eed493;border-radius:14px;padding:20px 22px;margin:22px 0;color:#3d2e00"><h3 style="margin:0 0 10px;color:#8b6100;">{L["buy_h"]}</h3><p style="margin:0;">{L["buy_p"]}</p></div>')
+    return ''.join(o)
+
+CMP = {'ru': ('⚙️ Совместимость', 'Работает с OpenCart 3.0.x и ocStore 3.0.x (включая 3.0.4.1).', 'Перед установкой и обновлением сделайте резервную копию файлов и базы данных.'),
+       'uk': ('⚙️ Сумісність', 'Працює з OpenCart 3.0.x та ocStore 3.0.x (зокрема 3.0.4.1).', 'Перед встановленням і оновленням зробіть резервну копію файлів і бази даних.'),
+       'en': ('⚙️ Compatibility', 'Works with OpenCart 3.0.x and ocStore 3.0.x (including 3.0.4.1).', 'Back up your files and database before installing or updating.')}
+CMP_WIN = {'ru': 'Windows-утилита; не устанавливается в магазин.', 'uk': 'Windows-утиліта; не встановлюється в магазин.', 'en': 'A Windows utility; it is not installed into the store.'}
+
+def build(pid, l):
+    if pid not in PROSE:
+        return build_old(pid, l)
+    k = LANG[l]; d = PROSE[pid][k]; L = H[k]
+    o = ['<div class="codecart-product-description">']
+    for i, para in enumerate(d['intro']):
+        o.append(f'<p>{"🚀 " if i == 0 else ""}{e(para)}</p>')
+    for sec in d['sections']:
+        o.append(f'<h3>{e(sec["h"])}</h3>')
+        for para in sec.get('p', []):
+            o.append(f'<p>{e(para)}</p>')
+        if sec.get('ul'):
+            o.append('<ul>' + ''.join(f'<li>✅ {e(x)}</li>' for x in sec['ul']) + '</ul>')
+    h, line, bk = CMP[k]
+    line = CMP_WIN[k] if pid == 110 else line
+    chips = [x for x in C[pid][k].get('chips', [])]
+    o.append(f'<h3>{h}</h3><p>{e(line)} {e(bk)}</p>')
+    if chips:
+        o.append('<ul>' + ''.join(f'<li>✅ {e(x)}</li>' for x in chips) + '</ul>')
+    o.append('</div>')
+    if pid not in NO_DEMO:
+        o.append(f'<div class="ccp-demo" style="background:#eef7ff;border:1px solid #bfdbfe;border-radius:14px;padding:18px 20px;margin-top:24px;color:#0b1b3a"><h3 style="margin:0 0 10px;color:#0b4fa5;">{L["demo_h"]}</h3><p>{L["demo_p"]}</p><p><strong>{L["demo_a"]}</strong> <a href="https://demo.codecartpro.com/admin/" target="_blank" rel="noopener">https://demo.codecartpro.com/admin/</a><br>👤 <strong>{L["login"]}</strong> Demo<br>🔑 <strong>{L["pwd"]}</strong> Demo</p><p style="margin-bottom:0;"><small>{L["demo_s"]}</small></p></div>')
     return ''.join(o)
 
 def meta_desc(pid, l, n=158):
-    t = C[pid][LANG[l]]['lead']
+    if pid in PROSE:
+        t = PROSE[pid][LANG[l]]['intro'][0]
+    else:
+        t = C[pid][LANG[l]]['lead']
     if len(t) <= n: return t
     t = t[:n].rsplit(' ', 1)[0].rstrip(',;:—-')
     return t + '…'

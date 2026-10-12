@@ -1,0 +1,23 @@
+-- Возвращает ваши исходные фото категорий (если вы уже выполняли 02 из версий 3.0–3.2, где категории были заменены).
+SET NAMES utf8mb4;
+START TRANSACTION;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/seo-modules.webp' WHERE `category_id`=59;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/ai-modules.webp' WHERE `category_id`=60;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/catalog-modules.webp' WHERE `category_id`=61;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/import-export-modules.webp' WHERE `category_id`=62;
+UPDATE `oc_category` SET `image`='catalog/catalog foto/321/chatgpt-image-16-ver-2026-r-16_48_06-6.webp' WHERE `category_id`=63;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/orders-sales-modules.webp' WHERE `category_id`=64;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/shipping-modules.webp' WHERE `category_id`=66;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/payment-modules.webp' WHERE `category_id`=67;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/notifications-modules.webp' WHERE `category_id`=68;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/security-privacy-modules.webp' WHERE `category_id`=69;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/reviews-trust-modules.webp' WHERE `category_id`=70;
+UPDATE `oc_category` SET `image`='catalog/catalog foto/321/chatgpt-image-16-ver-2026-r-16_48_02-1.webp' WHERE `category_id`=71;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/themes-design.webp' WHERE `category_id`=72;
+UPDATE `oc_category` SET `image`='catalog/catalog foto/321/chatgpt-image-16-ver-2026-r-16_48_03-2.webp' WHERE `category_id`=73;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/codecart-pro-system.webp' WHERE `category_id`=74;
+UPDATE `oc_category` SET `image`='catalog/catalog foto/321/chatgpt-image-16-ver-2026-r-16_48_03-3.webp' WHERE `category_id`=75;
+UPDATE `oc_category` SET `image`='catalog/catalog foto/321/chatgpt-image-16-ver-2026-r-16_48_04-4.webp' WHERE `category_id`=76;
+UPDATE `oc_category` SET `image`='catalog/codecartpro/categories/integrations-crm.webp' WHERE `category_id`=77;
+UPDATE `oc_category` SET `image`='catalog/catalog foto/321/chatgpt-image-16-ver-2026-r-16_48_05-5.webp' WHERE `category_id`=78;
+COMMIT;

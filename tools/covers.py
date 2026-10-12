@@ -60,7 +60,7 @@ def poster_html(p, cv):
     short = re.sub(r'\s*PRO$', '', t, flags=re.I)
     head = (s or short)
     head = head[:1].upper() + head[1:]
-    fs = 70 if len(head) <= 20 else 58 if len(head) <= 30 else 48
+    fs = 70 if len(head) <= 18 else 56 if len(head) <= 26 else 48 if len(head) <= 34 else 42
     ic = lambda k, n=28: svg(ICON_CYCLE[(k + p['id']) % len(ICON_CYCLE)], n, '#fff', 1.8)
     items = ''.join(f'<div class="it"><i class="tile">{ic(k)}</i><span>{html.escape(x)}</span></div>' for k, x in enumerate(cv['items'][:6]))
     cards = ''.join(f'<div class="cd"><i class="tile">{ic(k+3, 24)}</i><div><b>{html.escape(a)}</b><small>{html.escape(d)}</small></div></div>' for k, (a, d) in enumerate(cv['cards'][:6]))
@@ -156,7 +156,7 @@ if __name__ == '__main__':
                 if not p['status'] or p['id'] in (84,): continue
                 fn = p['image'].split('/')[-1]
                 if not p['image'].startswith('catalog/codecartpro/products/'): continue
-                save(page, product_html(p), 900, 900, OUT/'images/products'/fn)
+                save(page, product_html(p), 1000, 1000, OUT/'images/products'/fn)
                 print('p', p['id'], fn)
         if 'categories' in what:
             for cid in CAT:

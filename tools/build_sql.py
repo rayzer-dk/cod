@@ -12,14 +12,14 @@ def pro(t): return re.sub(r'\bPro\b','PRO',t)
 
 # ---------------------------------------------------------------- 02 images + banners
 def sql_images():
-    o = ["-- 2) Новые обложки и баннеры. Сначала загрузите папку images/ в /image/catalog/codecartpro/v3/ (см. README).",
+    o = ["-- 2) Новые обложки и баннеры. Сначала загрузите папку images/ в /image/catalog/codecartpro/v4/ (см. README).",
          "SET NAMES utf8mb4;","START TRANSACTION;"]
     for p in ACTIVE:
         if p['image'].startswith('catalog/codecartpro/products/'):
             fn = p['image'].split('/')[-1]
-            o.append(f"UPDATE `oc_product` SET `image`='catalog/codecartpro/v3/products/{fn}', `date_modified`=NOW() WHERE `product_id`={p['id']};")
+            o.append(f"UPDATE `oc_product` SET `image`='catalog/codecartpro/v4/products/{fn}', `date_modified`=NOW() WHERE `product_id`={p['id']};")
     for cid in CAT_IDS:
-        o.append(f"UPDATE `oc_category` SET `image`='catalog/codecartpro/v3/categories/cat-{cid}.webp', `date_modified`=NOW() WHERE `category_id`={cid};")
+        o.append(f"UPDATE `oc_category` SET `image`='catalog/codecartpro/v4/categories/cat-{cid}.webp', `date_modified`=NOW() WHERE `category_id`={cid};")
     o.append("COMMIT;")
     return '\n'.join(o) + '\n'
 
@@ -37,7 +37,7 @@ def sql_banners():
     for lid, lst in BAN.items():
         folder = LNAME[lid]
         for i,(t,link) in enumerate(lst,1):
-            rows.append(f"(7,{lid},{q(t)},{q(link)},'catalog/codecartpro/v3/banners/{folder}/slide-{i}.webp',{i})")
+            rows.append(f"(7,{lid},{q(t)},{q(link)},'catalog/codecartpro/v4/banners/{folder}/slide-{i}.webp',{i})")
     o.append("INSERT INTO `oc_banner_image` (`banner_id`,`language_id`,`title`,`link`,`image`,`sort_order`) VALUES\n" + ',\n'.join(rows) + ';')
     o.append("-- размер слайдшоу под новые баннеры 3:1")
     o.append("UPDATE `oc_module` SET `setting`=REPLACE(REPLACE(`setting`,'\"width\":\"1140\"','\"width\":\"1500\"'),'\"height\":\"380\"','\"height\":\"500\"') WHERE `module_id`=27;")

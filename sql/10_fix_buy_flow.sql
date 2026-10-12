@@ -259,6 +259,53 @@ html body.ccp-theme #ccp-cart-popup .ccp-cart-popup__close,html.ccp-dark-theme b
  html body.ccp-theme .ccp-quick-order-modal .modal-footer .ccp-btn{order:-1;width:100%;flex:none;display:flex;align-items:center;justify-content:center;gap:8px}
  html body.ccp-theme .ccp-quick-order-modal .modal-footer .btn-default{width:100%;flex:none}
 }
+
+/* ==========================================================================
+   17. Листинг модулей: квадратные обложки не обрезаются, карточки одной высоты, нет «зависания» строк
+   ========================================================================== */
+html body.ccp-theme .ccp-product-card__image,
+html body.ccp-theme .ccp-product-grid .ccp-product-card__image,
+html body.ccp-theme .product-layout .ccp-product-card__image,
+html body.ccp-theme .ccp-products-module .ccp-product-card__image,
+html body.ccp-theme .ccp-related-carousel .ccp-product-card__image{height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:1/1!important;padding:0!important;border-radius:18px 18px 0 0!important;overflow:hidden}
+html body.ccp-theme .ccp-product-card__image a{display:block;height:100%}
+html body.ccp-theme .ccp-product-card__image img{width:100%!important;height:100%!important;object-fit:cover!important;display:block}
+html body.ccp-theme .ccp-product-card{display:flex;flex-direction:column;overflow:hidden}
+html body.ccp-theme .ccp-product-card__body{flex:1;display:flex;flex-direction:column}
+html body.ccp-theme .ccp-product-card__actions{margin-top:auto}
+
+/* запасной вариант для стандартной разметки OpenCart (.product-layout / .product-thumb) */
+html body.ccp-theme #content .row:has(.product-layout){display:flex!important;flex-wrap:wrap}
+html body.ccp-theme #content .row:has(.product-layout):before,html body.ccp-theme #content .row:has(.product-layout):after{display:none!important}
+html body.ccp-theme .product-layout{display:flex;float:none!important;margin-bottom:20px}
+html body.ccp-theme .product-layout .product-thumb{display:flex;flex-direction:column;width:100%;margin:0;background:var(--cc-card);border:1px solid var(--cc-line);border-radius:20px;overflow:hidden;box-shadow:var(--cc-shadow);transition:transform .2s,box-shadow .2s,border-color .2s}
+html body.ccp-theme .product-layout .product-thumb:hover{transform:translateY(-4px);box-shadow:var(--cc-shadow-hover);border-color:var(--cc-blue-2)}
+html body.ccp-theme .product-layout .product-thumb .image{float:none!important;margin:0!important;padding:0!important;width:100%!important;display:block!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:1/1!important;overflow:hidden;background:var(--cc-soft);text-align:center}
+html body.ccp-theme .product-layout .product-thumb .image + div{flex:1;display:flex;flex-direction:column}
+html body.ccp-theme .product-layout .product-thumb .image a{display:block!important;width:100%!important;height:100%!important}
+html body.ccp-theme .product-layout .product-thumb .image img{width:100%!important;max-width:none!important;height:100%!important;object-fit:cover!important;display:block;margin:0!important}
+html body.ccp-theme .product-layout .product-thumb .caption{flex:1;min-height:0;padding:16px 16px 6px}
+html body.ccp-theme .product-layout .product-thumb .caption h4{font-size:16px;font-weight:800;line-height:1.3;margin:0 0 8px}
+html body.ccp-theme .product-layout .product-thumb .caption h4 a{color:var(--cc-text)}
+html body.ccp-theme .product-layout .product-thumb .caption h4 a:hover{color:var(--cc-blue-2)}
+html body.ccp-theme .product-layout .product-thumb .caption p{color:var(--cc-muted);font-size:14px;line-height:1.5}
+html body.ccp-theme .product-layout .product-thumb .price{font-size:20px;font-weight:850;color:var(--cc-blue-2)}
+html body.ccp-theme .product-layout .product-thumb .button-group{display:flex;gap:8px;margin-top:auto;padding:12px 16px 16px;border:0;background:none}
+html body.ccp-theme .product-layout .product-thumb .button-group button{flex:1;float:none;width:auto;height:44px;border-radius:12px;border:2px solid var(--cc-line);background:var(--cc-card);color:var(--cc-blue-2);font-weight:800}
+html body.ccp-theme .product-layout .product-thumb .button-group button:first-child{flex:3;border:0;background:linear-gradient(165deg,#ffe07a,#ffc21a 58%,#f0a000);color:var(--cc-navy);box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 8px 20px rgba(240,160,0,.3)}
+
+/* ==========================================================================
+   18. Описание модуля в формате «codecart-product-description» (эмодзи-разделы)
+   ========================================================================== */
+.codecart-product-description{color:var(--cc-text,#0b1b3a);line-height:1.75;font-size:16px}
+.codecart-product-description p{margin:0 0 14px}
+.codecart-product-description h2{font-size:clamp(22px,2.6vw,30px);font-weight:850;margin:0 0 16px}
+.codecart-product-description h3{font-size:clamp(18px,2vw,22px);font-weight:850;margin:30px 0 12px;padding-top:6px;border-top:1px solid var(--cc-line,#d9e5f7)}
+.codecart-product-description ul{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+.codecart-product-description li{padding:10px 14px;border-radius:12px;background:var(--cc-soft,#f1f6ff);border:1px solid var(--cc-line,#d9e5f7)}
+html.ccp-dark-theme .codecart-product-description li{background:#0f2247;border-color:#27406e}
+.ccp-demo h3,.ccp-buy-channels h3{border-top:0!important;padding-top:0!important}
+.ccp-demo a,.ccp-buy-channels a{font-weight:700}
 ' WHERE `store_id`=0 AND `key`='theme_codecart_pro_custom_css_global';
 UPDATE `oc_setting` SET `value`='/* CodeCart PRO — доработка всплывающей корзины темы 8.7.5.
    Куда: Система → Дизайн → Темы → CodeCart PRO → Свой код → «JS (подвал)», включить «Кастомный JS».

@@ -5,10 +5,10 @@ import {speak,stopSpeech} from './speech.mjs';
 import {createRecorder} from './recorder.mjs';
 import {scoreDictation} from './pd3-diff.mjs';
 import {recordScore,LIMITS} from './pd3-store.mjs';
-import {countWords,analyzeWriting} from './pd3-writing-check.mjs';
+import {countWords} from './pd3-writing-check.mjs';
 import {applyReaderState,statusText} from './pd3-reader-view.mjs';
 import {hubView,readingListView,readingItemView,dictationListView,dictationItemView,listeningListView,listeningItemView} from './pd3-views.mjs';
-import {examListView,examIntroView,examFindView,examTextView,writingListView,writingItemView,writingSpec,wordMeter,oralView,recorderHtml} from './pd3-practice-views.mjs';
+import {examListView,examIntroView,examFindView,examTextView,writingListView,writingItemView,wordMeter,oralView,recorderHtml} from './pd3-practice-views.mjs';
 
 const EMPTY_DATA={readingPractice:[],readingExamFind:[],readingExamText:[],dictations:[],listening:[],oralMonologue:[],oralInterview:[],oralInteraction:[],oralDiscussion:[],oralPhrases:[],oralCriteria:[],writingEmail:[],writingTask:[],writingCriteria:[],connectors:[]};
 const TITLES={hub:'PD3',reading:'PD3 — чтение вслух',dictation:'PD3 — диктанты',listening:'PD3 — аудирование',exam:'PD3 — чтение (экзамен)',writing:'PD3 — письмо',oral:'PD3 — устная часть'};
@@ -49,7 +49,6 @@ export function createPd3Page({data,store,deps}){
   function teardown(){
     flushDraft();stopTimer();destroyReader();clearRecorder();stopSpeech();
   }
-  const heading=()=>{const el=container()?.querySelector('h1');return el;};
 
   /* ---------- rendering ---------- */
   function html(){
@@ -204,12 +203,11 @@ export function createPd3Page({data,store,deps}){
     ensureReader(it.sentences,{gap});
   }
   function dictationListen(pos){
-    const it=item(),limit=d().settings.dictation.limit,key=pos==='all'?'all':Number(pos);
+    const limit=d().settings.dictation.limit,key=pos==='all'?'all':Number(pos);
     if(limit&&(run.plays[key]||0)>=limit)return;
     run.plays[key]=(run.plays[key]||0)+1;
     startReading(key==='all'?0:key,{onlyOne:key!=='all'});
     render();
-    void it;
   }
   function checkDictation(){
     const it=item(),settings=d().settings.dictation;

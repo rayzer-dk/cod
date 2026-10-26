@@ -1,4 +1,6 @@
-# Danskdag 1.9.1
+# Danskdag 1.9.2
+
+PD3 section: see `docs/release-1.9.2.md`.
 
 Audit-fix release: see `docs/release-1.9.1.md`.
 

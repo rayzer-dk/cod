@@ -42,6 +42,10 @@ const dayDistance = (a,b) => (Date.parse(a) - Date.parse(b))/DAY;
 export function activeStreak(state, now = new Date()) {
   return state.lastDay && dayDistance(dayKey(now),state.lastDay) <= 1 ? state.streak : 0;
 }
+function advanceStreak(result, state, today) {
+  if (state.lastDay !== today) result.streak = state.lastDay && dayDistance(today,state.lastDay) === 1 ? state.streak + 1 : 1;
+  result.lastDay = today;
+}
 export function finishSession(state, event, now = new Date()) {
   if (!record(event) || !safeId(event.id) || !integerWithin(event.total,100) || event.total<1 ||
       !integerWithin(event.correct,event.total) || !numberWithin(event.minutes,1440) ||
@@ -52,8 +56,7 @@ export function finishSession(state, event, now = new Date()) {
   if (state.sessions.includes(event.id)) return state;
   const result = structuredClone(state), today = dayKey(now), xp = event.correct*10;
   result.xp += xp;
-  if (state.lastDay !== today) result.streak = state.lastDay && dayDistance(today,state.lastDay) === 1 ? state.streak + 1 : 1;
-  result.lastDay = today;
+  advanceStreak(result,state,today);
   result.sessions = [...result.sessions,event.id].slice(-10000);
   result.activity[today] = {xp:(result.activity[today]?.xp || 0)+xp,lessons:(result.activity[today]?.lessons || 0)+1,minutes:(result.activity[today]?.minutes || 0)+event.minutes};
   if (event.lessonId) {
@@ -61,6 +64,36 @@ export function finishSession(state, event, now = new Date()) {
     result.completed[event.lessonId]={best:Math.max(old?.best || 0,Math.round(event.correct/event.total*100)),attempts:(old?.attempts || 0)+1};
   }
   return result;
+}
+// XP for finished PD3 activities. Each activity is worth at most this much in total (a share of it per percent of the best result),
+// nothing below PD3_MIN_PERCENT, and no more than PD3_DAY_XP a day from PD3 altogether.
+export const PD3_XP = {reading:10,listening:10,dictation:12,'exam-find':20,'exam-text':25,writing:15,oral:8};
+export const PD3_MIN_PERCENT = 30, PD3_DAY_XP = 60;
+/** Counts a finished PD3 activity: {kind,id,percent,minutes}. The result must already be stored in state.pd3 by the caller.
+ * XP is paid for the first completion and for an improved best result only (state.pd3.xp remembers the percent already paid),
+ * so repeating or reopening an activity gives nothing. Any counted completion also keeps the streak and the day's activity.
+ * Returns {state,xp,counted,first}; an unfinished, empty or invalid attempt returns the same state with counted=false. */
+export function awardPd3(state, event, now = new Date()) {
+  const none = {state,xp:0,counted:false,first:false};
+  if (!record(event) || !Object.hasOwn(PD3_XP,event.kind) || !/^[a-z0-9-]{1,60}$/.test(event.id) || !integerWithin(event.percent,100) ||
+      !(now instanceof Date) || !Number.isFinite(now.getTime()) || event.percent < PD3_MIN_PERCENT) return none;
+  const result = structuredClone(state), today = dayKey(now), key = `${event.kind}:${event.id}`;
+  const pd3 = result.pd3 || (result.pd3 = emptyPd3()), ledger = pd3.xp;
+  if (ledger.day !== today) {ledger.day = today;ledger.today = 0;}
+  const worth = percent => Math.round(PD3_XP[event.kind]*percent/100), before = ledger.items[key] || 0, room = Math.max(0,PD3_DAY_XP-ledger.today);
+  let reached = Math.max(before,event.percent);
+  while (reached > before && worth(reached)-worth(before) > room) reached--;
+  const xp = worth(reached)-worth(before), minutes = numberWithin(event.minutes,1440) ? event.minutes : 1;
+  // The record moves only with paid XP, so a gain too small to pay (or a day limit) is not lost: it is paid with the next improvement.
+  if (xp > 0) ledger.items[key] = reached;
+  ledger.today += xp;
+  result.xp += xp;
+  advanceStreak(result,state,today);
+  const day = result.activity[today];
+  // A repeat that pays nothing keeps the streak but does not add another "lesson" to the day.
+  if (xp > 0 || !day?.lessons) result.activity[today] = {xp:(day?.xp || 0)+xp,lessons:(day?.lessons || 0)+1,minutes:(day?.minutes || 0)+minutes};
+  pd3.updatedAt = Math.max(pd3.updatedAt,now.getTime());
+  return {state:result,xp,counted:true,first:before === 0};
 }
 export function getLearnerLevel(xp) {
   const value=typeof xp==='number' && Number.isFinite(xp) ? Math.max(0,xp) : 0;
@@ -101,7 +134,146 @@ export function getAchievements(state) {
   ];
   return awards.map(([id,title,description,icon,progress,target])=>({id,title,description,icon,earned:progress>=target,progress:Math.min(progress,target),target}));
 }
-const STATE_KEYS=new Set(['version','xp','streak','lastDay','completed','reviews','activity','sessions','bookmarks','difficult','customWords','settings','_unknown']);
+// ---- PD3 data inside the progress (state.pd3) --------------------------------------------------------------
+// The schema lives here so that the Worker, which bundles only this file, validates the same data as the app. pd3-store.mjs re-exports it.
+export const PD3_VERSION=1;
+export const PD3_LIMITS={draft:12000,items:300,bytes:900000,importBytes:1500000,keywords:12,keyword:40,state:262144,xpItems:600};
+/** Error kinds counted in the dictation statistics (the same list as ERROR_KINDS in pd3-diff.mjs). */
+export const PD3_STAT_KINDS=['aeoa','double','silent','ending','case','other','punctuation','missing','extra','order'];
+/** Fields of `state.pd3` that validatePd3 knows; anything else a newer version wrote is carried in `_unknown` by engine.mjs. */
+export const PD3_KEYS=new Set(['version','updatedAt','settings','reading','listening','dictation','exam','writing','oral','plan','stats','xp','_unknown']);
+const PD3_ID=/^[a-z0-9-]{1,60}$/;
+const PD3_SCORE_MAPS=['reading','listening','dictation'];
+const PD3_RATES=[0.6,0.75,0.9,1];
+
+const pd3Object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
+const pd3Int=(value,min,max,fallback=0)=>Number.isFinite(Number(value))?Math.min(max,Math.max(min,Math.round(Number(value)))):fallback;
+const pd3Stamp=value=>pd3Int(value,0,8.64e15,0);
+const pd3Pct=value=>pd3Int(value,0,100,0);
+const pd3Text=(value,max)=>typeof value==='string'?value.slice(0,max):'';
+
+export function emptyPd3(){
+  return {
+    version:PD3_VERSION,updatedAt:0,
+    settings:{
+      reader:{rate:0.9,follow:true,translation:false,calibration:1},
+      dictation:{rate:0.9,limit:0,strict:false},
+      exam:{timer:true},
+      writing:{timer:false,minutes:45}
+    },
+    reading:{},listening:{},dictation:{},
+    exam:{find:{},text:{}},
+    writing:{},oral:{},
+    plan:{examDate:''},
+    stats:{dictation:{runs:0,errors:{}}},
+    xp:{items:{},day:'',today:0}
+  };
+}
+const PD3_XP_KEY=/^[a-z]+(?:-[a-z]+)?:[a-z0-9-]{1,60}$/;
+const PD3_DAY_KEY=/^\d{4}-\d{2}-\d{2}$/;
+const pd3ValidDay=value=>typeof value==='string'&&PD3_DAY_KEY.test(value)&&Number.isFinite(Date.parse(value))&&new Date(value).toISOString().startsWith(value);
+function pd3CleanStats(value){
+  const dictation=pd3Object(value)&&pd3Object(value.dictation)?value.dictation:{},errors={};
+  if(pd3Object(dictation.errors))for(const kind of PD3_STAT_KINDS){
+    const count=pd3Int(dictation.errors[kind],0,1000000,0);
+    if(count)errors[kind]=count;
+  }
+  return {dictation:{runs:pd3Int(dictation.runs,0,1000000,0),errors}};
+}
+function pd3CleanXp(value){
+  const source=pd3Object(value)?value:{},items={};
+  if(pd3Object(source.items))for(const [key,percent] of Object.entries(source.items).slice(0,PD3_LIMITS.xpItems)){
+    if(PD3_XP_KEY.test(key)&&Number.isFinite(Number(percent)))items[key]=pd3Pct(percent);
+  }
+  const day=pd3ValidDay(source.day)?source.day:'';
+  return {items,day,today:day?pd3Int(source.today,0,100000,0):0};
+}
+
+function pd3CleanScore(value){
+  if(!pd3Object(value))return null;
+  const entry={best:pd3Pct(value.best),last:pd3Pct(value.last),attempts:pd3Int(value.attempts,0,100000),at:pd3Stamp(value.at)};
+  if(Array.isArray(value.parts))entry.parts=value.parts.slice(0,6).map(pd3Pct);
+  return entry;
+}
+function pd3CleanMap(source,cleaner){
+  const result={};
+  if(!pd3Object(source))return result;
+  for(const [id,value] of Object.entries(source).slice(0,PD3_LIMITS.items)){
+    if(!PD3_ID.test(id))continue;
+    const entry=cleaner(value);
+    if(entry)result[id]=entry;
+  }
+  return result;
+}
+const pd3Flags=(value,max)=>Array.isArray(value)?value.slice(0,max).map(Boolean):[];
+function pd3CleanSelf(value){
+  const result={};
+  if(pd3Object(value))for(const [id,score] of Object.entries(value).slice(0,12)){
+    if(PD3_ID.test(id)&&Number.isFinite(Number(score)))result[id]=pd3Int(score,1,5,3);
+  }
+  return result;
+}
+function pd3CleanWriting(value){
+  if(!pd3Object(value))return null;
+  return {
+    draft:pd3Text(value.draft,PD3_LIMITS.draft),option:value.option==='B'?'B':'A',updatedAt:pd3Stamp(value.updatedAt),
+    done:!!value.done,req:pd3Flags(value.req,12),check:pd3Flags(value.check,20),self:pd3CleanSelf(value.self)
+  };
+}
+function pd3CleanOral(value){
+  if(!pd3Object(value))return null;
+  const keywords=Array.isArray(value.keywords)?value.keywords.map(word=>pd3Text(word,PD3_LIMITS.keyword).trim()).filter(Boolean).slice(0,PD3_LIMITS.keywords):[];
+  return {keywords,self:pd3CleanSelf(value.self),done:!!value.done,updatedAt:pd3Stamp(value.updatedAt)};
+}
+
+/** Returns a clean copy of stored or imported data; throws when it is not PD3 data of a known version. */
+export function validatePd3(raw){
+  if(!pd3Object(raw))throw new Error('Not PD3 data');
+  if(raw.version!==PD3_VERSION)throw new Error('Unknown PD3 data version');
+  const base=emptyPd3(),s=pd3Object(raw.settings)?raw.settings:{};
+  const reader=pd3Object(s.reader)?s.reader:{},dictation=pd3Object(s.dictation)?s.dictation:{},exam=pd3Object(s.exam)?s.exam:{},writing=pd3Object(s.writing)?s.writing:{};
+  const data={
+    version:PD3_VERSION,updatedAt:pd3Stamp(raw.updatedAt),
+    settings:{
+      reader:{rate:PD3_RATES.includes(reader.rate)?reader.rate:base.settings.reader.rate,follow:reader.follow!==false,translation:!!reader.translation,calibration:Math.min(3,Math.max(0.35,Number(reader.calibration)||1))},
+      dictation:{rate:PD3_RATES.includes(dictation.rate)?dictation.rate:base.settings.dictation.rate,limit:[0,2,3].includes(dictation.limit)?dictation.limit:0,strict:!!dictation.strict},
+      exam:{timer:exam.timer!==false},
+      writing:{timer:!!writing.timer,minutes:[30,45,60,90,120].includes(writing.minutes)?writing.minutes:45}
+    },
+    exam:{find:pd3CleanMap(raw.exam?.find,pd3CleanScore),text:pd3CleanMap(raw.exam?.text,pd3CleanScore)},
+    writing:pd3CleanMap(raw.writing,pd3CleanWriting),oral:pd3CleanMap(raw.oral,pd3CleanOral),
+    plan:{examDate:pd3ValidDay(raw.plan?.examDate)?raw.plan.examDate:''},
+    stats:pd3CleanStats(raw.stats),xp:pd3CleanXp(raw.xp)
+  };
+  for(const name of PD3_SCORE_MAPS)data[name]=pd3CleanMap(raw[name],pd3CleanScore);
+  return data;
+}
+
+/** Attaches fields carried from a newer version and keeps the whole object under PD3_LIMITS.state: long drafts are shortened
+ * (oldest first), then the oldest records are dropped. Returns the same object. Data below the limit is not touched. */
+export function sealPd3(data,unknown=null,max=PD3_LIMITS.state){
+  if(unknown&&pd3Object(unknown)&&Object.keys(unknown).length)data._unknown=unknown;else delete data._unknown;
+  const size=()=>JSON.stringify(data).length;
+  if(size()<=max)return data;
+  const drafts=Object.values(data.writing).filter(entry=>entry.draft).sort((a,b)=>a.updatedAt-b.updatedAt);
+  for(const cap of [6000,3000,1000,0])for(const entry of drafts){
+    if(entry.draft.length<=cap)continue;
+    entry.draft=entry.draft.slice(0,cap);
+    if(size()<=max)return data;
+  }
+  const records=[];
+  for(const name of PD3_SCORE_MAPS)for(const [id,entry] of Object.entries(data[name]))records.push([entry.at,data[name],id]);
+  for(const name of ['find','text'])for(const [id,entry] of Object.entries(data.exam[name]))records.push([entry.at,data.exam[name],id]);
+  for(const name of ['writing','oral'])for(const [id,entry] of Object.entries(data[name]))records.push([entry.updatedAt,data[name],id]);
+  records.sort((a,b)=>a[0]-b[0]);
+  for(const [,map,id] of records){
+    delete map[id];
+    if(size()<=max)return data;
+  }
+  delete data._unknown;
+  return data;
+}
+const STATE_KEYS=new Set(['version','xp','streak','lastDay','completed','reviews','activity','sessions','bookmarks','difficult','customWords','settings','pd3','_unknown']);
 const SETTING_KEYS=new Set(['level','goal','theme','rate','mode','fontSize','newPerDay','voiceUri','language','name','_unknown']);
 // Fields written by a newer app version are carried along (bounded, JSON-only) so that saving never erases them.
 function unknownFields(source,known,carried){
@@ -192,6 +364,10 @@ export function validateState(raw) {
   if(typeof s.name==='string' && s.name.length<=40 && !/[\u0000-\u001f\u007f]/.test(s.name) && s.name.trim())clean.settings.name=s.name.trim();
   const settingsExtra=unknownFields(s,SETTING_KEYS,s._unknown);
   if(settingsExtra)clean.settings._unknown=settingsExtra;
+  // PD3 results are optional. Data that is not PD3 data of a known version is left out; it never makes the whole progress unreadable.
+  if(Object.hasOwn(raw,'pd3')){
+    try{clean.pd3=sealPd3(validatePd3(raw.pd3),unknownFields(raw.pd3,PD3_KEYS,raw.pd3._unknown));}catch{ /* Not usable PD3 data. */ }
+  }
   const extra=unknownFields(raw,STATE_KEYS,raw._unknown);
   if(extra)clean._unknown=extra;
   return clean;

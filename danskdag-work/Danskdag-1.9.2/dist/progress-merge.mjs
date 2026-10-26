@@ -1,10 +1,11 @@
+import {mergePd3Tabs} from './pd3-merge.mjs';
 // Three-way merge of learner progress written by two tabs of the same browser.
 //   base   - what this tab last read from or wrote to storage
 //   ours   - this tab's in-memory progress (base plus changes made here)
 //   theirs - what another tab wrote meanwhile
 // Counters that only grow (XP, attempts, minutes) add up both tabs' new work; lists are merged as sets with
 // removals respected; per-card review data takes the more recent attempt; everything else is "changed here wins".
-// The result must still be passed through validateState by the caller.
+// PD3 results (state.pd3) are merged by pd3-merge.mjs. The result must still be passed through validateState by the caller.
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const num=value=>typeof value==='number' && Number.isFinite(value) ? value : 0;
 const later=(a,b)=>(a ?? '')>(b ?? '') ? a : b;
@@ -78,6 +79,8 @@ export function mergeProgress(base,ours,theirs) {
     const mine=ours.settings[key],original=base?.settings[key];
     if(!base || !same(mine,original)){ if(mine===undefined)delete merged.settings[key]; else merged.settings[key]=mine; }
   }
+  const pd3=mergePd3Tabs(base?.pd3,ours.pd3,theirs.pd3,!!base);
+  if(pd3)merged.pd3=pd3;else delete merged.pd3;
   if(ours._unknown || theirs._unknown)merged._unknown={...ours._unknown,...theirs._unknown};
   return merged;
 }

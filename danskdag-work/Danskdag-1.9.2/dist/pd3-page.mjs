@@ -5,6 +5,7 @@ import {speak,stopSpeech} from './speech.mjs';
 import {createRecorder} from './recorder.mjs';
 import {scoreDictation} from './pd3-diff.mjs';
 import {recordScore,LIMITS} from './pd3-store.mjs';
+import {vocabExample} from './pd3-vocab.mjs';
 import {countWords} from './pd3-writing-check.mjs';
 import {applyReaderState,statusText} from './pd3-reader-view.mjs';
 import {hubView,readingListView,readingItemView,dictationListView,dictationItemView,listeningListView,listeningItemView} from './pd3-views.mjs';
@@ -26,6 +27,14 @@ export function createPd3Page({data,store,deps}){
   const container=()=>deps.container();
 
   /* ---------- helpers ---------- */
+  /** Counts a finished activity in the learner's progress (XP, streak, day). Only checked, non-empty results count; see awardPd3 in engine.mjs. */
+  function complete(kind,id,percent){
+    const minutes=Math.max(1,Math.min(60,Math.round((now()-(run?.t0??now()))/60000)));
+    const result=deps.award?.({kind,id,percent:Math.round(percent),minutes})||{xp:0,counted:false};
+    if(run)run.xp=result.xp;
+    return result;
+  }
+  const xpText=result=>result.xp>0?` +${result.xp} XP`:'';
   function persist(change){
     const ok=store.update(change);
     if(!ok&&!errorShown){errorShown=true;deps.toast(store.status.error==='size'?'Данные PD3 слишком велики для сохранения. Скачай копию PD3 в разделе PD3 и удали лишнее.':'Не удалось сохранить результаты PD3 в браузере. Скачай копию PD3 в разделе PD3.');}
@@ -54,9 +63,9 @@ export function createPd3Page({data,store,deps}){
   function html(){
     const view=ui.view,it=item(),settings=d();
     const error=store.status.broken?'Сохранённые данные PD3 не удалось прочитать. Их копия сохранена в браузере, раздел начат заново.':store.status.error==='unavailable'?'Браузер не даёт сохранять результаты PD3. Скачай копию PD3 вручную.':'';
-    const ctx={data:D,d:settings,run,error};
+    const ctx={data:D,d:settings,run,error,now:new Date(now()),known:deps.vocab?.has};
     if(view==='hub')return hubView(ctx);
-    if(view==='reading')return it?readingItemView({item:it,d:settings,run}):readingListView(ctx);
+    if(view==='reading')return it?readingItemView({item:it,d:settings,run,known:deps.vocab?.has}):readingListView(ctx);
     if(view==='dictation')return it?dictationItemView({item:it,d:settings,run}):dictationListView(ctx);
     if(view==='listening')return it?listeningItemView({item:it,d:settings,run}):listeningListView(ctx);
     if(view==='exam'){
@@ -102,6 +111,11 @@ export function createPd3Page({data,store,deps}){
     if(focus)focusPageStart(container(),'h1');
   }
   function makeRun(){
+    const created=buildRun();
+    if(created)created.t0=now();
+    return created;
+  }
+  function buildRun(){
     const it=item();
     switch(ui.view){
       case 'reading':return it?{answers:{},checked:false,score:0,snap:null}:null;
@@ -187,8 +201,10 @@ export function createPd3Page({data,store,deps}){
     const it=item();
     if(it.questions.some((_,i)=>run.answers[`q:${i}`]===undefined)){deps.toast('Ответь на все вопросы, потом нажми «Проверить ответы».');return;}
     run.score=it.questions.filter((q,i)=>run.answers[`q:${i}`]===q.answer).length;run.checked=true;
-    persist(s=>{recordScore(s.reading,it.id,Math.round(run.score/it.questions.length*100),null,now());});
-    render();deps.announce?.(`Результат: ${run.score} из ${it.questions.length}`);
+    const percent=Math.round(run.score/it.questions.length*100);
+    persist(s=>{recordScore(s.reading,it.id,percent,null,now());});
+    const award=complete('reading',it.id,percent);
+    render();deps.announce?.(`Результат: ${run.score} из ${it.questions.length}.${xpText(award)}`);
     container().querySelector('.pd3-result')?.scrollIntoView({block:'center'});
   }
 
@@ -214,11 +230,22 @@ export function createPd3Page({data,store,deps}){
     flushInputs();
     const result=scoreDictation(it.sentences,run.inputs,it.mode,{strict:settings.strict});
     run.result=result;
-    persist(s=>{recordScore(s.dictation,it.id,result.percent,null,now());});
+    // An empty check shows its result but is not saved: it would count as a finished dictation and as a mistake statistic.
+    const typed=Object.values(run.inputs).some(value=>String(value).trim());
+    let award={xp:0};
+    if(typed){
+      persist(s=>{
+        recordScore(s.dictation,it.id,result.percent,null,now());
+        const stats=s.stats.dictation;
+        stats.runs=Math.min(1000000,stats.runs+1);
+        for(const entry of result.errors)stats.errors[entry.kind]=Math.min(1000000,(stats.errors[entry.kind]||0)+entry.count);
+      });
+      award=complete('dictation',it.id,result.percent);
+    }
     ensureReader(it.sentences);
     render({keepScroll:false});
     globalThis.scrollTo?.({top:0,behavior:'instant'});
-    deps.announce?.(`Диктант проверен: ${result.percent}%`);
+    deps.announce?.(`Диктант проверен: ${result.percent}%.${xpText(award)}`);
     focusPageStart(container(),'h1');
   }
   function flushInputs(){
@@ -244,10 +271,12 @@ export function createPd3Page({data,store,deps}){
     const it=item();
     if(it.questions.some((_,i)=>run.answers[`q:${i}`]===undefined)){deps.toast('Ответь на все вопросы, потом нажми «Проверить».');return;}
     run.score=it.questions.filter((q,i)=>run.answers[`q:${i}`]===q.answer).length;run.phase='result';
-    persist(s=>{recordScore(s.listening,it.id,Math.round(run.score/it.questions.length*100),null,now());});
+    const percent=Math.round(run.score/it.questions.length*100);
+    persist(s=>{recordScore(s.listening,it.id,percent,null,now());});
+    const award=complete('listening',it.id,percent);
     ensureReader(it.sentences);
     render({keepScroll:false});
-    deps.announce?.(`Результат: ${run.score} из ${it.questions.length}`);
+    deps.announce?.(`Результат: ${run.score} из ${it.questions.length}.${xpText(award)}`);
     focusPageStart(container(),'h1');
   }
 
@@ -266,14 +295,18 @@ export function createPd3Page({data,store,deps}){
     stopTimer();run.timerOn=false;run.phase='result';
     if(ui.kind==='find'){
       const score=it.questions.filter(q=>run.answers[`find:${q.id}`]===q.section).length;
-      persist(s=>{recordScore(s.exam.find,it.id,Math.round(score/it.questions.length*100),null,now());});
+      const percent=Math.round(score/it.questions.length*100);
+      persist(s=>{recordScore(s.exam.find,it.id,percent,null,now());});
+      complete('exam-find',it.id,percent);
     }else{
       const gaps2=it.text2.parts.filter(p=>p.gap).map(p=>p.gap),gaps3=it.text3.segments.filter(x=>typeof x!=='string');
       const s1=it.text1.questions.filter((q,i)=>run.answers[`t1:${i}`]===q.answer).length;
       const s2=gaps2.filter(n=>run.answers[`t2:${n}`]===it.text2.solution[n]).length;
       const s3=gaps3.filter(g=>run.answers[`t3:${g.gap}`]===g.answer).length;
       const total=it.text1.questions.length+gaps2.length+gaps3.length;
-      persist(s=>{recordScore(s.exam.text,it.id,Math.round((s1+s2+s3)/total*100),[s1/it.text1.questions.length*100,s2/gaps2.length*100,s3/gaps3.length*100],now());});
+      const percent=Math.round((s1+s2+s3)/total*100);
+      persist(s=>{recordScore(s.exam.text,it.id,percent,[s1/it.text1.questions.length*100,s2/gaps2.length*100,s3/gaps3.length*100],now());});
+      complete('exam-text',it.id,percent);
     }
     render({keepScroll:false});
     globalThis.scrollTo?.({top:0,behavior:'instant'});
@@ -349,7 +382,7 @@ export function createPd3Page({data,store,deps}){
   function click(el){
     const action=el.dataset.action,value=el.dataset.value,id=el.dataset.id,pos=el.dataset.pos;
     switch(action){
-      case 'pd3-open':open(value);return true;
+      case 'pd3-open':case 'pd3-advice':open(value);return true;
       case 'pd3-pick':
         if(ui.view==='reading')openReading(id);
         else if(ui.view==='dictation')openDictation(id);
@@ -362,6 +395,10 @@ export function createPd3Page({data,store,deps}){
         const name=`Danskdag_PD3_${new Date(now()).toISOString().slice(0,10)}.json`;
         (deps.download||downloadFile)(name,store.exportJson());deps.toast('Копия PD3 подготовлена для скачивания.');return true;}
       case 'pd3-import':container().querySelector('#pd3-file')?.click();return true;
+      case 'pd3-plan-clear':persist(s=>{s.plan.examDate='';});render();container()?.querySelector('#pd3-exam-date')?.focus({preventScroll:true});return true;
+      case 'pd3-weak-practice':if(D.dictations.some(x=>x.id===id))openDictation(id);return true;
+      case 'pd3-vocab-add':addVocab(pos===undefined?[]:[Number(pos)]);return true;
+      case 'pd3-vocab-all':addVocab('all');return true;
       case 'pd3-play':playPressed();return true;
       case 'pd3-prev':void reader?.prev();return true;
       case 'pd3-next':void reader?.next();return true;
@@ -388,7 +425,10 @@ export function createPd3Page({data,store,deps}){
       case 'pd3-wtimer':writingTimerPressed();return true;
       case 'pd3-write-done':{
         saveDraft();const it=item();
-        persist(s=>{const w=s.writing[it.id]||(s.writing[it.id]={draft:run.text,option:run.option,updatedAt:now(),done:false,req:[],check:[],self:{}});w.done=true;});
+        persist(s=>{const w=s.writing[it.id]||(s.writing[it.id]={draft:run.text,option:run.option,updatedAt:now(),done:false,req:[],check:[],self:{}});w.done=true;w.updatedAt=now();});
+        // A text shorter than half of the minimum length does not count as a finished piece of writing.
+        if(countWords(run.text)>=Math.ceil((it.minWords||0)/2)&&countWords(run.text)>0){const award=complete('writing',it.id,100);if(award.xp>0)deps.announce?.(`Письмо завершено.${xpText(award)}`);}
+        else deps.toast('Текст короче половины нужного объёма: в прогресс он не засчитан. Дополни его и нажми «Готово» снова.');
         stopTimer();run.timerOn=false;run.phase='done';render({keepScroll:false});globalThis.scrollTo?.({top:0,behavior:'instant'});focusPageStart(container(),'h1');return true;}
       case 'pd3-write-edit':run.phase='write';render({keepScroll:false});focusPageStart(container(),'h1');return true;
       case 'pd3-oral-tab':run.tab=value;run.id=null;run.key='';resetOralItem();render({keepScroll:false});return true;
@@ -415,6 +455,18 @@ export function createPd3Page({data,store,deps}){
       case 'pd3-int-restart':resetOralItem();render();return true;
       default:return false;
     }
+  }
+  /** Adds words of the open reading text to the learner's own words (with a sentence from the text as the example). */
+  function addVocab(which){
+    const it=item();
+    if(ui.view!=='reading'||!it?.vocab||!deps.vocab)return;
+    const indexes=which==='all'?it.vocab.map((_,i)=>i):which.filter(i=>Number.isInteger(i)&&it.vocab[i]);
+    const words=indexes.map(i=>({da:it.vocab[i].da,ru:it.vocab[i].ru,note:vocabExample(it.vocab[i].da,it.sentences)}));
+    const result=deps.vocab.add(words);
+    render();
+    container()?.querySelector('.pd3-vocab summary')?.focus({preventScroll:true});
+    if(result.added)deps.announce?.(`Добавлено в мои слова: ${result.added}.${result.skipped?` Уже были в словаре: ${result.skipped}.`:''}`);
+    else deps.announce?.(result.failed?'Не удалось добавить слова.':'Эти слова уже есть в словаре.');
   }
   function startOrMark(pos){
     if(!reader)return;
@@ -443,6 +495,7 @@ export function createPd3Page({data,store,deps}){
   }
   function change(target){
     if(target.id==='pd3-file'){importFile(target);return true;}
+    if(target.id==='pd3-exam-date'){persist(s=>{s.plan.examDate=target.value;});render();return true;}
     const setting=target.dataset?.pd3Setting;
     if(setting){
       const checked=target.checked;
@@ -464,13 +517,17 @@ export function createPd3Page({data,store,deps}){
     }
     if(target.dataset?.pd3Check){
       const [list,index]=target.dataset.pd3Check.split(':'),i=Number(index),it=item();
-      persist(s=>{const w=s.writing[it.id]||(s.writing[it.id]={draft:run.text,option:run.option,updatedAt:now(),done:false,req:[],check:[],self:{}});w[list][i]=target.checked;});
+      persist(s=>{const w=s.writing[it.id]||(s.writing[it.id]={draft:run.text,option:run.option,updatedAt:now(),done:false,req:[],check:[],self:{}});w[list][i]=target.checked;w.updatedAt=now();});
       return true;
     }
     if(target.dataset?.pd3Self){
       const criterion=target.dataset.pd3Self,score=Number(target.value);
-      if(ui.view==='writing'){const it=item();persist(s=>{const w=s.writing[it.id]||(s.writing[it.id]={draft:run.text,option:run.option,updatedAt:now(),done:false,req:[],check:[],self:{}});w.self[criterion]=score;});}
-      else if(ui.view==='oral'&&run.key)persist(s=>{const o=s.oral[run.key]||(s.oral[run.key]={keywords:[],self:{},done:false,updatedAt:0});o.self[criterion]=score;o.done=true;o.updatedAt=now();});
+      if(ui.view==='writing'){const it=item();persist(s=>{const w=s.writing[it.id]||(s.writing[it.id]={draft:run.text,option:run.option,updatedAt:now(),done:false,req:[],check:[],self:{}});w.self[criterion]=score;w.updatedAt=now();});}
+      else if(ui.view==='oral'&&run.key){
+        persist(s=>{const o=s.oral[run.key]||(s.oral[run.key]={keywords:[],self:{},done:false,updatedAt:0});o.self[criterion]=score;o.done=true;o.updatedAt=now();});
+        // The oral part has no automatic check: it counts once at least three criteria have been rated.
+        if(Object.keys(d().oral[run.key]?.self||{}).length>=3){const award=complete('oral',run.key,100);if(award.xp>0)deps.announce?.(`Устная часть отмечена.${xpText(award)}`);}
+      }
       return true;
     }
     return false;

@@ -1,89 +1,15 @@
-// Separate storage for the PD3 section. It never touches the learner's main progress (engine state, cloud sync, hashes).
+import {validatePd3,sealPd3,emptyPd3,PD3_VERSION,PD3_LIMITS,PD3_STAT_KINDS,PD3_KEYS} from './engine.mjs';
+// Data of the PD3 section. Since 1.9.3 it lives in the learner's progress as the optional field `state.pd3` (see engine.mjs);
+// PD3_KEY is the storage key of versions 1.9.2 and earlier, still read once to migrate old results (pd3-migrate.mjs).
+// The data schema (validatePd3, defaults, size limits) lives in engine.mjs, which the Worker bundles; this module re-exports it under the names the app and the tests use.
 export const PD3_KEY='danskdag.pd3.v1';
-export const PD3_VERSION=1;
-export const LIMITS={draft:12000,items:300,bytes:900000,importBytes:1500000,keywords:12,keyword:40};
-const ID=/^[a-z0-9-]{1,60}$/;
+
+export {validatePd3,sealPd3,emptyPd3,PD3_VERSION,PD3_KEYS};
+export const LIMITS=PD3_LIMITS;
+export const STAT_KINDS=PD3_STAT_KINDS;
+export function defaults(){return emptyPd3();}
 const SCORE_MAPS=['reading','listening','dictation'];
-const RATES=[0.6,0.75,0.9,1];
-
-const isObject=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
-const int=(value,min,max,fallback=0)=>Number.isFinite(Number(value))?Math.min(max,Math.max(min,Math.round(Number(value)))):fallback;
-const stamp=value=>int(value,0,8.64e15,0);
-const pct=value=>int(value,0,100,0);
-const text=(value,max)=>typeof value==='string'?value.slice(0,max):'';
-
-export function defaults(){
-  return {
-    version:PD3_VERSION,updatedAt:0,
-    settings:{
-      reader:{rate:0.9,follow:true,translation:false,calibration:1},
-      dictation:{rate:0.9,limit:0,strict:false},
-      exam:{timer:true},
-      writing:{timer:false,minutes:45}
-    },
-    reading:{},listening:{},dictation:{},
-    exam:{find:{},text:{}},
-    writing:{},oral:{}
-  };
-}
-
-function cleanScore(value){
-  if(!isObject(value))return null;
-  const entry={best:pct(value.best),last:pct(value.last),attempts:int(value.attempts,0,100000),at:stamp(value.at)};
-  if(Array.isArray(value.parts))entry.parts=value.parts.slice(0,6).map(pct);
-  return entry;
-}
-function cleanMap(source,cleaner){
-  const result={};
-  if(!isObject(source))return result;
-  for(const [id,value] of Object.entries(source).slice(0,LIMITS.items)){
-    if(!ID.test(id))continue;
-    const entry=cleaner(value);
-    if(entry)result[id]=entry;
-  }
-  return result;
-}
-const flags=(value,max)=>Array.isArray(value)?value.slice(0,max).map(Boolean):[];
-function cleanSelf(value){
-  const result={};
-  if(isObject(value))for(const [id,score] of Object.entries(value).slice(0,12)){
-    if(ID.test(id)&&Number.isFinite(Number(score)))result[id]=int(score,1,5,3);
-  }
-  return result;
-}
-function cleanWriting(value){
-  if(!isObject(value))return null;
-  return {
-    draft:text(value.draft,LIMITS.draft),option:value.option==='B'?'B':'A',updatedAt:stamp(value.updatedAt),
-    done:!!value.done,req:flags(value.req,12),check:flags(value.check,20),self:cleanSelf(value.self)
-  };
-}
-function cleanOral(value){
-  if(!isObject(value))return null;
-  const keywords=Array.isArray(value.keywords)?value.keywords.map(word=>text(word,LIMITS.keyword).trim()).filter(Boolean).slice(0,LIMITS.keywords):[];
-  return {keywords,self:cleanSelf(value.self),done:!!value.done,updatedAt:stamp(value.updatedAt)};
-}
-
-/** Returns a clean copy of stored or imported data; throws when it is not PD3 data of a known version. */
-export function validatePd3(raw){
-  if(!isObject(raw))throw new Error('Not PD3 data');
-  if(raw.version!==PD3_VERSION)throw new Error('Unknown PD3 data version');
-  const base=defaults(),s=isObject(raw.settings)?raw.settings:{};
-  const reader=isObject(s.reader)?s.reader:{},dictation=isObject(s.dictation)?s.dictation:{},exam=isObject(s.exam)?s.exam:{},writing=isObject(s.writing)?s.writing:{};
-  const data={
-    version:PD3_VERSION,updatedAt:stamp(raw.updatedAt),
-    settings:{
-      reader:{rate:RATES.includes(reader.rate)?reader.rate:base.settings.reader.rate,follow:reader.follow!==false,translation:!!reader.translation,calibration:Math.min(3,Math.max(0.35,Number(reader.calibration)||1))},
-      dictation:{rate:RATES.includes(dictation.rate)?dictation.rate:base.settings.dictation.rate,limit:[0,2,3].includes(dictation.limit)?dictation.limit:0,strict:!!dictation.strict},
-      exam:{timer:exam.timer!==false},
-      writing:{timer:!!writing.timer,minutes:[30,45,60,90,120].includes(writing.minutes)?writing.minutes:45}
-    },
-    exam:{find:cleanMap(raw.exam?.find,cleanScore),text:cleanMap(raw.exam?.text,cleanScore)},
-    writing:cleanMap(raw.writing,cleanWriting),oral:cleanMap(raw.oral,cleanOral)
-  };
-  for(const name of SCORE_MAPS)data[name]=cleanMap(raw[name],cleanScore);
-  return data;
-}
+const pct=value=>Math.min(100,Math.max(0,Math.round(Number(value))||0));
 
 function newer(a,b){return (b.updatedAt??b.at??0)>(a.updatedAt??a.at??0)?b:a;}
 /** Merges imported data into current data: higher best scores, newer drafts and self-assessments win. Settings stay as they are. */
@@ -103,12 +29,57 @@ export function mergePd3(current,incoming){
     const mine=result[name][id];
     result[name][id]=mine?newer(mine,entry):entry;
   }
+  // The exam date of the current data stays; an empty one takes the imported date. Error statistics are totals, so the larger one wins
+  // (importing a copy of the same data twice must not count twice). XP records stay: importing gives no XP.
+  if(!result.plan.examDate)result.plan.examDate=incoming.plan.examDate;
+  result.stats.dictation.runs=Math.max(result.stats.dictation.runs,incoming.stats.dictation.runs);
+  for(const [kind,count] of Object.entries(incoming.stats.dictation.errors))result.stats.dictation.errors[kind]=Math.max(result.stats.dictation.errors[kind]||0,count);
   result.updatedAt=Math.max(current.updatedAt,incoming.updatedAt);
   return result;
 }
 
+/** The PD3 section over the learner's progress. `read()` returns the stored `state.pd3` (or undefined while PD3 is unused),
+ * `write(next)` puts a new object there, saves the progress and returns whether saving worked.
+ * The field appears in the progress only after the first change, so learners who never open PD3 keep their data unchanged. */
+export function createPd3StateStore({read,write,clock=()=>Date.now()}){
+  const status={error:null,broken:false};
+  const empty=defaults();
+  const current=()=>read()||empty;
+  function save(next,unknown){
+    const clean=sealPd3(validatePd3(next),unknown);
+    const ok=write(clean);
+    status.error=ok?null:'quota';
+    return ok;
+  }
+  return {
+    status,
+    load(){return current();},
+    /** The stored data, or the defaults while PD3 is unused. Treat it as read-only: change it through update(). */
+    get:current,
+    /** Applies `change` to a copy of the stored data and saves it. Returns true when saved. */
+    update(change){
+      const base=structuredClone(current());
+      change(base);
+      base.updatedAt=clock();
+      return save(base,base._unknown);
+    },
+    exportJson(){return JSON.stringify({app:'danskdag-pd3',...structuredClone(current()),_unknown:undefined},null,2);},
+    importJson(raw){
+      if(typeof raw!=='string'||raw.length>LIMITS.importBytes)return {ok:false,error:'size'};
+      let incoming;
+      try{incoming=validatePd3(JSON.parse(raw));}catch{return {ok:false,error:'format'};}
+      const merged=mergePd3(structuredClone(current()),incoming);
+      merged.updatedAt=Math.max(merged.updatedAt,clock());
+      return save(merged,current()._unknown)?{ok:true}:{ok:false,error:status.error||'quota'};
+    }
+  };
+}
+
 /** A store over any Storage-like object. All writes are guarded: a full or blocked storage keeps the in-memory data and reports the error. */
+/** A store over a Storage-like object under its own key (versions 1.9.2 and earlier). Given {read,write,clock} instead of a storage,
+ * it is the store over the learner's progress (createPd3StateStore), which is what the app uses. */
 export function createPd3Store(storage=globalThis.localStorage,key=PD3_KEY,clock=()=>Date.now()){
+  if(storage&&typeof storage.read==='function'&&typeof storage.write==='function')return createPd3StateStore({clock,...storage});
   let data=defaults();
   const status={error:null,broken:false};
   function read(){

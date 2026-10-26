@@ -5,7 +5,7 @@ import {wordClassLabel} from './word-class-labels.mjs';
 import {appLanguage,relocalizeSession} from './language.mjs';
 import {checkRelease} from './app-updates.mjs';
 import {offlineEdition,assetUrl,hostedUrl,prepareOfflineCache,offlineCacheMessage} from './runtime.mjs';
-import {createState,validateState,normalize,dayKey,activeStreak,finishSession,getLearnerLevel,getAchievements} from './engine.mjs';
+import {createState,validateState,normalize,dayKey,activeStreak,finishSession,awardPd3,getLearnerLevel,getAchievements} from './engine.mjs';
 import {lessons,lessonById,levels,getCatalog,getWordEntries,isMarked,trainingPool} from './course.mjs';
 import {makeSession,restoreSession,answerSession,selfCheckSession,advanceSession,moveToken,shuffle} from './learning.mjs';
 import {h,icon,button as btn,plural,addDanishAudio,themeToggle,teachingText} from './ui.mjs';
@@ -30,6 +30,10 @@ import {createCloudSync,listCloudCopies} from './cloud-sync.mjs';
 import {cloudSettings} from './continuity-view.mjs';
 import {saveProgressCopy,listProgressCopies,loadProgress,describeProgress} from './recovery.mjs';
 import {mergeProgress} from './progress-merge.mjs';
+import {adoptRemoteState} from './pd3-merge.mjs';
+import {migrateLegacyPd3} from './pd3-migrate.mjs';
+import {pd3Totals} from './pd3-progress.mjs';
+import {vocabKey,newOwnWords} from './pd3-vocab.mjs';
 import {FOCUSABLE,captureFocus,restoreFocus,focusPageStart,pageTitle,createAnnouncer,debounce} from './accessibility.mjs';
 import {createPd3Page} from './pd3-page.mjs';
 import {createPd3Store} from './pd3-store.mjs';
@@ -71,9 +75,42 @@ const renderSearch=debounce(()=>render(),120);
 const recorder=createRecorder({changed:value=>{const controls=$('#recording-controls');if(coach&&controls)controls.innerHTML=recordingControls(value);}});
 const audioFeedback=createAudioFeedback((phase,text)=>{const status=$('#speech-status');if(!status)return;status.textContent=phase==='idle'?'':`${({loading:'Подготовка озвучки',speaking:'Звучит',error:'Не удалось озвучить'})[phase]}: ${text}`;status.classList.toggle('visible',phase!=='idle');});
 const say=(text,rate=state.settings.rate,control=null)=>{if(['requesting','recording','stopping'].includes(recorder.snapshot().phase)){toast('Сначала останови запись.');return false;}return speak(text,rate,toast,state.settings.voiceUri,audioFeedback.begin(control,text));};
-let pd3Storage=null;try{pd3Storage=globalThis.localStorage;}catch{ /* The PD3 store reports unavailable storage itself. */ }
-const pd3Store=createPd3Store(pd3Storage||{getItem(){throw new Error('storage');},setItem(){throw new Error('storage');}});pd3Store.load();
-const pd3=createPd3Page({data:pd3Data,store:pd3Store,deps:{container:()=>$('#pd3-root'),voiceUri:()=>state.settings.voiceUri,toast:text=>toast(text),announce:text=>announcer.say(text),enhance:scope=>addDanishAudio(scope),setTitle:text=>{document.title=pageTitle(text);},say:(text,rate,control)=>say(text,rate,control),offline:offlineEdition}});
+// PD3 results used to live under their own key (versions 1.9.2 and earlier). They move into the progress once; the old content is kept under another key.
+if(!unreadable)try{
+ const moved=migrateLegacyPd3(localStorage,state,next=>{const previous=state;state=validateState(next);if(persist(false))return true;state=previous;return false;});
+ if(moved.status==='migrated')catalog=getCatalog(state);
+}catch{ /* Old PD3 data stays where it is. */ }
+// PD3 data is the optional field state.pd3. It is created by the first PD3 change, so learners who never use PD3 keep their progress unchanged.
+const pd3Store=createPd3Store({read:()=>state.pd3,write:next=>{const previous=state;state=validateState({...state,pd3:next});if(persist())return true;state=previous;return false;}});
+let vocabCache={catalog:null,keys:null};
+const vocabKeys=()=>{if(vocabCache.catalog!==catalog)vocabCache={catalog,keys:new Set(Object.values(catalog).map(p=>vocabKey(p.da)))};return vocabCache.keys;};
+// Words of a reading text become the learner's own words (they enter memory practice like any word added by hand).
+const pd3Vocab={
+ has:da=>vocabKeys().has(vocabKey(da)),
+ add(words){
+  const result=newOwnWords(words,vocabKeys(),state.customWords.length);
+  if(!result.added)return {added:0,skipped:result.skipped,full:result.full,failed:false};
+  const previous=state;
+  try{state=validateState({...state,customWords:[...state.customWords,...result.words]});}catch{state=previous;return {added:0,skipped:0,failed:true};}
+  catalog=getCatalog(state);persist();
+  return {added:result.added,skipped:result.skipped,full:result.full,failed:false};
+ }
+};
+// A finished PD3 activity pays XP once (and again only for a better best result), keeps the streak and counts for the day's goal.
+function awardPd3Activity(event){
+ const result=awardPd3(state,event,new Date());
+ if(!result.counted)return result;
+ state=validateState(result.state);persist();updateMetrics();
+ return result;
+}
+function updateMetrics(){
+ const streak=activeStreak(state),bar=$('.header-actions');
+ const streakNumber=bar?.querySelector('.metric.orange b'),streakWord=bar?.querySelector('.metric.orange span'),xpNumber=bar?.querySelector('.metric.purple b');
+ if(streakNumber)streakNumber.textContent=String(streak);
+ if(streakWord)streakWord.textContent=plural(streak,['день','дня','дней']);
+ if(xpNumber)xpNumber.textContent=String(state.xp);
+}
+const pd3=createPd3Page({data:pd3Data,store:pd3Store,deps:{container:()=>$('#pd3-root'),voiceUri:()=>state.settings.voiceUri,toast:text=>toast(text),announce:text=>announcer.say(text),enhance:scope=>addDanishAudio(scope),setTitle:text=>{document.title=pageTitle(text);},say:(text,rate,control)=>say(text,rate,control),offline:offlineEdition,award:awardPd3Activity,vocab:pd3Vocab}});
 const dueItems=()=>getWordEntries(state).filter(p=>p.verified===true&&getReviewFor(p,state.reviews)?.due<=Date.now());
 const nextLesson=()=>nextPathLesson(lessons,state);
 function toast(text){const el=$('#toast');el.textContent=text;el.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('visible'),4500);}
@@ -151,7 +188,7 @@ function render(){
  const entries=memo(()=>getWordEntries(state)),plan=memo(()=>planMemorySession(entries(),state)),summary=memo(()=>memorySummary(entries(),state));
  const filtered=memo(words),fileTotal=memo(()=>trainingPool(state).filter(p=>p.source==='file').length),following=memo(nextLesson),copies=memo(cloudCopies),stored=memo(localCopies);
  const view=theme===state.settings.theme?state:{...state,settings:{...state.settings,theme}};
- const context={pd3View:()=>pd3.view(),basicsTab,numberValue,offlineEdition,offlineReady,referenceTab,referenceCategory,referenceQuery,referencePage,referenceData,referenceLessons:{forms:formLessons,quantity:patternLessons.filter(l=>l.kind==='grammar'),particles:patternLessons.filter(l=>l.kind==='pattern')},state:view,session,catalog,due,get next(){return following();},todayXP:state.activity[dayKey()]?.xp||0,get fileCount(){return fileTotal();},get words(){return filtered();},wordFilter,wordLimit,query,recovery,installEvent,labTab,labSelection,labQuery,labCategory,cloudStatus,cloudConflict,get cloudPlan(){return cloudSettings(cloudStatus,cloudConflict,copies());},get memoryPlan(){return plan();},get memorySummary(){return summary();},get localCopies(){return stored();}};
+ const context={pd3View:()=>pd3.view(),pd3Data,get pd3Totals(){return pd3Totals(state.pd3,pd3Data);},basicsTab,numberValue,offlineEdition,offlineReady,referenceTab,referenceCategory,referenceQuery,referencePage,referenceData,referenceLessons:{forms:formLessons,quantity:patternLessons.filter(l=>l.kind==='grammar'),particles:patternLessons.filter(l=>l.kind==='pattern')},state:view,session,catalog,due,get next(){return following();},todayXP:state.activity[dayKey()]?.xp||0,get fileCount(){return fileTotal();},get words(){return filtered();},wordFilter,wordLimit,query,recovery,installEvent,labTab,labSelection,labQuery,labCategory,cloudStatus,cloudConflict,get cloudPlan(){return cloudSettings(cloudStatus,cloudConflict,copies());},get memoryPlan(){return plan();},get memorySummary(){return summary();},get localCopies(){return stored();}};
  root.innerHTML=`<a class="skip" href="#content">К содержимому</a><aside class="sidebar"><button type="button" class="brand" data-page="learn" aria-label="Danskdag, на главную" title="На главную"><img src="${assetUrl('/icon.svg?v=1.9.2')}" alt="Флаг Дании"><span>Dansk<span>dag</span></span></button><nav aria-label="Разделы">${navigation.map(([id,ic,name])=>`<button class="nav-item ${page===id?'active':''} ${page==='wordlab'&&id==='dictionary'?'parent-active':''} ${['conversation','wordlab','forms','basics','pronunciation','pd3'].includes(id)?'desktop-nav':''}" data-page="${id}" title="${name}" ${id==='pd3'?'aria-label="PD3, подготовка к экзамену"':''} ${page===id?'aria-current="page"':''}>${icon(ic)}<span class="nav-label">${name}</span><span class="nav-mobile-label">${({grammar:'Правила',dictionary:'Слова',review:'Повтор'})[id]||name}</span>${id==='review'&&due.length?`<b class="nav-count">${due.length}</b>`:''}</button>`).join('')}</nav><div class="sidebar-end"><div class="rank-mini"><span class="rank-icon">${icon('spark')}</span><div><strong>Опыт ${learner.level}</strong><small>${h(learner.name)}</small></div></div><div class="meter"><span style="width:${learner.progress*100}%"></span></div><button class="nav-item ${page==='settings'?'active':''}" data-page="settings">${icon('gear')}<span>Настройки</span></button></div></aside><div class="app-shell"><header class="app-header"><button type="button" class="header-title" data-page="learn" aria-label="РУССКИЙ → DANSK, ${sectionName(page)}. На главную" title="На главную"><span class="eyebrow"><img class="danish-flag" src="${assetUrl('/flag-dk.svg')}" alt="Флаг Дании"> РУССКИЙ → DANSK</span><strong>${sectionName(page)}</strong></button><div class="header-actions">${themeToggle(theme)}<button class="metric orange" data-page="progress" title="Серия занятий">${icon('flame')}<b>${activeStreak(state)}</b><span>${plural(activeStreak(state),['день','дня','дней'])}</span></button><button class="metric purple" data-page="progress" title="Очки за завершённые занятия">${icon('bolt')}<b>${state.xp}</b><span>XP</span></button><button class="icon-button settings-mobile" data-page="settings" title="Настройки">${icon('gear')}</button><button class="profile" data-page="settings" title="Открыть настройки">${h(Array.from(state.settings.name||'D')[0].toUpperCase())}</button></div></header><nav class="mobile-sections" aria-label="Слова и речь">${[['forms','cards','Справочники'],['conversation','chat','Речь'],['wordlab','search','Значения'],['pronunciation','sound','Звуки'],['pd3','target','PD3']].map(([id,ic,label])=>`<button data-page="${id}" class="${page===id?'active':''}" ${page===id?'aria-current="page"':''} ${id==='pd3'?'aria-label="PD3, подготовка к экзамену"':''}>${icon(ic)}${label}</button>`).join('')}</nav><main id="content" tabindex="-1">${unreadable?unreadableNotice():''}${warning?`<div class="notice warning">${icon('info')}<span>${h(warning)}</span><button data-page="settings">Настройки</button></div>`:''}${renderView(page,context)}</main></div>`;if(page==='settings')root.querySelector('.settings-card').insertAdjacentHTML('afterbegin',profileSetting()+languageSetting()+renderLevelSelect(state,'settings-level')+(offlineEdition?'':`<button type="button" class="btn secondary check-update" data-action="check-update">Проверить обновление</button>`));addDanishAudio(root);
  if(page==='pd3')pd3.mount();
  if(focus)restoreFocus(root,focus);
@@ -232,7 +269,7 @@ function toggle(id,key){
 }
 const hasCopy=raw=>listProgressCopies(localStorage,KEY).some(copy=>copy.raw===raw);
 function showImportDialog(title,source){
- showDialog(title,`<p>${source} ${importCandidate.xp} XP и ${count(importCandidate.customWords.length)} добавлено вручную. Текущие данные (${state.xp} XP) будут заменены. Незавершённое занятие закроется.</p><p class="field-note">Перед заменой копия текущего прогресса сохранится на этом устройстве. Вернуть её можно в настройках, в разделе «Копии прогресса».</p>`,btn('Отмена','close-dialog','secondary')+btn('Загрузить','confirm-import'));
+ showDialog(title,`<p>${source} ${importCandidate.xp} XP и ${count(importCandidate.customWords.length)} добавлено вручную. Текущие данные (${state.xp} XP) будут заменены. Незавершённое занятие закроется.</p>${state.pd3?'<p class="field-note">Результаты PD3 с этого устройства сохранятся и объединятся с загруженными.</p>':''}<p class="field-note">Перед заменой копия текущего прогресса сохранится на этом устройстве. Вернуть её можно в настройках, в разделе «Копии прогресса».</p>`,btn('Отмена','close-dialog','secondary')+btn('Загрузить','confirm-import'));
 }
 // Replacing progress is never silent: the previous local progress is kept as a recovery copy first.
 function replaceProgress(downloadedInstead){
@@ -243,7 +280,8 @@ function replaceProgress(downloadedInstead){
   return;
  }
  if(downloadedInstead)download(before??JSON.stringify(state,null,2),true);
- state=importCandidate;catalog=getCatalog(state);session=null;importCandidate=null;unreadable=null;
+ // PD3 results found only on this device are kept: the loaded progress and the current one are combined for PD3.
+ state=validateState(adoptRemoteState(importCandidate,state));catalog=getCatalog(state);session=null;importCandidate=null;unreadable=null;
  // Explicit replacement: what is stored now is the basis, so another tab's older data is not merged back in.
  try{saved={raw:localStorage.getItem(KEY),state:structuredClone(state)};}catch{saved={raw:null,state:null};}
  closeDialog();persist();
@@ -272,6 +310,7 @@ document.addEventListener('click',async event=>{
  else if(action==='reference-tab'){referenceTab=value;referenceCategory='all';referenceQuery='';referencePage=1;render();}
  else if(action==='reference-train'){const selection=referenceSelection({referenceTab,referenceCategory,referenceQuery,referencePage,referenceData});const pool=shuffle(selection.rows).map(row=>catalog[row.id]).filter(Boolean).sort((a,b)=>{const rank=p=>{const r=state.reviews[p.id];return !r?1:r.due<=Date.now()?0:2;};return rank(a)-rank(b);}).slice(0,6);start(pool,{title:selection.categories.find(cat=>cat.id===selection.selected)?.title||'Практика слов и фраз'});}
  else if(action==='reference-page'){referencePage=Math.max(1,Number(value)||1);render();window.scrollTo(0,0);}
+ else if(action==='open-pd3'){go('pd3');if(['reading','dictation','listening','exam','writing','oral'].includes(value))pd3.open(value);}
  else if(action==='lab-show-classes'){labTab='classes';labSelection=null;go('wordlab');}
  else if(action==='lab-tab'){labTab=value;labSelection=null;render();}
  else if(action==='lab-category'){labCategory=value;render();}
@@ -432,7 +471,7 @@ function showCloudConflict(){
  shownCloudRevision=cloudConflict.revision;const local=state,{remote}=cloudConflict;
  showDialog('Есть две версии прогресса',`<p>На этом устройстве: ${local.xp} XP, ${Object.keys(local.completed).length} уроков. В сохранённой версии: ${remote?.xp||0} XP, ${Object.keys(remote?.completed||{}).length} уроков.</p><p>Выбери, какую версию использовать. Копия текущих данных сохранится для восстановления. Очки двух версий автоматически не складываются.</p>`,btn('Оставить эту версию','cloud-local','primary')+btn('Загрузить сохранённую','cloud-remote','secondary')+btn('Скачать копию устройства','export','secondary'));
 }
-if(!offlineEdition)cloud=createCloudSync({getState:()=>state,canApply:()=>!active&&!session&&!unreadable&&!$('.dialog-backdrop'),onRemote:next=>{const raw=JSON.stringify(next);localStorage.setItem(KEY,raw);state=next;saved={raw,state:structuredClone(next)};if(next.settings.theme!=='light'&&themeSource==='auto'){themeSource='user';try{localStorage.setItem(THEME_SOURCE,'user');}catch{ /* Kept in the progress itself. */ }}if(state.settings.language!==appLanguage){location.reload();return;}catalog=getCatalog(state);render();},onStatus:status=>{cloudStatus=status;updateCloudPanel();},onConflict:conflict=>{cloudConflict=conflict;updateCloudPanel();maybeCloudConflict();}});
+if(!offlineEdition)cloud=createCloudSync({getState:()=>state,canApply:()=>!active&&!session&&!unreadable&&!$('.dialog-backdrop'),onRemote:remote=>{const next=validateState(adoptRemoteState(remote,state));const raw=JSON.stringify(next);localStorage.setItem(KEY,raw);state=next;saved={raw,state:structuredClone(next)};if(next.settings.theme!=='light'&&themeSource==='auto'){themeSource='user';try{localStorage.setItem(THEME_SOURCE,'user');}catch{ /* Kept in the progress itself. */ }}if(state.settings.language!==appLanguage){location.reload();return;}catalog=getCatalog(state);render();},onStatus:status=>{cloudStatus=status;updateCloudPanel();},onConflict:conflict=>{cloudConflict=conflict;updateCloudPanel();maybeCloudConflict();}});
 render();void cloud?.start();
 if(!offlineEdition)void prepareOfflineCache(()=>{lastUpdateCheck=0;void findUpdate();}).then(ready=>{offlineReady=ready;const status=$('[data-offline-status]');if(status)status.textContent=offlineCacheMessage(ready);});
 

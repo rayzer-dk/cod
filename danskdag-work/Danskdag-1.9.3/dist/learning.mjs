@@ -1,6 +1,8 @@
 import {createSessionId, isCorrect, normalize} from './engine.mjs';
 import {getReviewFor,practiceStage} from './memory.mjs';
 import {findWord} from './text.mjs';
+import {compareDictation} from './pd3-diff.mjs';
+import {clozeFor,SPELL_FREE_LISTENS} from './pd3-spell.mjs';
 
 export function shuffle(values) {
   const copy = [...values];
@@ -150,8 +152,41 @@ export function answerFormHint(answers) {
   return '';
 }
 
-export function createTasks(items, pool, mode = 'easy', reviews = {}) {
+// ---- Dictation cards ---------------------------------------------------------------------------
+// A sentence the learner wrote wrongly in a PD3 dictation (kind 'dictation', see pd3-spell.mjs) is practised by writing it down: the
+// sentence is read aloud and typed ('listen'). On a device without a Danish voice the sentence is shown with one word left out and
+// that word is typed ('cloze'). The answer is right only when every word is right (case and punctuation do not count).
+function dictationTask(item, auto, voice) {
+  const cloze = voice ? null : clozeFor(item);
+  return {
+    itemId: item.id, kind: 'dictate', dictMode: cloze ? 'cloze' : 'listen', reverse: false,
+    answers: cloze ? [cloze.answer] : [item.da], options: [],
+    prompt: cloze ? cloze.text : '', promptLang: 'da', answerLang: 'da',
+    ...(auto ? {stage: 'recall'} : {}), bank: [], retry: false
+  };
+}
+/** Switches the current dictation card to the cloze form (no sound on this device). The change counts as help. */
+export function clozeSession(session, item) {
+  const task = session.tasks[session.index], cloze = item && task?.kind === 'dictate' && task.dictMode === 'listen' && !session.submitted ? clozeFor(item) : null;
+  if (!cloze) return session;
+  const next = structuredClone(session), changed = next.tasks[next.index];
+  changed.dictMode = 'cloze'; changed.answers = [cloze.answer]; changed.prompt = cloze.text;
+  next.helped = true;
+  return next;
+}
+/** One more listening of the current dictation card. Listenings beyond SPELL_FREE_LISTENS are help, like an opened hint. */
+export function listenSession(session) {
+  const task = session.tasks[session.index];
+  if (!task || task.kind !== 'dictate' || task.dictMode !== 'listen' || session.submitted) return session;
+  const next = structuredClone(session);
+  next.plays = Math.min(99, (next.plays || 0) + 1);
+  if (next.plays > SPELL_FREE_LISTENS) next.helped = true;
+  return next;
+}
+
+export function createTasks(items, pool, mode = 'easy', reviews = {}, settings = {}) {
   return items.map((item, index) => {
+    if (item.kind === 'dictation') return dictationTask(item, mode === 'auto', settings.voice !== false);
     const review=getReviewFor(item,reviews);
     let stage=mode==='auto'?practiceStage(review,item):null;
     const effectiveMode=stage?(stage==='recognition'?'easy':stage==='build'?'mixed':'expert'):mode;
@@ -208,7 +243,10 @@ export function createTasks(items, pool, mode = 'easy', reviews = {}) {
   });
 }
 
-export const checkTask = (task, answer) => isCorrect(answer, task.answers);
+export const checkTask = (task, answer) => task.kind === 'dictate' && task.dictMode !== 'cloze' ? compareDictation(task.answers[0], String(answer ?? '')).exact : isCorrect(answer, task.answers);
+
+// A sentence to be written from dictation is never shown beforehand.
+const studyIds=(selected,ids=[])=>ids.filter(id=>selected.some(p=>p.id===id&&p.kind!=='dictation')).slice(0,2);
 
 export function makeSession(items, pool, options = {}) {
   const selected = items.slice(0, 6);
@@ -216,11 +254,11 @@ export function makeSession(items, pool, options = {}) {
   return {
     schema: 2, id: createSessionId(), lessonId: options.lessonId || null,
     title: options.title || 'Повторение', mode: options.mode || 'easy',
-    tasks: createTasks(selected, pool, options.mode, options.reviews), initialCount: selected.length,
+    tasks: createTasks(selected, pool, options.mode, options.reviews, {voice: options.voice}), initialCount: selected.length,
     index: 0, correct: 0, missed: [], started: Date.now(),
-    submitted: false, answer: '', words: [], revealed: false,
+    submitted: false, answer: '', words: [], revealed: false, plays: 0,
     feedback: false, retryAdded: false, beforeAwards: [], helped:false,outcomes:[],selfChecked:false,
-    studyIds:(options.studyIds||[]).filter(id=>selected.some(p=>p.id===id)).slice(0,2),studyDone:!(options.studyIds||[]).some(id=>selected.some(p=>p.id===id))
+    studyIds:studyIds(selected,options.studyIds),studyDone:!studyIds(selected,options.studyIds).length
   };
 }
 
@@ -230,7 +268,7 @@ export function answerSession(session, answer) {
   next.submitted = true;
   next.feedback = checkTask(task, answer);
   next.answer = answer;
-  const kind=!task.options.length&&['type','gap','focus'].includes(task.kind)?'recall':'recognition';
+  const kind=!task.options.length&&['type','gap','focus','dictate'].includes(task.kind)?'recall':'recognition';
   next.outcomes ||= [];
   next.outcomes.push({itemId:task.itemId,correct:next.feedback,kind,helped:!!next.helped||!!next.revealed,retry:!!task.retry,...(task.contextId?{contextId:task.contextId}:{})});
   if (next.index < next.initialCount) {
@@ -268,6 +306,7 @@ export function advanceSession(session) {
   next.revealed = false;
   next.helped = false;
   next.selfChecked = false;
+  next.plays = 0;
   return next;
 }
 
@@ -309,16 +348,20 @@ export function restoreSession(raw, items, creditedSessions = []) {
   if (!['easy', 'mixed', 'expert', 'auto'].includes(s.mode) || !Number.isFinite(s.started) || !stringList(s.missed, 6) || !s.missed.every(id => items[id])) return null;
   if (typeof s.submitted !== 'boolean' || typeof s.feedback !== 'boolean' || !strings(s.answer, 1600)) return null;
   for (const t of s.tasks) {
-    if (!items[t.itemId] || !['choice', 'build', 'type', 'listen', 'gap', 'focus'].includes(t.kind) || !strings(t.prompt)) return null;
+    if (!items[t.itemId] || !['choice', 'build', 'type', 'listen', 'gap', 'focus', 'dictate'].includes(t.kind) || !strings(t.prompt)) return null;
     if (t.stage!==undefined&&!['recognition','build','recall'].includes(t.stage))return null;
     if(t.contextId!==undefined&&(!strings(t.contextId,120)||!/^ctx-[a-zA-Z0-9_-]+$/.test(t.contextId)))return null;
     if (t.completeDa!==undefined&&(!strings(t.completeDa)||!strings(t.contextTranslation)))return null;
     if (t.hint!==undefined&&!['article','infinitive'].includes(t.hint)) return null;
+    if (t.dictMode!==undefined&&(t.kind!=='dictate'||!['listen','cloze'].includes(t.dictMode))) return null;
+    if (t.kind==='dictate'&&(!['listen','cloze'].includes(t.dictMode)||items[t.itemId].kind!=='dictation'||(t.options||[]).length||!Array.isArray(t.answers)||t.answers.length!==1||t.answerLang!=='da'||(t.dictMode==='cloze'&&!t.prompt.includes('___')))) return null;
     if (t.kind === 'focus' && (!strings(t.question, 500) || !strings(t.target || '', 220))) return null;
     if (!stringList(t.answers, 30) || !t.answers.length || !stringList(t.options, 4) || !stringList(t.bank, 80)) return null;
     if (!['da', 'ru'].includes(t.promptLang) || !['da', 'ru'].includes(t.answerLang)) return null;
   }
   if (!Array.isArray(s.words) || s.words.length > 80 || !s.words.every(i => Number.isInteger(i) && i >= 0 && i < (s.tasks[s.index]?.bank.length || 0)) || new Set(s.words).size !== s.words.length) return null;
+  if(s.plays===undefined)s.plays=0;
+  if(!Number.isInteger(s.plays)||s.plays<0||s.plays>99)return null;
   if(s.helped===undefined)s.helped=false;
   if(s.selfChecked===undefined)s.selfChecked=false;
   if(s.outcomes===undefined)s.outcomes=[];

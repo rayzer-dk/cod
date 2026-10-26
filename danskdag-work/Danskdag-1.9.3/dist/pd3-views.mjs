@@ -1,16 +1,17 @@
 // Views of the PD3 hub, read-aloud practice, dictations and listening. Every function returns an HTML string.
-import {h,icon,spoken} from './ui.mjs';
+import {h,icon,spoken,plural} from './ui.mjs';
 import {backButton,pageHead,toggleButtons,checkbox,mcq,lettersBar} from './pd3-ui.mjs';
 import {playerHtml,textHtml,sentenceHtml} from './pd3-reader-view.mjs';
 import {annotate} from './pd3-diff.mjs';
-import {planView,weakView} from './pd3-system-view.mjs';
+import {canMock} from './pd3-mock.mjs';
+import {planView,weakView,mockHistoryView,spellView} from './pd3-system-view.mjs';
 
 export const DISCLAIMER='Это тренировка по мотивам формата PD3 (уровень B2), не официальный экзамен. Провайдеры описывают устную часть по-разному, поэтому задания приблизительные.';
 const wordCount=item=>item.sentences.reduce((sum,s)=>sum+s.da.split(/\s+/).filter(Boolean).length,0);
 const backTo=(view,label)=>`<button type="button" class="text-button pd3-back" data-action="pd3-open" data-value="${view}">${icon('arrow')}<span>${label}</span></button>`;
 const empty=(text)=>`<div class="info-panel">${text}</div>`;
 
-export function hubView({data,d,error,now=new Date()}){
+export function hubView({data,d,error,now=new Date(),spell=null}){
   const done=(map,list)=>list.filter(item=>map[item.id]?.attempts).length;
   const oralCount=data.oralMonologue.length+data.oralInterview.length+data.oralInteraction.length+data.oralDiscussion.length;
   const cards=[
@@ -19,13 +20,14 @@ export function hubView({data,d,error,now=new Date()}){
     ['listening','chat','Аудирование','Текст звучит без показа, потом вопросы, расшифровка и перевод.',data.listening.length?`Пройдено ${done(d.listening,data.listening)} из ${data.listening.length}`:'',data.listening.length],
     ['exam','book','Чтение (экзамен)','Del 1 и Del 2 с таймером: разделы, пропущенные абзацы и пропуски в тексте.',data.readingExamFind.length+data.readingExamText.length?`Попыток: ${Object.values(d.exam.find).concat(Object.values(d.exam.text)).reduce((n,e)=>n+e.attempts,0)}`:'',data.readingExamFind.length+data.readingExamText.length],
     ['writing','cards','Письмо','Письмо и сочинение: счётчик слов, проверки, образец и самооценка.',data.writingEmail.length+data.writingTask.length?`Черновиков: ${Object.values(d.writing).filter(w=>w.draft).length}`:'',data.writingEmail.length+data.writingTask.length],
-    ['oral','chat','Устная часть','Монолог, интервью, взаимодействие и дискуссия с записью себя и самооценкой.',oralCount?`Отмечено самооценок: ${Object.keys(d.oral).length}`:'',oralCount]
+    ['oral','chat','Устная часть','Монолог, интервью, взаимодействие и дискуссия с записью себя и самооценкой.',oralCount?`Отмечено самооценок: ${Object.keys(d.oral).length}`:'',oralCount],
+    ['mock','trophy','Пробный экзамен','Полный прогон по формату с таймером: чтение, письмо и устная часть по этапам, затем отчёт по навыкам.',Object.keys(d.mocks||{}).length?`Пройдено пробных экзаменов: ${Object.keys(d.mocks).length}`:'Ещё не проходили',canMock(data)?1:0]
   ];
   return `${pageHead('PD3: подготовка к экзамену','Практика уровня B2: читать, слушать, писать и говорить.')}
 <div class="notice pd3-disclaimer">${icon('info')}<span>${DISCLAIMER}</span></div>
 ${error?`<div class="notice warning" role="alert">${icon('info')}<span>${error}</span></div>`:''}
-<div class="pd3-hub">${cards.map(([view,ic,title,text,progress,count])=>`<button type="button" class="panel pd3-card" data-action="pd3-open" data-value="${view}" ${count?'':'disabled'}><span class="topic-icon">${icon(ic)}</span><span class="pd3-card-body"><b>${title}</b><span>${text}</span><small>${count?progress:'Материалы появятся позже'}</small></span>${icon('arrow')}</button>`).join('')}</div>
-${planView({d,data,now})}${weakView({d,data,label:errorLabel})}
+<div class="pd3-hub">${cards.map(([view,ic,title,text,progress,count])=>`<button type="button" class="panel pd3-card" data-action="${view==='mock'?'pd3-mock-open':'pd3-open'}" data-value="${view}" ${count?'':'disabled'}><span class="topic-icon">${icon(ic)}</span><span class="pd3-card-body"><b>${title}</b><span>${text}</span><small>${count?progress:'Материалы появятся позже'}</small></span>${icon('arrow')}</button>`).join('')}</div>
+${planView({d,data,now})}${mockHistoryView({d})}${weakView({d,data,label:errorLabel})}${spellView({spell})}
 <section class="panel pd3-backup"><h2>Копия результатов PD3</h2><p>Результаты, черновики писем и настройки PD3 входят в общий прогресс и в его резервные копии. Отдельный файл удобен, чтобы перенести только PD3 на другое устройство. При загрузке лучшие результаты и более новые черновики объединяются с текущими.</p><div class="button-row"><button type="button" class="btn secondary" data-action="pd3-export">${icon('download')} Скачать копию PD3</button><button type="button" class="btn secondary" data-action="pd3-import">${icon('upload')} Загрузить</button></div><input id="pd3-file" type="file" accept=".json,application/json" hidden><p class="field-note">Аудиозаписи твоего голоса нигде не сохраняются и в копию не попадают.</p></section>`;
 }
 
@@ -116,6 +118,7 @@ export function dictationResultView({item,d,run}){
   const userHtml=typed.map(pieces=>`<p lang="da" data-audio-ready>${pieces.map(p=>p.status?`<span class="pd3-d-${p.status}">${h(p.text)}${STATUS_TEXT[p.status]||p.status==='extra'?`<span class="sr-only"> (${p.status==='extra'?'лишнее':STATUS_TEXT[p.status]})</span>`:''}</span>`:h(p.text)).join('')||'<i>(пусто)</i>'}</p>`).join('');
   return `${backTo('dictation','К списку диктантов')}${pageHead(item.title,'Результат')}
 <div class="panel pd3-result" role="status"><b class="pd3-score">${r.percent}%</b><span>Правильных слов: ${r.counts.correct} из ${r.counts.total}${r.counts.extra?` · лишних: ${r.counts.extra}`:''}${run.xp>0?` · +${run.xp} XP`:''}</span><div class="meter" aria-hidden="true"><span style="width:${r.percent}%"></span></div></div>
+${run.spellAdded>0?`<p class="notice pd3-spell-added" role="status">${icon('repeat')}<span>Добавлено в повторение: ${run.spellAdded} ${plural(run.spellAdded,['предложение с ошибкой','предложения с ошибками','предложений с ошибками'])}. Они вернутся карточками «Диктант-карточка» в разделе «Повторение».</span></p>`:''}
 <section class="panel pd3-legend"><h2>Типичные ошибки</h2>${errors}${item.tip?`<p class="note-box">${icon('info')}<span><b>На что слушать:</b> ${h(item.tip)}</span></p>`:''}</section>
 <h2 class="pd3-h2">Эталон</h2><p class="field-note">Подчёркнуто волной — слово написано с ошибкой, пунктиром — пропущено, рамка — стоит не на своём месте. Нажми на предложение, чтобы услышать его ещё раз.</p>
 <div class="pd3-reader">${playerHtml(settings,{showTranslation:false})}<div class="pd3-text" data-reader-text><p>${text}</p></div></div>

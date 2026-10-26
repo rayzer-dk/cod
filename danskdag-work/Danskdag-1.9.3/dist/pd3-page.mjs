@@ -4,8 +4,10 @@ import {createReader,READER_RATES} from './pd3-audio.mjs';
 import {speak,stopSpeech} from './speech.mjs';
 import {createRecorder} from './recorder.mjs';
 import {scoreDictation} from './pd3-diff.mjs';
+import {spellFindings} from './pd3-spell.mjs';
 import {recordScore,LIMITS} from './pd3-store.mjs';
 import {createRunStore,snapshotRun,validateRun,applyRun} from './pd3-run.mjs';
+import {createMockController} from './pd3-mock-page.mjs';
 import {vocabExample} from './pd3-vocab.mjs';
 import {countWords} from './pd3-writing-check.mjs';
 import {applyReaderState,statusText} from './pd3-reader-view.mjs';
@@ -13,7 +15,7 @@ import {hubView,readingListView,readingItemView,dictationListView,dictationItemV
 import {examListView,examIntroView,examFindView,examTextView,writingListView,writingItemView,wordMeter,oralView,recorderHtml} from './pd3-practice-views.mjs';
 
 const EMPTY_DATA={readingPractice:[],readingExamFind:[],readingExamText:[],dictations:[],listening:[],oralMonologue:[],oralInterview:[],oralInteraction:[],oralDiscussion:[],oralPhrases:[],oralCriteria:[],writingEmail:[],writingTask:[],writingCriteria:[],connectors:[]};
-const TITLES={hub:'PD3',reading:'PD3 — чтение вслух',dictation:'PD3 — диктанты',listening:'PD3 — аудирование',exam:'PD3 — чтение (экзамен)',writing:'PD3 — письмо',oral:'PD3 — устная часть'};
+const TITLES={hub:'PD3',reading:'PD3 — чтение вслух',dictation:'PD3 — диктанты',listening:'PD3 — аудирование',exam:'PD3 — чтение (экзамен)',writing:'PD3 — письмо',oral:'PD3 — устная часть',mock:'PD3 — пробный экзамен'};
 const REC_LIMITS={monologue:150,interview:60,interaction:60,discussion:90};
 const ORAL_PREFIX={monologue:'mono',interview:'intv',interaction:'inter',discussion:'disc'};
 const interactive='button,a[href],input,textarea,select,summary,audio,[role=button]';
@@ -29,6 +31,14 @@ export function createPd3Page({data,store,deps}){
   let runSaveTimer=null,restoreTried=false;
   const d=()=>store.get();
   const container=()=>deps.container();
+  // The mock exam (a full run through the exam format with a report) lives in pd3-mock-page.mjs; it works on this page's run object and screen.
+  const mockCtl=createMockController({
+    D,deps,now,d:()=>store.get(),persist:change=>persist(change),container:()=>container(),
+    getRun:()=>run,setRun:value=>{run=value;},getUi:()=>ui,setUi:value=>{ui=value;},
+    render:options=>render(options),title:()=>title(),saveRun:()=>saveRun(),scheduleRunSave:()=>scheduleRunSave(),
+    resetMedia:()=>{stopTimer();clearRecorder();stopSpeech();},
+    open:(...args)=>open(...args),openHub:()=>open('hub',null,null,{force:true}),openTarget:(view,id,tab)=>openTarget(view,id,tab)
+  });
 
   /* ---------- helpers ---------- */
   /** Counts a finished activity in the learner's progress (XP, streak, day). Only checked, non-empty results count; see awardPd3 in engine.mjs. */
@@ -59,6 +69,7 @@ export function createPd3Page({data,store,deps}){
     const raw=runStore.read();
     const record=validateRun(raw,{data:D,now:now()});
     if(!record){runStore.clear();return false;}
+    if(record.view==='mock')return restoreMock(record);
     teardown();
     ui={view:record.view,id:record.id,kind:record.kind};
     run=makeRun();applyRun(run,record);
@@ -79,6 +90,23 @@ export function createPd3Page({data,store,deps}){
     deps.toast(message);
     return true;
   }
+  function restoreMock(record){
+    teardown();
+    ui={view:'mock',id:record.id,kind:null};
+    run=makeRun();applyRun(run,record);
+    const message=mockCtl.afterRestore(record);
+    render({keepScroll:false});title();
+    focusPageStart(container(),'h1');
+    deps.toast(message);
+    return true;
+  }
+  /** From the end of a mock exam: opens a practice section (a reading text, the oral phrases ...). */
+  function openTarget(view,id,tab){
+    if(view==='reading'&&id&&D.readingPractice.some(x=>x.id===id)){openReading(id);return;}
+    if(!['reading','writing','oral','listening','dictation','exam'].includes(view))return;
+    open(view);
+    if(view==='oral'&&tab==='phrases'&&run){run.tab='phrases';render({keepScroll:false});}
+  }
   const item=()=>{
     const pick=(list)=>list.find(x=>x.id===ui.id);
     switch(ui.view){
@@ -94,15 +122,16 @@ export function createPd3Page({data,store,deps}){
   function destroyReader(){reader?.destroy();reader=null;}
   function clearRecorder(){rec?.clear();rec=null;if(run?.rec)run.rec={phase:'idle',url:'',message:''};}
   function teardown(){
-    flushDraft();stopTimer();destroyReader();clearRecorder();stopSpeech();
+    flushDraft();stopTimer();destroyReader();clearRecorder();stopSpeech();mockCtl.stop();
   }
 
   /* ---------- rendering ---------- */
   function html(){
     const view=ui.view,it=item(),settings=d();
     const error=store.status.broken?'Сохранённые данные PD3 не удалось прочитать. Их копия сохранена в браузере, раздел начат заново.':store.status.error==='unavailable'?'Браузер не даёт сохранять результаты PD3. Скачай копию PD3 вручную.':'';
-    const ctx={data:D,d:settings,run,error,now:new Date(now()),known:deps.vocab?.has};
+    const ctx={data:D,d:settings,run,error,now:new Date(now()),known:deps.vocab?.has,spell:deps.spell?.summary?.()||null};
     if(view==='hub')return hubView(ctx);
+    if(view==='mock'&&run)return mockCtl.html();
     if(view==='reading')return it?readingItemView({item:it,d:settings,run,known:deps.vocab?.has}):readingListView(ctx);
     if(view==='dictation')return it?dictationItemView({item:it,d:settings,run}):dictationListView(ctx);
     if(view==='listening')return it?listeningItemView({item:it,d:settings,run}):listeningListView(ctx);
@@ -123,6 +152,7 @@ export function createPd3Page({data,store,deps}){
     deps.enhance?.(el);
     if(reader)paintReader(reader.snapshot());
     if(timer)paintTimer();
+    if(ui.view==='mock'&&run)mockCtl.after();
   }
   function render({keepScroll=true}={}){
     const el=container();
@@ -133,13 +163,15 @@ export function createPd3Page({data,store,deps}){
     if(focus)restoreFocus(el,focus);
     if(keepScroll)globalThis.scrollTo?.({top:y,behavior:'instant'});
   }
-  function title(){deps.setTitle?.(TITLES[ui.view]||TITLES.hub);}
+  function title(){deps.setTitle?.(ui.view==='mock'?mockCtl.titleText():(TITLES[ui.view]||TITLES.hub));}
 
   /** The markup for the app's page renderer. */
   function view(){return `<div id="pd3-root">${wrap()}</div>`;}
 
   /* ---------- navigation ---------- */
-  function open(viewName,id=null,kind=null,{focus=true}={}){
+  function open(viewName,id=null,kind=null,{focus=true,force=false}={}){
+    // An exam under way is not dropped by opening something else; it ends through its own "Выйти" or "Закрыть отчёт".
+    if(!force&&ui.view==='mock'&&mockCtl.protects()){deps.toast('Идёт пробный экзамен. Заверши его или выйди из него кнопкой «Выйти».');return;}
     teardown();forgetRun();
     ui={view:viewName,id,kind};
     run=makeRun();
@@ -165,6 +197,7 @@ export function createPd3Page({data,store,deps}){
         const stored=d().writing[it.id]||{};
         return {phase:'write',option:ui.kind==='task'?(stored.option||'A'):'A',text:stored.draft||'',remaining:null,timerOn:false};
       }
+      case 'mock':return mockCtl.createRun();
       case 'oral':return {tab:'monologue',id:null,key:'',step:0,started:false,kw:[],rec:{phase:'idle',url:'',message:''},remaining:null,timerOn:false};
       default:return null;
     }
@@ -282,10 +315,16 @@ export function createPd3Page({data,store,deps}){
       });
       award=complete('dictation',it.id,result.percent);
     }
+    // Sentences with mistakes become cards of the repetition (pd3-spell.mjs). Nothing typed: nothing added, like the statistics above.
+    run.spellAdded=0;
+    if(typed&&deps.spell){
+      const found=spellFindings(it,result,run.inputs);
+      if(found.length)run.spellAdded=deps.spell.record(it.id,found)||0;
+    }
     ensureReader(it.sentences);
     render({keepScroll:false});
     globalThis.scrollTo?.({top:0,behavior:'instant'});
-    deps.announce?.(`Диктант проверен: ${result.percent}%.${xpText(award)}`);
+    deps.announce?.(`Диктант проверен: ${result.percent}%.${xpText(award)}${run.spellAdded?` Добавлено в повторение: ${run.spellAdded}.`:''}`);
     focusPageStart(container(),'h1');
   }
   function flushInputs(){
@@ -435,8 +474,10 @@ export function createPd3Page({data,store,deps}){
   /* ---------- events ---------- */
   function click(el){
     const action=el.dataset.action,value=el.dataset.value,id=el.dataset.id,pos=el.dataset.pos;
+    if(ui.view==='mock'&&run&&mockCtl.click(el))return true;
     switch(action){
       case 'pd3-open':case 'pd3-advice':open(value);return true;
+      case 'pd3-mock-open':open('mock');return true;
       case 'pd3-pick':
         if(ui.view==='reading')openReading(id);
         else if(ui.view==='dictation')openDictation(id);
@@ -539,6 +580,7 @@ export function createPd3Page({data,store,deps}){
     field.dispatchEvent(new Event('input',{bubbles:true}));
   }
   function input(target){
+    if(ui.view==='mock'&&mockCtl.input(target))return true;
     if(target.id==='pd3-write'&&run){
       run.text=target.value;updateWritingMeter();
       clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,700);
@@ -550,6 +592,7 @@ export function createPd3Page({data,store,deps}){
     return false;
   }
   function change(target){
+    if(ui.view==='mock'&&run&&mockCtl.change(target))return true;
     if(target.id==='pd3-file'){importFile(target);return true;}
     if(target.id==='pd3-exam-date'){persist(s=>{s.plan.examDate=target.value;});render();return true;}
     const setting=target.dataset?.pd3Setting;
@@ -605,6 +648,7 @@ export function createPd3Page({data,store,deps}){
     a.href=url;a.download=name;doc().body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
   }
   function keydown(event){
+    if(ui.view==='mock'&&run&&mockCtl.keydown(event))return true;
     // Enter in a dictation sentence field goes to the next sentence (the keyboard's "next" key does the same); an IME candidate is not Enter.
     if(event.key==='Enter'&&!event.isComposing&&event.keyCode!==229&&!event.defaultPrevented&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.shiftKey&&event.target?.matches?.('input[data-pd3-field]')){
       const fields=[...container()?.querySelectorAll('input[data-pd3-field]')||[]],next=fields[fields.indexOf(event.target)+1];
@@ -623,12 +667,16 @@ export function createPd3Page({data,store,deps}){
   function focusin(event){const t=event.target;if(t?.matches?.('#pd3-write,#pd3-dict-text,[data-pd3-field]'))lastField=t.id||null;}
 
   /** The tab is hidden or the page is closing: save the draft and drop everything that should not outlive the view. */
-  function suspend(){flushDraft();flushRun();clearRecorder();reader?.stop();}
+  function suspend(){flushDraft();if(ui.view==='mock'&&run?.mock)saveRun();else flushRun();clearRecorder();reader?.stop();}
   /** The learner left the section (or chose it again): back to the hub with nothing left running. */
   function leave(){
+    // An exam under way outlives leaving the section (its clock keeps running): the record stays and is brought back at the next visit.
+    const keepMock=ui.view==='mock'&&mockCtl.protects();
+    if(keepMock)saveRun();
     teardown();ui={view:'hub',id:null,kind:null};run=null;
     // Leaving the section (or choosing it again) is an explicit exit: the unfinished task is dropped.
-    forgetRun();restoreTried=false;
+    if(!keepMock)forgetRun();
+    restoreTried=false;
   }
   /** The learner opens the section from another page: an unfinished task of an earlier visit is brought back at the next mount. */
   function enter(){restoreTried=false;}

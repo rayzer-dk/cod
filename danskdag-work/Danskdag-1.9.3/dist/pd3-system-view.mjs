@@ -2,6 +2,7 @@
 // and the short line on the home page. Every function returns an HTML string; the numbers come from pd3-progress.mjs.
 import {h,icon,plural} from './ui.mjs';
 import {dayKey} from './engine.mjs';
+import {mockHistory,mockAdvice,canMock,MODE_NAMES,MOCK_STALE_DAYS} from './pd3-mock.mjs';
 import {skillRows,recommendSkill,daysUntil,activityRows,weakSpots,STALE_DAYS} from './pd3-progress.mjs';
 
 const days=n=>`${n} ${plural(n,['день','дня','дней'])}`;
@@ -38,6 +39,7 @@ export function planView({d,data,now}){
 <p class="pd3-countdown" role="status" aria-live="polite">${countdown}</p>
 <ul class="pd3-skills">${skills.map(skill=>`<li><b>${h(skill.title)}</b><span>${skillLine(skill)}</span></li>`).join('')}</ul>
 ${advice?`<div class="pd3-advice"><p><b>Что делать дальше:</b> ${h(advice.skill.title)}. ${reasonText(advice.reason,advice.skill)}</p><button type="button" class="btn primary" data-action="pd3-advice" data-value="${OPEN_VIEW[advice.skill.id]}">Открыть раздел ${icon('arrow')}</button></div>`:''}
+${mockAdviceView({d,data,now})}
 <p class="field-note">Как выбирается подсказка: сначала навык, которым ещё не занимались, затем тот, к которому не возвращались ${days(STALE_DAYS)} и больше, иначе навык с самым низким результатом. Это ориентир для тренировки, а не прогноз результата на экзамене.</p></section>`;
 }
 
@@ -50,6 +52,43 @@ export function weakView({d,data,label}){
 <ol class="pd3-weak-list">${spots.map(spot=>`<li><span><b>${h(label(spot.kind))}</b> · ${spot.count}</span>${spot.practice?`<button type="button" class="btn secondary" data-action="pd3-weak-practice" data-id="${h(spot.practice)}" aria-label="Потренировать: ${h(label(spot.kind))}">Потренировать</button>`:''}</li>`).join('')}</ol></section>`;
 }
 
+/** Dictation sentences in the repetition: how many, and a link to practise those that are due. `spell` is {count,due} from spellSummary; '' while there are none. */
+export function spellView({spell}){
+  if(!spell?.count)return '';
+  return `<section class="panel pd3-spell" aria-labelledby="pd3-spell-title"><h2 id="pd3-spell-title">Диктанты в повторении</h2>
+<p class="pd3-spell-line"><b>На повторении из диктантов: ${spell.count}</b>${spell.due?` · пора повторить: ${spell.due}`:''}</p>
+<p class="field-note">Предложения, в которых были ошибки, возвращаются как карточки «Диктант-карточка»: их озвучивают, а ты записываешь услышанное. Срок следующего раза выбирает то же расписание, что и для слов.</p>
+${spell.due?`<button type="button" class="btn primary" data-action="practice-spell">Повторить сейчас ${icon('arrow')}</button>`:''}</section>`;
+}
+
+/** The suggestion to take a mock exam (none yet, or the last one is MOCK_STALE_DAYS days old or older); '' otherwise. */
+function mockAdviceView({d,data,now}){
+  const advice=mockAdvice(d,data,now);
+  if(!advice.due)return '';
+  const why=advice.reason==='never'?'ещё ни одного не было, а он показывает общую картину по всем навыкам сразу.':`последний был ${days(advice.days)} назад: пора пройти ещё один.`;
+  return `<div class="pd3-advice pd3-advice-mock"><p><b>Пробный экзамен:</b> ${why} Он предлагается, если его не было или прошло ${days(MOCK_STALE_DAYS)} и больше.</p><button type="button" class="btn secondary" data-action="pd3-mock-open" data-value="mock">Пройти пробный экзамен ${icon('arrow')}</button></div>`;
+}
+
+const percentText=value=>value===null||value===undefined?'—':`${value}%`;
+function mockLine(record){
+  return `<li><b>${dateText(record.at)}</b> · ${MODE_NAMES[record.mode]||h(record.mode)} · набор ${h(record.set.replace(/^set-/,''))}<span>Del 1: ${percentText(record.find)} · Del 2: ${percentText(record.text)} · письмо (самооценка): ${percentText(record.writing)} · устная часть (самооценка): ${percentText(record.oral)}</span></li>`;
+}
+/** The last five mock exams in the hub (date, mode, percents by skill); '' while there are none. */
+export function mockHistoryView({d}){
+  const history=mockHistory(d,5);
+  if(!history.length)return '';
+  return `<section class="panel pd3-mock-history" aria-labelledby="pd3-mock-history-title"><h2 id="pd3-mock-history-title">Пробные экзамены</h2>
+<ol class="pd3-mock-history-list">${history.map(mockLine).join('')}</ol>
+<p class="field-note">Чтение проверила программа, письмо и устная часть — самооценка: она обычно выше настоящей оценки. Показаны последние пять.</p>
+<div class="button-row"><button type="button" class="btn secondary" data-action="pd3-mock-open" data-value="mock">Новый пробный экзамен ${icon('arrow')}</button></div></section>`;
+}
+/** The mock exam block of the progress page; '' while there are none. */
+export function mockProgressSection(pd3){
+  const history=mockHistory(pd3,5),count=Object.keys(pd3?.mocks||{}).length;
+  if(!history.length)return '';
+  return `<div class="section-title space-top"><h2>Пробные экзамены</h2><span>${count}</span></div><button type="button" class="panel pd3-progress-row pd3-mock-row" data-action="open-pd3" data-value="mock"><ol class="pd3-mock-history-list">${history.map(mockLine).join('')}</ol>${icon('arrow')}</button>`;
+}
+
 /** The PD3 section of the progress page, or '' while PD3 has not been used. */
 export function pd3ProgressSection(pd3,data){
   if(!pd3)return '';
@@ -60,7 +99,13 @@ export function pd3ProgressSection(pd3,data){
     const result=row.best!==null?`лучший результат: ${row.best}%`:row.self!=null?`самооценка: ${row.self}%`:'результатов пока нет';
     const last=row.lastAt?`последняя активность: ${dateText(row.lastAt)}`:'пока без активности';
     return `<button type="button" class="panel pd3-progress-row" data-action="open-pd3" data-value="${row.id}"><span class="pd3-progress-name"><b>${h(row.title)}</b><small>${result} · ${last}</small></span><span class="meter" aria-hidden="true"><span style="width:${row.done/row.total*100}%"></span></span><small class="pd3-progress-count">${row.done} / ${row.total}</small>${icon('arrow')}</button>`;
-  }).join('')}</div>`;
+  }).join('')}</div>${mockProgressSection(pd3)}`;
+}
+
+/** The line under the PD3 section of the progress page: dictation sentences in the repetition ({count,due} from spellSummary). */
+export function spellProgressLine(spell){
+  if(!spell?.count)return '';
+  return `<p class="field-note pd3-spell-line">На повторении из диктантов: ${spell.count}${spell.due?` · пора повторить: ${spell.due}`:''}</p>`;
 }
 
 /** The short line for the home page status row; '' until something in PD3 has been completed. */

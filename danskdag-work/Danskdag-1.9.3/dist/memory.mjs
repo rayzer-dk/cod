@@ -101,6 +101,8 @@ const learningKind=entry=>hasSource(entry,'personal') ? 'personal' : hasSource(e
 function newPriority(entry,state) {
   const marked=new Set([...(state.difficult || []),...(state.bookmarks || [])]);
   if (aliases(entry).some(id=>marked.has(id))) return 0;
+  // A dictation card without a review (its progress came from elsewhere) is a sentence the learner got wrong: it goes first.
+  if (entry.kind==='dictation') return 0;
   if (hasSource(entry,'personal')) return 1;
   if (entry.kind==='grammar' && entry.level===state.settings?.level) return 2;
   if (hasSource(entry,'file')) return 3;
@@ -110,7 +112,8 @@ function newPriority(entry,state) {
 
 function currentDayCount(cards,now) {
   const today=dayKey(new Date(now));
-  return cards.filter(({review})=>timestamp(review?.introducedAt)>0 && dayKey(new Date(review.introducedAt))===today).length;
+  // Dictation cards start with the mistake itself, not with a new word, so they do not use up the day's allowance of new material.
+  return cards.filter(({entry,review})=>entry.kind!=='dictation' && timestamp(review?.introducedAt)>0 && dayKey(new Date(review.introducedAt))===today).length;
 }
 
 export function planMemorySession(entries,state,now=Date.now()) {

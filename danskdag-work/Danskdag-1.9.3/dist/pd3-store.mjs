@@ -1,4 +1,5 @@
-import {validatePd3,sealPd3,emptyPd3,PD3_VERSION,PD3_LIMITS,PD3_STAT_KINDS,PD3_KEYS} from './engine.mjs';
+import {validatePd3,sealPd3,emptyPd3,PD3_VERSION,PD3_LIMITS,PD3_STAT_KINDS,PD3_KEYS,capPd3Mocks} from './engine.mjs';
+import {mergeSpell} from './pd3-spell.mjs';
 // Data of the PD3 section. Since 1.9.3 it lives in the learner's progress as the optional field `state.pd3` (see engine.mjs);
 // PD3_KEY is the storage key of versions 1.9.2 and earlier, still read once to migrate old results (pd3-migrate.mjs).
 // The data schema (validatePd3, defaults, size limits) lives in engine.mjs, which the Worker bundles; this module re-exports it under the names the app and the tests use.
@@ -12,6 +13,12 @@ const SCORE_MAPS=['reading','listening','dictation'];
 const pct=value=>Math.min(100,Math.max(0,Math.round(Number(value))||0));
 
 function newer(a,b){return (b.updatedAt??b.at??0)>(a.updatedAt??a.at??0)?b:a;}
+/** Mock exam records of two copies by id: the one saved later (updatedAt) wins; at most PD3_LIMITS.mocks newest are kept. */
+export function mergeMocks(mine,theirs){
+  const result={...(mine||{})};
+  for(const [id,entry] of Object.entries(theirs||{}))result[id]=result[id]?newer(result[id],entry):entry;
+  return capPd3Mocks(result);
+}
 /** Merges imported data into current data: higher best scores, newer drafts and self-assessments win. Settings stay as they are. */
 export function mergePd3(current,incoming){
   const result=structuredClone(current);
@@ -34,6 +41,10 @@ export function mergePd3(current,incoming){
   if(!result.plan.examDate)result.plan.examDate=incoming.plan.examDate;
   result.stats.dictation.runs=Math.max(result.stats.dictation.runs,incoming.stats.dictation.runs);
   for(const [kind,count] of Object.entries(incoming.stats.dictation.errors))result.stats.dictation.errors[kind]=Math.max(result.stats.dictation.errors[kind]||0,count);
+  const spell=mergeSpell(result.spell,incoming.spell);
+  if(spell.length)result.spell=spell;
+  const mocks=mergeMocks(result.mocks,incoming.mocks);
+  if(Object.keys(mocks).length)result.mocks=mocks;
   result.updatedAt=Math.max(current.updatedAt,incoming.updatedAt);
   return result;
 }

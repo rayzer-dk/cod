@@ -1,11 +1,16 @@
 // The unfinished PD3 task ("active run") that survives a page reload: an exam in progress, a dictation text, used listens.
 // It is temporary, device-only state, like an unfinished lesson: it lives under its own localStorage key, never in the shared
 // progress, the PD3 copy or the cloud. Pure functions (no DOM); the page controller decides when to save, restore and clear.
+import {snapshotMock,applyMock,validateMockRun} from './pd3-mock.mjs';
 export const RUN_KEY='danskdag.pd3.run.v1';
-export const RUN_VERSION=1;
+// Version 2 is the schema with the mock exam (view 'mock'). The other views are still written as version 1, so the older schema stays readable
+// (and an older app version reads them); a record of one version is never read as the other's view.
+export const RUN_VERSION=2;
+export const RUN_LEGACY_VERSION=1;
 export const RUN_MAX_AGE=24*60*60*1000;
 export const RUN_MAX_BYTES=32768;
-const RUN_VIEWS=new Set(['reading','dictation','listening','exam']);
+export const MOCK_RUN_MAX_BYTES=65536;
+const RUN_VIEWS=new Set(['reading','dictation','listening','exam','mock']);
 const MAX_TEXT=3000,MAX_KEYS=200,MAX_PLAYS=99;
 const isRecord=value=>!!value&&typeof value==='object'&&!Array.isArray(value)&&[Object.prototype,null].includes(Object.getPrototypeOf(value));
 const finite=value=>typeof value==='number'&&Number.isFinite(value);
@@ -24,7 +29,7 @@ export function itemOf(data,view,kind,id){
  */
 export function snapshotRun(ui,run,now){
   if(!run||!ui||!RUN_VIEWS.has(ui.view)||typeof ui.id!=='string'||!ui.id)return null;
-  const record={v:RUN_VERSION,savedAt:now,view:ui.view,kind:ui.view==='exam'?ui.kind:null,id:ui.id,t0:finite(run.t0)?run.t0:now};
+  const record={v:ui.view==='mock'?RUN_VERSION:RUN_LEGACY_VERSION,savedAt:now,view:ui.view,kind:ui.view==='exam'?ui.kind:null,id:ui.id,t0:finite(run.t0)?run.t0:now};
   const answers=map=>Object.fromEntries(Object.entries(map||{}).filter(([,value])=>value!==undefined&&value!==''&&value!==null));
   switch(ui.view){
     case 'reading':{
@@ -46,6 +51,10 @@ export function snapshotRun(ui,run,now){
     case 'exam':{
       if(run.phase!=='run')return null;
       return {...record,answers:answers(run.answers),task:run.task,timerOn:!!run.timerOn,deadline:run.timerOn&&finite(run.deadline)?run.deadline:null};
+    }
+    case 'mock':{
+      const snap=snapshotMock(run);
+      return snap?{...record,t0:run.mock.startedAt,mock:snap.mock,draft:snap.draft}:null;
     }
     default:return null;
   }
@@ -80,13 +89,15 @@ function validAnswers(map,item,view,kind){
  */
 export function validateRun(raw,{data,now}){
   try{
-    if(!isRecord(raw)||raw.v!==RUN_VERSION||!RUN_VIEWS.has(raw.view)||typeof raw.id!=='string')return null;
+    if(!isRecord(raw)||raw.v!==(raw.view==='mock'?RUN_VERSION:RUN_LEGACY_VERSION)||!RUN_VIEWS.has(raw.view)||typeof raw.id!=='string')return null;
+    // A mock exam is kept longer (a full one needs a break) and checks its own clock and content.
+    if(raw.view==='mock')return validateMockRun(raw,{data,now});
     if(!finite(raw.savedAt)||raw.savedAt>now+60000||now-raw.savedAt>RUN_MAX_AGE)return null;
     const kind=raw.view==='exam'?raw.kind:null;
     if(raw.view==='exam'&&kind!=='find'&&kind!=='text')return null;
     const item=itemOf(data,raw.view,kind,raw.id);
     if(!item)return null;
-    const record={v:RUN_VERSION,savedAt:raw.savedAt,view:raw.view,kind,id:raw.id,t0:finite(raw.t0)&&raw.t0<=now&&raw.t0>=raw.savedAt-RUN_MAX_AGE?raw.t0:raw.savedAt};
+    const record={v:RUN_LEGACY_VERSION,savedAt:raw.savedAt,view:raw.view,kind,id:raw.id,t0:finite(raw.t0)&&raw.t0<=now&&raw.t0>=raw.savedAt-RUN_MAX_AGE?raw.t0:raw.savedAt};
     if(raw.view==='dictation'){
       if(!isRecord(raw.inputs)||!isRecord(raw.plays)||Object.keys(raw.inputs).length>MAX_KEYS||Object.keys(raw.plays).length>MAX_KEYS)return null;
       record.inputs={};record.plays={};
@@ -130,6 +141,7 @@ export function applyRun(run,record){
     case 'reading':run.answers={...record.answers};break;
     case 'dictation':run.inputs={...record.inputs};run.plays={...record.plays};break;
     case 'listening':run.plays=record.plays;run.answers={...record.answers};break;
+    case 'mock':applyMock(run,record);break;
     case 'exam':run.phase='run';run.answers={...record.answers};run.task=record.task;run.timerOn=record.timerOn;run.deadline=record.deadline;run.timeUp=false;break;
   }
   return run;
@@ -146,7 +158,7 @@ export function createRunStore(storage=defaultStorage(),key=RUN_KEY){
     write(record){
       try{
         const text=JSON.stringify(record);
-        if(text.length>RUN_MAX_BYTES){this.clear();return false;}
+        if(text.length>(record?.view==='mock'?MOCK_RUN_MAX_BYTES:RUN_MAX_BYTES)){if(record?.view!=='mock')this.clear();return false;}
         area().setItem(key,text);return true;
       }catch{return false;}
     },

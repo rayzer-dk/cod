@@ -16,6 +16,8 @@ import {learningContexts} from './learning-contexts.mjs';
 const dailyItems=dailyLexicon.map(item=>({...item,...(learningContexts[item.id]?{contextVariants:learningContexts[item.id]}:{})}));
 import {documentVocabulary,documentImportSummary,documentNeedsReview} from './document-vocabulary.mjs';
 import {patternLessons} from './patterns-data.mjs';
+import {dictations} from './pd3-dictation-data.mjs';
+import {spellItems,spellSignature} from './pd3-spell.mjs';
 
 export const levels = {
   A1: {name:'Основы', description:'Порядок слов, артикли и первые фразы'},
@@ -46,17 +48,18 @@ export const documentItems=documentVocabulary.map(p=>({...p,source:'file',kind:'
 export {documentImportSummary,documentNeedsReview};
 export {quickGrammar, languageNotes, glossary, needsReview, importSummary};
 
-// The static part of the catalogue never changes; only the learner's own words do, so results are
-// cached against a signature of those words.
+// The static part of the catalogue never changes; only the learner's own words and the dictation sentences put into
+// repetition (state.pd3.spell, see pd3-spell.mjs) do, so results are cached against a signature of those.
 const personalSignature=words=>words.map(p=>[p.id,p.da,p.ru,p.note,p.association].join('\u0001')).join('\u0002');
 const cacheFor=(state,build)=>{
-  const signature=personalSignature(state.customWords);
-  if(build.signature!==signature){build.signature=signature;build.value=build.compute(state.customWords);}
+  const signature=personalSignature(state.customWords)+'\u0003'+spellSignature(state.pd3?.spell);
+  if(build.signature!==signature){build.signature=signature;build.value=build.compute(state.customWords,state);}
   return build.value;
 };
-const catalogCache={signature:null,value:null,compute:words=>{
+const catalogCache={signature:null,value:null,compute:(words,state)=>{
   const personal = words.map(p=>({...p,kind:'word',source:'personal',verified:true,level:'B1',lessonId:null,daAnswers:p.daAnswers||[p.da],ruAnswers:[...new Set([p.ru,...(p.ruAnswers||[]),...p.ru.split(/;| \/ /).map(s=>s.trim()).filter(s=>s.length>1)])]}));
-  return Object.fromEntries([...courseItems,...importedItems,...documentItems,...commonItems,...dailyItems,...personal].map(p=>[p.id,p]));
+  // Dictation cards have their own kind: they are practised in the repetition, but are not words of any list.
+  return Object.fromEntries([...courseItems,...importedItems,...documentItems,...commonItems,...dailyItems,...personal,...spellItems(state?.pd3?.spell,dictations)].map(p=>[p.id,p]));
 }};
 export function getCatalog(state) {
   return cacheFor(state,catalogCache);
@@ -77,6 +80,8 @@ const entriesCache={signature:null,value:null,compute:words=>{
   if(!staticEntries){staticEntries=new Map();for(const item of [...importedItems,...documentItems,...courseItems,...commonItems,...dailyItems])mergeEntry(staticEntries,item);}
   const combined=new Map(staticEntries);
   for (const item of Object.values(catalogCache.value).filter(p=>p.source==='personal'))mergeEntry(combined,item);
+  // A dictation sentence is never merged with a word or phrase of the same text: its review belongs to the dictation card alone.
+  for (const item of Object.values(catalogCache.value).filter(p=>p.kind==='dictation'))combined.set(`dictation::${item.id}`,{...item,ids:[item.id],sources:[item.source]});
   return [...combined.values()];
 }};
 export function getWordEntries(state) {
@@ -91,6 +96,6 @@ export function isMarked(item, ids) {
 const poolCache={catalog:null,value:null};
 export function trainingPool(state) {
   const catalog=getCatalog(state);
-  if(poolCache.catalog!==catalog){poolCache.catalog=catalog;poolCache.value=Object.values(catalog).filter(p=>p.verified!==false && p.da && p.ru);}
+  if(poolCache.catalog!==catalog){poolCache.catalog=catalog;poolCache.value=Object.values(catalog).filter(p=>p.verified!==false && p.da && p.ru && p.kind!=='dictation');}
   return poolCache.value.slice();
 }

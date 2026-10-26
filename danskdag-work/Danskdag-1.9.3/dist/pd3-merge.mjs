@@ -1,6 +1,7 @@
 // Merging PD3 results: three-way for two tabs of one browser (base/ours/theirs, as in progress-merge.mjs) and a union
 // for a cloud copy that replaces the device's progress. Inputs are validated `state.pd3` objects (or undefined while PD3 is unused).
-import {emptyPd3,mergePd3,sealPd3,LIMITS} from './pd3-store.mjs';
+import {emptyPd3,mergePd3,sealPd3,LIMITS,mergeMocks} from './pd3-store.mjs';
+import {mergeSpell} from './pd3-spell.mjs';
 
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 // The side that changed a value wins; when both changed it, `ourWin` decides (the newer record).
@@ -98,6 +99,12 @@ export function mergePd3Tabs(base,ours,theirs,hasBase=true){
     xp.day=o.day;
     xp.today=Math.min(100000,total(known,b.xp.day===o.day?b.xp.today:0,o.today,t.today));
   }else if(o.day>t.day){xp.day=o.day;xp.today=o.today;}
+  // Dictation sentences in repetition: the union (larger count, newest time); the cards' reviews are merged with the rest of the progress.
+  const spell=mergeSpell(ours.spell,theirs.spell);
+  if(spell.length)merged.spell=spell;else delete merged.spell;
+  // Mock exams: a record added or changed in either tab is kept; the same exam seen in both tabs takes the one saved later.
+  const mocks=mergeMocks(null,mergeKeyed(b.mocks||{},ours.mocks||{},theirs.mocks||{},(bb,o,t)=>mergeMocks({x:o},{x:t}).x));
+  if(Object.keys(mocks).length)merged.mocks=mocks;else delete merged.mocks;
   merged.updatedAt=Math.max(ours.updatedAt,theirs.updatedAt);
   if(ours._unknown||theirs._unknown)merged._unknown={...ours._unknown,...theirs._unknown};
   return sealPd3(merged,merged._unknown,LIMITS.state);

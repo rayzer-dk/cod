@@ -68,3 +68,13 @@
 .pronunciation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.pronunciation-card{padding:18px;display:flex;flex-direction:column;gap:10px}.pronunciation-card h2{font-size:1.15rem;margin:0}.pronunciation-card p{font-size:.95rem;margin:0;color:var(--muted);line-height:1.55}.pronunciation-card>.btn{align-self:flex-start;margin-top:auto}.pronunciation-words{display:flex;flex-wrap:wrap;gap:8px 16px}.pronunciation-words small{display:block;color:var(--muted)}.pronunciation-coach{display:grid;gap:14px}.coach-target{font-size:var(--reading-size);font-weight:650;margin:0;line-height:1.6}.coach-chunks{display:flex;flex-wrap:wrap;gap:6px}.coach-checks{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:10px}.coach-checks legend{padding:0 6px;font-weight:650}.coach-checks label{display:flex;gap:10px;align-items:flex-start;line-height:1.45}.coach-checks input{width:18px;height:18px;flex-shrink:0;margin-top:2px}#recording-controls audio{display:block;width:100%;margin-top:10px}.pronunciation-coach h3{font-size:1rem;margin:0}@media(max-width:600px){.pronunciation-grid{grid-template-columns:1fr}.pronunciation-card{padding:14px}.coach-chunks .btn{white-space:normal;text-align:left}.mobile-sections{flex-wrap:wrap}}
 
 .pronunciation-coach>p{margin:0}.pronunciation-coach .field-note{line-height:1.5!important}#recording-controls .field-note{margin:10px 0}.pronunciation-coach{gap:12px}
+
+/* Dictation cards: a sentence the learner got wrong in a PD3 dictation, practised by writing it down (see exercise.mjs, pd3-spell.mjs). */
+.dictation-plays{display:block;margin-top:6px;color:var(--blue-ink);font-size:.78rem;font-weight:600}
+.dictation-plays:empty{display:none}
+.dictation-label{margin:14px 0 2px;font-size:.78rem;font-weight:700}
+.dictation-reference,.dictation-typed{overflow-wrap:anywhere;line-height:1.7;margin:4px 0 6px}
+.dictation-translation{margin:12px 0}
+.pd3-spell-line{margin:6px 0 10px}
+.pd3-spell .btn{margin-top:8px}
+.pd3-spell,.pd3-spell-added{margin-bottom:22px}

@@ -72,7 +72,7 @@ export function finishSession(state, event, now = new Date()) {
 }
 // XP for finished PD3 activities. Each activity is worth at most this much in total (a share of it per percent of the best result),
 // nothing below PD3_MIN_PERCENT, and no more than PD3_DAY_XP a day from PD3 altogether.
-export const PD3_XP = {reading:10,listening:10,dictation:12,'exam-find':20,'exam-text':25,writing:15,oral:8};
+export const PD3_XP = {reading:10,listening:10,dictation:12,'exam-find':20,'exam-text':25,writing:15,oral:8,mock:30};
 export const PD3_MIN_PERCENT = 30, PD3_DAY_XP = 60;
 /** Counts a finished PD3 activity: {kind,id,percent,minutes}. The result must already be stored in state.pd3 by the caller.
  * XP is paid for the first completion and for an improved best result only (state.pd3.xp remembers the percent already paid),
@@ -142,11 +142,11 @@ export function getAchievements(state) {
 // ---- PD3 data inside the progress (state.pd3) --------------------------------------------------------------
 // The schema lives here so that the Worker, which bundles only this file, validates the same data as the app. pd3-store.mjs re-exports it.
 export const PD3_VERSION=1;
-export const PD3_LIMITS={draft:12000,items:300,bytes:900000,importBytes:1500000,keywords:12,keyword:40,state:262144,xpItems:600};
+export const PD3_LIMITS={draft:12000,items:300,bytes:900000,importBytes:1500000,keywords:12,keyword:40,state:262144,xpItems:600,mocks:20};
 /** Error kinds counted in the dictation statistics (the same list as ERROR_KINDS in pd3-diff.mjs). */
 export const PD3_STAT_KINDS=['aeoa','double','silent','ending','case','other','punctuation','missing','extra','order'];
 /** Fields of `state.pd3` that validatePd3 knows; anything else a newer version wrote is carried in `_unknown` by engine.mjs. */
-export const PD3_KEYS=new Set(['version','updatedAt','settings','reading','listening','dictation','exam','writing','oral','plan','stats','xp','_unknown']);
+export const PD3_KEYS=new Set(['version','updatedAt','settings','reading','listening','dictation','exam','writing','oral','plan','stats','xp','mocks','spell','_unknown']);
 const PD3_ID=/^[a-z0-9-]{1,60}$/;
 const PD3_SCORE_MAPS=['reading','listening','dictation'];
 const PD3_RATES=[0.6,0.75,0.9,1];
@@ -192,6 +192,62 @@ function pd3CleanXp(value){
   }
   const day=pd3ValidDay(source.day)?source.day:'';
   return {items,day,today:day?pd3Int(source.today,0,100000,0):0};
+}
+
+/** Limits of the dictation sentences kept in spaced repetition (state.pd3.spell). */
+export const PD3_SPELL={max:200,words:5,wordLength:40};
+/** Dictation sentences with mistakes that were put into spaced repetition: [{id,dictId,idx,words,count,lastAt}], newest first,
+ * at most PD3_SPELL.max. `id` is always `spell-<dictId>-<idx>` (the key of the card in state.reviews); `words` are the words written wrongly.
+ * Records with the same id are combined: larger count, newest time, union of the words (newest record first). */
+export function pd3CleanSpell(value){
+  if(!Array.isArray(value))return [];
+  const byId=new Map();
+  for(const raw of value.slice(0,PD3_SPELL.max*4)){
+    if(!pd3Object(raw)||typeof raw.dictId!=='string'||!PD3_ID.test(raw.dictId)||!Number.isInteger(raw.idx)||raw.idx<0||raw.idx>999)continue;
+    const id=`spell-${raw.dictId}-${raw.idx}`;
+    if(id.length>120)continue;
+    const words=[];
+    if(Array.isArray(raw.words))for(const word of raw.words){
+      const text=typeof word==='string'?word.trim().slice(0,PD3_SPELL.wordLength):'';
+      if(text&&!words.includes(text))words.push(text);
+    }
+    const entry={id,dictId:raw.dictId,idx:raw.idx,words:words.slice(0,PD3_SPELL.words),count:pd3Int(raw.count,1,1000000,1),lastAt:pd3Stamp(raw.lastAt)};
+    const old=byId.get(id);
+    if(!old){byId.set(id,entry);continue;}
+    const [first,second]=entry.lastAt>=old.lastAt?[entry,old]:[old,entry];
+    byId.set(id,{...first,words:[...new Set([...first.words,...second.words])].slice(0,PD3_SPELL.words),count:Math.max(first.count,second.count),lastAt:first.lastAt});
+  }
+  return [...byId.values()].sort((a,b)=>b.lastAt-a.lastAt||(a.id<b.id?-1:a.id>b.id?1:0)).slice(0,PD3_SPELL.max);
+}
+
+/** Mock exams (state.pd3.mocks, at most PD3_LIMITS.mocks, newest kept): {at,updatedAt,mode,set,find,text,writing,oral,weak,minutes,stages,of}.
+ * find/text are percents checked by the program, writing/oral percents of the learner's self-assessment; null = not measured. */
+const PD3_MOCK_WEAK=['','find','text','writing','oral'];
+const pd3OptPct=value=>value===null||value===undefined||value===''||!Number.isFinite(Number(value))?null:pd3Pct(value);
+function pd3CleanMock(value){
+  if(!pd3Object(value)||!['full','short'].includes(value.mode)||typeof value.set!=='string'||!PD3_ID.test(value.set))return null;
+  const at=pd3Stamp(value.at);
+  return {
+    at,updatedAt:pd3Stamp(value.updatedAt)||at,mode:value.mode,set:value.set,
+    find:pd3OptPct(value.find),text:pd3OptPct(value.text),writing:pd3OptPct(value.writing),oral:pd3OptPct(value.oral),
+    weak:PD3_MOCK_WEAK.includes(value.weak)?value.weak:'',minutes:pd3Int(value.minutes,0,1440),stages:pd3Int(value.stages,0,12),of:pd3Int(value.of,0,12)
+  };
+}
+/** The newest PD3_LIMITS.mocks records of an id-keyed map (used when cleaning and after merging two copies). */
+export function capPd3Mocks(map){
+  const result={};
+  for(const [id,entry] of Object.entries(map||{}).sort((a,b)=>b[1].at-a[1].at||(a[0]<b[0]?-1:1)).slice(0,PD3_LIMITS.mocks))result[id]=entry;
+  return result;
+}
+function pd3CleanMocks(source){
+  const result={};
+  if(!pd3Object(source))return result;
+  for(const [id,value] of Object.entries(source).slice(0,PD3_LIMITS.mocks*4)){
+    if(!PD3_ID.test(id))continue;
+    const entry=pd3CleanMock(value);
+    if(entry)result[id]=entry;
+  }
+  return capPd3Mocks(result);
 }
 
 function pd3CleanScore(value){
@@ -251,6 +307,12 @@ export function validatePd3(raw){
     stats:pd3CleanStats(raw.stats),xp:pd3CleanXp(raw.xp)
   };
   for(const name of PD3_SCORE_MAPS)data[name]=pd3CleanMap(raw[name],pd3CleanScore);
+  // Optional: absent until the first mock exam is finished, so progress that never used it stays as it was.
+  const mocks=pd3CleanMocks(raw.mocks);
+  if(Object.keys(mocks).length)data.mocks=mocks;
+  // Optional: absent until a dictation with mistakes is checked, so progress that never used it stays as it was.
+  const spell=pd3CleanSpell(raw.spell);
+  if(spell.length)data.spell=spell;
   return data;
 }
 
@@ -264,6 +326,12 @@ export function sealPd3(data,unknown=null,max=PD3_LIMITS.state){
   for(const cap of [6000,3000,1000,0])for(const entry of drafts){
     if(entry.draft.length<=cap)continue;
     entry.draft=entry.draft.slice(0,cap);
+    if(size()<=max)return data;
+  }
+  // Dictation sentences in repetition (newest first): the oldest go before any result does.
+  if(Array.isArray(data.spell)){
+    while(data.spell.length&&size()>max)data.spell.pop();
+    if(!data.spell.length)delete data.spell;
     if(size()<=max)return data;
   }
   const records=[];

@@ -3,6 +3,12 @@ export const countWords=value=>String(value??'').split(/\s+/).filter(token=>/[\p
 const LETTERS='[\\p{L}\\p{N}]';
 const escape=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
+/** The prompt, the requirements and the model answer of a writing task (for a "task" the chosen option A or B). Shared by the writing page and the mock exam. */
+export const writingSpec=(kind,item,option)=>{
+  const chosen=kind==='task'?item.options.find(o=>o.key===option)||item.options[0]:item;
+  return {prompt:chosen.prompt,requirements:chosen.requirements,model:kind==='task'?item.modelAnswers[chosen.key]:item.modelAnswer,key:chosen.key};
+};
+
 /** 'low' below the minimum, 'high' above the maximum, otherwise 'ok'. */
 export function lengthLevel(words,min,max){return words<min?'low':words>max?'high':'ok';}
 

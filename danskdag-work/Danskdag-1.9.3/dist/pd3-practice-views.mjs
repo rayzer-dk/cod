@@ -2,7 +2,8 @@
 import {h,icon,spoken} from './ui.mjs';
 import {backButton,pageHead,toggleButtons,checkbox,mcq,lettersBar,paragraphs,clock,selfAssessment} from './pd3-ui.mjs';
 import {resultBlock,DISCLAIMER} from './pd3-views.mjs';
-import {analyzeWriting} from './pd3-writing-check.mjs';
+import {analyzeWriting,writingSpec} from './pd3-writing-check.mjs';
+export {writingSpec};
 
 const backTo=(view,label)=>`<button type="button" class="text-button pd3-back" data-action="pd3-open" data-value="${view}">${icon('arrow')}<span>${label}</span></button>`;
 const empty=text=>`<div class="info-panel">${text}</div>`;
@@ -29,7 +30,7 @@ function highlightEvidence(paragraph,evidence){
   return `${h(paragraph.slice(0,at))}<mark class="pd3-evid">${h(evidence)}</mark>${h(paragraph.slice(at+evidence.length))}`;
 }
 
-export function examFindView({item,run}){
+export function examFindView({item,run,embedded=false}){
   const checked=run.phase==='result',minutes=item.minutes||25;
   const evidenceBySection=new Map();
   if(checked)for(const q of item.questions){if(!evidenceBySection.has(q.section))evidenceBySection.set(q.section,[]);evidenceBySection.get(q.section).push(q);}
@@ -44,12 +45,12 @@ export function examFindView({item,run}){
     return `<li class="pd3-find-q ${checked?(ok?'is-right':'is-wrong'):''}"><label for="pd3-find-${h(q.id)}"><span class="pd3-qn">${i+1}.</span> <span lang="da" data-audio-ready>${h(q.q)}</span></label><select id="pd3-find-${h(q.id)}" data-pd3-set="find:${h(q.id)}" ${checked?'disabled':''}>${optionList(options,given,'— выбери раздел —')}</select>${checked?`<div class="pd3-feedback"><b>${ok?'Верно.':'Неверно.'}</b> Ответ в разделе ${item.sections.indexOf(section)+1}: <span lang="da" data-audio-ready>${h(section?.title||'')}</span>.<blockquote lang="da" data-audio-ready>${h(q.evidence)}</blockquote><p class="pd3-why"><b>Почему:</b> ${h(q.why)}</p></div>`:''}</li>`;}).join('');
   const score=checked?item.questions.filter(q=>run.answers[`find:${q.id}`]===q.section).length:0;
   const answered=item.questions.filter(q=>run.answers[`find:${q.id}`]).length;
-  return `${backTo('exam','К списку заданий')}${pageHead(item.title,'Del 1')}${checked?resultBlock(score,item.questions.length,run.timeUp?'Время вышло. Результат Del 1':'Результат Del 1',run.xp):timerBar(run,minutes)}
+  return `${embedded?'':`${backTo('exam','К списку заданий')}${pageHead(item.title,'Del 1')}${checked?resultBlock(score,item.questions.length,run.timeUp?'Время вышло. Результат Del 1':'Результат Del 1',run.xp):timerBar(run,minutes)}`}
 <div class="pd3-exam-grid"><div class="pd3-sections"><nav class="panel pd3-toc" aria-label="Оглавление"><h2>Разделы</h2><ol>${item.sections.map((s,i)=>`<li><button type="button" class="text-button" data-action="pd3-jump" data-id="${h(s.id)}"><span lang="da" data-audio-ready>${i+1}. ${h(s.title)}</span></button></li>`).join('')}</ol></nav>${sections}</div>
-<section class="pd3-qlist" aria-labelledby="pd3-find-title"><h2 id="pd3-find-title">Вопросы · ${checked?`${score} из ${item.questions.length}`:`отвечено ${answered} из ${item.questions.length}`}</h2><ol>${list}</ol>${checked?'':`<div class="button-row"><button type="button" class="btn primary" data-action="pd3-exam-finish">Завершить и проверить</button></div>`}</section></div>`;
+<section class="pd3-qlist" aria-labelledby="pd3-find-title"><h2 id="pd3-find-title">Вопросы · ${checked?`${score} из ${item.questions.length}`:`отвечено ${answered} из ${item.questions.length}`}</h2><ol>${list}</ol>${checked||embedded?'':`<div class="button-row"><button type="button" class="btn primary" data-action="pd3-exam-finish">Завершить и проверить</button></div>`}</section></div>`;
 }
 
-export function examTextView({item,run}){
+export function examTextView({item,run,embedded=false,tasks=['t1','t2','t3']}){
   const checked=run.phase==='result',minutes=item.minutes||65;
   const t1=item.text1,t2=item.text2,t3=item.text3;
   const gaps2=t2.parts.filter(p=>p.gap).map(p=>p.gap),gaps3=t3.segments.filter(s=>typeof s!=='string');
@@ -81,7 +82,7 @@ export function examTextView({item,run}){
   }
   const total=checked?s1+s2+s3:0,max=t1.questions.length+gaps2.length+gaps3.length;
   const summary=checked?`${resultBlock(total,max,run.timeUp?'Время вышло. Результат Del 2':'Результат Del 2',run.xp)}<ul class="pd3-parts"><li>Текст 1 (вопросы): ${s1} из ${t1.questions.length}</li><li>Текст 2 (абзацы): ${s2} из ${gaps2.length}</li><li>Текст 3 (пропуски): ${s3} из ${gaps3.length}</li></ul>`:timerBar(run,minutes);
-  return `${backTo('exam','К списку заданий')}${pageHead('Чтение, Del 2','Три задания к текстам')}${summary}<div class="pd3-tabs" role="group" aria-label="Задания Del 2">${tabs.map(([id,label])=>`<button type="button" class="${run.task===id?'active':''}" data-action="pd3-task" data-value="${id}" aria-pressed="${run.task===id}">${label}</button>`).join('')}</div><section class="pd3-task">${body}</section>${checked?'':`<div class="button-row"><button type="button" class="btn primary" data-action="pd3-exam-finish">Завершить и проверить</button></div>`}`;
+  return `${embedded?'':`${backTo('exam','К списку заданий')}${pageHead('Чтение, Del 2','Три задания к текстам')}${summary}`}<div class="pd3-tabs" role="group" aria-label="Задания Del 2">${tabs.filter(([id])=>tasks.includes(id)).map(([id,label])=>`<button type="button" class="${run.task===id?'active':''}" data-action="pd3-task" data-value="${id}" aria-pressed="${run.task===id}">${label}</button>`).join('')}</div><section class="pd3-task">${body}</section>${checked||embedded?'':`<div class="button-row"><button type="button" class="btn primary" data-action="pd3-exam-finish">Завершить и проверить</button></div>`}`;
 }
 
 /* ---------- Writing ---------- */
@@ -91,10 +92,6 @@ export function writingListView({data,d}){
   return `${backButton()}${pageHead('Письмо','Ответ на письмо (100–160 слов) и сочинение (200–300 слов). Черновик сохраняется сам.')}${list.length?`<div class="pd3-list">${list.join('')}</div>`:empty('Материалы появятся позже.')}`;
 }
 
-export const writingSpec=(kind,item,option)=>{
-  const chosen=kind==='task'?item.options.find(o=>o.key===option)||item.options[0]:item;
-  return {prompt:chosen.prompt,requirements:chosen.requirements,model:kind==='task'?item.modelAnswers[chosen.key]:item.modelAnswer,key:chosen.key};
-};
 
 export function wordMeter(words,min,max){
   const level=words<min?'low':words>max?'high':'ok';
@@ -102,13 +99,19 @@ export function wordMeter(words,min,max){
   return {level,html:`Слов: <b>${words}</b> · нужно ${min}–${max} · ${text}`,percent:Math.min(100,Math.round(words/max*100))};
 }
 
+/** Pieces of the writing page that the mock exam shows as well (the exam keeps its own draft and ticks instead of the writing store). */
+export const writingOptionPicker=(kind,item,spec)=>kind==='task'?`<div class="pd3-choice" role="group" aria-label="Выбор темы">${item.options.map(o=>`<button type="button" class="${o.key===spec.key?'active':''}" data-action="pd3-wopt" data-value="${o.key}" aria-pressed="${o.key===spec.key}">Тема ${o.key}</button>`).join('')}</div>`:'';
+export const writingPromptHtml=(kind,spec,stored)=>`<section class="panel pd3-prompt"><h2>${kind==='email'?'Письмо, на которое нужно ответить':'Задание'}</h2><div class="pd3-pre" lang="da" data-audio-ready>${paragraphs(spec.prompt)}</div><h3>Что должно быть в ответе</h3><ul class="pd3-reqs">${spec.requirements.map((r,i)=>`<li>${checkbox(`pd3-req-${i}`,`<span lang="da" data-audio-ready>${h(r)}</span>`,stored.req?.[i],`data-pd3-check="req:${i}"`)}</li>`).join('')}</ul></section>`;
+export const writingChecklistHtml=(item,stored)=>`<section class="panel pd3-checklist"><h3>Проверь перед сдачей</h3><ul>${(item.checklist||[]).map((c,i)=>`<li>${checkbox(`pd3-chk-${i}`,h(c),stored.check?.[i],`data-pd3-check="check:${i}"`)}</li>`).join('')}</ul></section>`;
+export const writingBoxHtml=({text,meter,note,maxlength=12000})=>`<section class="panel pd3-writing"><label for="pd3-write" class="answer-label">Твой ответ</label>${lettersBar('Датские буквы')}<textarea id="pd3-write" lang="da" autocapitalize="sentences" autocorrect="off" autocomplete="off" spellcheck="false" rows="14" maxlength="${maxlength}">${h(text)}</textarea><p class="pd3-count pd3-count-${meter.level}" id="pd3-count" role="status">${meter.html}</p><div class="meter" aria-hidden="true"><span id="pd3-count-bar" style="width:${meter.percent}%"></span></div><p class="field-note" id="pd3-saved" role="status">${note}</p></section>`;
+
 export function writingItemView({kind,item,d,run,data}){
   const stored=d.writing[item.id]||{},option=run.option,spec=writingSpec(kind,item,option);
   const text=run.text,meter=wordMeter(analyzeWriting(text).words,item.minWords,item.maxWords);
   const settings=d.settings.writing;
-  const optionPicker=kind==='task'?`<div class="pd3-choice" role="group" aria-label="Выбор темы">${item.options.map(o=>`<button type="button" class="${o.key===spec.key?'active':''}" data-action="pd3-wopt" data-value="${o.key}" aria-pressed="${o.key===spec.key}">Тема ${o.key}</button>`).join('')}</div>`:'';
-  const prompt=`<section class="panel pd3-prompt"><h2>${kind==='email'?'Письмо, на которое нужно ответить':'Задание'}</h2><div class="pd3-pre" lang="da" data-audio-ready>${paragraphs(spec.prompt)}</div><h3>Что должно быть в ответе</h3><ul class="pd3-reqs">${spec.requirements.map((r,i)=>`<li>${checkbox(`pd3-req-${i}`,`<span lang="da" data-audio-ready>${h(r)}</span>`,stored.req?.[i],`data-pd3-check="req:${i}"`)}</li>`).join('')}</ul></section>`;
-  const common=`<section class="panel pd3-checklist"><h3>Проверь перед сдачей</h3><ul>${(item.checklist||[]).map((c,i)=>`<li>${checkbox(`pd3-chk-${i}`,h(c),stored.check?.[i],`data-pd3-check="check:${i}"`)}</li>`).join('')}</ul></section>`;
+  const optionPicker=writingOptionPicker(kind,item,spec);
+  const prompt=writingPromptHtml(kind,spec,stored);
+  const common=writingChecklistHtml(item,stored);
   if(run.phase==='done'){
     const a=analyzeWriting(text,data.connectors,{minWords:item.minWords,maxWords:item.maxWords});
     return `${backTo('writing','К списку заданий')}${pageHead(item.title,'Проверка')}
@@ -122,7 +125,7 @@ ${item.phrases?.length?`<section class="panel"><h2>Полезные фразы</
 <section class="panel"><h2>Самооценка</h2>${selfAssessment('pd3-wself',data.writingCriteria,stored.self)}</section>
 <div class="button-row"><button type="button" class="btn secondary" data-action="pd3-write-edit">Продолжить редактирование</button></div>`;
   }
-  return `${backTo('writing','К списку заданий')}${pageHead(item.title,`${h(item.topic)} · ${item.level}`)}${optionPicker}<div class="pd3-write-grid">${prompt}<div class="pd3-editor"><section class="panel pd3-writing"><label for="pd3-write" class="answer-label">Твой ответ</label>${lettersBar('Датские буквы')}<textarea id="pd3-write" lang="da" autocapitalize="sentences" autocorrect="off" autocomplete="off" spellcheck="false" rows="14" maxlength="12000">${h(text)}</textarea><p class="pd3-count pd3-count-${meter.level}" id="pd3-count" role="status">${meter.html}</p><div class="meter" aria-hidden="true"><span id="pd3-count-bar" style="width:${meter.percent}%"></span></div><p class="field-note" id="pd3-saved" role="status">${stored.updatedAt?'Черновик сохранён.':'Черновик сохраняется автоматически.'}</p></section>
+  return `${backTo('writing','К списку заданий')}${pageHead(item.title,`${h(item.topic)} · ${item.level}`)}${optionPicker}<div class="pd3-write-grid">${prompt}<div class="pd3-editor">${writingBoxHtml({text,meter,note:stored.updatedAt?'Черновик сохранён.':'Черновик сохраняется автоматически.'})}
 <section class="panel pd3-timer-box"><h3>Таймер</h3>${checkbox('pd3-wtimer-on','Включить таймер (необязательно)',settings.timer,'data-pd3-setting="writeTimer"')}${settings.timer?`<label for="pd3-wtimer-min">Минут</label><select id="pd3-wtimer-min" data-pd3-setting="writeMinutes">${[30,45,60,90,120].map(m=>`<option value="${m}" ${settings.minutes===m?'selected':''}>${m}</option>`).join('')}</select><p class="pd3-timer"><b id="pd3-timer" role="timer" aria-live="off">${clock(run.remaining??settings.minutes*60)}</b></p><div class="button-row"><button type="button" class="btn secondary" data-action="pd3-wtimer">${run.timerOn?'Остановить таймер':'Запустить таймер'}</button></div>`:''}</section>${common}<div class="button-row"><button type="button" class="btn primary" data-action="pd3-write-done">Готово: показать проверку и образец</button></div></div></div>`;
 }
 
@@ -135,11 +138,11 @@ export function recorderHtml(rec,{maxSeconds=20}={}){
   return `<div class="pd3-recorder"><div class="button-row">${rec.phase==='recording'?'<button type="button" class="btn primary" data-action="pd3-rec-stop">Остановить запись</button>':`<button type="button" class="btn secondary" data-action="pd3-rec-start" ${busy?'disabled':''}>${rec.url?'Записать ещё раз':'Записать себя'}</button>`}${rec.url?'<button type="button" class="btn secondary" data-action="pd3-rec-clear">Удалить запись</button>':''}</div><p class="field-note" role="status">${h(rec.message)||`Запись до ${maxSeconds} секунд. Она остаётся только в памяти этой вкладки.`}</p>${rec.url?`<audio controls src="${h(rec.url)}"></audio>`:''}</div>`;
 }
 
-export function oralView({data,d,run}){
+export function oralView({data,d,run,embedded=false}){
   const tabs=`<div class="pd3-tabs" role="group" aria-label="Части устного экзамена">${TABS.map(([id,label])=>`<button type="button" class="${run.tab===id?'active':''}" data-action="pd3-oral-tab" data-value="${id}" aria-pressed="${run.tab===id}">${label}</button>`).join('')}</div>`;
-  const head=`${backButton()}${pageHead('Устная часть','Тренировка по мотивам формата PD3: говори вслух, записывай себя и оценивай.')}<div class="notice pd3-disclaimer">${icon('info')}<span>${ORAL_NOTE}</span></div>${tabs}`;
-  const pickList=(list,titleOf,subOf)=>`<div class="pd3-list">${list.map(item=>`<button type="button" class="panel pd3-item ${run.id===item.id?'active':''}" data-action="pd3-oral-pick" data-id="${h(item.id)}" aria-pressed="${run.id===item.id}"><b lang="da" data-audio-ready>${h(titleOf(item))}</b><small>${subOf(item)}</small></button>`).join('')}</div>`;
-  const self=key=>`<section class="panel"><h2>Самооценка</h2>${selfAssessment('pd3-oself',data.oralCriteria,d.oral[key]?.self)}</section>`;
+  const head=embedded?'':`${backButton()}${pageHead('Устная часть','Тренировка по мотивам формата PD3: говори вслух, записывай себя и оценивай.')}<div class="notice pd3-disclaimer">${icon('info')}<span>${ORAL_NOTE}</span></div>${tabs}`;
+  const pickList=embedded?()=>'':(list,titleOf,subOf)=>`<div class="pd3-list">${list.map(item=>`<button type="button" class="panel pd3-item ${run.id===item.id?'active':''}" data-action="pd3-oral-pick" data-id="${h(item.id)}" aria-pressed="${run.id===item.id}"><b lang="da" data-audio-ready>${h(titleOf(item))}</b><small>${subOf(item)}</small></button>`).join('')}</div>`;
+  const self=embedded?()=>'':key=>`<section class="panel"><h2>Самооценка</h2>${selfAssessment('pd3-oself',data.oralCriteria,d.oral[key]?.self)}</section>`;
   const rec=(max)=>recorderHtml(run.rec,{maxSeconds:max});
   let body='';
   if(run.tab==='monologue'){

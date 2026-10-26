@@ -7,7 +7,7 @@ import {checkRelease} from './app-updates.mjs';
 import {offlineEdition,assetUrl,hostedUrl,prepareOfflineCache,offlineCacheMessage} from './runtime.mjs';
 import {createState,validateState,normalize,dayKey,activeStreak,finishSession,awardPd3,getLearnerLevel,getAchievements} from './engine.mjs';
 import {lessons,lessonById,levels,getCatalog,getWordEntries,isMarked,trainingPool} from './course.mjs';
-import {makeSession,restoreSession,answerSession,selfCheckSession,advanceSession,moveToken,shuffle} from './learning.mjs';
+import {makeSession,restoreSession,answerSession,selfCheckSession,advanceSession,moveToken,shuffle,listenSession,clozeSession} from './learning.mjs';
 import {h,icon,button as btn,plural,addDanishAudio,themeToggle,teachingText} from './ui.mjs';
 import {speak,stopSpeech,getDanishVoices,voiceStatus} from './speech.mjs';
 import {createAudioFeedback} from './audio-feedback.mjs';
@@ -22,7 +22,7 @@ import {dailyLexicon,dailyCategories} from './daily-lexicon-data.mjs';
 import {referenceSelection,searchKey} from './reference-tools.mjs';
 import {particleFamilies,informalExpressions,patternLessons} from './patterns-data.mjs';
 import {renderView,modeNames,count,voiceOptions} from './views.mjs';
-import {exerciseView,resultView,hasAnswer} from './exercise.mjs';
+import {exerciseView,resultView,hasAnswer,playsText} from './exercise.mjs';
 import {getReviewFor,planMemorySession,memorySummary,recordAttempt} from './memory.mjs';
 import {renderStudy} from './memory-view.mjs';
 import {illustrationFor,renderIllustration} from './illustrations.mjs';
@@ -31,6 +31,7 @@ import {cloudSettings} from './continuity-view.mjs';
 import {saveProgressCopy,listProgressCopies,loadProgress,describeProgress} from './recovery.mjs';
 import {mergeProgress} from './progress-merge.mjs';
 import {adoptRemoteState} from './pd3-merge.mjs';
+import {recordSpell,spellSummary} from './pd3-spell.mjs';
 import {migrateLegacyPd3} from './pd3-migrate.mjs';
 import {pd3Totals} from './pd3-progress.mjs';
 import {vocabKey,newOwnWords} from './pd3-vocab.mjs';
@@ -110,7 +111,19 @@ function updateMetrics(){
  if(streakWord)streakWord.textContent=plural(streak,['день','дня','дней']);
  if(xpNumber)xpNumber.textContent=String(state.xp);
 }
-const pd3=createPd3Page({data:pd3Data,store:pd3Store,deps:{container:()=>$('#pd3-root'),voiceUri:()=>state.settings.voiceUri,toast:text=>toast(text),announce:text=>announcer.say(text),enhance:scope=>addDanishAudio(scope),setTitle:text=>{document.title=pageTitle(text);},say:(text,rate,control)=>say(text,rate,control),offline:offlineEdition,award:awardPd3Activity,vocab:pd3Vocab}});
+// Sentences written wrongly in a dictation go into the repetition as cards (state.pd3.spell and a review of their own, see pd3-spell.mjs).
+const pd3Spell={
+ record(dictId,found){
+  const result=recordSpell(state,dictId,found,Date.now());
+  if(!result.recorded)return 0;
+  const previous=state;
+  try{state=validateState(result.state);}catch{state=previous;return 0;}
+  catalog=getCatalog(state);persist();
+  return result.recorded;
+ },
+ summary:()=>spellSummary(state,Date.now())
+};
+const pd3=createPd3Page({data:pd3Data,store:pd3Store,deps:{container:()=>$('#pd3-root'),voiceUri:()=>state.settings.voiceUri,toast:text=>toast(text),announce:text=>announcer.say(text),enhance:scope=>addDanishAudio(scope),setTitle:text=>{document.title=pageTitle(text);},say:(text,rate,control)=>say(text,rate,control),offline:offlineEdition,award:awardPd3Activity,vocab:pd3Vocab,spell:pd3Spell}});
 const dueItems=()=>getWordEntries(state).filter(p=>p.verified===true&&getReviewFor(p,state.reviews)?.due<=Date.now());
 const nextLesson=()=>nextPathLesson(lessons,state);
 function toast(text){const el=$('#toast');el.textContent=text;el.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('visible'),4500);}
@@ -171,6 +184,7 @@ function chooseTheme(theme){
 function preferences(){const theme=effectiveTheme();document.documentElement.lang=appLanguage;document.title=pageTitle(active&&session?session.title:sectionName(page));document.documentElement.dataset.theme=theme;document.documentElement.style.setProperty('--reading-size',`${state.settings.fontSize}px`);document.querySelector('meta[name=theme-color]').content=theme==='dark'?'#192720':'#f5f5f7';}
 function go(next){if(![...navigation.map(n=>n[0]),'settings','method'].includes(next))return;renderSearch.cancel();closeDialog();if(page==='pd3')pd3.leave();else if(next==='pd3')pd3.enter();page=next;active=false;history.replaceState(null,'',`#${next}`);render();window.scrollTo(0,0);focusPageStart($('#content'));void cloud?.flush();maybeCloudConflict();}
 function words(){return getWordEntries(state).filter(p=>{
+ if(p.kind==='dictation')return false;
  const match=wordFilter==='illustrated'&&!!illustrationFor(p)||wordFilter==='all'||wordFilter==='file'&&p.sources.includes('file')||wordFilter==='personal'&&p.sources.includes('personal')||wordFilter==='difficult'&&isMarked(p,state.difficult)||wordFilter==='saved'&&isMarked(p,state.bookmarks);
  return match&&(!query||searchKey(`${p.da} ${p.ru} ${p.note||''}`).includes(searchKey(query)));
 });}
@@ -188,7 +202,7 @@ function render(){
  const entries=memo(()=>getWordEntries(state)),plan=memo(()=>planMemorySession(entries(),state)),summary=memo(()=>memorySummary(entries(),state));
  const filtered=memo(words),fileTotal=memo(()=>trainingPool(state).filter(p=>p.source==='file').length),following=memo(nextLesson),copies=memo(cloudCopies),stored=memo(localCopies);
  const view=theme===state.settings.theme?state:{...state,settings:{...state.settings,theme}};
- const context={pd3View:()=>pd3.view(),pd3Data,get pd3Totals(){return pd3Totals(state.pd3,pd3Data);},basicsTab,numberValue,offlineEdition,offlineReady,referenceTab,referenceCategory,referenceQuery,referencePage,referenceData,referenceLessons:{forms:formLessons,quantity:patternLessons.filter(l=>l.kind==='grammar'),particles:patternLessons.filter(l=>l.kind==='pattern')},state:view,session,catalog,due,get next(){return following();},todayXP:state.activity[dayKey()]?.xp||0,get fileCount(){return fileTotal();},get words(){return filtered();},wordFilter,wordLimit,query,recovery,installEvent,labTab,labSelection,labQuery,labCategory,cloudStatus,cloudConflict,get cloudPlan(){return cloudSettings(cloudStatus,cloudConflict,copies());},get memoryPlan(){return plan();},get memorySummary(){return summary();},get localCopies(){return stored();}};
+ const context={pd3View:()=>pd3.view(),pd3Data,get pd3Totals(){return pd3Totals(state.pd3,pd3Data);},get spell(){return spellSummary(state,Date.now());},basicsTab,numberValue,offlineEdition,offlineReady,referenceTab,referenceCategory,referenceQuery,referencePage,referenceData,referenceLessons:{forms:formLessons,quantity:patternLessons.filter(l=>l.kind==='grammar'),particles:patternLessons.filter(l=>l.kind==='pattern')},state:view,session,catalog,due,get next(){return following();},todayXP:state.activity[dayKey()]?.xp||0,get fileCount(){return fileTotal();},get words(){return filtered();},wordFilter,wordLimit,query,recovery,installEvent,labTab,labSelection,labQuery,labCategory,cloudStatus,cloudConflict,get cloudPlan(){return cloudSettings(cloudStatus,cloudConflict,copies());},get memoryPlan(){return plan();},get memorySummary(){return summary();},get localCopies(){return stored();}};
  root.innerHTML=`<a class="skip" href="#content">К содержимому</a><aside class="sidebar"><button type="button" class="brand" data-page="learn" aria-label="Danskdag, на главную" title="На главную"><img src="${assetUrl('/icon.svg?v=1.9.3')}" alt="Флаг Дании"><span>Dansk<span>dag</span></span></button><nav aria-label="Разделы">${navigation.map(([id,ic,name])=>`<button class="nav-item ${page===id?'active':''} ${page==='wordlab'&&id==='dictionary'?'parent-active':''} ${['conversation','wordlab','forms','basics','pronunciation','pd3'].includes(id)?'desktop-nav':''}" data-page="${id}" title="${name}" ${id==='pd3'?'aria-label="PD3, подготовка к экзамену"':''} ${page===id?'aria-current="page"':''}>${icon(ic)}<span class="nav-label">${name}</span><span class="nav-mobile-label">${({grammar:'Правила',dictionary:'Слова',review:'Повтор'})[id]||name}</span>${id==='review'&&due.length?`<b class="nav-count">${due.length}</b>`:''}</button>`).join('')}</nav><div class="sidebar-end"><div class="rank-mini"><span class="rank-icon">${icon('spark')}</span><div><strong>Опыт ${learner.level}</strong><small>${h(learner.name)}</small></div></div><div class="meter"><span style="width:${learner.progress*100}%"></span></div><button class="nav-item ${page==='settings'?'active':''}" data-page="settings">${icon('gear')}<span>Настройки</span></button></div></aside><div class="app-shell"><header class="app-header"><button type="button" class="header-title" data-page="learn" aria-label="РУССКИЙ → DANSK, ${sectionName(page)}. На главную" title="На главную"><span class="eyebrow"><img class="danish-flag" src="${assetUrl('/flag-dk.svg')}" alt="Флаг Дании"> РУССКИЙ → DANSK</span><strong>${sectionName(page)}</strong></button><div class="header-actions">${themeToggle(theme)}<button class="metric orange" data-page="progress" title="Серия занятий">${icon('flame')}<b>${activeStreak(state)}</b><span>${plural(activeStreak(state),['день','дня','дней'])}</span></button><button class="metric purple" data-page="progress" title="Очки за завершённые занятия">${icon('bolt')}<b>${state.xp}</b><span>XP</span></button><button class="icon-button settings-mobile" data-page="settings" title="Настройки">${icon('gear')}</button><button class="profile" data-page="settings" title="Открыть настройки">${h(Array.from(state.settings.name||'D')[0].toUpperCase())}</button></div></header><nav class="mobile-sections" aria-label="Слова и речь">${[['forms','cards','Справочники'],['conversation','chat','Речь'],['wordlab','search','Значения'],['pronunciation','sound','Звуки'],['pd3','target','PD3']].map(([id,ic,label])=>`<button data-page="${id}" class="${page===id?'active':''}" ${page===id?'aria-current="page"':''} ${id==='pd3'?'aria-label="PD3, подготовка к экзамену"':''}>${icon(ic)}${label}</button>`).join('')}</nav><main id="content" tabindex="-1">${unreadable?unreadableNotice():''}${warning?`<div class="notice warning">${icon('info')}<span>${h(warning)}</span><button data-page="settings">Настройки</button></div>`:''}${renderView(page,context)}</main></div>`;if(page==='settings')root.querySelector('.settings-card').insertAdjacentHTML('afterbegin',profileSetting()+languageSetting()+renderLevelSelect(state,'settings-level')+(offlineEdition?'':`<button type="button" class="btn secondary check-update" data-action="check-update">Проверить обновление</button>`));addDanishAudio(root);
  if(page==='pd3')pd3.mount();
  if(focus)restoreFocus(root,focus);
@@ -220,10 +234,15 @@ function start(items,options={},force=false){
  const eligible=items.filter(p=>p&&p.verified===true);
  if(!eligible.length){toast('В группе пока нет проверенных слов. Добавь слово или выбери другую группу.');return;}
  if(session&&!force){requested={items:eligible,options};showDialog('Продолжить начатое?',`<p>Занятие «${h(session.title)}» ещё не закончено. Продолжить его или заменить новым?</p>`,btn('Продолжить','resume','secondary')+btn('Начать новое','replace-session'));return;}
- session=makeSession(eligible,trainingPool(state),{...options,mode:options.mode||state.settings.mode,reviews:state.reviews});session.language=appLanguage;session.route=options.route===true;session.routeLevel=options.routeLevel||null;session.beforeAwards=getAchievements(state).filter(a=>a.earned).map(a=>a.id);active=true;requested=null;renderSearch.cancel();persist();render();window.scrollTo(0,0);focusPageStart(root,'h1,h2');
+ session=makeSession(eligible,trainingPool(state),{...options,mode:options.mode||state.settings.mode,reviews:state.reviews,voice:getDanishVoices().length>0});session.language=appLanguage;session.route=options.route===true;session.routeLevel=options.routeLevel||null;session.beforeAwards=getAchievements(state).filter(a=>a.earned).map(a=>a.id);active=true;requested=null;renderSearch.cancel();persist();render();window.scrollTo(0,0);focusPageStart(root,'h1,h2');
 }
 function startLesson(id,force=false,mode=null,route=false){const l=lessonById[id];if(l)start(l.items.map(p=>catalog[p.id]),{title:l.title,lessonId:id,route,routeLevel:l.level,...(mode?{mode}:{})},force);}
 function startFile(){const pool=trainingPool(state).filter(p=>p.source==='file');start([...shuffle(pool.filter(p=>!state.reviews[p.id])),...shuffle(pool.filter(p=>state.reviews[p.id]))],{title:'Мои слова из файла'});}
+function startSpell(){
+ const now=Date.now(),due=getWordEntries(state).filter(p=>p.kind==='dictation'&&!(getReviewFor(p,state.reviews)?.due>now));
+ if(!due.length){go('review');return;}
+ start(due,{title:'Диктант-карточки',mode:'auto'});
+}
 function startMemory(){const plan=planMemorySession(getWordEntries(state),state);if(!plan.items.length){go('review');return;}start(plan.items,{title:'Практика памяти',mode:'auto',studyIds:plan.items.filter(p=>!getReviewFor(p,state.reviews)).map(p=>p.id)});}
 function renderSession(){
  stopSpeech();audioFeedback.clear();document.body.classList.add('session-mode');preferences();
@@ -310,7 +329,7 @@ document.addEventListener('click',async event=>{
  else if(action==='reference-tab'){referenceTab=value;referenceCategory='all';referenceQuery='';referencePage=1;render();}
  else if(action==='reference-train'){const selection=referenceSelection({referenceTab,referenceCategory,referenceQuery,referencePage,referenceData});const pool=shuffle(selection.rows).map(row=>catalog[row.id]).filter(Boolean).sort((a,b)=>{const rank=p=>{const r=state.reviews[p.id];return !r?1:r.due<=Date.now()?0:2;};return rank(a)-rank(b);}).slice(0,6);start(pool,{title:selection.categories.find(cat=>cat.id===selection.selected)?.title||'Практика слов и фраз'});}
  else if(action==='reference-page'){referencePage=Math.max(1,Number(value)||1);render();window.scrollTo(0,0);}
- else if(action==='open-pd3'){go('pd3');if(['reading','dictation','listening','exam','writing','oral'].includes(value))pd3.open(value);}
+ else if(action==='open-pd3'){go('pd3');if(['reading','dictation','listening','exam','writing','oral','mock'].includes(value))pd3.open(value);}
  else if(action==='lab-show-classes'){labTab='classes';labSelection=null;go('wordlab');}
  else if(action==='lab-tab'){labTab=value;labSelection=null;render();}
  else if(action==='lab-category'){labCategory=value;render();}
@@ -361,7 +380,9 @@ document.addEventListener('click',async event=>{
  else if(action==='add-token'&&session&&!session.submitted&&!session.words.includes(pos)){session.words.push(pos);persist();renderSession();}
  else if(action==='remove-token'&&session&&!session.submitted){session.words.splice(pos,1);persist();renderSession();}
  else if(action==='letter'&&session&&!session.submitted){const input=$('#answer-input'),start=input.selectionStart??input.value.length,end=input.selectionEnd??start,inserted=insertAtSelection(input.value,start,end,el.dataset.letter,input.maxLength>0?input.maxLength:1500);input.focus();if(!inserted){toast('Достигнута максимальная длина ответа.');return;}session.answer=inserted.value;input.value=session.answer;input.setSelectionRange(inserted.caret,inserted.caret);persist();$('[data-action=check-answer]').disabled=!hasAnswer(session);}
- else if(action==='listen'||action==='listen-slow'){const t=session.tasks[session.index],text=t.kind==='gap'&&!session.submitted?t.prompt.replace(/___/g,'…'):t.completeDa||catalog[t.itemId].da;say(text,action==='listen-slow'?0.7:state.settings.rate,el);}
+ else if(action==='listen'||action==='listen-slow'){if(session.tasks[session.index]?.kind==='dictate'&&!session.submitted){session=listenSession(session);persist();const note=$('[data-plays]');if(note)note.textContent=playsText(session.plays);}const t=session.tasks[session.index],text=t.kind==='gap'&&!session.submitted?t.prompt.replace(/___/g,'…'):t.completeDa||catalog[t.itemId].da;say(text,action==='listen-slow'?0.7:state.settings.rate,el);}
+ else if(action==='dictate-cloze'&&session&&!session.submitted){session=clozeSession(session,catalog[session.tasks[session.index].itemId]);persist();renderSession();}
+ else if(action==='practice-spell')startSpell();
  else if(action==='reveal'){session.revealed=true;persist();renderSession();}
  else if(action==='check-answer')checkAnswer();
  else if(action==='self-check'&&session&&!session.selfChecked){session=selfCheckSession(session);const t=session.tasks[session.index],entry=getWordEntries(state).find(p=>p.ids.includes(t.itemId))||{id:t.itemId};if(session.selfChecked){const review=recordAttempt(getReviewFor(entry,state.reviews),{...session.outcomes.at(-1),selfChecked:true});for(const alias of entry.ids||[t.itemId])if(alias===t.itemId||state.reviews[alias])state.reviews[alias]=review;persist();renderSession();}}
@@ -464,6 +485,7 @@ globalThis.addEventListener('storage',event=>{if(event.key===KEY&&event.newValue
 try{globalThis.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if(themeSource==='auto'){preferences();if(!active&&!$('.dialog-backdrop'))render();}});}catch{ /* Older browsers keep the theme chosen at load. */ }
 document.addEventListener('visibilitychange',()=>{if(document.hidden){recorder.clear();stopSpeech();pd3.suspend();}});
 globalThis.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installEvent=event;if(page==='settings'&&!active)render();});
+try{getDanishVoices();}catch{ /* Asks the browser to load its voices early: a dictation card needs to know whether there is a Danish one. */ }
 globalThis.speechSynthesis?.addEventListener('voiceschanged',()=>{if(page!=='settings'||active)return;const select=$('#voice'),status=$('.voice-status');if(select)select.innerHTML=voiceOptions(state.settings.voiceUri);if(status){status.innerHTML=icon('sound')+h(voiceStatus(state.settings.voiceUri));status.classList.toggle('available',getDanishVoices().length>0);}});
 globalThis.addEventListener('hashchange',()=>{if(!active)go(location.hash.slice(1));});
 function updateCloudPanel(){const panel=$('.continuity-panel');if(panel)panel.outerHTML=cloudSettings(cloudStatus,cloudConflict,cloudCopies());}

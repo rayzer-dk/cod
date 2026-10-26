@@ -39,3 +39,9 @@ test('self-check is offered after a wrong built sentence but not after giving up
  assert.doesNotMatch(exerciseView({...wrong,answer:''},{[item.id]:item},createState()),/data-action="self-check"/);
  assert.doesNotMatch(exerciseView({...wrong,tasks:[task]},{[item.id]:item},createState()),/data-action="self-check"/);
 });
+test('typed Danish answers are not auto-capitalised or autocorrected by mobile keyboards',()=>{
+ const typed={itemId:item.id,kind:'type',prompt:'Я работаю.',promptLang:'ru',answerLang:'da',options:[],answers:['Jeg arbejder.'],bank:[]};
+ const html=exerciseView({...session,mode:'expert',tasks:[typed]},{[item.id]:item},createState());
+ const input=html.match(/<input id="answer-input"[^>]*>/)[0];
+ for(const attribute of ['autocapitalize="none"','autocorrect="off"','spellcheck="false"','autocomplete="off"'])assert.ok(input.includes(attribute),attribute);
+});

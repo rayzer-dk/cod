@@ -1187,10 +1187,13 @@ html[data-theme=dark] .answer-option.selected>.option-number{color:#192720}
 .local-copies small{display:block;color:var(--muted)}
 .local-copies .copy-actions,.cloud-copies{display:flex;flex-wrap:wrap;gap:8px}
 .notice>button+button{margin-left:0}
+/* A heading that receives focus after a page change is a reading position, not a control: no focus ring around it */
+h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,#app:focus{outline:none}
 /* Touch targets: at least 44 CSS pixels wherever the pointer is a finger (WCAG 2.5.5) */
 @media(pointer:coarse){
   .mode-switch>button,.remember-button,.coverage-note>summary,.dialogue-translation>summary,.local-copies>summary,.filter-tabs>button,.common-card-actions>.btn,.danish-keys>button{min-height:44px}
   .icon-button,.round-button,.mini-actions>.icon-button,.header-actions .theme-toggle,.settings-mobile,.session-header>.icon-button,.exercise-prompt>.icon-button,.dialog-heading>.icon-button,.lab-example-tools .icon-button,.answer-option-row>.inline-audio,.token-unit>.inline-audio{min-width:44px;min-height:44px}
   .metric{min-height:44px}
+  .btn,.button-row>.btn,.dictionary-toolbar>.btn,.reference-pager .btn,select,input:not([type=checkbox]):not([type=radio]):not([type=file]),.bottom-strip>button{min-height:44px}
   .notice>button,.text-button{min-height:44px;padding-top:10px;padding-bottom:10px}
 }

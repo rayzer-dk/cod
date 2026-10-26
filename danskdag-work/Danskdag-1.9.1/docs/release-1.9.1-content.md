@@ -9,7 +9,7 @@ Scope: Danish data, Russian teaching text and Ukrainian locale files. Raw `origi
 - `dialogue-data.mjs` dialogue-b2-work (report) and dialogue-c1-work (figures): `inden middag` replaced with `inden klokken tolv`, because `middag` means dinner elsewhere in the course (spoken-tak-sidst, c-extra-b1-repair). Russian "до полудня" is still correct; the b2 teaching note was updated.
 - `pronunciation-data.mjs` pron-stoed: the pair `jeg køber` / `en køber` (which does not illustrate stød) was replaced by `en hund` (with stød) / `hun` (without); note text updated. `docs/pronunciation-sources.md` no longer claims that Sproget.dk confirms the køber pair.
 - `extended-curriculum.mjs` g-c1-extra-concession-6: `Selv med de forbedringer` to `Selv med disse forbedringer`.
-- `vocabulary-extra-2.mjs` v-ae9e5c526407: `for handicappet ungdom` to `for handicappede unge`.
+- `vocabulary-extra-2.mjs` v-ae9e5c526407 (handicappet): the unnatural `for handicappet ungdom` is replaced by `Min onkel er handicappet og bruger kørestol.`; the example must contain the headword in the form `handicappet`, otherwise the contextual gap cannot be built.
 - `vocabulary.mjs` / `vocabulary-extra-4.mjs`: `Jeg skal bruge kran.` to `Jeg skal bruge en kran.`; `Pas på fingre.` to `Pas på fingrene.`.
 - `vocabulary-extra-3.mjs` v-18106e382411: `Der er stor modsætning` to `Der er en stor modsætning`.
 - `daily-lexicon-data.mjs` (social): `Hun giver mig en undskyldning.` (with the Russian "приносит извинения") to `Jeg skylder dig en undskyldning.` / "Я должен принести тебе извинения."

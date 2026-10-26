@@ -40,11 +40,15 @@ export function captureFocus(root,active=globalThis.document?.activeElement) {
   if(!key)return null;
   const selector=selectorFor(key),same=[...root.querySelectorAll(selector)];
   const saved={selector,nth:Math.max(0,same.indexOf(active))};
+  const kind=el=>el.dataset?.action;
   for(const group of GROUPS) {
     const container=active.closest(group);
     if(container){
+      // Neighbours of the same kind (other tokens, other options) are the natural place to continue.
       saved.group=group;saved.groupNth=[...root.querySelectorAll(group)].indexOf(container);
-      saved.neighbourIndex=[...container.querySelectorAll(FOCUSABLE)].indexOf(active);
+      if(kind(active))saved.action=kind(active);
+      const peers=[...container.querySelectorAll(FOCUSABLE)].filter(el=>!el.disabled && (!saved.action || kind(el)===saved.action));
+      saved.neighbourIndex=Math.max(0,peers.indexOf(active));
       break;
     }
   }
@@ -58,7 +62,7 @@ export function restoreFocus(root,saved) {
   let neighbours=[];
   if(saved.group){
     const container=[...root.querySelectorAll(saved.group)][Math.max(0,saved.groupNth)];
-    neighbours=container ? [...container.querySelectorAll(FOCUSABLE)] : [];
+    neighbours=container ? [...container.querySelectorAll(FOCUSABLE)].filter(el=>!saved.action || el.dataset?.action===saved.action) : [];
   }
   const target=pickFocusTarget({matches:[...root.querySelectorAll(saved.selector)],nth:saved.nth,neighbours,neighbourIndex:Math.max(0,saved.neighbourIndex ?? 0)});
   if(!target)return null;

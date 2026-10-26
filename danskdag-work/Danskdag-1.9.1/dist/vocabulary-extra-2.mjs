@@ -1084,8 +1084,8 @@ export const vocabularyExtra2 = [
   },
   {
     "id": "v-ae9e5c526407",
-    "exampleDa": "Foreningen arbejder for bedre adgang til sport for handicappede unge.",
-    "exampleRu": "Объединение добивается большей доступности спорта для молодёжи с инвалидностью.",
+    "exampleDa": "Min onkel er handicappet og bruger kørestol.",
+    "exampleRu": "Мой дядя имеет инвалидность и пользуется инвалидной коляской.",
     "association": "Спортивная площадка становится доступной людям с разными ограничениями возможностей."
   },
   {

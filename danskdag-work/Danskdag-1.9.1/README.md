@@ -1,4 +1,6 @@
-# Danskdag 1.9.0
+# Danskdag 1.9.1
+
+Audit-fix release: see `docs/release-1.9.1.md`.
 
 Start with Home → A1 → choice answers → Start lesson. The ordered route offers the next topic after completion and shows completed/mastered counts. Expand the level's lesson list for order and checkmarks; Progress lists completed lessons by level. Settings stores an optional name and the material level without resetting progress. Numbers and Reading adds 7 lessons / 42 exercises, a spoken 0–9999 cardinal-number converter and three short A1 texts. First-tap speech waits for delayed voice discovery. See `docs/release-1.9.0.md` for validation and limits.
 

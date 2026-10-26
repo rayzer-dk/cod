@@ -9,7 +9,7 @@ test('new and legacy progress default to Ukrainian and preserve explicit Russian
  delete state.settings.language;state.xp=60;state.bookmarks=['old-id'];
  const clean=validateState(state);assert.equal(clean.settings.language,'uk');assert.equal(clean.xp,60);assert.deepEqual(clean.bookmarks,['old-id']);
  state.settings.language='ru';assert.equal(validateState(state).settings.language,'ru');
- state.settings.language='xx';assert.throws(()=>validateState(state));
+ state.settings.language='xx';assert.equal(validateState(state).settings.language,'uk');assert.equal(validateState(state).xp,60);
 });
 test('build translation preserves JavaScript, Danish, dynamic expressions and provenance',()=>{
  assert.equal(typeof compiler.localizeSource,'function');

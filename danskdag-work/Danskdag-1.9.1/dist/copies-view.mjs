@@ -2,7 +2,7 @@ import {h,button as btn} from './ui.mjs';
 import {formatCopyTime} from './recovery.mjs';
 
 const reasons={
-  import:'Перед загрузкой файла',unreadable:'Прогресс не удалось прочитать',restore:'Перед возвратом копии',
+  'import':'Перед загрузкой файла',unreadable:'Прогресс не удалось прочитать',restore:'Перед возвратом копии',
   fresh:'Перед началом заново',legacy:'Исходная копия прежней версии',tabs:'Конфликт двух вкладок'
 };
 /** Local recovery copies of progress, newest first. Downloading is always possible; restoring asks for confirmation. */

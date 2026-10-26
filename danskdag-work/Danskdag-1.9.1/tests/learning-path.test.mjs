@@ -25,7 +25,7 @@ test('an optional profile name survives validation while old progress keeps its 
  const state=createState(),old=structuredClone(state);assert.equal(Object.hasOwn(validateState(old).settings,'name'),false);
  state.settings.name='  Володимир  ';assert.equal(validateState(state).settings.name,'Володимир');
  state.settings.name='';assert.equal(Object.hasOwn(validateState(state).settings,'name'),false);
- state.settings.name='a'.repeat(41);assert.throws(()=>validateState(state));state.settings.name='bad\nname';assert.throws(()=>validateState(state));
+ state.settings.name='a'.repeat(41);assert.equal(Object.hasOwn(validateState(state).settings,'name'),false);state.settings.name='bad\nname';assert.equal(Object.hasOwn(validateState(state).settings,'name'),false);assert.equal(validateState(state).xp,0);
 });
 test('word classes show a learner-language name beside the Danish term',()=>{
  assert.equal(typeof labels.wordClassLabel,'function');

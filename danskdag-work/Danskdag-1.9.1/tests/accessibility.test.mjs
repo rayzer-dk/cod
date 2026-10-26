@@ -43,14 +43,16 @@ test('focus survives a redraw: a chosen option, a used token and a removed token
     }
   });
   for(const button of bank)button.closest=sel=>sel==='.token-bank'?bankBox:null;
-  bankBox.querySelectorAll=()=>bank;
+  const speakers=[0,1,2].map(pos=>fake('button',{action:'speak-text',text:'w'+pos}));
+  bankBox.querySelectorAll=()=>[bank[0],speakers[0],bank[1],speakers[1],bank[2],speakers[2]];
   const before=makeRoot(bank,{'.token-bank':[bankBox]});
   const saved=captureFocus(before,bank[1]);
   assert.equal(saved.selector,'button[data-action="add-token"][data-pos="1"][data-source="bank"]');
-  assert.equal(saved.group,'.token-bank');assert.equal(saved.neighbourIndex,1);
+  assert.equal(saved.group,'.token-bank');assert.equal(saved.neighbourIndex,1);assert.equal(saved.action,'add-token');
   // Redraw: token 1 is now used (disabled), the other two are fresh elements.
   const after=[0,1,2].map(pos=>fake('button',{action:'add-token',source:'bank',pos:String(pos)},{disabled:pos===1}));
-  const afterBox={querySelectorAll:()=>after};
+  const afterSpeakers=[0,1,2].map(pos=>fake('button',{action:'speak-text',text:'w'+pos}));
+  const afterBox={querySelectorAll:()=>[after[0],afterSpeakers[0],after[1],afterSpeakers[1],after[2],afterSpeakers[2]]};
   const target=restoreFocus(makeRoot(after,{'.token-bank':[afterBox]}),saved);
   assert.equal(target,after[2]);assert.equal(after[2].focused,true);
   // An option that is still there is focused directly.

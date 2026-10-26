@@ -106,3 +106,16 @@ test('long texts are compared quickly and absurdly long ones are refused',()=>{
  assert.ok(performance.now()-started<1500);assert.equal(r.counts.misspelled,1);
  assert.throws(()=>compareDictation(text.repeat(3),text),RangeError);
 });
+
+import {scoreDictation} from '../dist/pd3-diff.mjs';
+test('a whole dictation is scored by sentence or as one text',()=>{
+ const sentences=[{da:'Jeg bor i by.'},{da:'Det regner i dag.'}];
+ const same=scoreDictation(sentences,{0:'jeg bor i by',1:'det regner i dag'},'sentences');
+ assert.equal(same.percent,100);assert.equal(same.units.length,2);assert.equal(same.counts.total,8);
+ const mixed=scoreDictation(sentences,{0:'jeg bor i by',1:'det regnr'},'sentences');
+ assert.equal(mixed.counts.missing,2);assert.equal(mixed.counts.misspelled,1);assert.ok(mixed.percent>50&&mixed.percent<90);
+ assert.equal(scoreDictation(sentences,{},'sentences').percent,0);
+ const text=scoreDictation(sentences,{all:'Jeg bor i by. Det regner i dag.'},'text');
+ assert.equal(text.percent,100);assert.equal(text.whole.ref.length,8);
+ assert.equal(scoreDictation(sentences,{all:''},'text').percent,0);
+});

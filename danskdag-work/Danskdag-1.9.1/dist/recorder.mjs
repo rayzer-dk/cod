@@ -3,6 +3,7 @@ export function createRecorder(options={}){
  const Recorder=Object.hasOwn(options,'Recorder')?options.Recorder:globalThis.MediaRecorder;
  const urls=options.urls||globalThis.URL,setTimer=options.setTimer||globalThis.setTimeout,clearTimer=options.clearTimer||globalThis.clearTimeout;
  const changed=options.changed||(()=>{});
+ const maxSeconds=Number.isFinite(options.maxSeconds)&&options.maxSeconds>0?Math.min(600,Math.floor(options.maxSeconds)):20;
  let value={phase:'idle',url:'',message:''},token=0,stream=null,recorder=null,timer=null;
  const emit=patch=>{value={...value,...patch};changed({...value});};
  const release=()=>{clearTimer(timer);timer=null;stream?.getTracks().forEach(track=>track.stop());stream=null;};
@@ -27,10 +28,10 @@ export function createRecorder(options={}){
     else emit({phase:'error',message:'Запись пуста. Проверь микрофон и попробуй ещё раз.'});
    };
    current.onerror=()=>{clear();emit({phase:'error',message:'Не удалось записать звук. Проверь микрофон и попробуй ещё раз.'});};
-   current.start();emit({phase:'recording',message:'Идёт запись · до 20 секунд'});timer=setTimer(stop,20000);
+   current.start();emit({phase:'recording',message:maxSeconds===20?'Идёт запись · до 20 секунд':`Идёт запись · максимум ${maxSeconds} сек.`});timer=setTimer(stop,maxSeconds*1000);
   }catch(error){
    if(request!==token)return;clear();emit({phase:'error',message:error?.name==='NotAllowedError'?'Нет доступа к микрофону. Разреши его в настройках сайта или повтори фразу без записи.':'Микрофон недоступен. Проверь устройство и попробуй ещё раз.'});
   }
  }
- return {start,stop,clear,snapshot:()=>({...value})};
+ return {start,stop,clear,maxSeconds,snapshot:()=>({...value})};
 }

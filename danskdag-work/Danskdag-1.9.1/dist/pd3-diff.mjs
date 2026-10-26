@@ -131,11 +131,11 @@ export function compareDictation(reference,input,{strict=false}={}){
   let percent;
   if(!ref.length)percent=user.length?0:100;
   else{
-    const points=counts.correct+0.5*counts.misspelled+0.5*counts.order-0.5*counts.extra;
-    percent=Math.round(100*Math.min(1,Math.max(0,points/ref.length)));
+    percent=Math.round(100*Math.min(1,Math.max(0,(counts.correct+0.5*counts.misspelled+0.5*counts.order-0.5*counts.extra)/ref.length)));
   }
   const list=[...errors.values()].sort((a,b)=>ERROR_KINDS.indexOf(a.kind)-ERROR_KINDS.indexOf(b.kind));
-  return {percent,counts,ref,user,errors:list,strict,exact:counts.correct===ref.length&&counts.extra===0&&ref.length>0};
+  const points=counts.correct+0.5*counts.misspelled+0.5*counts.order-0.5*counts.extra;
+  return {percent,points,counts,ref,user,errors:list,strict,exact:counts.correct===ref.length&&counts.extra===0&&ref.length>0};
 }
 
 /** The text split into pieces for display: [{text,status?}] with the separators between tokens kept as plain pieces. */
@@ -149,4 +149,30 @@ export function annotate(text,tokens){
   }
   if(offset<value.length)pieces.push({text:value.slice(offset)});
   return pieces;
+}
+
+/**
+ * Scores a whole dictation. 'text' mode compares the text as one piece; 'sentences' mode compares each sentence with its own input
+ * and adds the results up. Returns {percent,counts,errors,units|null,whole|null}.
+ */
+export function scoreDictation(sentences,inputs,mode,{strict=false}={}){
+  const merge=lists=>{
+    const merged=new Map();
+    for(const list of lists)for(const e of list){
+      if(!merged.has(e.kind))merged.set(e.kind,{kind:e.kind,count:0,examples:[]});
+      const entry=merged.get(e.kind);entry.count+=e.count;
+      for(const ex of e.examples)if(entry.examples.length<4)entry.examples.push(ex);
+    }
+    return [...merged.values()].sort((a,b)=>ERROR_KINDS.indexOf(a.kind)-ERROR_KINDS.indexOf(b.kind));
+  };
+  if(mode==='text'){
+    const whole=compareDictation(sentences.map(s=>s.da).join(' '),inputs.all||'',{strict});
+    return {percent:whole.percent,counts:whole.counts,errors:whole.errors,units:null,whole};
+  }
+  const units=sentences.map((s,i)=>compareDictation(s.da,inputs[i]||'',{strict}));
+  const counts={correct:0,misspelled:0,missing:0,extra:0,order:0,total:0};
+  let points=0;
+  for(const u of units){for(const key of Object.keys(counts))counts[key]+=u.counts[key];points+=u.points;}
+  const percent=counts.total?Math.round(100*Math.min(1,Math.max(0,points/counts.total))):100;
+  return {percent,counts,errors:merge(units.map(u=>u.errors)),units,whole:null};
 }

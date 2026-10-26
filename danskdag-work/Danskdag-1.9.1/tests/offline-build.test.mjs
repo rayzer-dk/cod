@@ -59,7 +59,7 @@ test('HTML escapes embedded script terminators without changing lesson text',()=
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'danskdag-html-escape-'));
  try{
   fs.mkdirSync(path.join(root,'dist'));fs.writeFileSync(path.join(root,'package.json'),'{"version":"1.5.2"}');
-  for(const name of ['styles.css','wordlab.css','memory.css','path.css','basics.css'])fs.writeFileSync(path.join(root,'dist',name),'');
+  for(const name of ['styles.css','wordlab.css','memory.css','path.css','basics.css','pd3.css'])fs.writeFileSync(path.join(root,'dist',name),'');
   fs.writeFileSync(path.join(root,'dist','icon.svg'),'<svg xmlns="http://www.w3.org/2000/svg"/>');
   const text='</script><script>globalThis.attacked=true</script>';
   fs.writeFileSync(path.join(root,'dist','app.mjs'),'globalThis.lessonText='+JSON.stringify(text)+';');

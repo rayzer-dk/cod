@@ -1,14 +1,18 @@
 // Word-level comparison of a dictation with its reference text (pure functions, no DOM).
 // Words are aligned with a weighted edit distance, so one missing word does not turn everything after it into an error.
+import {stripInvisible} from './engine.mjs';
 const TOKEN=/([\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*)|([.,;:!?…«»"“”„()–—])/gu;
-const MAX_TOKENS=700;
+// The alignment table has (reference+input) cells; above this many the comparison is refused with `tooLong` instead of thrown.
+const MAX_CELLS=2_500_000;
+/** The text as it is compared: NFC, without invisible formatting characters (ZWSP, soft hyphen, LRM/RLM, bidi controls). Offsets refer to this string. */
+export const cleanText=text=>stripInvisible(String(text??'').normalize('NFC'));
 
 export const ERROR_KINDS=['aeoa','double','silent','ending','case','other','punctuation','missing','extra','order'];
 
 /** Tokens with positions. Without `strict` only words (lowercase); with it also punctuation marks and exact letter case. */
 export function tokenize(text,{strict=false}={}){
   const tokens=[];
-  for(const match of String(text??'').normalize('NFC').matchAll(TOKEN)){
+  for(const match of cleanText(text).matchAll(TOKEN)){
     const word=match[1]!==undefined;
     if(!word&&!strict)continue;
     const raw=match[0],unified=raw.replace(/’/g,"'");
@@ -52,10 +56,14 @@ export function classifyMisspelling(reference,written){
 }
 
 const limitFor=word=>word.length<=3?1:2;
+// Lowercase form and skeleton are computed once per token: the alignment asks about every pair of tokens.
+const lower=t=>t.lower??(t.lower=t.norm.toLowerCase());
+const skeleton=t=>t.skeleton??(t.skeleton=SKELETON(lower(t)));
 function nearMiss(r,u){
   if(!r.word||!u.word)return false;
-  const a=r.norm.toLowerCase(),b=u.norm.toLowerCase();
-  return levenshtein(a,b)<=limitFor(a)||SKELETON(a)===SKELETON(b);
+  const a=lower(r),b=lower(u);
+  if(skeleton(r)===skeleton(u))return true;
+  return Math.abs(a.length-b.length)<=limitFor(a)&&levenshtein(a,b)<=limitFor(a);
 }
 
 function align(ref,user){
@@ -67,7 +75,7 @@ function align(ref,user){
     const r=ref[i-1],u=user[j-1];
     let best=Infinity,move=0;
     if(r.norm===u.norm){best=cost[(i-1)*width+j-1];move=1;}
-    else if(nearMiss(r,u)){best=cost[(i-1)*width+j-1]+0.5+0.1*levenshtein(r.norm.toLowerCase(),u.norm.toLowerCase());move=4;}
+    else if(nearMiss(r,u)){best=cost[(i-1)*width+j-1]+0.5+0.1*levenshtein(lower(r),lower(u));move=4;}
     const missing=cost[(i-1)*width+j]+1;
     if(missing<best){best=missing;move=2;}
     const extra=cost[i*width+j-1]+1;
@@ -85,6 +93,12 @@ function align(ref,user){
   return pairs.reverse();
 }
 
+/** Percent of a dictation: rounded as usual, but capped at 99 while anything is wrong, so one mistake in a long text never shows as 100%. */
+function percentOf(points,total,exact){
+  if(exact)return 100;
+  return Math.min(99,Math.round(100*Math.min(1,Math.max(0,points/total))));
+}
+
 /**
  * Compares the reference text with what was typed.
  * Result: {percent,counts,ref,user,errors}. ref/user are token lists with a `status`
@@ -92,8 +106,9 @@ function align(ref,user){
  */
 export function compareDictation(reference,input,{strict=false}={}){
   const ref=tokenize(reference,{strict}),user=tokenize(input,{strict});
-  if(ref.length>MAX_TOKENS||user.length>MAX_TOKENS){
-    throw new RangeError('Text is too long to compare');
+  if((ref.length+1)*(user.length+1)>MAX_CELLS){
+    // Never throws on real input: the page shows "too long, shorten it" instead.
+    return {tooLong:true,percent:0,points:0,counts:{correct:0,misspelled:0,missing:0,extra:0,order:0,total:ref.length},ref:[],user:[],errors:[],strict,exact:false};
   }
   for(const token of ref)token.status='missing';
   for(const token of user)token.status='extra';
@@ -128,19 +143,18 @@ export function compareDictation(reference,input,{strict=false}={}){
   const counts={correct:0,misspelled:0,missing:0,extra:0,order:0,total:ref.length};
   for(const token of ref)counts[token.status]++;
   counts.extra=user.filter(token=>token.status==='extra').length;
+  const points=counts.correct+0.5*counts.misspelled+0.5*counts.order-0.5*counts.extra;
+  const exact=counts.correct===ref.length&&counts.extra===0&&ref.length>0;
   let percent;
   if(!ref.length)percent=user.length?0:100;
-  else{
-    percent=Math.round(100*Math.min(1,Math.max(0,(counts.correct+0.5*counts.misspelled+0.5*counts.order-0.5*counts.extra)/ref.length)));
-  }
+  else percent=percentOf(points,ref.length,exact);
   const list=[...errors.values()].sort((a,b)=>ERROR_KINDS.indexOf(a.kind)-ERROR_KINDS.indexOf(b.kind));
-  const points=counts.correct+0.5*counts.misspelled+0.5*counts.order-0.5*counts.extra;
-  return {percent,points,counts,ref,user,errors:list,strict,exact:counts.correct===ref.length&&counts.extra===0&&ref.length>0};
+  return {percent,points,counts,ref,user,errors:list,strict,exact};
 }
 
 /** The text split into pieces for display: [{text,status?}] with the separators between tokens kept as plain pieces. */
 export function annotate(text,tokens){
-  const pieces=[],value=String(text??'').normalize('NFC');
+  const pieces=[],value=cleanText(text);
   let offset=0;
   for(const token of tokens){
     if(token.start>offset)pieces.push({text:value.slice(offset,token.start)});
@@ -167,12 +181,14 @@ export function scoreDictation(sentences,inputs,mode,{strict=false}={}){
   };
   if(mode==='text'){
     const whole=compareDictation(sentences.map(s=>s.da).join(' '),inputs.all||'',{strict});
+    if(whole.tooLong)return {tooLong:true,percent:0,counts:whole.counts,errors:[],units:null,whole:null};
     return {percent:whole.percent,counts:whole.counts,errors:whole.errors,units:null,whole};
   }
   const units=sentences.map((s,i)=>compareDictation(s.da,inputs[i]||'',{strict}));
+  if(units.some(u=>u.tooLong))return {tooLong:true,percent:0,counts:{correct:0,misspelled:0,missing:0,extra:0,order:0,total:0},errors:[],units:null,whole:null};
   const counts={correct:0,misspelled:0,missing:0,extra:0,order:0,total:0};
   let points=0;
   for(const u of units){for(const key of Object.keys(counts))counts[key]+=u.counts[key];points+=u.points;}
-  const percent=counts.total?Math.round(100*Math.min(1,Math.max(0,points/counts.total))):100;
+  const percent=counts.total?percentOf(points,counts.total,units.every(u=>u.exact||!u.ref.length&&!u.user.length)):100;
   return {percent,counts,errors:merge(units.map(u=>u.errors)),units,whole:null};
 }

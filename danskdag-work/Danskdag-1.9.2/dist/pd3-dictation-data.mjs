@@ -75,7 +75,7 @@ export const dictations = [
  {
   id: "sammensatte-ord",
   level: "B1",
-  topic: "Складні слова",
+  topic: "Составные слова",
   title: "Sammensatte ord",
   mode: "sentences",
   sentences: [

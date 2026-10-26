@@ -19,7 +19,7 @@ import {verbForms,adjectiveForms,formLessons} from './forms-data.mjs';
 import {commonWords,commonCategories} from './common-words.mjs';
 import {spokenEntries,spokenCategories,extraInformal} from './spoken-data.mjs';
 import {dailyLexicon,dailyCategories} from './daily-lexicon-data.mjs';
-import {referenceSelection} from './reference-tools.mjs';
+import {referenceSelection,searchKey} from './reference-tools.mjs';
 import {particleFamilies,informalExpressions,patternLessons} from './patterns-data.mjs';
 import {renderView,modeNames,count,voiceOptions} from './views.mjs';
 import {exerciseView,resultView,hasAnswer} from './exercise.mjs';
@@ -34,7 +34,7 @@ import {adoptRemoteState} from './pd3-merge.mjs';
 import {migrateLegacyPd3} from './pd3-migrate.mjs';
 import {pd3Totals} from './pd3-progress.mjs';
 import {vocabKey,newOwnWords} from './pd3-vocab.mjs';
-import {FOCUSABLE,captureFocus,restoreFocus,focusPageStart,pageTitle,createAnnouncer,debounce} from './accessibility.mjs';
+import {FOCUSABLE,captureFocus,restoreFocus,focusPageStart,pageTitle,createAnnouncer,debounce,insertAtSelection,keepFieldFocus} from './accessibility.mjs';
 import {createPd3Page} from './pd3-page.mjs';
 import {createPd3Store} from './pd3-store.mjs';
 import {pd3Data} from './pd3-data.mjs';
@@ -169,10 +169,10 @@ function chooseTheme(theme){
  if(themeSource!=='user'){themeSource='user';try{localStorage.setItem(THEME_SOURCE,'user');}catch{ /* The choice itself is saved with the progress. */ }}
 }
 function preferences(){const theme=effectiveTheme();document.documentElement.lang=appLanguage;document.title=pageTitle(active&&session?session.title:sectionName(page));document.documentElement.dataset.theme=theme;document.documentElement.style.setProperty('--reading-size',`${state.settings.fontSize}px`);document.querySelector('meta[name=theme-color]').content=theme==='dark'?'#192720':'#f5f5f7';}
-function go(next){if(![...navigation.map(n=>n[0]),'settings','method'].includes(next))return;renderSearch.cancel();closeDialog();if(page==='pd3'||next==='pd3')pd3.leave();page=next;active=false;history.replaceState(null,'',`#${next}`);render();window.scrollTo(0,0);focusPageStart($('#content'));void cloud?.flush();maybeCloudConflict();}
+function go(next){if(![...navigation.map(n=>n[0]),'settings','method'].includes(next))return;renderSearch.cancel();closeDialog();if(page==='pd3')pd3.leave();else if(next==='pd3')pd3.enter();page=next;active=false;history.replaceState(null,'',`#${next}`);render();window.scrollTo(0,0);focusPageStart($('#content'));void cloud?.flush();maybeCloudConflict();}
 function words(){return getWordEntries(state).filter(p=>{
  const match=wordFilter==='illustrated'&&!!illustrationFor(p)||wordFilter==='all'||wordFilter==='file'&&p.sources.includes('file')||wordFilter==='personal'&&p.sources.includes('personal')||wordFilter==='difficult'&&isMarked(p,state.difficult)||wordFilter==='saved'&&isMarked(p,state.bookmarks);
- return match&&(!query||normalize(`${p.da} ${p.ru} ${p.note||''}`).includes(normalize(query)));
+ return match&&(!query||searchKey(`${p.da} ${p.ru} ${p.note||''}`).includes(searchKey(query)));
 });}
 function memo(compute){let ready=false,value;return()=>{if(!ready){value=compute();ready=true;}return value;};}
 const cloudCopies=()=>{try{return listCloudCopies(localStorage);}catch{return [];}};
@@ -215,7 +215,7 @@ function lessonIntro(id,route=false){
  showDialog(l.title,`<span class="pill purple">${l.level} · ${l.items.length} ${plural(l.items.length,['задание','задания','заданий'])}</span><p class="rule-explanation">${teachingText(l.rule)}</p><div class="intro-examples">${examples.join('')}</div><p class="field-note">${l.roleplay?'Выбери, как отвечать. В режиме без подсказок готовая фраза появится после твоей попытки.':'Режим: '+modeNames[state.settings.mode]+'. Разбор — после каждого ответа.'}</p>`,actions);
 }
 function wordDetail(id){const p=catalog[id];if(!p)return;showDialog(p.da,`${renderIllustration(p)}<p class="detail-translation">${h(p.ru)}</p>${wordClassLabel(p.wordClass)?`<div class="word-class-name">${teachingText(wordClassLabel(p.wordClass))}</div>`:''}${p.note?`<div class="note-box">${icon('info')}<p>${teachingText(p.note)}</p></div>`:''}${p.association?`<div class="association">${icon('brain')}<p>${h(p.association)}</p></div>`:''}${p.exampleDa?`<div class="word-example"><p lang="da">${h(p.exampleDa)}</p><small>${h(p.exampleRu||'')}</small></div>`:''}${p.verified===false?'<p class="field-note">Исходная запись требует проверки и не включена в упражнения.</p>':''}`,btn(`${icon('sound')} Послушать`,'speak','secondary',`data-id="${id}"`)+btn('Произнести и сравнить','pronounce-word','secondary',`data-id="${id}"`)+btn(`${icon('repeat')} Не запомнил`,'difficult','secondary',`data-id="${id}"`)+(p.source==='personal'?btn('Редактировать','edit-word','secondary',`data-id="${id}"`):p.verified===true?btn('Тренировать','train-word','primary',`data-id="${id}"`):''));}
-function wordForm(id=null){const p=id?state.customWords.find(w=>w.id===id):null;showDialog(p?'Редактировать слово':'Новое слово',`<form id="word-form" data-id="${p?.id||''}"><label for="new-da">По-датски</label><input id="new-da" name="da" type="text" lang="da" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="220" required value="${h(p?.da||'')}" placeholder="Например, en udfordring"><label for="new-ru">Перевод на русский</label><input id="new-ru" name="ru" type="text" maxlength="300" required value="${h(p?.ru||'')}" placeholder="Например, сложная задача, вызов"><label for="new-note">Пояснение или пример</label><textarea id="new-note" name="note" maxlength="500" rows="2">${h(p?.note||'')}</textarea><label for="new-association">Твоя ассоциация</label><textarea id="new-association" name="association" maxlength="500" rows="2" placeholder="Что поможет вспомнить значение?">${h(p?.association||'')}</textarea><div id="form-error" class="form-error" role="alert"></div><div class="dialog-actions"><button class="btn primary" type="submit">Сохранить слово ${icon('check')}</button></div></form>`);$('#new-da').focus();}
+function wordForm(id=null){const p=id?state.customWords.find(w=>w.id===id):null;showDialog(p?'Редактировать слово':'Новое слово',`<form id="word-form" data-id="${p?.id||''}"><label for="new-da">По-датски</label><input id="new-da" name="da" type="text" lang="da" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" enterkeyhint="next" maxlength="220" required value="${h(p?.da||'')}" placeholder="Например, en udfordring"><label for="new-ru">Перевод на русский</label><input id="new-ru" name="ru" type="text" lang="${appLanguage}" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" enterkeyhint="next" maxlength="300" required value="${h(p?.ru||'')}" placeholder="Например, сложная задача, вызов"><label for="new-note">Пояснение или пример</label><textarea id="new-note" name="note" maxlength="500" rows="2">${h(p?.note||'')}</textarea><label for="new-association">Твоя ассоциация</label><textarea id="new-association" name="association" maxlength="500" rows="2" placeholder="Что поможет вспомнить значение?">${h(p?.association||'')}</textarea><div id="form-error" class="form-error" role="alert"></div><div class="dialog-actions"><button class="btn primary" type="submit">Сохранить слово ${icon('check')}</button></div></form>`);$('#new-da').focus();}
 function start(items,options={},force=false){
  const eligible=items.filter(p=>p&&p.verified===true);
  if(!eligible.length){toast('В группе пока нет проверенных слов. Добавь слово или выбери другую группу.');return;}
@@ -360,7 +360,7 @@ document.addEventListener('click',async event=>{
  else if(action==='choose'&&session&&!session.submitted){session.answer=value;persist();renderSession();}
  else if(action==='add-token'&&session&&!session.submitted&&!session.words.includes(pos)){session.words.push(pos);persist();renderSession();}
  else if(action==='remove-token'&&session&&!session.submitted){session.words.splice(pos,1);persist();renderSession();}
- else if(action==='letter'&&session&&!session.submitted){const input=$('#answer-input'),start=input.selectionStart??input.value.length,end=input.selectionEnd??start;session.answer=(input.value.slice(0,start)+el.dataset.letter+input.value.slice(end)).slice(0,1500);input.value=session.answer;input.focus();input.setSelectionRange(start+1,start+1);persist();$('[data-action=check-answer]').disabled=!hasAnswer(session);}
+ else if(action==='letter'&&session&&!session.submitted){const input=$('#answer-input'),start=input.selectionStart??input.value.length,end=input.selectionEnd??start,inserted=insertAtSelection(input.value,start,end,el.dataset.letter,input.maxLength>0?input.maxLength:1500);input.focus();if(!inserted){toast('Достигнута максимальная длина ответа.');return;}session.answer=inserted.value;input.value=session.answer;input.setSelectionRange(inserted.caret,inserted.caret);persist();$('[data-action=check-answer]').disabled=!hasAnswer(session);}
  else if(action==='listen'||action==='listen-slow'){const t=session.tasks[session.index],text=t.kind==='gap'&&!session.submitted?t.prompt.replace(/___/g,'…'):t.completeDa||catalog[t.itemId].da;say(text,action==='listen-slow'?0.7:state.settings.rate,el);}
  else if(action==='reveal'){session.revealed=true;persist();renderSession();}
  else if(action==='check-answer')checkAnswer();
@@ -442,9 +442,11 @@ document.addEventListener('keydown',event=>{
  if(!active||!session||!session.studyDone||session.index>=session.tasks.length)return;
  const token=event.target.closest('[data-source=answer]');
  if(token&&!session.submitted&&['ArrowLeft','ArrowRight'].includes(event.key)){const from=Number(token.dataset.pos),to=from+(event.key==='ArrowLeft'?-1:1);session.words=moveToken(session.words,from,to);event.preventDefault();persist();renderSession();$(`.answer-zone [data-pos="${Math.max(0,Math.min(session.words.length-1,to))}"]`)?.focus();return;}
- if(event.key==='Enter'&&!event.repeat){if(event.target.closest('button,summary,a,select'))return;event.preventDefault();session.submitted?nextTask():checkAnswer();}
+ if(event.key==='Enter'&&!event.repeat&&!event.isComposing&&event.keyCode!==229){if(event.target.closest('button,summary,a,select'))return;event.preventDefault();session.submitted?nextTask():checkAnswer();}
  else if(/^[1-4]$/.test(event.key)&&!event.target.closest('input,textarea')&&!session.submitted){const option=session.tasks[session.index].options[Number(event.key)-1];if(option){session.answer=option;persist();renderSession();}}
 });
+// The æ/ø/å buttons must not take the focus from the field: the keyboard stays open and the caret stays in place.
+for(const type of ['pointerdown','mousedown'])document.addEventListener(type,keepFieldFocus('.danish-keys button,.pd3-letter'));
 document.addEventListener('pointerdown',event=>{const el=event.target.closest('.token');if(!el||el.disabled||!active||session?.submitted||event.button!==0)return;drag={source:el.dataset.source,pos:Number(el.dataset.pos),x:event.clientX,y:event.clientY,el,ghost:null};});
 document.addEventListener('pointermove',event=>{if(!drag)return;if(!drag.ghost&&Math.hypot(event.clientX-drag.x,event.clientY-drag.y)>8){drag.ghost=drag.el.cloneNode(true);drag.ghost.className='token drag-ghost';drag.ghost.setAttribute('aria-hidden','true');document.body.append(drag.ghost);document.body.classList.add('dragging');}if(drag.ghost){event.preventDefault();drag.ghost.style.left=`${event.clientX+10}px`;drag.ghost.style.top=`${event.clientY-20}px`;}},{passive:false});
 document.addEventListener('pointerup',event=>{

@@ -1,10 +1,11 @@
 // Controller of the PD3 section: navigation between its pages, reader/timer/recorder lifecycles, saving to the PD3 store.
-import {captureFocus,restoreFocus,focusPageStart} from './accessibility.mjs';
+import {captureFocus,restoreFocus,focusPageStart,insertAtSelection} from './accessibility.mjs';
 import {createReader,READER_RATES} from './pd3-audio.mjs';
 import {speak,stopSpeech} from './speech.mjs';
 import {createRecorder} from './recorder.mjs';
 import {scoreDictation} from './pd3-diff.mjs';
 import {recordScore,LIMITS} from './pd3-store.mjs';
+import {createRunStore,snapshotRun,validateRun,applyRun} from './pd3-run.mjs';
 import {vocabExample} from './pd3-vocab.mjs';
 import {countWords} from './pd3-writing-check.mjs';
 import {applyReaderState,statusText} from './pd3-reader-view.mjs';
@@ -23,6 +24,9 @@ export function createPd3Page({data,store,deps}){
   const doc=()=>deps.document||globalThis.document;
   let ui={view:'hub',id:null,kind:null};
   let run=null,reader=null,rec=null,timer=null,saveTimer=null,lastField=null,lastStatus='',errorShown=false;
+  // The unfinished task survives a reload (see pd3-run.mjs): its own device-only key, not part of the shared progress.
+  const runStore=deps.runStore||createRunStore(deps.runStorage);
+  let runSaveTimer=null,restoreTried=false;
   const d=()=>store.get();
   const container=()=>deps.container();
 
@@ -40,6 +44,40 @@ export function createPd3Page({data,store,deps}){
     if(!ok&&!errorShown){errorShown=true;deps.toast(store.status.error==='size'?'Данные PD3 слишком велики для сохранения. Скачай копию PD3 в разделе PD3 и удали лишнее.':'Не удалось сохранить результаты PD3 в браузере. Скачай копию PD3 в разделе PD3.');}
     if(ok)errorShown=false;
     return ok;
+  }
+  /* ---------- the unfinished task (survives a reload) ---------- */
+  function saveRun(){
+    clearTimeout(runSaveTimer);runSaveTimer=null;
+    const record=snapshotRun(ui,run,now());
+    if(record)runStore.write(record);else runStore.clear();
+  }
+  function scheduleRunSave(){clearTimeout(runSaveTimer);runSaveTimer=setTimeout(saveRun,400);}
+  function flushRun(){if(runSaveTimer)saveRun();}
+  /** The task is over or was left on purpose: nothing to restore any more. */
+  function forgetRun(){clearTimeout(runSaveTimer);runSaveTimer=null;runStore.clear();}
+  function restoreRun(){
+    const raw=runStore.read();
+    const record=validateRun(raw,{data:D,now:now()});
+    if(!record){runStore.clear();return false;}
+    teardown();
+    ui={view:record.view,id:record.id,kind:record.kind};
+    run=makeRun();applyRun(run,record);
+    if(record.view==='dictation')buildDictationReader(item());
+    else if(record.view!=='exam')ensureReader(item().sentences);
+    let message='Задание восстановлено.';
+    if(record.view==='exam'&&run.timerOn){
+      const left=Math.ceil((run.deadline-now())/1000);
+      if(left>0)startTimer(left,examTimeUp,EXAM_MARKS,run.deadline);
+      else{
+        // The time ran out while the page was closed: the answers are checked as when the timer ends.
+        run.timeUp=true;message='Время экзамена вышло, пока страница была закрыта. Ответы проверены.';
+      }
+    }
+    if(run.timeUp)finishExam();else render({keepScroll:false});
+    title();
+    focusPageStart(container(),'h1');
+    deps.toast(message);
+    return true;
   }
   const item=()=>{
     const pick=(list)=>list.find(x=>x.id===ui.id);
@@ -102,7 +140,7 @@ export function createPd3Page({data,store,deps}){
 
   /* ---------- navigation ---------- */
   function open(viewName,id=null,kind=null,{focus=true}={}){
-    teardown();
+    teardown();forgetRun();
     ui={view:viewName,id,kind};
     run=makeRun();
     render({keepScroll:false});
@@ -172,9 +210,10 @@ export function createPd3Page({data,store,deps}){
   }
 
   /* ---------- timers ---------- */
-  function startTimer(seconds,onEnd,announceAt=[]){
+  /** `endsAt` (an absolute time) restores a timer that was already running; announcements for marks already passed are not repeated then. */
+  function startTimer(seconds,onEnd,announceAt=[],endsAt=null){
     stopTimer();
-    timer={endsAt:now()+seconds*1000,onEnd,announceAt,said:new Set(),id:setInterval(tick,1000)};
+    timer={endsAt:endsAt??now()+seconds*1000,onEnd,announceAt,said:new Set(endsAt===null?[]:announceAt.filter(mark=>seconds<=mark)),id:setInterval(tick,1000)};
     run.timerOn=true;run.remaining=seconds;
     paintTimer();
   }
@@ -200,7 +239,7 @@ export function createPd3Page({data,store,deps}){
   function checkReading(){
     const it=item();
     if(it.questions.some((_,i)=>run.answers[`q:${i}`]===undefined)){deps.toast('Ответь на все вопросы, потом нажми «Проверить ответы».');return;}
-    run.score=it.questions.filter((q,i)=>run.answers[`q:${i}`]===q.answer).length;run.checked=true;
+    run.score=it.questions.filter((q,i)=>run.answers[`q:${i}`]===q.answer).length;run.checked=true;forgetRun();
     const percent=Math.round(run.score/it.questions.length*100);
     persist(s=>{recordScore(s.reading,it.id,percent,null,now());});
     const award=complete('reading',it.id,percent);
@@ -221,7 +260,7 @@ export function createPd3Page({data,store,deps}){
   function dictationListen(pos){
     const limit=d().settings.dictation.limit,key=pos==='all'?'all':Number(pos);
     if(limit&&(run.plays[key]||0)>=limit)return;
-    run.plays[key]=(run.plays[key]||0)+1;
+    run.plays[key]=(run.plays[key]||0)+1;saveRun();
     startReading(key==='all'?0:key,{onlyOne:key!=='all'});
     render();
   }
@@ -229,7 +268,8 @@ export function createPd3Page({data,store,deps}){
     const it=item(),settings=d().settings.dictation;
     flushInputs();
     const result=scoreDictation(it.sentences,run.inputs,it.mode,{strict:settings.strict});
-    run.result=result;
+    if(result.tooLong){deps.toast('Ввод слишком длинный для проверки. Сократи текст до объёма диктанта и нажми «Проверить» снова.');return;}
+    run.result=result;forgetRun();
     // An empty check shows its result but is not saved: it would count as a finished dictation and as a mistake statistic.
     const typed=Object.values(run.inputs).some(value=>String(value).trim());
     let award={xp:0};
@@ -263,14 +303,14 @@ export function createPd3Page({data,store,deps}){
     if(['playing','loading'].includes(s.status)){reader.pause();return;}
     if(s.status==='paused'){startReading();return;}
     if(run.plays>=max)return;
-    run.plays++;
+    run.plays++;saveRun();
     startReading(0);
     render();
   }
   function checkListening(){
     const it=item();
     if(it.questions.some((_,i)=>run.answers[`q:${i}`]===undefined)){deps.toast('Ответь на все вопросы, потом нажми «Проверить».');return;}
-    run.score=it.questions.filter((q,i)=>run.answers[`q:${i}`]===q.answer).length;run.phase='result';
+    run.score=it.questions.filter((q,i)=>run.answers[`q:${i}`]===q.answer).length;run.phase='result';forgetRun();
     const percent=Math.round(run.score/it.questions.length*100);
     persist(s=>{recordScore(s.listening,it.id,percent,null,now());});
     const award=complete('listening',it.id,percent);
@@ -281,18 +321,21 @@ export function createPd3Page({data,store,deps}){
   }
 
   /* ---------- reading exam ---------- */
+  const EXAM_MARKS=[600,300,60];
+  const examTimeUp=()=>{run.timeUp=true;finishExam();deps.announce?.('Время вышло. Ответы проверены.');};
   function startExam(){
     const it=item(),minutes=it.minutes||(ui.kind==='find'?25:65);
-    run.phase='run';run.timerOn=d().settings.exam.timer;run.timeUp=false;
-    if(run.timerOn)startTimer(minutes*60,()=>{run.timeUp=true;finishExam();deps.announce?.('Время вышло. Ответы проверены.');},[600,300,60]);
+    run.phase='run';run.timerOn=d().settings.exam.timer;run.timeUp=false;run.deadline=null;
+    if(run.timerOn){startTimer(minutes*60,examTimeUp,EXAM_MARKS);run.deadline=timer.endsAt;}
     else run.remaining=null;
+    saveRun();
     render({keepScroll:false});
     globalThis.scrollTo?.({top:0,behavior:'instant'});
     focusPageStart(container(),'h1');
   }
   function finishExam(){
     const it=item();
-    stopTimer();run.timerOn=false;run.phase='result';
+    stopTimer();run.timerOn=false;run.phase='result';forgetRun();
     if(ui.kind==='find'){
       const score=it.questions.filter(q=>run.answers[`find:${q.id}`]===q.section).length;
       const percent=Math.round(score/it.questions.length*100);
@@ -351,13 +394,24 @@ export function createPd3Page({data,store,deps}){
   function recorderChanged(snap,max){
     if(!run)return;
     run.rec=snap;
+    if(run.monoPending&&run.tab==='monologue'&&(snap.phase==='recording'||snap.phase==='error')){
+      // The two minutes start when the recording really started. Without a microphone the timer still runs, and says so.
+      run.monoPending=false;beginMonologue();
+      if(snap.phase==='error'){deps.toast('Запись не началась: таймер идёт без записи.');deps.announce?.('Запись не началась. Таймер идёт без записи.');}
+      return;
+    }
     const box=container()?.querySelector('.pd3-recorder');
     if(!box)return;
     const hadFocus=box.contains(doc().activeElement);
     box.outerHTML=recorderHtml(snap,{maxSeconds:max});
     if(hadFocus)container().querySelector('.pd3-recorder button:not([disabled])')?.focus({preventScroll:true});
   }
+  function beginMonologue(){
+    startTimer(120,()=>{rec?.stop();deps.announce?.('Две минуты прошли.');render();},[60]);
+    render();
+  }
   function resetOralItem(){
+    run.monoPending=false;
     clearRecorder();stopSpeech();stopTimer();
     run.step=0;run.started=false;run.timerOn=false;run.remaining=run.tab==='monologue'?120:null;
   }
@@ -418,7 +472,7 @@ export function createPd3Page({data,store,deps}){
       case 'pd3-listen':listenPressed();return true;
       case 'pd3-exam-start':startExam();return true;
       case 'pd3-exam-finish':finishExam();return true;
-      case 'pd3-task':run.task=value;render({keepScroll:false});return true;
+      case 'pd3-task':run.task=value;saveRun();render({keepScroll:false});return true;
       case 'pd3-jump':{const target=container().querySelector(`#pd3-sec-${CSS.escape(id)}`);const heading=target?.querySelector('h3');target?.scrollIntoView({block:'start'});heading?.focus({preventScroll:true});return true;}
       case 'pd3-letter':insertLetter(el.dataset.letter);return true;
       case 'pd3-wopt':saveDraft();run.option=value;persist(s=>{const w=s.writing[item().id];if(w)w.option=value;});render();return true;
@@ -438,9 +492,9 @@ export function createPd3Page({data,store,deps}){
       case 'pd3-kw-reset':{const m=D.oralMonologue.find(x=>x.id===run.id);run.kw=(m?.keywords||[]).slice(0,LIMITS.keywords);saveKeywords();render();return true;}
       case 'pd3-mono-start':{
         stopSpeech();resetOralItem();
-        startTimer(120,()=>{rec?.stop();deps.announce?.('Две минуты прошли.');render();},[60]);
+        run.monoPending=true;
         void recorder().start();render();return true;}
-      case 'pd3-mono-stop':stopTimer();run.timerOn=false;rec?.stop();render();return true;
+      case 'pd3-mono-stop':run.monoPending=false;stopTimer();run.timerOn=false;rec?.stop();render();return true;
       case 'pd3-rec-start':stopSpeech();void recorder().start();return true;
       case 'pd3-rec-stop':rec?.stop();return true;
       case 'pd3-rec-clear':rec?.clear();return true;
@@ -478,8 +532,10 @@ export function createPd3Page({data,store,deps}){
     const field=(lastField&&el.querySelector(`#${CSS.escape(lastField)}`))||el.querySelector('#pd3-write,#pd3-dict-text,[data-pd3-field]');
     if(!field)return;
     const start=field.selectionStart??field.value.length,end=field.selectionEnd??start;
-    field.value=field.value.slice(0,start)+letter+field.value.slice(end);
-    field.focus();field.setSelectionRange(start+1,start+1);
+    const inserted=insertAtSelection(field.value,start,end,letter,field.maxLength>0?field.maxLength:Infinity);
+    field.focus();
+    if(!inserted){deps.toast('Достигнута максимальная длина текста.');return;}
+    field.value=inserted.value;field.setSelectionRange(inserted.caret,inserted.caret);
     field.dispatchEvent(new Event('input',{bubbles:true}));
   }
   function input(target){
@@ -489,7 +545,7 @@ export function createPd3Page({data,store,deps}){
       const label=container()?.querySelector('#pd3-saved');if(label)label.textContent='Сохраняется…';
       return true;
     }
-    if(target.dataset?.pd3Field!==undefined&&run){run.inputs[target.dataset.pd3Field]=target.value;return true;}
+    if(target.dataset?.pd3Field!==undefined&&run){run.inputs[target.dataset.pd3Field]=target.value;scheduleRunSave();return true;}
     if(target.dataset?.pd3Kw!==undefined&&run){run.kw[Number(target.dataset.pd3Kw)]=target.value;saveKeywords();return true;}
     return false;
   }
@@ -501,7 +557,7 @@ export function createPd3Page({data,store,deps}){
       const checked=target.checked;
       if(setting==='follow')persist(s=>{s.settings.reader.follow=checked;});
       else if(setting==='translation')persist(s=>{s.settings.reader.translation=checked;});
-      else if(setting==='strict'){persist(s=>{s.settings.dictation.strict=checked;});if(run?.result){const it=item();run.result=scoreDictation(it.sentences,run.inputs,it.mode,{strict:checked});}}
+      else if(setting==='strict'){persist(s=>{s.settings.dictation.strict=checked;});if(run?.result){const it=item(),next=scoreDictation(it.sentences,run.inputs,it.mode,{strict:checked});if(next.tooLong)deps.toast('Ввод слишком длинный для проверки. Сократи текст до объёма диктанта.');else run.result=next;}}
       else if(setting==='timerExam')persist(s=>{s.settings.exam.timer=checked;});
       else if(setting==='writeTimer'){persist(s=>{s.settings.writing.timer=checked;});if(!checked){stopTimer();run.timerOn=false;}}
       else if(setting==='writeMinutes'){persist(s=>{s.settings.writing.minutes=Number(target.value);});stopTimer();run.timerOn=false;run.remaining=null;}
@@ -512,6 +568,7 @@ export function createPd3Page({data,store,deps}){
       const key=target.dataset.pd3Set,raw=target.value;
       if(raw==='')delete run.answers[key];
       else run.answers[key]=key.startsWith('find:')||key.startsWith('t2:')?raw:Number(raw);
+      saveRun();
       if(ui.view==='exam')render();
       return true;
     }
@@ -548,6 +605,11 @@ export function createPd3Page({data,store,deps}){
     a.href=url;a.download=name;doc().body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
   }
   function keydown(event){
+    // Enter in a dictation sentence field goes to the next sentence (the keyboard's "next" key does the same); an IME candidate is not Enter.
+    if(event.key==='Enter'&&!event.isComposing&&event.keyCode!==229&&!event.defaultPrevented&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.shiftKey&&event.target?.matches?.('input[data-pd3-field]')){
+      const fields=[...container()?.querySelectorAll('input[data-pd3-field]')||[]],next=fields[fields.indexOf(event.target)+1];
+      if(next){event.preventDefault();next.focus();return true;}
+    }
     if(!reader||event.defaultPrevented||event.ctrlKey||event.metaKey||event.altKey)return false;
     const readerView=ui.view==='reading'&&run||ui.view==='dictation'&&run?.result||ui.view==='listening'&&run?.phase==='result';
     if(!readerView)return false;
@@ -561,9 +623,20 @@ export function createPd3Page({data,store,deps}){
   function focusin(event){const t=event.target;if(t?.matches?.('#pd3-write,#pd3-dict-text,[data-pd3-field]'))lastField=t.id||null;}
 
   /** The tab is hidden or the page is closing: save the draft and drop everything that should not outlive the view. */
-  function suspend(){flushDraft();clearRecorder();reader?.stop();}
+  function suspend(){flushDraft();flushRun();clearRecorder();reader?.stop();}
   /** The learner left the section (or chose it again): back to the hub with nothing left running. */
-  function leave(){teardown();ui={view:'hub',id:null,kind:null};run=null;}
+  function leave(){
+    teardown();ui={view:'hub',id:null,kind:null};run=null;
+    // Leaving the section (or choosing it again) is an explicit exit: the unfinished task is dropped.
+    forgetRun();restoreTried=false;
+  }
+  /** The learner opens the section from another page: an unfinished task of an earlier visit is brought back at the next mount. */
+  function enter(){restoreTried=false;}
+  /** Called after the page is drawn. The first time, an unfinished task of an earlier visit (a reload) is brought back. */
+  function mount(){
+    if(!restoreTried){restoreTried=true;if(ui.view==='hub'&&restoreRun())return;}
+    afterRender();
+  }
 
-  return {view,mount:afterRender,click,input,change,keydown,focusin,suspend,leave,title,open,state:()=>({...ui}),reader:()=>reader};
+  return {view,mount,click,input,change,keydown,focusin,suspend,leave,enter,title,open,state:()=>({...ui}),reader:()=>reader};
 }

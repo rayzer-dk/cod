@@ -268,3 +268,21 @@ test('day keys are shared-formatter Copenhagen dates and survive missing time zo
     assert.throws(()=>fallback.dayKey(new Date(NaN)),RangeError);
   }finally{Intl.DateTimeFormat=RealFormat;}
 });
+
+test('L2: bidi marks and other invisible characters do not reject a right answer', () => {
+  for (const c of ['‎','‏','‪','‫','‬','‭','‮','⁦','⁧','⁨','⁩','​','­','﻿','؜']) {
+    assert.equal(E.normalize(`${c}hu${c}nd${c}`),'hund','U+'+c.codePointAt(0).toString(16));
+    assert.equal(E.isCorrect(`en${c} hund`,['en hund']),true);
+  }
+  assert.equal(E.stripInvisible('a‏b‮c'),'abc');
+  // Real spaces and the Danish letters are untouched, and "aa" is still not "å".
+  assert.equal(E.normalize('Blå bær'),'blå bær');
+  assert.notEqual(E.normalize('aa'),E.normalize('å'));
+  assert.equal(E.isCorrect('blaa',['blå']),false);
+});
+
+test('engine.mjs stays free of imports', async () => {
+  const {readFile}=await import('node:fs/promises');
+  const source=await readFile(new URL('../dist/engine.mjs',import.meta.url),'utf8');
+  assert.equal(/^\s*import[\s{*'"]/m.test(source),false);
+});

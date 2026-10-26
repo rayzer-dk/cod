@@ -2,6 +2,20 @@
 const DATA_KEYS=['action','cardAction','id','value','pos','source','page','setting','letter','text','referenceCategory'];
 // Groups whose members are interchangeable: when the exact control disappears, a neighbour inside the group takes the focus.
 const GROUPS=['.answer-zone','.token-bank','.answer-options','.mode-switch','.filter-tabs','.reference-pager','.dialog-actions'];
+/**
+ * Puts `text` in place of the selection [start,end) of `value`. Returns {value,caret}, or null when the result would be longer than `max`:
+ * then nothing is changed, so a full field never loses its last character silently.
+ */
+export function insertAtSelection(value,start,end,text,max=Infinity) {
+  const source=String(value??'');
+  const from=Math.max(0,Math.min(source.length,Number.isFinite(start)?start:source.length));
+  const to=Math.max(from,Math.min(source.length,Number.isFinite(end)?end:from));
+  const next=source.slice(0,from)+text+source.slice(to);
+  if(next.length>max)return null;
+  return {value:next,caret:from+text.length};
+}
+/** pointerdown/mousedown handler for helper buttons next to a text field: the field keeps the focus, so the on-screen keyboard does not flicker. */
+export const keepFieldFocus=selector=>event=>{if(event.target?.closest?.(selector))event.preventDefault();};
 export const FOCUSABLE='button,input,textarea,select,a[href],audio[controls],summary,[tabindex]:not([tabindex="-1"])';
 
 const kebab=name=>name.replace(/[A-Z]/g,letter=>'-'+letter.toLowerCase());

@@ -1,12 +1,17 @@
 import {normalize} from './engine.mjs';
+// Search-only folding of the Danish letters, applied to the query AND to the searched text: å and aa become a, ø and oe become o,
+// æ becomes ae. So "hojtryksrenser" finds "højtryksrenser" and "aeble" finds "æble". It is never used to check an answer:
+// there normalize() keeps å, ø, æ distinct and "aa" is not "å".
+const SEARCH_FOLDS=[[/aa/g,'a'],[/å/g,'a'],[/oe/g,'o'],[/ø/g,'o'],[/æ/g,'ae']];
+export const searchKey=value=>SEARCH_FOLDS.reduce((text,[from,to])=>text.replace(from,to),normalize(value));
 const hiddenKeys=new Set(['id','lessonId','category','group','wordClass','kind','source','verified']);
 function visibleText(value){if(typeof value==='string')return [value];if(Array.isArray(value))return value.flatMap(visibleText);if(value&&typeof value==='object')return Object.entries(value).filter(([key])=>!hiddenKeys.has(key)).flatMap(([,v])=>visibleText(v));return [];}
 function filteredReferenceRows(rows,query){
- const key=normalize(query);
+ const key=searchKey(query);
  if(!key)return rows;
  return rows.filter(row=>{
   const forms=row.participle&&row.auxiliary?row.auxiliary.split('/').flatMap(aux=>[`${aux} ${row.participle}`,`${aux==='er'?'var':'havde'} ${row.participle}`]):[];
-  return normalize([...visibleText(row),...forms].join(' ')).includes(key);
+  return searchKey([...visibleText(row),...forms].join(' ')).includes(key);
  });
 }
 export function referencePage(rows,query='',requestedPage=1,pageSize=20){

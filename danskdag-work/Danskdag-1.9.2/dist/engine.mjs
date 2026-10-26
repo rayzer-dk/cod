@@ -30,9 +30,14 @@ export function dayKey(date = new Date()) {
   if(!Number.isFinite(date?.getTime?.()))throw new RangeError('Invalid time value');
   return copenhagenFallbackKey(date);
 }
+// Invisible formatting characters that are never part of a typed word: soft hyphen, zero-width characters, LRM/RLM, the bidi
+// embedding/override/isolate controls (U+202A-202E, U+2066-2069), the word joiner, Arabic letter mark and the BOM.
+// Pasted or keyboard-inserted text carries them; they must neither reject a right answer nor split a word.
+export const INVISIBLE_CHARACTERS=/[\u00ad\u061c\u200b-\u200f\u202a-\u202e\u2060\u2066-\u2069\ufeff]/g;
+export const stripInvisible=value=>String(value??'').replace(INVISIBLE_CHARACTERS,'');
 // Locale-independent folding. Danish letters stay distinct: "aa" is never treated as "å".
 export function normalize(value) {
-  return String(value).normalize('NFC').toLowerCase().normalize('NFC').replace(/[\u00ad\u200b-\u200d\u2060\ufeff]/g,'').replace(/[\u00a0\u2007\u202f]/g,' ').replace(/ё/g,'е').replace(/[’‘ʼ`]/g,"'").replace(/[‐‑–—]/g,'-').replace(/[.,!?;:"“”«»„…]/g,'').replace(/\s+/g,' ').trim();
+  return stripInvisible(String(value).normalize('NFC').toLowerCase().normalize('NFC')).replace(/[\u00a0\u2007\u202f]/g,' ').replace(/ё/g,'е').replace(/[’‘ʼ`]/g,"'").replace(/[‐‑–—]/g,'-').replace(/[.,!?;:"“”«»„…]/g,'').replace(/\s+/g,' ').trim();
 }
 export const isCorrect = (value, answers) => answers.some(answer => normalize(value) === normalize(answer));
 export function createState() {

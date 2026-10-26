@@ -1,6 +1,6 @@
 import {senseFamilies} from './meanings-data.mjs';
 import {wordClasses} from './word-classes-data.mjs';
-import {normalize} from './engine.mjs';
+import {searchKey} from './reference-tools.mjs';
 
 export {senseFamilies,wordClasses};
 export const meaningCategories={homonym:'Одинаковая форма',construction:'Сочетания',polysemy:'Разные значения',confusion:'Похожие слова'};
@@ -26,6 +26,6 @@ export const classLessons=wordClasses.map(c=>({
 }));
 
 export function findFamilies(query='',category='all'){
- const needle=normalize(query);
- return senseFamilies.filter(f=>(category==='all'||f.category===category)&&(!needle||normalize([f.title,f.summary,...f.senses.flatMap(s=>[s.form,s.ru,s.note,s.da,s.translation])].join(' ')).includes(needle)));
+ const needle=searchKey(query);
+ return senseFamilies.filter(f=>(category==='all'||f.category===category)&&(!needle||searchKey([f.title,f.summary,...f.senses.flatMap(s=>[s.form,s.ru,s.note,s.da,s.translation])].join(' ')).includes(needle)));
 }

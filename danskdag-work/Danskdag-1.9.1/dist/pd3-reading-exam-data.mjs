@@ -230,7 +230,7 @@ export const readingExamFind = [
     "paragraphs": [
      "Borgerservice har åbent mandag til fredag fra ni til fjorten, og torsdag også om eftermiddagen til klokken atten. Mange opgaver kræver tidsbestilling, for eksempel at få nyt pas eller kørekort, men enkle spørgsmål kan besvares uden aftale. Husk at medbringe gyldigt id og eventuelle papirer, som sagen kræver.",
      "Til dem, der ikke er vant til digitale løsninger, tilbyder borgerservice en hjælpedesk, hvor en medarbejder viser, hvordan man udfylder blanketter på nettet. Her kan man også få hjælp til at logge på sin digitale postkasse. Der er en computer, som borgerne må bruge uden at betale, men højst tyve minutter ad gangen, hvis der er andre, der venter.",
-     "Borgerservice modtager også anmeldelser om flytning. Medarbejderne kan hjælpe med at udfylde oplysningerne, men afgørelser i andre sager træffes af en sagsbehandler på et andet kontor. Svaret sendes til borgerens digitale postkasse, og i mellemtiden kan man følge sagen på nettet."
+     "Borgerservice modtager også anmeldelser af flytning. Medarbejderne kan hjælpe med at udfylde oplysningerne, men afgørelser i andre sager træffes af en sagsbehandler på et andet kontor. Svaret sendes til borgerens digitale postkasse, og i mellemtiden kan man følge sagen på nettet."
     ]
    }
   ],
@@ -272,4 +272,254 @@ export const readingExamFind = [
  }
 ];
 
-export const readingExamText = [];
+export const readingExamText = [
+ {
+  "id": "exam-1",
+  "minutes": 65,
+  "text1": {
+   "title": "Når kontoret flytter hjem",
+   "paragraphs": [
+    "For nogle år siden ville de fleste have set det som et stort privilegium at kunne arbejde hjemmefra. I dag er det for mange blevet en del af hverdagen. Mange virksomheder har indført aftaler om, hvor mange dage om ugen de ansatte må arbejde derhjemme, og nogle har helt opgivet at give alle et fast skrivebord.",
+    "Camilla Roed, som er personalechef i en mellemstor rådgivningsvirksomhed, fortæller, at ordningen har givet virksomheden flere fordele. »Medarbejderne bruger mindre tid på at pendle, og mange siger, at de kan koncentrere sig bedre, når de ikke bliver afbrudt hele tiden,« siger hun. Hun tilføjer, at virksomheden også har kunnet ansætte folk, der bor langt fra byen, fordi de ikke behøver at flytte for at få jobbet.",
+    "Men hjemmearbejde har også sine skyggesider. Flere medarbejdere oplever, at grænsen mellem arbejde og fritid bliver utydelig. Når computeren står på spisebordet, er det fristende at svare på en mail om aftenen, og nogle har svært ved at holde fri. Andre savner de små samtaler ved kaffemaskinen, som ofte giver idéer og gør arbejdet mere underholdende.",
+    "Sociolog Jens Brandt, som har undersøgt arbejdslivet i flere virksomheder, mener, at nøglen er tillid. »Hvis lederne ikke tør give slip på kontrollen, bliver ordningen en belastning for alle,« siger han. Han påpeger, at det især er nyansatte, der kan have brug for at møde kolleger ansigt til ansigt, fordi de skal lære virksomhedens kultur at kende.",
+    "Rådgivningsvirksomheden har derfor lavet en aftale, hvor alle møder ind på kontoret to faste dage om ugen. De øvrige dage kan man selv vælge. På kontordagene lægges møder og fælles aktiviteter, så man undgår, at folk sidder alene foran skærmen. Til gengæld er der indført en regel om, at man ikke forventes at svare på mails efter klokken seksten.",
+    "Mette, der er konsulent, er tilfreds med ordningen, men hun fortæller, at det tog tid at finde en rytme. De første uger arbejdede hun længere, end hun skulle, fordi hun følte, at hun skulle bevise, at hun var effektiv. Nu har hun en fast rutine: Hun går en tur om morgenen, som erstatter turen til kontoret, og hun slukker computeren, når dagen er slut.",
+    "Lederne har også måttet lære nyt. Det er sværere at se, om en medarbejder har det dårligt, når man mødes via en skærm, og derfor har flere chefer indført korte, faste samtaler, hvor de blot spørger, hvordan det går. Camilla Roed kalder det »en lille investering, der betaler sig«.",
+    "Også kontorerne ændrer sig. Flere virksomheder har gjort deres lokaler mindre og indrettet dem med flere mødelokaler og færre faste pladser. Det sparer penge, men kritikere advarer om, at det kan føles som at miste sin plads, hvis man ikke længere har noget, der er ens eget. Mødelokalerne bliver ofte booket i god tid, og enkelte medarbejdere oplever, at det er svært at finde et roligt sted at arbejde.",
+    "Eksperterne er enige om, at der ikke findes én løsning, som passer til alle. Det afhænger af opgaverne, af kulturen og af den enkelte medarbejders behov. Det vigtigste er, at ordningen bliver drøftet åbent, og at den kan justeres, hvis den ikke virker."
+   ],
+   "questions": [
+    {
+     "q": "Hvad er der ifølge første afsnit sket med hjemmearbejde i løbet af nogle år?",
+     "options": ["Det er gået fra at være et privilegium til at være en del af hverdagen for mange.","Det er blevet forbudt i mange virksomheder.","Det er kun blevet populært blandt ledere."],
+     "answer": 0,
+     "why": "Первый абзац: раньше работа из дома считалась привилегией, а теперь «blevet en del af hverdagen» для многих. О запрете и о руководителях речи нет."
+    },
+    {
+     "q": "Hvilke fordele nævner Camilla Roed?",
+     "options": ["Medarbejderne spiser sundere og bruger mere tid sammen.","Medarbejderne pendler mindre og kan koncentrere sig bedre.","Virksomheden sparer penge på løn."],
+     "answer": 1,
+     "why": "Второй абзац: «bruger mindre tid på at pendle ... kan koncentrere sig bedre». Питание и экономия на зарплате не упомянуты."
+    },
+    {"q":"Hvad oplever nogle medarbejdere som en skyggeside ved hjemmearbejde?","options":["At de får for lidt arbejde.","At grænsen mellem arbejde og fritid bliver utydelig.","At de får en lavere løn."],"answer":1,"why":"Третий абзац: «grænsen mellem arbejde og fritid bliver utydelig»."},
+    {"q":"Hvad mener Jens Brandt er nøglen til, at ordningen fungerer?","options":["Strenge regler for kontrol.","Bedre teknologi i hjemmet.","Tillid fra lederne."],"answer":2,"why":"Четвёртый абзац: «nøglen er tillid»; контроль, наоборот, назван проблемой."},
+    {
+     "q": "Hvorfor kan nyansatte især have brug for at møde kolleger ansigt til ansigt?",
+     "options": ["De skal lære virksomhedens kultur at kende.","De har ikke en computer derhjemme.","De vil gerne forhandle om deres løn."],
+     "answer": 0,
+     "why": "Четвёртый абзац: «fordi de skal lære virksomhedens kultur at kende»."
+    },
+    {
+     "q": "Hvad indeholder aftalen i rådgivningsvirksomheden?",
+     "options": ["Alle skal være på kontoret fire dage om ugen.","Man vælger frit, om man vil møde ind på kontoret.","Alle er på kontoret to faste dage, og man skal ikke svare på mails efter klokken seksten."],
+     "answer": 2,
+     "why": "Пятый абзац: «to faste dage om ugen» и «ikke forventes at svare på mails efter klokken seksten»."
+    },
+    {
+     "q": "Hvordan har Mette fået en bedre hverdag med hjemmearbejde?",
+     "options": ["Hun arbejder længere for at vise, at hun er effektiv.","Hun går en tur om morgenen og slukker computeren, når dagen er slut.","Hun er holdt op med at komme på kontoret."],
+     "answer": 1,
+     "why": "Шестой абзац: «Hun går en tur om morgenen ... og hun slukker computeren». Работа допоздна была её ошибкой в первые недели."
+    },
+    {
+     "q": "Hvad advarer kritikere om, når kontorerne bliver mindre?",
+     "options": ["At det bliver for dyrt at leje lokaler.","At nogle kan føle, at de mister deres egen plads.","At der bliver for få mødelokaler."],
+     "answer": 1,
+     "why": "Седьмой абзац: «kritikere advarer om, at det kan føles som at miste sin plads». Переговорных, наоборот, становится больше."
+    }
+   ]
+  },
+  "text2": {
+   "title": "Biblioteket som mødested",
+   "parts": [
+    {
+     "t": "Når man går ind på Nordby Bibliotek en tirsdag eftermiddag, møder man ikke den stilhed, som mange forbinder med et bibliotek. I stedet lyder der latter fra en sofagruppe, og ved et langt bord sidder en gruppe voksne og øver sig i at tale dansk over en kop kaffe. Biblioteket har ændret sig meget de seneste år, og det er ikke tilfældigt. Det er især hverdagslivet, der trækker folk ind ad døren."
+    },
+    {"gap":1},
+    {
+     "t": "Derfor besluttede bibliotekschef Lone Madsen at spørge borgerne direkte, hvad de savnede. Hun satte sig sammen med både unge og ældre brugere og lyttede til deres ønsker. Svarene overraskede hende. Mange sagde, at de manglede et sted, hvor de kunne være sammen med andre uden at skulle købe noget."
+    },
+    {"gap":2},
+    {
+     "t": "Mange af de nye tilbud henvender sig til voksne, der gerne vil lære noget nyt eller bare komme ud af hjemmet. Der er kurser i alt fra madlavning til brug af computer, og hver uge mødes både en strikkeklub og en læsegruppe. Fællesskabet omkring tilbuddene gør, at mange kommer flere gange om ugen."
+    },
+    {"gap":3},
+    {"t":"Ikke alle er lige begejstrede. Nogle af de faste gæster savner stilheden og synes, at der er kommet for meget larm. Biblioteket har derfor indrettet en stillezone på første sal, hvor samtaler og telefoner ikke er tilladt."},
+    {"gap":4},
+    {"t":"Lone Madsen understreger, at udlån af bøger stadig er en vigtig del af arbejdet. Men hun mener, at fremtidens bibliotek først og fremmest skal være et sted, hvor mennesker mødes."},
+    {"gap":5}
+   ],
+   "removed": [
+    {
+     "id": "A",
+     "t": "Resultatet blev en række ændringer. Reolerne blev flyttet ud til væggene, så der kunne blive plads til lange borde og bløde stole, og i stueetagen åbnede en lille café, som drives af frivillige. Indretningen er blevet mere åben, og det betyder, at man kan se, hvad der foregår, allerede når man træder ind."
+    },
+    {"id":"B","t":"Løsningen har fungeret godt, og de fleste er glade for at kunne vælge. Samtidig har personalet bemærket, at flere unge nu bruger stedet til at læse til eksamen, fordi der er gode arbejdspladser og gratis internet."},
+    {"id":"C","t":"For ti år siden var det anderledes. Dengang kom de fleste kun for at låne bøger og film, og udlånet faldt år for år. Biblioteket var et roligt sted, hvor man helst talte med dæmpet stemme, og mange unge kom der slet ikke."},
+    {"id":"D","t":"Lone Madsen har arbejdet på biblioteket i tyve år, og hun har altid drømt om at skabe et sted med ro og koncentration. Hun ønsker derfor ikke, at biblioteket bliver for livligt, og hun overvejer at fjerne caféen igen."},
+    {"id":"E","t":"Hun ser det som en styrke, at huset er åbent for alle, uanset alder og baggrund. Når en pensionist sidder ved siden af en studerende og en nytilflyttet familie, opstår der samtaler, som ellers aldrig ville have fundet sted."},
+    {
+     "id": "F",
+     "t": "Særligt populær er sprogcaféen, hvor voksne, der lærer dansk, kan øve sig sammen med frivillige, som har dansk som modersmål. Her handler samtalerne ikke om grammatik, men om hverdagen: om børn, arbejde og vejret. Mange deltagere siger, at det er her, de for første gang har turdet tale frit."
+    },
+    {"id":"G","t":"Den store kritik har været, at biblioteket bruger for mange penge på caféen og for få på bøger. Derfor har kommunen besluttet at fjerne alle frivillige og lukke caféen."}
+   ],
+   "solution": {"1":"C","2":"A","3":"F","4":"B","5":"E"},
+   "why": {
+    "1": "Вступление говорит, что библиотека сильно изменилась «ikke tilfældigt». Абзац C («For ti år siden var det anderledes») показывает, как было раньше, а следующий абзац начинается с «Derfor» — реакции на падение выдачи.",
+    "2": "Предыдущий абзац заканчивается тем, что горожане хотели место без обязательных покупок. Абзац A («Resultatet blev en række ændringer») называет конкретные изменения — новую расстановку и кафе, — после чего речь идёт о «nye tilbud».",
+    "3": "Предыдущий абзац перечисляет курсы и клубы. Абзац F («Særligt populær er sprogcaféen») выделяет из них языковое кафе, о котором уже говорилось во вступлении.",
+    "4": "Предыдущий абзац вводит зону тишины. Абзац B («Løsningen har fungeret godt ... kunne vælge») оценивает именно это решение: можно выбирать между шумом и тишиной.",
+    "5": "Предыдущий абзац называет мысль Лоне Мадсен: библиотека — место встречи. Абзац E («Hun ser det som en styrke ...») продолжает эту мысль и завершает текст."
+   },
+   "distractorWhy": "Абзац D лишний: он противоречит тексту, потому что Лоне Мадсен сама начала перемены и считает, что библиотека должна быть местом встречи, а не тишины. Абзац G тоже лишний: он говорит о закрытии кафе и увольнении волонтёров, но дальше в тексте кафе и волонтёры работают (языковое кафе), и ни один из пяти пропусков по смыслу для него не подходит."
+  },
+  "text3": {
+   "title": "At lære dansk som voksen",
+   "segments": [
+    "Mange voksne, der flytter til Danmark, ",
+    {"gap":1,"options":["undervurderer","overvurderer","undersøger","underviser"],"answer":0},
+    ", hvor lang tid det tager ",
+    {"gap":2,"options":["at lære","lære","lærer","lært"],"answer":0},
+    " et nyt sprog. De regner med at kunne føre en samtale efter få måneder, men virkeligheden er ofte en anden. Danskere taler hurtigt og udtaler mange ord utydeligt, og det kan være svært at høre, hvor ét ord slutter, og det næste begynder. Det betyder, at mange føler sig modløse i de første måneder. ",
+    {"gap":3,"options":["Selvom","Fordi","Eftersom","Hvorfor"],"answer":0},
+    " man går på sprogskole to gange om ugen, er det svært at gøre fremskridt, hvis man ikke bruger sproget i hverdagen. Det er derfor et ",
+    {"gap":4,"options":["godt","god","gode","bedst"],"answer":0},
+    " råd at finde steder, hvor man kan øve sig uden at føle sig bedømt. Mange har ",
+    {"gap":5,"options":["oplevet","oplever","oplevede","opleve"],"answer":0},
+    ", at det hjælper at deltage i en forening, fordi man så møder de samme mennesker igen og igen, og samtalerne bliver lettere for hver gang. Hvis man vil have kontakt med danskere, skal man ofte selv tage initiativ. Danskerne er venlige, men de skifter let til engelsk, når de hører, at man har svært ved at finde ordene. Det er ikke ment som en fornærmelse, men som en hjælp. Man kan i stedet sige, at man gerne vil øve sig i dansk, og ",
+    {"gap":6,"options":["så","hvis","for","at"],"answer":0},
+    " svarer de fleste gerne på dansk. Det kan også være en hjælp at høre dansk i dagligdagen, for eksempel gennem radio, podcasts eller tv-serier. Man behøver ikke at forstå hvert eneste ord, men man vænner sig langsomt ",
+    {"gap":7,"options":["til","med","på","for"],"answer":0},
+    " sprogets rytme. Nogle lærer også nye ord ved at skrive dem ned på små sedler og hænge dem op rundt omkring i hjemmet. Det er også en fordel at have et konkret mål. Nogle vil gerne kunne tale med lægen, andre vil klare en prøve, og en tredje gruppe drømmer om at få et job, hvor der kræves dansk. Når målet er tydeligt, er det lettere at holde motivationen oppe, også når fremskridtet virker langsomt. Til sidst er det vigtigt at huske, at fejl er en naturlig del af læringen. Dem, der tør tale, selvom de laver fejl, udvikler sig som regel ",
+    {"gap":8,"options":["hurtigere","hurtig","hurtigst","mere hurtigt"],"answer":0},
+    " end dem, der venter på at blive perfekte."
+   ]
+  }
+ },
+ {
+  "id": "exam-2",
+  "minutes": 65,
+  "text1": {
+   "title": "Et nyt liv på landet",
+   "paragraphs": [
+    "Da Sara og Jonas for tre år siden flyttede fra en lille lejlighed i storbyen til et gammelt hus på landet, troede de, at det værste ville være at undvære caféerne og restauranterne. De tog fejl. Det, de savnede mest i begyndelsen, var noget helt andet: at kunne tage cyklen ud til bageren og være der på fem minutter.",
+    "Beslutningen om at flytte var ikke let. Jonas arbejdede som grafiker og kunne arbejde hjemmefra, men Sara havde et job på en skole i byen, og hun måtte regne på, om det kunne betale sig at pendle. Til sidst fandt hun et job på en friskole i nærheden, selvom lønnen var lidt lavere. De blev enige om, at de hellere ville have tid sammen end en større indkomst.",
+    "Huset trængte til meget. Taget lækkede, og køkkenet var fra halvfjerdserne. Parret havde regnet med at kunne klare det meste selv, men de opdagede hurtigt, at de ikke havde nok erfaring. Heldigvis var naboen, en pensioneret tømrer ved navn Ole, villig til at hjælpe, og han lærte dem mere i løbet af et forår, end nogen kurser ville have gjort.",
+    "Det sociale liv var en overraskelse. Mange venner i byen havde advaret dem om, at landsbyer kan være lukkede, og at tilflyttere ofte bliver stående udenfor. Sara og Jonas oplevede det modsatte. Allerede den første uge kom flere naboer forbi med kage, og de blev inviteret til sognets årlige høstfest. At de ikke kendte nogen, var ikke noget problem, for alle ville gerne vide, hvem de var. Jonas har selv meldt sig til sognets arbejdsdag, hvor man hjælper med at klippe hække og ordne kirkegården.",
+    "Men livet på landet kræver også tilvænning. Der er langt til indkøb, og bussen kører kun få gange om dagen, så en bil er næsten en nødvendighed. Om vinteren kan vejene være glatte, og det kan tage lang tid at få en håndværker, fordi mange har travlt. Jonas siger, at han har lært at planlægge sine indkøb bedre, og at han ikke længere løber ud efter mælk i sidste øjeblik.",
+    "Det største plus er ifølge Sara roen. Hun oplever, at hun sover bedre, og at børnene kan lege udenfor hele dagen, uden at hun behøver at bekymre sig. De har også fået en lille køkkenhave, hvor de dyrker kartofler og krydderurter. Det er langt fra selvforsyning, men det giver en glæde, som de ikke kendte fra storbyen. Om aftenen sidder de ofte på terrassen og lytter til fuglene.",
+    "Samtidig erkender de, at de har haft held. De har råd til at leve på en fuld indkomst og en lidt mindre, og de har en nabo, der gerne hjælper. Andre, som har prøvet noget lignende, har oplevet ensomhed eller dårlig økonomi. Det kræver derfor, at man kender sine grænser og er realistisk i sine forventninger til livet.",
+    "Spørger man dem, om de vil anbefale andre at gøre det samme, tøver de ikke med at svare, at det afhænger af, hvad man leder efter. Hvis man drømmer om ro og et fællesskab, kan landlivet være svaret. Men hvis man elsker byens tempo, kan det blive en skuffelse. Selv ville de ikke bytte tilbage."
+   ],
+   "questions": [
+    {
+     "q": "Hvad savnede Sara og Jonas mest i begyndelsen?",
+     "options": ["Caféerne og restauranterne i storbyen.","At kunne komme hurtigt hen til bageren på cyklen.","Deres gamle lejlighed."],
+     "answer": 1,
+     "why": "Первый абзац: они думали, что будут скучать по кафе, но «savnede mest» возможность быстро доехать на велосипеде до пекаря."
+    },
+    {
+     "q": "Hvorfor skulle Sara regne på, om hun kunne blive i sit job?",
+     "options": ["Fordi det kunne være dyrt at pendle til byen.","Fordi hendes skole skulle lukke.","Fordi Jonas ville have, at hun holdt op med at arbejde."],
+     "answer": 0,
+     "why": "Второй абзац: «hun måtte regne på, om det kunne betale sig at pendle». Закрытия школы и желания Йонаса в тексте нет."
+    },
+    {
+     "q": "Hvordan løste Sara problemet med sit arbejde?",
+     "options": ["Hun fandt et job på en friskole i nærheden med en lidt lavere løn.","Hun begyndte at arbejde hjemmefra sammen med Jonas.","Hun fik en højere løn og flyttede arbejdet til landet."],
+     "answer": 0,
+     "why": "Второй абзац: «fandt hun et job på en friskole i nærheden, selvom lønnen var lidt lavere»."
+    },
+    {
+     "q": "Hvorfor blev naboen Ole vigtig for parret?",
+     "options": ["Han solgte dem huset til en lav pris.","Han havde et kursus i byggeri, som de kunne deltage i.","Han hjalp dem med at lære at reparere huset."],
+     "answer": 2,
+     "why": "Третий абзац: Оле, пенсионер-плотник, «villig til at hjælpe» и научил их больше, чем любые курсы."
+    },
+    {
+     "q": "Hvordan blev Sara og Jonas modtaget i landsbyen?",
+     "options": ["Venligt, selvom ingen kendte dem.","Med mistro, som vennerne havde advaret om.","Slet ikke, for ingen kom forbi."],
+     "answer": 0,
+     "why": "Четвёртый абзац: «Sara og Jonas oplevede det modsatte» — к ним заходили соседи с пирогом, их пригласили на праздник."
+    },
+    {
+     "q": "Hvilken ulempe ved landlivet nævner teksten?",
+     "options": ["At det er svært at få nye venner.","At der ikke findes håndværkere.","At der er langt til indkøb, så en bil er næsten nødvendig."],
+     "answer": 2,
+     "why": "Пятый абзац: «Der er langt til indkøb ... en bil er næsten en nødvendighed». Мастера найти трудно, но они существуют («kan tage lang tid»)."
+    },
+    {"q":"Hvad er det største plus ved landlivet ifølge Sara?","options":["Roen.","Muligheden for at blive selvforsynende.","En højere indkomst."],"answer":0,"why":"Шестой абзац: «Det største plus er ifølge Sara roen». Самообеспечение названо «langt fra»."},
+    {
+     "q": "Hvorfor siger Sara og Jonas, at de har haft held?",
+     "options": ["De har råd til at leve på mindre og har en hjælpsom nabo.","De har aldrig oplevet ensomhed.","De fik huset gratis."],
+     "answer": 0,
+     "why": "Седьмой абзац: «De har råd til at leve på en fuld indkomst og en lidt mindre, og de har en nabo, der gerne hjælper»."
+    }
+   ]
+  },
+  "text2": {
+   "title": "Den sidste købmand",
+   "parts": [
+    {
+     "t": "I landsbyen Hjortebæk lå der i mange år en købmandsbutik, som var samlingssted for de fleste af byens knap fire hundrede beboere. Butikken lå ved siden af kirken og havde åbent hver dag fra morgen til aften. Da ejeren gik på pension for fem år siden, fandt ingen en ny køber, og butikken lukkede. For mange af de ældre betød det, at de pludselig skulle køre tyve kilometer for at købe mælk og brød."
+    },
+    {"gap":1},
+    {"t":"Efter flere timers diskussion blev de enige om at prøve at drive butikken som en forening, hvor medlemmerne selv ejer andele. Hver andel kostede et mindre beløb, og det viste sig hurtigt, at mange var villige til at betale."},
+    {"gap":2},
+    {
+     "t": "Det var dog ikke nok at have åbent. Butikken måtte konkurrere med supermarkederne i den nærmeste by, som havde et bredere udvalg og lavere priser. Det var især de yngre familier, der valgte supermarkedet, fordi de kunne tage indkøbene med på vej hjem fra arbejde. Derfor besluttede foreningen at satse på varer fra egnen."
+    },
+    {"gap":3},
+    {"t":"Alligevel er økonomien stadig skrøbelig. Omsætningen er lav om vinteren, og formanden, Karen Holm, fortæller, at nogle af de frivillige er begyndt at føle sig slidt op. Foreningen har derfor drøftet at ansætte en medarbejder i et par dage om ugen."},
+    {"gap":4},
+    {"t":"Samtidig er butikken blevet noget andet end et sted at handle. Der står en kaffemaskine ved døren, og de fleste, der kommer ind, bliver stående et øjeblik for at tale med nogen. Der hænger også en opslagstavle, hvor beboerne kan sætte sedler op om alt fra killinger til hjælp med havearbejde."},
+    {"gap":5}
+   ],
+   "removed": [
+    {
+     "id": "A",
+     "t": "Når Karen bliver spurgt, hvorfor hun bruger sin tid på butikken, svarer hun uden at tøve: Den er mere end et sted at købe mælk. Den er et sted, hvor man siger goddag, og hvor man opdager, hvis nogen ikke har været forbi i et par dage. For Hjortebæk er butikken blevet fællesskabets hjerte."
+    },
+    {"id":"B","t":"I løbet af få måneder var der solgt nok andele til, at foreningen kunne leje lokalerne og købe de første varer ind. Samtidig meldte næsten tredive personer sig som frivillige, så butikken kunne have åbent seks dage om ugen."},
+    {"id":"C","t":"Det forudsætter dog, at flere køber andele, og at flere beboere gør det til en vane at handle i butikken i stedet for at køre til supermarkedet. Karen Holm har derfor planer om at holde en åben dag, hvor man kan smage på varerne og tale med de frivillige."},
+    {"id":"D","t":"Mange af de ældre mener stadig, at den gamle butik var bedre, fordi ejeren kendte alle kunderne ved navn. De vil helst have den tilbage, og de er ikke interesserede i at betale for andele."},
+    {"id":"E","t":"Det fik en gruppe beboere til at indkalde til et møde i forsamlingshuset. Omkring halvtreds mennesker kom, og stemningen var præget af både vrede og beslutsomhed. Mange mente, at byen ville miste sit liv, hvis den ikke fik en butik igen."},
+    {"id":"F","t":"For tre år siden besøgte en journalist fra en landsdækkende avis landsbyen og skrev en stor artikel om projektet. Artiklen gjorde Hjortebæk kendt, og der kom turister fra hele landet."},
+    {"id":"G","t":"Æg og grøntsager kom nu fra gårdene i nærheden, og et lokalt bageri leverede friskbagt brød hver morgen. Kunderne var villige til at betale lidt mere for sådanne varer, og det blev en vigtig del af butikkens profil."}
+   ],
+   "solution": {"1":"E","2":"B","3":"G","4":"C","5":"A"},
+   "why": {
+    "1": "Вступление заканчивается закрытием магазина. Абзац E («Det fik en gruppe beboere ...») — реакция жителей на это, а следующий абзац продолжает: «Efter flere timers diskussion blev de enige».",
+    "2": "Предыдущий абзац говорит, что многие готовы платить за доли. Абзац B («I løbet af få måneder ...») показывает результат: доли проданы, помещение арендовано, найдены волонтёры.",
+    "3": "Предыдущий абзац говорит, что объединение решило делать ставку на местные товары. Абзац G («Æg og grøntsager kom nu fra gårdene ...») конкретизирует это решение.",
+    "4": "Предыдущий абзац заканчивается идеей нанять сотрудника. Абзац C («Det forudsætter dog ...») называет условие для этого — больше пайщиков и покупателей — и вводит Карен Холм как автора планов.",
+    "5": "Предыдущий абзац говорит, что магазин стал не просто местом покупок. Абзац A («Når Karen bliver spurgt ...») подтверждает это словами Карен и завершает текст."
+   },
+   "distractorWhy": "Абзац D лишний: он говорит, что пожилые не хотят платить за доли, но текст прямо сообщает, что многие охотно платили. Абзац F лишний: статья журналиста и туристы нигде не связаны с соседними абзацами (нет ни упоминания прессы, ни логической связи с долями, наймом сотрудника или кофемашиной)."
+  },
+  "text3": {
+   "title": "Søvn og skærme",
+   "segments": [
+    "Mange voksne sover dårligere, end de burde, og ",
+    {"gap":1,"options":["en","et","de","den"],"answer":0},
+    " af forklaringerne er ofte skærmene. Når vi ligger i sengen og kigger på telefonen, får hjernen signaler om, at det stadig er dag, og det kan gøre det svært at falde i søvn. Problemet er blevet større, efterhånden som skærmene er blevet en fast del af hverdagen. Søvnforskere ",
+    {"gap":2,"options":["anbefaler","anbefaling","anbefalet","anbefale"],"answer":0},
+    " derfor, at man slukker skærmene mindst en time, før man går i seng. Mange vender sig imod rådet, ",
+    {"gap":3,"options":["fordi","så","selvom","hvorfor"],"answer":0},
+    " de bruger telefonen til at slappe af. Det er forståeligt, men afslapning foran en skærm er sjældent ",
+    {"gap":4,"options":["så god","så godt","mere god","bedst"],"answer":0},
+    " som afslapning uden. I stedet kan man læse en bog, lytte til rolig musik eller tage et varmt bad. Det vigtigste er, at man finder en rutine, som man selv kan holde fast i. Kaffe og tunge måltider sent om aftenen kan også forstyrre søvnen. Mange drikker kaffe langt ind i eftermiddagen uden at tænke på, at koffein bliver i kroppen i mange timer. Hvis man kan mærke, at man ligger vågen om natten, kan det hjælpe at holde op med kaffe efter frokost. Soveværelset spiller også en stor rolle. Det bør være mørkt, ",
+    {"gap":5,"options":["køligt","kølig","kølige","køler"],"answer":0},
+    " og stille, og det er en god idé at undgå at arbejde i sengen. Hvis man bruger sengen ",
+    {"gap":6,"options":["til","for","med","ved"],"answer":0},
+    " alt muligt, begynder kroppen at forbinde den med aktivitet i stedet for hvile. Nogle har gavn ",
+    {"gap":7,"options":["af","for","ved","til"],"answer":0},
+    " at tage telefonen ud af soveværelset helt og i stedet bruge et almindeligt vækkeur. Det kan virke som en lille ændring, men for mange gør det en stor forskel. Til sidst skal man huske, at alle har forskellige behov. Det er også værd at vide, at søvnen ændrer sig gennem livet. Børn og unge har brug for mere søvn, mens ældre ofte sover lettere og vågner oftere. Nogle har brug for otte timers søvn, mens andre klarer sig fint med seks. Hvis man vågner udhvilet og har energi i løbet af dagen, er der ingen grund til at bekymre sig. Men hvis man hele tiden er træt, ",
+    {"gap":8,"options":["kan det","det kan","det må","kunne det"],"answer":0},
+    " være en god idé at tale med lægen."
+   ]
+  }
+ }
+];

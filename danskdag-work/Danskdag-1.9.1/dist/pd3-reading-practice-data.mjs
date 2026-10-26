@@ -181,7 +181,7 @@ export const readingPractice = [
    {"da":"Udlejeren forklarer, at vand og varme betales hver måned sammen med huslejen, mens man selv skal tegne en aftale om strøm.","ru":"Арендодатель объясняет, что вода и отопление оплачиваются ежемесячно вместе с арендной платой, а договор на электричество нужно заключить самим."},
    {"da":"Lejligheden har et nyt badeværelse, men køkkenet er gammelt.","ru":"В квартире новая ванная комната, но кухня старая."},
    {"da":"Lena lægger mærke til, at der er et fælles vaskeri i kælderen, som beboerne kan bruge efter en fast plan.","ru":"Лена замечает, что в подвале есть общая прачечная, которой жильцы могут пользоваться по постоянному расписанию."},
-   {"da":"Det synes hun er praktisk, men Oleksandr er mere bekymret for lyden fra naboerne.","ru":"Ей это кажется удобным, но Александр больше беспокоится о шуме от соседей."},
+   {"da":"Det synes hun er praktisk, men Oleksandr er mere bekymret for støjen fra naboerne.","ru":"Ей это кажется удобным, но Александр больше беспокоится о шуме от соседей."},
    {"da":"To dage senere får de besked om, at de må flytte ind, og de modtager en lejekontrakt.","ru":"Через два дня им сообщают, что они могут въезжать, и присылают договор аренды."},
    {"da":"Inden de skriver under, læser de hele kontrakten grundigt.","ru":"Прежде чем подписать, они внимательно читают весь договор."},
    {"da":"Her står der blandt andet, hvor stor huslejen er, og hvornår pengene skal være på udlejerens konto.","ru":"Там, среди прочего, указано, какова арендная плата и когда деньги должны быть на счёте арендодателя."},
@@ -191,7 +191,7 @@ export const readingPractice = [
    {"da":"Da Oleksandr og Lena flytter ind, gennemgår de lejligheden sammen med udlejeren.","ru":"Когда Александр и Лена въезжают, они осматривают квартиру вместе с арендодателем."},
    {"da":"De tager billeder af alle skader, og udlejeren skriver dem ind i en rapport.","ru":"Они фотографируют все повреждения, и арендодатель вносит их в акт."},
    {"da":"Det er en god idé, fordi man ellers kan blive bedt om at betale for skader, som andre har lavet.","ru":"Это хорошая идея, потому что иначе тебя могут попросить заплатить за повреждения, которые нанесли другие."},
-   {"da":"Senere opdager de, at hanen i køkkenet drypper, og de giver straks udlejeren besked.","ru":"Позже они обнаруживают, что кран на кухне капает, и сразу сообщают арендодателю."},
+   {"da":"Senere opdager de, at vandhanen i køkkenet drypper, og de giver straks udlejeren besked.","ru":"Позже они обнаруживают, что кран на кухне капает, и сразу сообщают арендодателю."},
    {"da":"Han sender en håndværker, så problemet er løst allerede ugen efter.","ru":"Он присылает мастера, и проблема решена уже на следующей неделе."},
    {"da":"Lena synes, at det var en god start på lejeforholdet, fordi udlejeren reagerede hurtigt.","ru":"Лена считает, что это было хорошее начало арендных отношений, потому что арендодатель отреагировал быстро."},
    {"da":"Hvis man vil flytte igen, skal man sige lejemålet op, og det skal ske skriftligt og med et vist varsel.","ru":"Если хочешь съехать, нужно расторгнуть договор аренды, причём письменно и с соблюдением определённого срока уведомления."},
@@ -221,7 +221,7 @@ export const readingPractice = [
     "why": "В первом абзаце: «enten for dyre eller for langt væk fra Lenas arbejde». Вокзал, наоборот, описан как плюс."
    },
    {"q":"Hvad skal Oleksandr og Lena selv ordne, ifølge udlejeren?","options":["En aftale om varme.","En aftale om vand.","En aftale om strøm."],"answer":2,"why":"Во втором абзаце: вода и отопление платятся вместе с арендой, «mens man selv skal tegne en aftale om strøm»."},
-   {"q":"Hvad er Oleksandr mest bekymret for ved lejligheden?","options":["Lyden fra naboerne.","Det gamle køkken.","Det fælles vaskeri."],"answer":0,"why":"Во втором абзаце: «Oleksandr er mere bekymret for lyden fra naboerne». Прачечную одобряет Лена, а про кухню просто сказано, что она старая."},
+   {"q":"Hvad er Oleksandr mest bekymret for ved lejligheden?","options":["Støjen fra naboerne.","Det gamle køkken.","Det fælles vaskeri."],"answer":0,"why":"Во втором абзаце: «Oleksandr er mere bekymret for lyden fra naboerne». Прачечную одобряет Лена, а про кухню просто сказано, что она старая."},
    {
     "q": "Hvad sker der med depositummet, mens parret bor i lejligheden?",
     "options": ["Udlejeren bruger det til at betale for nye møbler.","Parret bruger det som en del af huslejen.","Udlejeren beholder pengene."],
@@ -306,7 +306,7 @@ export const readingPractice = [
    {"q":"Hvorfor fik Karolina en kontrolafgift?","options":["Hun havde glemt sit kort derhjemme.","Hun troede, at billetten kunne bruges i hele regionen.","Hun steg på det forkerte tog."],"answer":1,"why":"Во втором абзаце: «fordi hun troede, at billetten var gyldig i hele regionen»."},
    {
     "q": "Hvad kan Karolina gøre, hvis hun kommer for sent på grund af toget?",
-    "options": ["Hun kan skrive til sin chef.","Hun kan gå på arbejde i stedet for.","Hun kan bede om en ny billet."],
+    "options": ["Hun kan skrive til sin chef.","Hun kan blive hjemme uden at sige noget.","Hun kan bede om en ny billet."],
     "answer": 0,
     "why": "В третьем абзаце: «hun kan skrive til sin chef». Хождение пешком и новый билет в тексте не упомянуты."
    },
@@ -464,7 +464,7 @@ export const readingPractice = [
     "q": "Hvad var dirigentens opgave?",
     "options": ["At føre regnskabet.","At lede forsamlingen og sørge for, at alle fik taletid.","At fortælle om årets aktiviteter."],
     "answer": 1,
-    "why": "Во втором абзаце: дирижент «skulle lede forsamlingen og sørge for, at alle fik taletid». Отчёт делал председатель, финансы — казначей."
+    "why": "Во втором абзаце о dirigent сказано, что он «skulle lede forsamlingen og sørge for, at alle fik taletid». Отчёт делал председатель, финансы — казначей."
    },
    {
     "q": "Hvorfor ville bestyrelsen hæve kontingentet?",
@@ -631,12 +631,12 @@ export const readingPractice = [
    {"da":"en automat","ru":"автомат"},
    {"da":"en selvfølge","ru":"нечто само собой разумеющееся"},
    {"da":"at erkende","ru":"признавать"},
-   {"da":"jo ... desto","ru":"чем ... тем"}
+   {"da":"jo bedre, desto lettere","ru":"чем лучше, тем легче"}
   ],
   "questions": [
    {
     "q": "Hvorfor blev mange beboere irriterede?",
-    "options": ["Fordi boligforeningen skulle flytte alle containere.","Fordi de skulle til at sortere deres affald i flere slags.","Fordi huslejen skulle stige."],
+    "options": ["Fordi boligforeningen skulle flytte alle containere.","Fordi de nu skulle sortere deres affald i flere slags.","Fordi huslejen skulle stige."],
     "answer": 1,
     "why": "В первом абзаце: «nu skulle man pludselig adskille madaffald, papir, glas, plast og metal». Об аренде и переносе контейнеров не сказано."
    },

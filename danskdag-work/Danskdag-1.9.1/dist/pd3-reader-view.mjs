@@ -36,20 +36,20 @@ export function textHtml(item,options={}){
 }
 
 export function playerHtml(settings,{showTranslation=true,idPrefix='pd3'}={}){
-  return `<div class="pd3-player" role="group" aria-label="Управление чтением вслух">
+  return `<div class="pd3-sticky" role="group" aria-label="Управление чтением вслух">
 <div class="pd3-player-main">
 <button type="button" class="btn primary" id="${idPrefix}-play" data-action="pd3-play"><span class="pd3-play-icon">${symbols.play}</span><span class="pd3-play-label">Слушать</span></button>
 <button type="button" class="btn secondary" data-action="pd3-prev" aria-label="Предыдущее предложение" title="Предыдущее предложение (←)">${symbols.prev}</button>
 <button type="button" class="btn secondary" data-action="pd3-next" aria-label="Следующее предложение" title="Следующее предложение (→)">${symbols.next}</button>
 <button type="button" class="btn secondary" data-action="pd3-stop" aria-label="Остановить чтение" title="Остановить чтение">${symbols.stop}<span class="pd3-stop-label">Стоп</span></button>
 </div>
-<div class="pd3-player-options">
-<div><span class="pd3-label" id="${idPrefix}-rate-label">Скорость</span>${toggleButtons('Скорость чтения','pd3-rate',READER_RATES.map(r=>[r,`${String(r).replace('.',',')}×`]),settings.rate)}</div>
-<div class="pd3-checks">${checkbox(`${idPrefix}-follow`,'Следовать за чтением',settings.follow,'data-pd3-setting="follow"')}${showTranslation?checkbox(`${idPrefix}-translation`,'Показать перевод по предложениям',settings.translation,'data-pd3-setting="translation"'):''}</div>
-</div>
 <p class="pd3-status" id="${idPrefix}-status" role="status" aria-live="polite"></p>
 <p class="notice warning pd3-voice-note" id="${idPrefix}-message" hidden></p>
 <p class="pd3-now" id="${idPrefix}-now" lang="da" data-audio-ready hidden></p>
+</div>
+<div class="panel pd3-options">
+<div><span class="pd3-label">Скорость</span>${toggleButtons('Скорость чтения','pd3-rate',READER_RATES.map(r=>[r,`${String(r).replace('.',',')}×`]),settings.rate)}</div>
+<div class="pd3-checks">${checkbox(`${idPrefix}-follow`,'Следовать за чтением',settings.follow,'data-pd3-setting="follow"')}${showTranslation?checkbox(`${idPrefix}-translation`,'Показать перевод по предложениям',settings.translation,'data-pd3-setting="translation"'):''}</div>
 <p class="field-note">Пробел — пауза и продолжение, стрелки влево и вправо — предыдущее и следующее предложение, касание предложения — читать с него.</p>
 </div>`;
 }

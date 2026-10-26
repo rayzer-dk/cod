@@ -88,3 +88,10 @@ export const writingCriteria = [{id, title /* Russian */, descriptors:['Russian'
 export const connectors = ['fordi','selvom', ...];   // Danish linking words used for a mechanical check, 40+ entries, lowercase
 ```
 Model answers must satisfy every requirement of their prompt and the word limits.
+
+## state.pd3.mocks (platform data, not content)
+
+```js
+mocks: { [id /* m-<time>-<random> */]: {at, updatedAt, mode:'full'|'short', set:'set-3', find:0-100|null, text:0-100|null, writing:0-100|null, oral:0-100|null, weak:''|'find'|'text'|'writing'|'oral', minutes, stages, of} }
+```
+Optional, at most 20 (newest by `at`). `writing` and `oral` are percents of the learner's self-assessment, `find` and `text` are checked by the program. A mock exam needs at least one item in every list of the content (`canMock`); the sets are derived from the order of the lists, so new items are appended rather than inserted.

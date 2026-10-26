@@ -12,7 +12,7 @@ export const MOCK_STALE_DAYS=14;
 /** How long an unfinished run is kept on the device (from its last save): a full exam needs a break, so it lives longer. */
 export const MOCK_AGE={full:48*3600*1000,short:24*3600*1000};
 export const MOCK_TEXT_MAX=6000;
-export const MODE_NAMES={full:'Полный',short:'Короткий'};
+export const MODE_NAMES={full:'Полный режим',short:'Короткий режим'};
 /** XP share of the exam's worth (PD3_XP.mock): the short mode is half of the full one. Paid once per exam id. */
 export const MOCK_XP_PERCENT={full:100,short:50};
 /** Warnings of the clock, in seconds before the end of a stage: 10, 5, 1 minute and 30 seconds. Only the marks inside the stage are used. */

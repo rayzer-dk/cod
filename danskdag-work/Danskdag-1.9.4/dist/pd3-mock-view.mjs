@@ -45,11 +45,11 @@ export function mockSetupView({data,d,setup,sets}){
   return `${backButton()}${pageHead('Пробный экзамен','Полный прогон по мотивам формата Prøve i Dansk 3: этапы идут один за другим, в конце — отчёт по навыкам.')}
 <div class="notice pd3-disclaimer">${icon('info')}<span>${MOCK_NOTE}</span></div>
 <section class="panel pd3-mock-setup" aria-labelledby="pd3-mock-mode-title"><h2 id="pd3-mock-mode-title">Режим</h2>
-${toggleButtons('Режим экзамена','pd3-mock-mode',[['full','Полный'],['short','Короткий']],setup.mode)}
+${toggleButtons('Режим экзамена','pd3-mock-mode',[['full',MODE_NAMES.full],['short',MODE_NAMES.short]],setup.mode)}
 <p>${MODE_TEXT[setup.mode]}</p>${planList(setup.mode)}
 <p class="field-note">Письменная часть: ${minutesText(minutes.written)}${setup.mode==='full'?', устная часть около 15 минут':`, устная часть около ${minutes.oral} минут`}. Таймер считает по формату, но это приблизительные рамки.</p></section>
 <section class="panel" aria-labelledby="pd3-mock-timer-title"><h2 id="pd3-mock-timer-title">Таймер</h2>
-${toggleButtons('Таймер','pd3-mock-timer',[['format','По формату'],['none','Без таймера']],setup.timerMode)}
+${toggleButtons('Таймер экзамена','pd3-mock-timer',[['format','По формату'],['none','Без таймера']],setup.timerMode)}
 <p class="field-note">${setup.timerMode==='format'?'У каждого этапа свой срок. Когда время выходит, этап завершается сам, а всё введённое сохраняется.':'Время не ограничено: удобно, чтобы просто познакомиться с форматом. Этапы всё равно идут по порядку.'}</p></section>
 <section class="panel" aria-labelledby="pd3-mock-set-title"><h2 id="pd3-mock-set-title">Набор заданий</h2>
 <label for="pd3-mock-set">Набор</label><select id="pd3-mock-set" data-pd3-mock="set">${options}</select>
@@ -220,7 +220,7 @@ export function mockReportView({data,mock,report,now}){
   const set=mock.set;
   const skills=Object.entries(report.skills).map(([key,skill])=>skillCard(key,skill,report.weak)).join('');
   const xp=mock.xp>0?`<p role="status"><b>+${mock.xp} XP</b> за завершение пробного экзамена.</p>`:report.engaged*2<report.stages?'<p class="field-note">XP не начислены: выполнено меньше половины этапов.</p>':'';
-  return `${pageHead('Итоги пробного экзамена',`${modeName(mock.mode)} режим · набор ${set.id.replace(/^set-/,'')} · ${dateText(mock.finishedAt??now)} · на экзамен ушло около ${minutesText(report.minutes)}`)}
+  return `${pageHead('Итоги пробного экзамена',`${modeName(mock.mode)} · набор ${set.id.replace(/^set-/,'')} · ${dateText(mock.finishedAt??now)} · на экзамен ушло около ${minutesText(report.minutes)}`)}
 <div class="notice pd3-disclaimer">${icon('info')}<span>Это проценты по навыкам для тренировки, а не оценка по официальной шкале и не прогноз. Чтение проверила программа. Письмо и устная часть — твоя самооценка, она обычно выше настоящей оценки, поэтому не сравнивай эти проценты с чтением напрямую.</span></div>
 <section aria-labelledby="pd3-mock-skills-title"><h2 id="pd3-mock-skills-title" class="pd3-h2">Результаты по навыкам</h2><ul class="pd3-mock-skills">${skills}</ul>${xp}</section>
 ${report.writing.texts.length?`<section class="panel pd3-mock-writing" aria-labelledby="pd3-mock-writing-title"><h2 id="pd3-mock-writing-title">Письмо: проверки программы</h2><p class="field-note">Это механические подсказки, отдельно от самооценки: программа считает слова, связки и повторы, но не проверяет грамматику и смысл.</p>${report.writing.texts.map(writingChecks).join('')}</section>

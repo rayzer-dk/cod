@@ -221,7 +221,7 @@ test('mock: hub card, history and progress section',()=>{
   const mock=play('full'),record=mockRecord(mock,buildReport({mock,data,pd3:null}),T0);
   d.mocks={};for(let i=0;i<7;i++)d.mocks['m'+i]={...record,at:T0+i*HOUR,writing:null};
   const hub=hubView({data,d,error:''});
-  assert.equal((hub.match(/<li><b>\d\d\.\d\d\.\d{4}<\/b>/g)||[]).length,5,'the last five');
+  assert.equal((hub.match(/<li><span class="pd3-mock-head"><b>\d\d\.\d\d\.\d{4}<\/b>/g)||[]).length,5,'the last five');
   assert.match(hub,/Del 1: 100% · Del 2: 100% · письмо \(самооценка\): — · устная часть \(самооценка\): 60%/);
   assert.equal((hub.match(/data-action="pd3-open"/g)||[]).length,6,'still six section buttons');
   const progress=pd3ProgressSection(d,data);assert.match(progress,/Пробные экзамены/);assert.match(progress,/data-action="open-pd3" data-value="mock"/);

@@ -1,4 +1,6 @@
-# Danskdag 1.9.3
+# Danskdag 1.9.4
+
+PD3 mock exam and dictation-error review cards: see `docs/release-1.9.4.md`.
 
 PD3 results integrated into progress, QA fixes: see `docs/release-1.9.3.md`.
 

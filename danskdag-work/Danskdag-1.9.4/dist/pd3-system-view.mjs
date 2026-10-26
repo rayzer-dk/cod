@@ -71,7 +71,7 @@ function mockAdviceView({d,data,now}){
 
 const percentText=value=>value===null||value===undefined?'—':`${value}%`;
 function mockLine(record){
-  return `<li><b>${dateText(record.at)}</b> · ${MODE_NAMES[record.mode]||h(record.mode)} · набор ${h(record.set.replace(/^set-/,''))}<span>Del 1: ${percentText(record.find)} · Del 2: ${percentText(record.text)} · письмо (самооценка): ${percentText(record.writing)} · устная часть (самооценка): ${percentText(record.oral)}</span></li>`;
+  return `<li><span class="pd3-mock-head"><b>${dateText(record.at)}</b> · ${MODE_NAMES[record.mode]||h(record.mode)} · набор ${h(record.set.replace(/^set-/,''))}</span><span class="pd3-mock-nums">Del 1: ${percentText(record.find)} · Del 2: ${percentText(record.text)} · письмо (самооценка): ${percentText(record.writing)} · устная часть (самооценка): ${percentText(record.oral)}</span></li>`;
 }
 /** The last five mock exams in the hub (date, mode, percents by skill); '' while there are none. */
 export function mockHistoryView({d}){

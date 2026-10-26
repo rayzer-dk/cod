@@ -158,6 +158,7 @@ export function createMockController(ctx){
       if(isFinished(mock))completeExam();
       else enterStage({announce:false});
     }else enterStage({fresh:false,announce:false});
+    ctx.saveRun();
     return message;
   }
 

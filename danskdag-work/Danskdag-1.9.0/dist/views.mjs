@@ -12,6 +12,7 @@ import {renderWordLab} from './wordlab-view.mjs';
 import {lessonGroups} from './lesson-navigation.mjs';
 import {renderPronunciation} from './pronunciation-view.mjs';
 import {renderReference} from './reference-view.mjs';
+import {renderLocalCopies} from './copies-view.mjs';
 
 export const modeNames={easy:'С вариантами',mixed:'Смешанный',expert:'Без подсказок'};
 export const count=(n,forms=['слово','слова','слов'])=>`${n} ${plural(n,forms)}`;

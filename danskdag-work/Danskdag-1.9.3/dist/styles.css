@@ -994,7 +994,8 @@ html[data-theme=dark] .answer-option.selected>.option-number{color:#192720}
   .sidebar{padding-left:2px;padding-right:2px}
   .sidebar nav{gap:0}
   .nav-item{font-size:12px;padding-left:0;padding-right:0}
-  .nav-item>span{white-space:nowrap;overflow-wrap:normal}
+  /* A long label (Повторення, Повтор) wraps inside its cell instead of running into the next one */
+  .nav-item>span{white-space:normal;overflow-wrap:anywhere;hyphens:auto;min-width:0}
   .settings-card{padding:22px}
   .settings-card>.mode-switch>button{font-size:max(12px,.7rem)}
   .word-card-bottom .remember-button{font-size:max(12px,.73rem)}
@@ -1128,7 +1129,9 @@ html[data-theme=dark] .answer-option.selected>.option-number{color:#192720}
 }
 
 .mobile-sections{display:none}
-@media(max-width:900px){.mobile-sections{display:flex;align-items:center;gap:6px;padding:0 14px 8px;border-bottom:1px solid var(--line);overflow:auto}.mobile-sections>button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;padding:6px 4px;border-radius:10px;font-size:max(12px,.65rem);color:var(--muted);flex:1;white-space:nowrap}.mobile-sections>button>.icon{width:17px;height:17px}.mobile-sections>button.active{background:var(--accent-soft);color:var(--accent-ink)}}
+@media(max-width:900px){.mobile-sections{display:flex;align-items:center;gap:6px;padding:0 14px 8px;border-bottom:1px solid var(--line);overflow:auto}.mobile-sections>button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;padding:6px 4px;border-radius:10px;font-size:max(12px,.65rem);color:var(--muted);flex:1 1 0;min-width:0;white-space:normal;overflow-wrap:anywhere;hyphens:auto;text-align:center;line-height:1.15}.mobile-sections>button>.icon{width:17px;height:17px;flex:none}.mobile-sections>button.active{background:var(--accent-soft);color:var(--accent-ink)}}
+/* Five section buttons on a narrow phone: tighter gaps and a slightly smaller label so words wrap at most once and never overlap */
+@media(max-width:400px){.mobile-sections{gap:3px;padding-left:8px;padding-right:8px}.mobile-sections>button{padding:6px 1px;font-size:max(11px,.58rem)}}
 
 .coverage-note>summary{cursor:pointer;padding:7px 0;min-height:36px;display:flex;align-items:center;color:var(--accent-ink)}
 .entry-class{font-size:.73rem;color:var(--muted);margin:3px 0 8px}
@@ -1196,4 +1199,9 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,#app:focus{outline:none}
   .metric{min-height:44px}
   .btn,.button-row>.btn,.dictionary-toolbar>.btn,.reference-pager .btn,select,input:not([type=checkbox]):not([type=radio]):not([type=file]),.bottom-strip>button{min-height:44px}
   .notice>button,.text-button{min-height:44px;padding-top:10px;padding-bottom:10px}
+  /* Word titles open the word card; the dictionary link is a plain text link: both get a 44px-high tap area without changing the text size */
+  .word-title{display:flex;align-items:center;min-height:44px}
+  .field-note>a{display:inline-flex;align-items:center;min-height:44px}
+  /* iOS Safari zooms the page when a field below 16px gets focus */
+  input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]),select,textarea{font-size:max(16px,1rem)!important}
 }

@@ -44,6 +44,7 @@
 .memory-result p{font-size:.9rem;margin:10px 0}
 .memory-result small{display:block;color:var(--muted)}
 .give-up{display:block;margin:18px 0 0;color:var(--muted);font-size:.83rem;text-decoration:underline;text-underline-offset:4px;padding:8px 0}
+@media(pointer:coarse){.give-up{display:flex;align-items:center;min-height:44px;padding:8px 0}}
 .own-phrase{margin-top:16px;padding-top:14px;border-top:1px solid currentColor;font-size:.9rem}
 @media(max-width:1000px){.memory-plan{grid-template-columns:minmax(0,1fr) 210px;padding:22px;gap:20px}.memory-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.memory-stat{padding:16px}}
 @media(max-width:600px){.memory-plan{grid-template-columns:1fr;padding:20px;gap:24px}.memory-plan-copy h2{font-size:1.4rem}.memory-batch{grid-template-columns:1fr 1fr}.memory-plan-actions{gap:16px}.memory-plan-actions .btn{width:100%;justify-content:center}.memory-stats{grid-template-columns:1fr}.memory-stat{grid-template-columns:42px auto minmax(0,1fr);gap:14px}.memory-stat>h3{grid-column:auto}.memory-method-grid,.memory-study-grid{grid-template-columns:1fr}.memory-method-card,.method-detail{padding:22px}.memory-study{margin-top:24px;padding:0 18px 40px}.memory-study-card{padding:20px}.memory-study>.btn{width:100%;justify-content:center}.memory-result{padding:18px}.memory-result p{line-height:1.8}}

@@ -7,7 +7,7 @@ test('release discovery bypasses offline caches and only reports a newer valid v
  const fetchRelease=async(url,options)=>{assert.equal(url,'/api/release');assert.equal(options.cache,'no-store');return new Response(JSON.stringify({version:'1.8.0'}),{headers:{'content-type':'application/json'}});};
  assert.equal(await updates.checkRelease('1.7.3',fetchRelease),'1.8.0');
  assert.equal(await updates.checkRelease('1.8.0',fetchRelease),null);
- assert.equal(await updates.checkRelease('1.9.2',fetchRelease),null);
+ assert.equal(await updates.checkRelease('1.9.3',fetchRelease),null);
  assert.equal(await updates.checkRelease('1.7.3',async()=>new Response('<html>Login</html>')),false);
  assert.equal(await updates.checkRelease('1.7.3',async()=>{throw Error('offline')}),false);
 });

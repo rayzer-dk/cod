@@ -1,4 +1,6 @@
-# Danskdag 1.9.2
+# Danskdag 1.9.3
+
+PD3 results integrated into progress, QA fixes: see `docs/release-1.9.3.md`.
 
 PD3 section: see `docs/release-1.9.2.md`.
 

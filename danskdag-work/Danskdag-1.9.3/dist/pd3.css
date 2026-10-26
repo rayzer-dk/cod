@@ -212,6 +212,7 @@ html[data-theme=dark]{
   .pd3-text{font-size:1.02rem}
   .pd3-player-main .btn{flex:1 1 auto;padding:8px 10px}
   .pd3-stop-label{display:none}
+  .pd3-player-main .btn{min-width:44px;min-height:44px}
   .pd3-card{padding:16px;gap:12px}
 }
 @media(pointer:coarse){

@@ -22,7 +22,7 @@ import vm from 'node:vm';
 const headersOf=response=>Object.fromEntries(response.headers);
 const hostedAssets=()=>{
  const {html,scriptHash}=createOfflineDocument(path.resolve('.'),{hosted:true});
- return {html,scriptHash,assets:{'/index.html':{type:'text/html; charset=utf-8',body:html,etag:'"h"',version:'1.9.2'},'/icon.svg':{type:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg"/>',etag:'"s"'},'/icon-192.png':{type:'image/png',body:'AAAA',binary:true,etag:'"p"'}}};
+ return {html,scriptHash,assets:{'/index.html':{type:'text/html; charset=utf-8',body:html,etag:'"h"',version:'1.9.3'},'/icon.svg':{type:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg"/>',etag:'"s"'},'/icon-192.png':{type:'image/png',body:'AAAA',binary:true,etag:'"p"'}}};
 };
 test('every response carries the protective headers, including errors and 304',async()=>{
  const {assets}=hostedAssets();

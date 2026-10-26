@@ -289,3 +289,16 @@ test('Monologue timer starts only once the recording started, and says so when i
  assert.deepEqual(b.log.toasts,['Запись не началась: таймер идёт без записи.']);
  click(b,'pd3-mono-stop');
 });
+
+test('L10: Enter in a dictation sentence field moves to the next field, but not while an IME is composing',()=>{
+ const app=boot();app.start();
+ const mk=()=>({focused:0,matches:selector=>selector==='input[data-pd3-field]',focus(){this.focused++;}});
+ const [a,b]=[mk(),mk()];
+ app.el.querySelectorAll=selector=>selector==='input[data-pd3-field]'?[a,b]:[];
+ const press=(target,extra={})=>{let prevented=false;const handled=app.page.keydown({key:'Enter',keyCode:13,target,defaultPrevented:false,preventDefault(){prevented=true;},...extra});return {handled,prevented};};
+ assert.deepEqual(press(a),{handled:true,prevented:true});assert.equal(b.focused,1);
+ assert.deepEqual(press(a,{isComposing:true}),{handled:false,prevented:false});
+ assert.deepEqual(press(a,{keyCode:229}),{handled:false,prevented:false});
+ assert.equal(b.focused,1,'composition Enter did not move the focus');
+ assert.equal(press(b).handled,false,'the last field has no next one');
+});

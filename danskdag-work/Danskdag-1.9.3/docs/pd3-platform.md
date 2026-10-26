@@ -16,3 +16,10 @@ Recorded audio (optional): a text may carry `audio:{src,marks:[{s,e},...]}` (sec
 Put the files in `dist/` (for example `dist/audio/<id>.mp3`); `tools/asset-types.mjs` gives `audio/mpeg`, `audio/ogg`, `audio/wav` and stores them as binary in the hosted worker.
 Limits: the standalone `Danskdag.html` does not embed audio files (`media-src blob:`), so there the reader always uses the device voice; the hosted service worker does not
 precache audio and the hosted worker does not answer HTTP range requests. A file that fails to load falls back to the device voice.
+
+## QA follow-up notes
+
+- Dictation comparison: invisible characters (ZWSP, soft hyphen, LRM/RLM, bidi controls) are removed before tokenising; the score is capped at 99% while anything is wrong; an input too large for the alignment table returns `tooLong` (the page asks to shorten it) instead of throwing. The field length is 1.5 times the reference.
+- Unfinished task: `danskdag.pd3.run.v1` (device-only, not in the shared progress, the PD3 copy or the cloud) keeps a dictation text, used listens, reading/listening answers and an exam (answers, task, absolute deadline) for 24 hours or until the task is checked, left or reopened; see `dist/pd3-run.mjs`.
+- Word counter of the writing meter (`countWords`): `hej,med,dig` (commas without spaces) counts as one word; this is left as is. The dictation comparison splits such text at the commas.
+- The monologue timer starts when the recording has started; without a microphone it starts anyway and says "таймер идёт без записи".

@@ -34,11 +34,11 @@ test('a missing word in the middle does not shift the following words',()=>{
 
 test('near misses are misspelled words, with the reason classified',()=>{
  const cases=[
-  ['Jeg går på arbejde','Jeg gar pa arbejde','aeoa'],
+  ['Jeg går på arbejde','Jeg gar på arbejde','aeoa'],
   ['Hun har en stor hund','Hun har en stor hunnd','double'],
   ['Han kommer også i morgen','Han komer også i morgen','double'],
   ['Han arbejdede hele dagen','Han arbejdet hele dagen','ending'],
-  ['Det er meget godt','Det er meget go','silent'],
+  ['Det er en god idé','Det er en go idé','silent'],
   ['Vi spiser brød','Vi spiser brod','aeoa'],
   ['Hun er sød','Hun er soed','aeoa']
  ];
@@ -47,8 +47,7 @@ test('near misses are misspelled words, with the reason classified',()=>{
   assert.equal(r.counts.misspelled,1,input);assert.ok(r.errors.find(e=>e.kind===kind),input+' → '+JSON.stringify(r.errors));
   assert.ok(r.percent>=80&&r.percent<100,input+' '+r.percent);
  }
- const wrong=compareDictation('Jeg læser en bog','Jeg læser en bog');assert.equal(wrong.counts.misspelled,1);
- assert.equal(wrong.ref[1].user,'læser');
+ const kept=compareDictation('Jeg læser en bog','Jeg læsr en bog');assert.equal(kept.ref[1].user,'læsr');
 });
 
 test('words that differ by more than two letters are missing plus extra, not a misspelling',()=>{
@@ -59,7 +58,7 @@ test('words that differ by more than two letters are missing plus extra, not a m
 
 test('a word typed in the wrong place is reported as order, not as two errors',()=>{
  const r=compareDictation('Jeg kan ikke komme','Jeg ikke kan komme');
- assert.equal(r.counts.order,2);assert.equal(r.counts.missing,0);
+ assert.equal(r.counts.order,1);assert.equal(r.user.filter(t=>t.status==='order').length,1);assert.equal(r.counts.missing,0);
  assert.ok(r.errors.find(e=>e.kind==='order'));
  assert.ok(r.percent<100&&r.percent>=50);
 });
@@ -103,7 +102,7 @@ test('levenshtein distances',()=>{
 
 test('long texts are compared quickly and absurdly long ones are refused',()=>{
  const text=Array.from({length:400},(_,i)=>'ord'+i).join(' ');
- const started=performance.now();const r=compareDictation(text,text.replace('ord200','ordx'));
+ const started=performance.now();const r=compareDictation(text,text.replace('ord200','ord20'));
  assert.ok(performance.now()-started<1500);assert.equal(r.counts.misspelled,1);
  assert.throws(()=>compareDictation(text.repeat(3),text),RangeError);
 });

@@ -55,7 +55,7 @@ const limitFor=word=>word.length<=3?1:2;
 function nearMiss(r,u){
   if(!r.word||!u.word)return false;
   const a=r.norm.toLowerCase(),b=u.norm.toLowerCase();
-  return levenshtein(a,b)<=limitFor(a);
+  return levenshtein(a,b)<=limitFor(a)||SKELETON(a)===SKELETON(b);
 }
 
 function align(ref,user){

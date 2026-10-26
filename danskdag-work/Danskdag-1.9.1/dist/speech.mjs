@@ -3,9 +3,22 @@ export function getDanishVoices(synthesis=globalThis.speechSynthesis) {
 }
 
 function selectedVoice(preferred,synthesis){const voices=getDanishVoices(synthesis);return voices.find(v=>v.voiceURI===preferred)||voices[0];}
-let current=null;
+let current=null,owner=null;
 
-export function isSpeechActive(){return current!==null;}
+export const pickDanishVoice=(preferred='',synthesis=globalThis.speechSynthesis)=>{try{return selectedVoice(preferred,synthesis)||null;}catch{return null;}};
+export function speechSupported(){return typeof globalThis.speechSynthesis?.getVoices==='function'&&typeof globalThis.speechSynthesis.speak==='function'&&typeof globalThis.SpeechSynthesisUtterance==='function';}
+
+export function isSpeechActive(){return current!==null||owner!==null;}
+
+/** A long-running player (the PD3 reader) claims the one audio output: any other speech or player is stopped, and a later speak() or claim stops this one. */
+export function claimSpeech(onPreempt=()=>{}){
+  const token={onPreempt};
+  const previous=owner;owner=null;
+  if(current)finish(current,'idle',true);
+  previous?.onPreempt();
+  owner=token;
+  return ()=>{if(owner===token)owner=null;};
+}
 
 function clearVoiceListener(request){
   if(request.voiceListener){
@@ -20,8 +33,28 @@ function finish(request,phase='idle',cancel=false){
   request.onState(phase);
 }
 export function stopSpeech(){
+  const player=owner;owner=null;
   if(current)finish(current,'idle',true);
   else globalThis.speechSynthesis?.cancel?.();
+  player?.onPreempt();
+}
+
+/** Resolves with a Danish voice as soon as the device reports one, or with null after `timeout` ms (voices often load late). */
+export function waitForDanishVoice(preferred='',{timeout=2000,synthesis=globalThis.speechSynthesis}={}){
+  return new Promise(resolve=>{
+    const found=()=>pickDanishVoice(preferred,synthesis);
+    const first=found();
+    if(first||typeof synthesis?.getVoices!=='function'){resolve(first);return;}
+    let done=false,timer=null,poll=null;
+    const finishWait=voice=>{
+      if(done)return;done=true;clearTimeout(timer);clearInterval(poll);
+      synthesis.removeEventListener?.('voiceschanged',check);resolve(voice);
+    };
+    const check=()=>{const voice=found();if(voice)finishWait(voice);};
+    synthesis.addEventListener?.('voiceschanged',check);
+    poll=setInterval(check,250);poll.unref?.();
+    timer=setTimeout(()=>finishWait(found()),timeout);timer.unref?.();
+  });
 }
 
 export function voiceStatus(preferred='') {

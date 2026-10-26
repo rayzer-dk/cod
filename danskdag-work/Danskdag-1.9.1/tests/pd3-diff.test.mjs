@@ -1,0 +1,109 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {compareDictation,tokenize,levenshtein,classifyMisspelling,annotate} from '../dist/pd3-diff.mjs';
+
+const statuses=tokens=>tokens.map(t=>t.status);
+const kinds=result=>Object.fromEntries(result.errors.map(e=>[e.kind,e.count]));
+
+test('an exact match is 100 percent with no errors, ignoring case and punctuation by default',()=>{
+ const reference='Jeg bor i København, og jeg elsker byen.';
+ for(const input of [reference,'jeg bor i københavn og jeg elsker byen','JEG BOR I KØBENHAVN, OG JEG ELSKER BYEN!!!'])
+  {const r=compareDictation(reference,input);assert.equal(r.percent,100,input);assert.equal(r.exact,true);assert.deepEqual(r.errors,[]);assert.equal(r.counts.total,8);}
+});
+
+test('empty input scores zero and marks every reference word as missing',()=>{
+ for(const input of ['','   ',' ,.! '])
+  {const r=compareDictation('Det regner i dag.',input);assert.equal(r.percent,0);assert.deepEqual(statuses(r.ref),['missing','missing','missing','missing']);assert.equal(r.user.length,0);assert.equal(kinds(r).missing,4);assert.equal(r.exact,false);}
+ assert.equal(compareDictation('','').percent,100);
+ assert.equal(compareDictation('','noget').percent,0);
+});
+
+test('extra words are marked in the typed text and cost points',()=>{
+ const r=compareDictation('Jeg bor i København','Jeg bor nu i København');
+ assert.deepEqual(statuses(r.user),['correct','correct','extra','correct','correct']);
+ assert.deepEqual(statuses(r.ref),['correct','correct','correct','correct']);
+ assert.equal(r.counts.extra,1);assert.equal(r.percent,88);assert.deepEqual(kinds(r),{extra:1});
+ const many=compareDictation('Hej','Hej hej hej hej hej');assert.equal(many.percent,0);
+});
+
+test('a missing word in the middle does not shift the following words',()=>{
+ const r=compareDictation('Vi ses i morgen klokken otte','Vi ses morgen klokken otte');
+ assert.deepEqual(statuses(r.ref),['correct','correct','missing','correct','correct','correct']);
+ assert.equal(r.percent,83);
+});
+
+test('near misses are misspelled words, with the reason classified',()=>{
+ const cases=[
+  ['Jeg går på arbejde','Jeg gar pa arbejde','aeoa'],
+  ['Hun har en stor hund','Hun har en stor hunnd','double'],
+  ['Han kommer også i morgen','Han komer også i morgen','double'],
+  ['Han arbejdede hele dagen','Han arbejdet hele dagen','ending'],
+  ['Det er meget godt','Det er meget go','silent'],
+  ['Vi spiser brød','Vi spiser brod','aeoa'],
+  ['Hun er sød','Hun er soed','aeoa']
+ ];
+ for(const [reference,input,kind] of cases){
+  const r=compareDictation(reference,input);
+  assert.equal(r.counts.misspelled,1,input);assert.ok(r.errors.find(e=>e.kind===kind),input+' → '+JSON.stringify(r.errors));
+  assert.ok(r.percent>=80&&r.percent<100,input+' '+r.percent);
+ }
+ const wrong=compareDictation('Jeg læser en bog','Jeg læser en bog');assert.equal(wrong.counts.misspelled,1);
+ assert.equal(wrong.ref[1].user,'læser');
+});
+
+test('words that differ by more than two letters are missing plus extra, not a misspelling',()=>{
+ const r=compareDictation('Jeg ser en bil','Jeg ser en hest');
+ assert.equal(r.counts.misspelled,0);assert.equal(r.ref[3].status,'missing');assert.equal(r.user[3].status,'extra');
+ const short=compareDictation('Jeg har en af','Jeg har en ud');assert.equal(short.counts.misspelled,0);
+});
+
+test('a word typed in the wrong place is reported as order, not as two errors',()=>{
+ const r=compareDictation('Jeg kan ikke komme','Jeg ikke kan komme');
+ assert.equal(r.counts.order,2);assert.equal(r.counts.missing,0);
+ assert.ok(r.errors.find(e=>e.kind==='order'));
+ assert.ok(r.percent<100&&r.percent>=50);
+});
+
+test('Danish letters are compared exactly, and æøå in the reference are not folded in the strict result',()=>{
+ const r=compareDictation('Jeg elsker smørrebrød','Jeg elsker smorrebrod');
+ assert.equal(r.counts.misspelled,1);assert.equal(r.ref[2].kind,'aeoa');
+ assert.equal(compareDictation('Åse bor på Ærø','åse bor på ærø').percent,100);
+ assert.equal(classifyMisspelling('lære','laere'),'aeoa');
+ assert.equal(classifyMisspelling('hvad','va'),'silent');
+});
+
+test('punctuation and case matter only in strict mode',()=>{
+ const reference='Hej, Anna! Hvordan har du det?';
+ assert.equal(compareDictation(reference,'hej anna hvordan har du det').percent,100);
+ const strict=compareDictation(reference,'hej anna hvordan har du det',{strict:true});
+ assert.ok(strict.percent<100);
+ assert.ok(strict.errors.find(e=>e.kind==='punctuation'));
+ assert.ok(strict.errors.find(e=>e.kind==='case'));
+ assert.equal(compareDictation(reference,reference,{strict:true}).percent,100);
+ assert.equal(compareDictation(reference,reference,{strict:true}).counts.total,tokenize(reference,{strict:true}).length);
+ assert.equal(tokenize(reference).length,6);assert.equal(tokenize(reference,{strict:true}).length,9);
+});
+
+test('hyphenated words, apostrophes and numbers stay single tokens',()=>{
+ assert.deepEqual(tokenize('Vi spiste by-en’s mad kl. 18').map(t=>t.text),['Vi','spiste','by-en’s','mad','kl','18']);
+ assert.equal(compareDictation("Det er Anna's bog","det er anna’s bog").percent,100);
+});
+
+test('annotate keeps separators and gives each token a status for display',()=>{
+ const reference='Jeg bor, ja.',r=compareDictation(reference,'Jeg boor');
+ const pieces=annotate(reference,r.ref);
+ assert.equal(pieces.map(p=>p.text).join(''),reference);
+ assert.deepEqual(pieces.filter(p=>p.status).map(p=>p.status),['correct','misspelled','missing']);
+ const typed=annotate('Jeg boor',r.user);assert.equal(typed.map(p=>p.text).join(''),'Jeg boor');assert.equal(typed.at(-1).hint,'bor');
+});
+
+test('levenshtein distances',()=>{
+ assert.equal(levenshtein('','abc'),3);assert.equal(levenshtein('hund','hunde'),1);assert.equal(levenshtein('ø','o'),1);assert.equal(levenshtein('same','same'),0);
+});
+
+test('long texts are compared quickly and absurdly long ones are refused',()=>{
+ const text=Array.from({length:400},(_,i)=>'ord'+i).join(' ');
+ const started=performance.now();const r=compareDictation(text,text.replace('ord200','ordx'));
+ assert.ok(performance.now()-started<1500);assert.equal(r.counts.misspelled,1);
+ assert.throws(()=>compareDictation(text.repeat(3),text),RangeError);
+});

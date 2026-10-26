@@ -319,7 +319,7 @@ export const oralInterview = [
    "Hvad kan du lide ved dit nabolag?",
    "Hvordan er kontakten til dine naboer?",
    "Hvad er bedst: at bo i en stor by eller i en lille by?",
-   "Hvilke problemer giver høje huslejer i de store byer for unge mennesker?",
+   "Hvilke problemer skaber høje huslejer for unge mennesker i de store byer?",
    "Hvordan skal byerne se ud om tyve år, hvis flere skal cykle?"
   ],
   followUps: [
@@ -419,7 +419,7 @@ export const oralInteraction = [
     ru: "Вы можете прийти сегодня в четырнадцать часов, или завтра до обеда вам удобнее?"
    },
    {da: "Så er det hos en anden læge end din egen. Er det i orden?", ru: "Тогда приём будет у другого врача, не у вашего. Вас это устраивает?"},
-   {da: "Godt, så skriver jeg dig op. Kan du sige dit fulde navn og dit telefonnummer?", ru: "Хорошо, тогда я вас запишу. Назовите свои полное имя и номер телефона."},
+   {da: "Godt, så skriver jeg dig op. Kan du sige dit fulde navn og dit telefonnummer?", ru: "Хорошо, тогда я вас запишу. Назовите ваше полное имя и номер телефона."},
    {da: "Er der andet, du gerne vil spørge om?", ru: "Хотите спросить что-нибудь ещё?"}
   ]
  },
@@ -602,7 +602,7 @@ export const oralDiscussion = [
   pro: [
    "Svømning kan redde liv, fordi mange børn leger ved vand.",
    "Det er en sund form for motion, som man kan bruge hele livet.",
-   "Alle børn får de samme muligheder, uanset hvad deres forældre kan.",
+   "Alle børn får de samme muligheder, uanset hvad deres forældre har råd til.",
    "Det giver børn selvtillid i og omkring vand."
   ],
   contra: [

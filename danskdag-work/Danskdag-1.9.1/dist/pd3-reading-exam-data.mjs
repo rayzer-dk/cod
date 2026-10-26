@@ -11,7 +11,7 @@ export const readingExamFind = [
     "paragraphs": [
      "Biblioteket i Bakkeby har fået nye åbningstider. Fra september er der åbent fra klokken ti til atten på hverdage, og om lørdagen kan man komme mellem ti og fjorten. Uden for åbningstiden kan medlemmer med et gyldigt lånerkort stadig komme ind i den selvbetjente del af biblioteket, hvor der er adgang til aviser, computere og stille arbejdspladser.",
      "Biblioteket låner ikke kun bøger ud. Man kan også låne værktøj som boremaskiner og hammere, og der er en lille samling af brætspil til hele familien. Gruppelokaler kan bookes på bibliotekets hjemmeside, og de fleste dage er der kaffe på kanden til de besøgende. Børnebiblioteket har et hjørne med puder og billedbøger, hvor de mindste kan sidde og kigge, mens de voksne læser avisen.",
-     "Biblioteket modtager gerne forslag til nye bøger. Man kan skrive sine ønsker i en formular ved udlånsdisken eller sende dem på mail til bibliotekarerne. Hvis en bog ikke findes på biblioteket, forsøger personalet at få den hjem fra et andet bibliotek, og så får man besked, når den er klar."
+     "Biblioteket modtager gerne forslag til nye bøger. Man kan skrive sine ønsker på en formular ved udlånsdisken eller sende dem på mail til bibliotekarerne. Hvis en bog ikke findes på biblioteket, forsøger personalet at få den hjem fra et andet bibliotek, og så får man besked, når den er klar."
     ]
    },
    {
@@ -20,7 +20,7 @@ export const readingExamFind = [
     "paragraphs": [
      "Svømmehallen holder lukket i hele juli på grund af en renovering af omklædningsrummene. I den periode kan man i stedet bruge friluftsbadet ved søen, som har åbent hver dag, når vejret er godt. Årskort, der er købt før sommeren, bliver forlænget med en måned, så ingen taber penge på lukningen.",
      "Efter ferien starter holdene til babysvømning igen. Små børn fra tre måneder kan være med sammen med en forælder, og vandet er varmere end i den store hal. Om morgenen mellem seks og otte er der banesvømning for de seje, og for seniorer er der vandgymnastik hver onsdag formiddag. Husk, at skabene i omklædningsrummet kun virker med en mønt, som man får tilbage, når man åbner skabet igen.",
-     "Børn under otte år må kun komme i svømmehallen sammen med en voksen, som selv er i vandet. Redderen sidder ved bassinkanten og holder øje med, at alle følger reglerne. Man skal vaske sig grundigt med sæbe, før man går i vandet, og det gælder både børn og voksne."
+     "Børn under otte år må kun komme i svømmehallen sammen med en voksen, som selv er i vandet. Livredderen sidder ved bassinkanten og holder øje med, at alle følger reglerne. Man skal vaske sig grundigt med sæbe, før man går i vandet, og det gælder både børn og voksne."
     ]
    },
    {
@@ -29,7 +29,7 @@ export const readingExamFind = [
     "paragraphs": [
      "Fra årsskiftet får alle husstande i kommunen en ekstra beholder til madaffald. Beholderen bliver tømt hver anden uge, mens restaffaldet hentes hver tredje uge. Kommunen sender en folder med en oversigt over, hvilke dage der er afhentning i den enkelte gade, så ingen behøver at gætte.",
      "Hvis man har store ting, som ikke kan være i en almindelig beholder, kan man bestille afhentning af storskrald ved at ringe til kommunen. Det er gratis at få hentet to ting om året, hvorefter man betaler et mindre beløb for hver ting. Genbrugspladsen på Industrivej har åbent alle dage undtagen mandag, og her kan man aflevere farligt affald, elektronik og haveaffald.",
-     "Grene fra haven må ikke komme i den almindelige beholder. De skal klippes i stykker på højst en meter, og løv kan samles i de brune papirsække, som kommunen uddeler i foråret. Fra november hentes de kun en gang om måneden, så det kan betale sig at planlægge oprydningen."
+     "Grene fra haven må ikke komme i den almindelige beholder. De skal klippes i stykker, der højst er en meter lange, og løv kan samles i de brune papirsække, som kommunen uddeler i foråret. Fra november hentes de kun en gang om måneden, så det kan betale sig at planlægge oprydningen."
     ]
    },
    {
@@ -65,7 +65,7 @@ export const readingExamFind = [
     "paragraphs": [
      "Fra mandag lukkes Strandvejen for biler på grund af arbejde med en ny cykelsti. Vejarbejdet forventes at vare i seks uger, og i den tid kører bus 14 en anden rute via Møllegade. Stoppestedet ved kirken flyttes til hjørnet af Bakkevej, så passagererne skal gå cirka to hundrede meter længere.",
      "Når cykelstien er færdig, bliver den to meter bred og adskilt fra vejen med en lav kant. Kommunen håber, at flere vil vælge cyklen til og fra arbejde, især fordi stien kommer til at forbinde stationen med erhvervsområdet. Cyklister opfordres til at bruge lygter, da belysningen først bliver sat op til sidst.",
-     "Cyklister, der tager turen langs fjorden, skal være opmærksomme på, at stien er smal flere steder. Kommunen vil lave små rasteområder med bænke og borde, så man kan hvile sig undervejs. Der opstilles også skilte, som viser afstanden til de næste byer."
+     "Cyklister, der tager turen langs fjorden, skal være opmærksomme på, at stien er smal flere steder. Kommunen vil lave små rastepladser med bænke og borde, så man kan hvile sig undervejs. Der opstilles også skilte, som viser afstanden til de næste byer."
     ]
    },
    {
@@ -91,7 +91,7 @@ export const readingExamFind = [
     "title": "Frivillige søges",
     "paragraphs": [
      "Foreningen Åbne Døre leder efter frivillige, som har lyst til at hjælpe børn med lektier to eftermiddage om ugen. Man skal ikke være lærer for at deltage, men man skal have tålmodighed og lyst til at lytte. Alle frivillige får en kort introduktion og en kopi af foreningens retningslinjer.",
-     "Foreningen søger også besøgsvenner, som vil besøge ældre, der føler sig ensomme. Besøgene aftales individuelt og varer typisk en times tid. Derudover mangler der chauffører til lørdagsture, hvor beboerne på plejehjemmet kører ud i naturen. Alle opgaver er ulønnede, men foreningen dækker udgifter til kørsel og forsikring.",
+     "Foreningen søger også besøgsvenner, som vil besøge ældre, der føler sig ensomme. Besøgene aftales individuelt og varer typisk en times tid. Derudover mangler der chauffører til lørdagsture, hvor beboerne på plejehjemmet bliver kørt ud i naturen. Alle opgaver er ulønnede, men foreningen dækker udgifter til kørsel og forsikring.",
      "Der er også brug for hjælp til foreningens årlige loppemarked, som afholdes i juni. Opgaverne omfatter at sætte borde op, sælge kage og rydde op bagefter. Frivillige kan vælge at deltage i en enkelt time eller hele dagen, alt efter hvad de har tid til."
     ]
    }
@@ -166,8 +166,8 @@ export const readingExamFind = [
     "title": "Genbrugsbutikken Anden Chance",
     "paragraphs": [
      "Genbrugsbutikken Anden Chance modtager gerne tøj, bøger, legetøj og køkkenting i god stand. Man kan aflevere varerne i åbningstiden tirsdag til fredag, og der er en kasse i gården til dem, der kommer senere. Butikken kan desværre ikke tage imod store møbler, fordi der ikke er plads til dem på lageret.",
-     "Overskuddet fra salget går til et lokalt feriefond for familier, der ikke har råd til at tage på ferie. Butikken drives af frivillige, og man kan være med, selvom man kun har tid en enkelt formiddag om måneden. Hver fredag er der halv pris på alt tøj med blå prismærker.",
-     "Prisen står på et lille skilt ved hver ting. Butikken har ikke betalingsterminal, så man skal betale med mobilen eller med kontanter. Kunderne bliver bedt om at tage en pose med hjemmefra, fordi butikken ikke længere sælger plasticposer."
+     "Overskuddet fra salget går til en lokal forening, som hjælper familier, der ikke har råd til at tage på ferie. Butikken drives af frivillige, og man kan være med, selvom man kun har tid en enkelt formiddag om måneden. Hver fredag er der halv pris på alt tøj med blå prismærker.",
+     "Prisen står på et lille skilt ved hver ting. Butikken har ingen betalingsterminal, så man skal betale med mobilen eller med kontanter. Kunderne bliver bedt om at tage en pose med hjemmefra, fordi butikken ikke længere sælger plasticposer."
     ]
    },
    {
@@ -219,7 +219,7 @@ export const readingExamFind = [
     "id": "s9",
     "title": "Efterårsferien i byen",
     "paragraphs": [
-     "I efterårsferien er der mange tilbud til børn i byen. Museet holder workshop i at lave lanterner af genbrugsmaterialer, og biblioteket arrangerer en spøgelseshistorie om aftenen for børn mellem seks og ti år. Begge dele foregår kun, hvis der er nok tilmeldte.",
+     "I efterårsferien er der mange tilbud til børn i byen. Museet holder workshop i at lave lanterner af genbrugsmaterialer, og biblioteket arrangerer en aften med spøgelseshistorier for børn mellem seks og ti år. Begge dele foregår kun, hvis der er nok tilmeldte.",
      "Svømmehallen har ekstra åbningstid, og idrætsforeningen tilbyder en gratis prøvetime i klatring. Der er et begrænset antal pladser til de fleste aktiviteter, så det kan betale sig at tilmelde sig tidligt. Programmet kan hentes på kommunens hjemmeside eller i borgerservice. I weekenden holdes der cykeltur til skoven, hvor man laver bål og griller pølser på pinde.",
      "Til alle arrangementerne gælder det, at børn under otte år skal have en voksen med. Det er vigtigt, at de voksne tager aktivt del, og at de hjælper børnene, hvis de bliver bange. Kommunen opfordrer familier til at tage madpakke med, fordi caféen i museet har begrænsede åbningstider i ferien."
     ]
@@ -229,7 +229,7 @@ export const readingExamFind = [
     "title": "Borgerservice",
     "paragraphs": [
      "Borgerservice har åbent mandag til fredag fra ni til fjorten, og torsdag også om eftermiddagen til klokken atten. Mange opgaver kræver tidsbestilling, for eksempel at få nyt pas eller kørekort, men enkle spørgsmål kan besvares uden aftale. Husk at medbringe gyldigt id og eventuelle papirer, som sagen kræver.",
-     "Til dem, der ikke er vant til digitale løsninger, tilbyder borgerservice en hjælpedesk, hvor en medarbejder viser, hvordan man udfylder blanketter på nettet. Her kan man også få hjælp til at logge på sin digitale postkasse. Der er en computer, som borgerne må bruge uden at betale, men højst tyve minutter ad gangen, hvis der er andre, der venter.",
+     "Til dem, der ikke er vant til digitale løsninger, tilbyder borgerservice en skranke, hvor en medarbejder viser, hvordan man udfylder blanketter på nettet. Her kan man også få hjælp til at logge på sin digitale postkasse. Der er en computer, som borgerne må bruge uden at betale, men højst tyve minutter ad gangen, hvis der er andre, der venter.",
      "Borgerservice modtager også anmeldelser af flytning. Medarbejderne kan hjælpe med at udfylde oplysningerne, men afgørelser i andre sager træffes af en sagsbehandler på et andet kontor. Svaret sendes til borgerens digitale postkasse, og i mellemtiden kan man følge sagen på nettet."
     ]
    }
@@ -239,8 +239,8 @@ export const readingExamFind = [
    {"id":"find-2-q2","q":"Hvor kan man læse, at man ikke længere kan købe billet med kontanter?","section":"s1","evidence":"ikke længere betale kontant hos chaufføren","why":"В разделе о местных автобусах: платить наличными у водителя больше нельзя."},
    {"id":"find-2-q3","q":"Hvor står der, at man kan øve en færdighed på en dukke?","section":"s2","evidence":"Alle deltagere får lov til at øve sig på en dukke","why":"В разделе о курсе первой помощи: все участники могут потренироваться на манекене."},
    {"id":"find-2-q4","q":"Hvor kan man læse om en tilmeldingsfrist, der ligger en uge før starten?","section":"s2","evidence":"senest en uge før kurset starter","why":"В разделе о курсе первой помощи: записаться нужно не позднее чем за неделю до начала курса."},
-   {"id":"find-2-q5","q":"Hvor står der, at man ikke kan aflevere store ting?","section":"s3","evidence":"ikke tage imod store møbler","why":"В разделе о комиссионном магазине: большую мебель магазин принять не может, потому что нет места на складе."},
-   {"id":"find-2-q6","q":"Hvor kan man læse, hvad overskuddet fra salget bruges til?","section":"s3","evidence":"går til et lokalt feriefond for familier","why":"В разделе о комиссионном магазине: прибыль идёт в местный фонд отдыха для семей."},
+   {"id":"find-2-q5","q":"Hvor står der, at man ikke kan aflevere store ting?","section":"s3","evidence":"ikke tage imod store møbler","why":"В разделе о магазине подержанных вещей: большую мебель магазин принять не может, потому что нет места на складе."},
+   {"id":"find-2-q6","q":"Hvor kan man læse, hvad overskuddet fra salget bruges til?","section":"s3","evidence":"går til en lokal forening, som hjælper familier","why":"В разделе о магазине подержанных вещей: прибыль идёт местному объединению, которое помогает семьям, не имеющим возможности поехать в отпуск."},
    {"id":"find-2-q7","q":"Hvor kan man læse, at man kan få gratis mad ved at hjælpe til?","section":"s4","evidence":"dem, der gør det, spiser gratis","why":"В разделе об общем ужине: те, кто помогает мыть посуду, едят бесплатно."},
    {
     "id": "find-2-q8",
@@ -281,7 +281,7 @@ export const readingExamText = [
    "paragraphs": [
     "For nogle år siden ville de fleste have set det som et stort privilegium at kunne arbejde hjemmefra. I dag er det for mange blevet en del af hverdagen. Mange virksomheder har indført aftaler om, hvor mange dage om ugen de ansatte må arbejde derhjemme, og nogle har helt opgivet at give alle et fast skrivebord.",
     "Camilla Roed, som er personalechef i en mellemstor rådgivningsvirksomhed, fortæller, at ordningen har givet virksomheden flere fordele. »Medarbejderne bruger mindre tid på at pendle, og mange siger, at de kan koncentrere sig bedre, når de ikke bliver afbrudt hele tiden,« siger hun. Hun tilføjer, at virksomheden også har kunnet ansætte folk, der bor langt fra byen, fordi de ikke behøver at flytte for at få jobbet.",
-    "Men hjemmearbejde har også sine skyggesider. Flere medarbejdere oplever, at grænsen mellem arbejde og fritid bliver utydelig. Når computeren står på spisebordet, er det fristende at svare på en mail om aftenen, og nogle har svært ved at holde fri. Andre savner de små samtaler ved kaffemaskinen, som ofte giver idéer og gør arbejdet mere underholdende.",
+    "Men hjemmearbejde har også sine skyggesider. Flere medarbejdere oplever, at grænsen mellem arbejde og fritid bliver utydelig. Når computeren står på spisebordet, er det fristende at svare på en mail om aftenen, og nogle har svært ved at holde fri. Andre savner de små samtaler ved kaffemaskinen, som ofte giver idéer og gør arbejdet sjovere.",
     "Sociolog Jens Brandt, som har undersøgt arbejdslivet i flere virksomheder, mener, at nøglen er tillid. »Hvis lederne ikke tør give slip på kontrollen, bliver ordningen en belastning for alle,« siger han. Han påpeger, at det især er nyansatte, der kan have brug for at møde kolleger ansigt til ansigt, fordi de skal lære virksomhedens kultur at kende.",
     "Rådgivningsvirksomheden har derfor lavet en aftale, hvor alle møder ind på kontoret to faste dage om ugen. De øvrige dage kan man selv vælge. På kontordagene lægges møder og fælles aktiviteter, så man undgår, at folk sidder alene foran skærmen. Til gengæld er der indført en regel om, at man ikke forventes at svare på mails efter klokken seksten.",
     "Mette, der er konsulent, er tilfreds med ordningen, men hun fortæller, at det tog tid at finde en rytme. De første uger arbejdede hun længere, end hun skulle, fordi hun følte, at hun skulle bevise, at hun var effektiv. Nu har hun en fast rutine: Hun går en tur om morgenen, som erstatter turen til kontoret, og hun slukker computeren, når dagen er slut.",
@@ -411,7 +411,7 @@ export const readingExamText = [
     "Men livet på landet kræver også tilvænning. Der er langt til indkøb, og bussen kører kun få gange om dagen, så en bil er næsten en nødvendighed. Om vinteren kan vejene være glatte, og det kan tage lang tid at få en håndværker, fordi mange har travlt. Jonas siger, at han har lært at planlægge sine indkøb bedre, og at han ikke længere løber ud efter mælk i sidste øjeblik.",
     "Det største plus er ifølge Sara roen. Hun oplever, at hun sover bedre, og at børnene kan lege udenfor hele dagen, uden at hun behøver at bekymre sig. De har også fået en lille køkkenhave, hvor de dyrker kartofler og krydderurter. Det er langt fra selvforsyning, men det giver en glæde, som de ikke kendte fra storbyen. Om aftenen sidder de ofte på terrassen og lytter til fuglene.",
     "Samtidig erkender de, at de har haft held. De har råd til at leve på en fuld indkomst og en lidt mindre, og de har en nabo, der gerne hjælper. Andre, som har prøvet noget lignende, har oplevet ensomhed eller dårlig økonomi. Det kræver derfor, at man kender sine grænser og er realistisk i sine forventninger til livet.",
-    "Spørger man dem, om de vil anbefale andre at gøre det samme, tøver de ikke med at svare, at det afhænger af, hvad man leder efter. Hvis man drømmer om ro og et fællesskab, kan landlivet være svaret. Men hvis man elsker byens tempo, kan det blive en skuffelse. Selv ville de ikke bytte tilbage."
+    "Spørger man dem, om de vil anbefale andre at gøre det samme, tøver de ikke med at svare, at det afhænger af, hvad man leder efter. Hvis man drømmer om ro og et fællesskab, kan landlivet være svaret. Men hvis man elsker byens tempo, kan det blive en skuffelse. Selv vil de ikke bytte tilbage."
    ],
    "questions": [
     {
@@ -506,7 +506,7 @@ export const readingExamText = [
     {"gap":1,"options":["en","et","de","den"],"answer":0},
     " af forklaringerne er ofte skærmene. Når vi ligger i sengen og kigger på telefonen, får hjernen signaler om, at det stadig er dag, og det kan gøre det svært at falde i søvn. Problemet er blevet større, efterhånden som skærmene er blevet en fast del af hverdagen. Søvnforskere ",
     {"gap":2,"options":["anbefaler","anbefaling","anbefalet","anbefale"],"answer":0},
-    " derfor, at man slukker skærmene mindst en time, før man går i seng. Mange vender sig imod rådet, ",
+    " derfor, at man slukker skærmene mindst en time, før man går i seng. Mange har svært ved at følge rådet, ",
     {"gap":3,"options":["fordi","så","selvom","hvorfor"],"answer":0},
     " de bruger telefonen til at slappe af. Det er forståeligt, men afslapning foran en skærm er sjældent ",
     {"gap":4,"options":["så god","så godt","mere god","bedst"],"answer":0},
@@ -516,7 +516,7 @@ export const readingExamText = [
     {"gap":6,"options":["til","for","med","ved"],"answer":0},
     " alt muligt, begynder kroppen at forbinde den med aktivitet i stedet for hvile. Nogle har gavn ",
     {"gap":7,"options":["af","for","ved","til"],"answer":0},
-    " at tage telefonen ud af soveværelset helt og i stedet bruge et almindeligt vækkeur. Det kan virke som en lille ændring, men for mange gør det en stor forskel. Til sidst skal man huske, at alle har forskellige behov. Det er også værd at vide, at søvnen ændrer sig gennem livet. Børn og unge har brug for mere søvn, mens ældre ofte sover lettere og vågner oftere. Nogle har brug for otte timers søvn, mens andre klarer sig fint med seks. Hvis man vågner udhvilet og har energi i løbet af dagen, er der ingen grund til at bekymre sig. Men hvis man hele tiden er træt, ",
+    " at tage telefonen ud af soveværelset helt og i stedet bruge et almindeligt vækkeur. Det kan virke som en lille ændring, men for mange gør det en stor forskel. Man skal desuden huske, at alle har forskellige behov. Det er også værd at vide, at søvnen ændrer sig gennem livet. Børn og unge har brug for mere søvn, mens ældre ofte sover lettere og vågner oftere. Nogle har brug for otte timers søvn, mens andre klarer sig fint med seks. Hvis man vågner udhvilet og har energi i løbet af dagen, er der ingen grund til at bekymre sig. Men hvis man hele tiden er træt, ",
     {"gap":8,"options":["kan det","det kan","det må","kunne det"],"answer":0},
     " være en god idé at tale med lægen."
    ]

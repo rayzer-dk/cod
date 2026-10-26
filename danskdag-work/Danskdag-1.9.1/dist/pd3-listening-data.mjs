@@ -84,7 +84,7 @@ export const listening = [
    {da: "Vi gentager: Toget mod Odense afgår fra spor fire.", ru: "Повторяем: поезд на Оденсе отправляется с пути четыре."},
    {da: "Passagerer til Korsør skal skifte tog i Roskilde.", ru: "Пассажирам до Корсёра нужно пересесть на другой поезд в Роскилле."},
    {da: "Elevatoren til spor fire er ude af drift, så brug i stedet trappen ved udgangen.", ru: "Лифт к пути четыре не работает, поэтому пользуйтесь лестницей у выхода."},
-   {da: "Du kan købe varm kaffe og kage i kiosken ved hovedindgangen.", ru: "Горячий кофе и выпечку можно купить в киоске у главного входа."},
+   {da: "Man kan købe varm kaffe og kage i kiosken ved hovedindgangen.", ru: "Горячий кофе и выпечку можно купить в киоске у главного входа."},
    {
     da: "Passagerer, der skal videre med bus, finder busserne foran hovedindgangen.",
     ru: "Пассажиры, которым нужно ехать дальше на автобусе, найдут автобусы перед главным входом."
@@ -377,7 +377,7 @@ export const listening = [
    {da: "Her får du en kort vejledning i, hvordan du bruger maskinerne.", ru: "Здесь вы получите краткую инструкцию о том, как пользоваться машинами."},
    {da: "Først skal du booke en tid på tavlen ved døren.", ru: "Сначала нужно записаться на время на доске у двери."},
    {da: "Du skriver dit navn og dit lejlighedsnummer ud for den tid, du vil bruge.", ru: "Вы пишете своё имя и номер квартиры напротив времени, которое хотите занять."},
-   {da: "Hver beboer må kun booke to tider om ugen.", ru: "Каждый жилец может записаться только на два времени в неделю."},
+   {da: "Hver beboer må kun booke to tider om ugen.", ru: "Каждый жилец может записаться на стирку только два раза в неделю."},
    {
     da: "Når du kommer, skal du sortere tøjet, så hvidt og farvet tøj ikke bliver vasket sammen.",
     ru: "Придя, рассортируйте бельё так, чтобы белое и цветное не стирались вместе."
@@ -475,7 +475,7 @@ export const listening = [
     ru: "Ты очень выручишь меня, если сможешь, а я с удовольствием сделаю то же самое для тебя в другой раз."
    },
    {da: "Send mig bare en mail, så jeg ved, at du har fået beskeden.", ru: "Просто отправь мне письмо по почте, чтобы я знал, что ты получила сообщение."},
-   {da: "Jeg tager nok først telefonen igen efter middag.", ru: "Скорее всего, я снова возьму трубку только после обеда."},
+   {da: "Jeg tager nok først telefonen igen efter frokost.", ru: "Скорее всего, я снова возьму трубку только после обеда."},
    {da: "Tusind tak, og vi ses i overmorgen.", ru: "Большое спасибо, увидимся послезавтра."}
   ],
   questions: [

@@ -178,7 +178,7 @@ export const readingPractice = [
    {"da":"Til sidst ser de en annonce for en treværelses lejlighed tæt på stationen.","ru":"Наконец они видят объявление о трёхкомнатной квартире рядом с вокзалом."},
    {"da":"De skriver til udlejeren med det samme og får lov til at komme og se den.","ru":"Они сразу пишут арендодателю и получают разрешение прийти и посмотреть квартиру."},
    {"da":"Under fremvisningen stiller Oleksandr mange spørgsmål, for han vil gerne vide, hvad der er inkluderet i huslejen.","ru":"Во время показа Александр задаёт много вопросов, ведь он хочет знать, что входит в арендную плату."},
-   {"da":"Udlejeren forklarer, at vand og varme betales hver måned sammen med huslejen, mens man selv skal tegne en aftale om strøm.","ru":"Арендодатель объясняет, что вода и отопление оплачиваются ежемесячно вместе с арендной платой, а договор на электричество нужно заключить самим."},
+   {"da":"Udlejeren forklarer, at vand og varme betales hver måned sammen med huslejen, mens man selv skal indgå en aftale om strøm.","ru":"Арендодатель объясняет, что вода и отопление оплачиваются ежемесячно вместе с арендной платой, а договор на электричество нужно заключить самим."},
    {"da":"Lejligheden har et nyt badeværelse, men køkkenet er gammelt.","ru":"В квартире новая ванная комната, но кухня старая."},
    {"da":"Lena lægger mærke til, at der er et fælles vaskeri i kælderen, som beboerne kan bruge efter en fast plan.","ru":"Лена замечает, что в подвале есть общая прачечная, которой жильцы могут пользоваться по постоянному расписанию."},
    {"da":"Det synes hun er praktisk, men Oleksandr er mere bekymret for støjen fra naboerne.","ru":"Ей это кажется удобным, но Александр больше беспокоится о шуме от соседей."},
@@ -220,8 +220,8 @@ export const readingPractice = [
     "answer": 0,
     "why": "В первом абзаце: «enten for dyre eller for langt væk fra Lenas arbejde». Вокзал, наоборот, описан как плюс."
    },
-   {"q":"Hvad skal Oleksandr og Lena selv ordne, ifølge udlejeren?","options":["En aftale om varme.","En aftale om vand.","En aftale om strøm."],"answer":2,"why":"Во втором абзаце: вода и отопление платятся вместе с арендой, «mens man selv skal tegne en aftale om strøm»."},
-   {"q":"Hvad er Oleksandr mest bekymret for ved lejligheden?","options":["Støjen fra naboerne.","Det gamle køkken.","Det fælles vaskeri."],"answer":0,"why":"Во втором абзаце: «Oleksandr er mere bekymret for lyden fra naboerne». Прачечную одобряет Лена, а про кухню просто сказано, что она старая."},
+   {"q":"Hvad skal Oleksandr og Lena selv ordne, ifølge udlejeren?","options":["En aftale om varme.","En aftale om vand.","En aftale om strøm."],"answer":2,"why":"Во втором абзаце: вода и отопление платятся вместе с арендой, «mens man selv skal indgå en aftale om strøm»."},
+   {"q":"Hvad er Oleksandr mest bekymret for ved lejligheden?","options":["Støjen fra naboerne.","Det gamle køkken.","Det fælles vaskeri."],"answer":0,"why":"Во втором абзаце: «Oleksandr er mere bekymret for støjen fra naboerne». Прачечную одобряет Лена, а про кухню просто сказано, что она старая."},
    {
     "q": "Hvad sker der med depositummet, mens parret bor i lejligheden?",
     "options": ["Udlejeren bruger det til at betale for nye møbler.","Parret bruger det som en del af huslejen.","Udlejeren beholder pengene."],
@@ -308,7 +308,7 @@ export const readingPractice = [
     "q": "Hvad kan Karolina gøre, hvis hun kommer for sent på grund af toget?",
     "options": ["Hun kan skrive til sin chef.","Hun kan blive hjemme uden at sige noget.","Hun kan bede om en ny billet."],
     "answer": 0,
-    "why": "В третьем абзаце: «hun kan skrive til sin chef». Хождение пешком и новый билет в тексте не упомянуты."
+    "why": "В третьем абзаце: «hun kan skrive til sin chef». Молчаливый прогул и новый билет в тексте не упомянуты."
    },
    {
     "q": "Hvad har Karolina gjort for at kunne cykle sikkert om vinteren?",

@@ -68,9 +68,9 @@ export function restoreFocus(root,saved) {
 }
 
 /** Moves keyboard and screen reader position to the start of new content (a page change). */
-export function focusPageStart(content) {
+export function focusPageStart(content,headingSelector='h1') {
   if(!content)return null;
-  const target=content.querySelector('h1') || content;
+  const target=content.querySelector(headingSelector) || content;
   if(!target.hasAttribute('tabindex'))target.setAttribute('tabindex','-1');
   target.focus({preventScroll:true});
   return target;

@@ -24,3 +24,18 @@ test('sentence tiles have separate audio controls without nesting buttons',()=>{
  assert.match(html,/data-action="speak-text"[^>]*data-text="arbejder\."/);
  assert.doesNotMatch(html,/<button[^>]*data-action="add-token"[^>]*>(?:(?!<\/button>)[\s\S])*<button/);
 });
+test('a typed Danish noun or verb states the expected form up front',()=>{
+ const word={id:'noun-hint',da:'et køleskab',ru:'холодильник'};
+ const typed={itemId:word.id,kind:'type',prompt:'холодильник',promptLang:'ru',answerLang:'da',options:[],answers:['et køleskab'],bank:[],reverse:true};
+ const view=hint=>exerciseView({...session,mode:'expert',tasks:[{...typed,...(hint?{hint}:{})}]},{[word.id]:word},createState());
+ assert.match(view('article'),/form-request[^>]*>[\s\S]*en\/et/);
+ assert.match(view('infinitive'),/form-request[^>]*>[\s\S]*at/);
+ assert.doesNotMatch(view(),/en\/et/);
+});
+test('self-check is offered after a wrong built sentence but not after giving up or for choices',()=>{
+ const build={...task,kind:'build',bank:['Jeg','arbejder'],answers:['Jeg arbejder.'],options:[]};
+ const wrong={...session,tasks:[build],words:[0,1],answer:'arbejder Jeg',submitted:true,feedback:false};
+ assert.match(exerciseView(wrong,{[item.id]:item},createState()),/data-action="self-check"/);
+ assert.doesNotMatch(exerciseView({...wrong,answer:''},{[item.id]:item},createState()),/data-action="self-check"/);
+ assert.doesNotMatch(exerciseView({...wrong,tasks:[task]},{[item.id]:item},createState()),/data-action="self-check"/);
+});

@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {Script} from 'node:vm';
 import {localizeSource,loadTranslations,languageBootstrap} from './localize-source.mjs';
@@ -55,8 +56,11 @@ export function createOfflineDocument(projectDirectory,{hosted=false}={}){
  const bundle=bundleModules(dist,'app.mjs',{transform:source=>localizeSource(source,translate),preamble:languageBootstrap}),css=['styles.css','wordlab.css','memory.css','path.css','basics.css'].map(file=>fs.readFileSync(path.join(dist,file),'utf8')).join('\n');
  const script=`globalThis.DANSKDAG_ASSETS=${JSON.stringify(assets)};\n${bundle.code}`.replace(/<\/script/gi,'<\\/script');
  const html=`<!doctype html>\n<html lang="uk" data-offline="true">\n<head>\n<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'">\n<meta name="theme-color" content="#192720"><meta name="application-name" content="Danskdag"><meta name="danskdag-version" content="${version}">\n<title>Danskdag ${version} — датский без интернета</title>\n<link rel="icon" href="${assets['/icon.svg']}" type="image/svg+xml">\n<style>${css}</style>\n</head><body><div id="app"></div><div id="speech-status" class="speech-status" role="status" aria-live="polite"></div><div id="toast" role="status" aria-live="polite"></div><noscript>Для работы уроков включи JavaScript в браузере.</noscript>\n<script>${script}</script>\n</body></html>\n`;
- const document=hosted?html.replace('data-offline="true"','data-offline="false"').replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n/,'').replace(`<title>Danskdag ${version} — датский без интернета</title>`,`<title>Danskdag — датский каждый день</title><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png">`):html;
- return {html:document,modules:bundle.modules,images};
+ // The hosted page has one inline script; the worker sends a Content-Security-Policy header that allows exactly that script.
+ // The hash goes into a meta tag outside the script so that the worker can read it without recomputing it.
+ const scriptHash='sha256-'+createHash('sha256').update(script).digest('base64');
+ const document=hosted?html.replace('data-offline="true"','data-offline="false"').replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n/,`<meta name="danskdag-script-sha256" content="${scriptHash}">\n`).replace(`<title>Danskdag ${version} — датский без интернета</title>`,`<title>Danskdag — датский каждый день</title><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png">`):html;
+ return {html:document,modules:bundle.modules,images,scriptHash};
 }
 
 if(process.argv[1]&&fileURLToPath(import.meta.url)===path.resolve(process.argv[1])){

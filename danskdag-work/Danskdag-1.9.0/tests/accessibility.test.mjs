@@ -74,8 +74,8 @@ test('text fields keep their caret across a redraw',()=>{
 
 test('a page change moves focus to the page heading, or to the content area',()=>{
   const heading=fake('h1',{},{hasAttribute:()=>false,setAttribute(name,value){this[name]=value;}});
-  const content=fake('main',{},{querySelector:sel=>sel==='h1'?heading:null,hasAttribute:()=>true});
-  assert.equal(focusPageStart(content),heading);assert.equal(heading.tabindex,'-1');assert.equal(heading.focused,true);
+  const content=fake('main',{},{querySelector:sel=>sel==='h1'||sel==='.x h1'?heading:null,hasAttribute:()=>true});
+  assert.equal(focusPageStart(content),heading);assert.equal(focusPageStart(content,'.x h1'),heading);assert.equal(focusPageStart(content,'h5'),content);assert.equal(heading.tabindex,'-1');assert.equal(heading.focused,true);
   const bare=fake('main',{},{querySelector:()=>null,hasAttribute:()=>true});
   assert.equal(focusPageStart(bare),bare);assert.equal(bare.focused,true);
   assert.equal(focusPageStart(null),null);

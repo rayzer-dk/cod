@@ -171,3 +171,100 @@ test('a session already credited to progress is not offered again after reload',
  assert.equal(L.restoreSession(finished,catalog,[finished.id]),null);
  assert.ok(L.restoreSession(session,catalog,[finished.id+'-other']));
 });
+
+// ---- build: word order, alternatives and self-check ----
+const orderItem={id:'order-1',da:'Jeg drikker kaffe om morgenen.',ru:'Я пью кофе по утрам.'};
+const orderPool=[orderItem,...pool.slice(1,4)];
+const buildAt1=(item)=>{ // mixed mode gives "build" for index 1
+ const filler={id:'filler',da:'Jeg lærer dansk.',ru:'Я учу датский.'};
+ return L.createTasks([filler,item],[filler,item,...pool],'mixed')[1];
+};
+test('a sentence with a movable time or place adverbial is not offered as build until the second order is listed',()=>{
+ assert.equal(L.hasMovableAdverbial('Jeg drikker kaffe om morgenen.'),true);
+ assert.equal(L.hasMovableAdverbial('Om morgenen drikker jeg kaffe.'),true);
+ assert.equal(L.hasMovableAdverbial('Jeg bor i Danmark.'),true);
+ assert.equal(L.hasMovableAdverbial('Min bror har en grøn bil.'),false);
+ assert.equal(L.hasMovableAdverbial('Hvor bor du i Danmark?'),false);
+ assert.equal(buildAt1(orderItem).kind,'choice');
+ const covered={...orderItem,daAnswers:['Jeg drikker kaffe om morgenen.','Om morgenen drikker jeg kaffe.']};
+ assert.equal(L.hasOrderVariant(covered),true);
+ const task=buildAt1(covered);
+ assert.equal(task.kind,'build');
+ // the bank is made from the first sentence; every listed order is accepted, nothing else is
+ assert.equal(L.checkTask(task,'Jeg drikker kaffe om morgenen'),true);
+ assert.equal(L.checkTask(task,'Om morgenen drikker jeg kaffe'),true);
+ assert.equal(L.checkTask(task,'om morgenen jeg drikker kaffe'),false);
+ // a listed second answer that only changes words does not cover a different word order
+ assert.equal(L.hasOrderVariant({...orderItem,daAnswers:[orderItem.da,'Jeg tager kaffe om morgenen.']}),false);
+});
+test('an unsafe build slot in adaptive practice is labelled and recorded as recognition',()=>{
+ const reviews={'order-1':{box:0,due:0,seen:1,recognition:1,recall:0,lastGrade:'recognition'}};
+ const task=L.createTasks([{...orderItem,da:'Jeg drikker kaffe om morgenen i dag igen.'}],orderPool,'auto',{...reviews})[0];
+ assert.equal(task.kind,'choice');assert.equal(task.stage,'recognition');assert.ok(task.options.length>=2);
+});
+test('self-check is available for build, grants no verified success and needs an actual answer',()=>{
+ const item={...orderItem,daAnswers:[orderItem.da]};
+ let s=L.makeSession([item],[item,...pool],{mode:'mixed'});
+ // force the build kind to exercise the session logic itself
+ s.tasks[0]={...s.tasks[0],kind:'build',reverse:true,options:[],answers:[item.da],answerLang:'da',promptLang:'ru',prompt:item.ru,bank:['Jeg','drikker','kaffe','om','morgenen']};
+ const wrong=L.answerSession(s,'Om morgenen drikker jeg kaffe');
+ assert.equal(wrong.feedback,false);assert.equal(wrong.correct,0);assert.deepEqual(wrong.missed,['order-1']);
+ const checked=L.selfCheckSession(wrong);
+ assert.equal(checked.selfChecked,true);assert.equal(checked.correct,0);assert.equal(checked.helped,true);
+ assert.deepEqual(checked.missed,[]);
+ assert.deepEqual({correct:checked.outcomes.at(-1).correct,helped:checked.outcomes.at(-1).helped,selfChecked:checked.outcomes.at(-1).selfChecked,kind:checked.outcomes.at(-1).kind},{correct:true,helped:true,selfChecked:true,kind:'recognition'});
+ const gaveUp=L.answerSession({...s,helped:true},'');
+ assert.deepEqual(L.selfCheckSession(gaveUp),gaveUp);
+});
+
+// ---- typed ru->da answers: article, "at" ----
+const entry=(id,da,ru,extra={})=>({id,kind:'word',verified:true,da,ru,...extra});
+test('typed noun answers require the article whichever duplicate entry is asked, and a verb accepts "at" either way',()=>{
+ const dict=[entry('rain-a','regn','дождь'),entry('rain-b','en regn','дождь'),entry('tend-a','tænde','включать'),entry('tend-b','at tænde','включать; зажигать'),entry('plain','sandsynlig','вероятный'),...pool];
+ const task=id=>L.createTasks([dict.find(p=>p.id===id)],dict,'expert')[0];
+ for(const id of ['rain-a','rain-b']){
+  const t=task(id);
+  assert.equal(t.kind,'type');assert.deepEqual(t.answers,['en regn']);assert.equal(t.hint,'article');
+  assert.ok(L.checkTask(t,'en regn'));assert.ok(!L.checkTask(t,'regn'));
+ }
+ for(const id of ['tend-a','tend-b']){
+  const t=task(id);
+  assert.equal(t.hint,'infinitive');assert.ok(L.checkTask(t,'tænde'));assert.ok(L.checkTask(t,'at tænde'));
+ }
+ const plain=task('plain');assert.equal(plain.hint,undefined);assert.deepEqual(plain.answers,['sandsynlig']);
+ // the hint is persisted with the session and validated on restore
+ const session=L.makeSession([dict[1]],dict,{mode:'expert'});
+ const catalog=Object.fromEntries(dict.map(p=>[p.id,p]));
+ assert.equal(L.restoreSession(JSON.parse(JSON.stringify(session)),catalog).tasks[0].hint,'article');
+ const bad=structuredClone(session);bad.tasks[0].hint='x';
+ assert.equal(L.restoreSession(bad,catalog),null);
+ // sentences are never given a form hint, even if they begin with "En"
+ const sentence=entry('sentence','En kop kaffe, tak.','Чашку кофе, пожалуйста.');
+ assert.equal(L.createTasks([sentence],[sentence,...pool],'expert')[0].hint,undefined);
+});
+
+// ---- cloze on function words ----
+test('function words are recognised from word class or closed-class Danish form, never from the translated gloss',()=>{
+ assert.equal(L.isFunctionWord({da:'fra',ru:'из; от; с'}),true);
+ assert.equal(L.isFunctionWord({da:'jo',ru:'ведь; же'}),true);
+ assert.equal(L.isFunctionWord({da:'foo',ru:'x',wordClass:'preposition'}),true);
+ assert.equal(L.isFunctionWord({da:'konjunktion',ru:'союз'}),false);
+ assert.equal(L.isFunctionWord({da:'konjunktion',ru:'сполучник'}),false);
+ assert.equal(L.isFunctionWord({da:'tillid',ru:'доверие'}),false);
+ assert.equal(L.isFunctionWord({da:'i dag',ru:'сегодня',wordClass:'phrase'}),false);
+ assert.equal(L.isFunctionWord({da:'sol',ru:'солнце',wordClass:'noun'}),false);
+});
+test('adaptive recall of a function word is a translation, not a cloze built from one example sentence',()=>{
+ const reviews=id=>({[id]:{box:1,due:0,seen:3,recognition:3,lastGrade:'recognition'}});
+ const da={id:'fw-da',kind:'word',da:'da',ru:'ведь; же (усилительная частица)',exampleDa:'Det er da en god idé!',exampleRu:'Это же хорошая идея!'};
+ const fra={id:'fw-fra',kind:'word',da:'fra',ru:'из; от; с',exampleDa:'Toget fra Aarhus kommer klokken ti.',exampleRu:'Поезд из Орхуса приходит в десять.'};
+ for(const w of [da,fra]){
+  const t=L.createTasks([w],[w,...pool],'auto',reviews(w.id))[0];
+  assert.equal(t.kind,'type');assert.equal(t.prompt,w.ru);assert.deepEqual(t.options,[]);assert.ok(L.checkTask(t,w.da));
+ }
+ // a content word keeps its context, and an authored context stays typed (its translation fixes the meaning)
+ const word={id:'cw',kind:'word',da:'tillid',ru:'доверие',exampleDa:'Jeg har tillid til mine kolleger.',exampleRu:'Я доверяю своим коллегам.'};
+ assert.equal(L.createTasks([word],[word,...pool],'auto',reviews('cw'))[0].kind,'gap');
+ const authored={...fra,id:'fw-authored',contextVariants:[{id:'ctx-fw-1',text:'Hun kommer ___ Aarhus.',answers:['fra'],completeDa:'Hun kommer fra Aarhus.',ru:'Она приезжает из Орхуса.'}]};
+ assert.equal(L.createTasks([authored],[authored,...pool],'auto',reviews('fw-authored'))[0].kind,'gap');
+});

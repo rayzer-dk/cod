@@ -52,3 +52,33 @@ test('offline cache rejects changed or sign-in responses instead of storing them
  let pending;handlers.install({waitUntil:p=>pending=p});await assert.rejects(pending,/mismatch/i);
  assert.equal(stored,0);assert.equal(deleted.length,1);
 });
+test('a hanging connection falls back to the verified cached app after the network timeout',async()=>{
+ const handlers={},cached='<html>verified bundle</html>',seen=[];
+ const self={location:{origin:'https://danskdag.example'},addEventListener:(key,fn)=>handlers[key]=fn};
+ const fetchImpl=(url,options={})=>{seen.push(options);return new Promise((_resolve,reject)=>options.signal?.addEventListener('abort',()=>reject(new DOMException('aborted','AbortError'))));};
+ vm.runInNewContext(builder.makeServiceWorker({'/index.html':digest(cached)},{networkTimeoutMs:40}),{self,URL,Response,crypto:webcrypto,setTimeout,clearTimeout,AbortController,caches:{open:async()=>({match:async()=>new Response(cached)})},fetch:fetchImpl});
+ const started=Date.now();let pending;
+ handlers.fetch({request:{url:self.location.origin+'/',method:'GET'},respondWith:p=>pending=p});
+ assert.equal(await (await pending).text(),cached);
+ const waited=Date.now()-started;assert.ok(waited>=30&&waited<1500,`waited ${waited} ms`);
+ assert.equal(seen.length,1);assert.ok(seen[0].signal);
+ assert.equal(seen[0].cache,'no-cache','the entry page is revalidated, not downloaded again each time');
+});
+test('a timely response is returned and its timer is cleared; the default timeout is three seconds',async()=>{
+ const handlers={},cleared=[];
+ const self={location:{origin:'https://danskdag.example'},addEventListener:(key,fn)=>handlers[key]=fn};
+ const source=builder.makeServiceWorker({'/index.html':digest('x')});
+ assert.match(source,/NETWORK_TIMEOUT=3000/);
+ const timers=new Map();let nextTimer=1;
+ vm.runInNewContext(source,{self,URL,Response,crypto:webcrypto,AbortController,setTimeout:(fn,ms)=>{timers.set(nextTimer,ms);return nextTimer++;},clearTimeout:id=>cleared.push(id),caches:{open:async()=>({match:async()=>new Response('stale')})},fetch:async()=>new Response('fresh',{headers:{'x-danskdag-version':'1.9.1'}})});
+ let pending;handlers.fetch({request:{url:self.location.origin+'/open',method:'GET'},respondWith:p=>pending=p});
+ assert.equal(await (await pending).text(),'fresh');
+ assert.deepEqual([...timers.values()],[3000]);assert.deepEqual(cleared,[1]);
+});
+test('an aborted or failing entry request never replaces the cache and never rewrites the open page',async()=>{
+ const handlers={},puts=[];
+ const self={location:{origin:'https://danskdag.example'},addEventListener:(key,fn)=>handlers[key]=fn};
+ vm.runInNewContext(builder.makeServiceWorker({'/index.html':digest('cached')}),{self,URL,Response,crypto:webcrypto,setTimeout,clearTimeout,AbortController,caches:{open:async()=>({match:async()=>new Response('cached'),put:async(...args)=>puts.push(args)})},fetch:async()=>{throw new TypeError('offline');}});
+ let pending;handlers.fetch({request:{url:self.location.origin+'/index.html',method:'GET'},respondWith:p=>pending=p});
+ assert.equal(await (await pending).text(),'cached');assert.deepEqual(puts,[]);
+});

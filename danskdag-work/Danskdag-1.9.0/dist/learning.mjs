@@ -51,11 +51,11 @@ export const buildOrderIsSafe=item=>!hasMovableAdverbial(item.da)||hasOrderVaria
 // ---- Function words ---------------------------------------------------------------------------
 // Prepositions, conjunctions, pronouns, particles and modals are closed classes: several of them
 // usually fit one gap ("Det er ___ en god idé" accepts da and jo), so a typed cloze made from a
-// single example sentence would reject correct answers. Part of speech is read from the data when
-// it exists (wordClass); imported vocabulary has none, so the gloss ("частица", "предлог", ...) and
-// the closed-class forms below are used instead.
+// single example sentence would reject correct answers. Part of speech is taken from the data when
+// the entry has one (wordClass). Imported vocabulary has none, so its Danish form is checked against
+// the closed classes below. The decision never reads the Russian or Ukrainian gloss: the same entry
+// must produce the same task in both teaching languages.
 const FUNCTION_CLASSES=new Set(['preposition','conjunction','pronoun','article','interjection']);
-const FUNCTION_GLOSS=/частиц|предлог|союз|междомет|местоим|артикл|усилит|служебн|при сравнении/i;
 const CLOSED_CLASS=new Set(('af ad bag blandt efter for foran fra før gennem hos i imod inden langs med mellem mod om omkring over på til trods uden under ved via ifølge angående '+
  'og eller men at fordi hvis når da mens selvom medmindre så end som både hverken enten '+
  'jeg du han hun den det vi de mig dig ham hende os jer dem min mit mine din dit dine sin sit sine vores jeres deres man sig selv ingen intet ingenting noget nogen nogle alle alt andre anden andet samme begge hver hvert sådan sådanne denne dette disse enhver '+
@@ -65,8 +65,7 @@ const CLOSED_CLASS=new Set(('af ad bag blandt efter for foran fra før gennem ho
 export function isFunctionWord(item){
  if(item.wordClass)return FUNCTION_CLASSES.has(item.wordClass);
  const tokens=tokensOf(item.da);
- if(tokens.length===1&&CLOSED_CLASS.has(tokens[0]))return true;
- return tokens.length<=2&&FUNCTION_GLOSS.test(`${item.ru||''} ${item.original||''}`);
+ return tokens.length===1&&CLOSED_CLASS.has(tokens[0]);
 }
 
 // ---- Distractors ------------------------------------------------------------------------------
@@ -171,7 +170,7 @@ export function createTasks(items, pool, mode = 'easy', reviews = {}) {
     let answers = focus ? [...focus.answers] : gap ? [...gap.answers] : [...(targetDa ? item.daAnswers || [item.da] : item.ruAnswers || [item.ru])];
     if (!gap && targetDa && kind !== 'build' && item.kind === 'word') {
       for (const synonym of pool) {
-        if (synonym.verified !== false && synonym.kind === 'word' && (normalize(synonym.ru) === normalize(item.ru) || (synonym.id !== item.id && isSameEntry(synonym, item)))) {
+        if (synonym.verified !== false && synonym.kind === 'word' && (featuresOf(synonym).ru.key === featuresOf(item).ru.key || (synonym.id !== item.id && isSameEntry(synonym, item)))) {
           for (const answer of synonym.daAnswers || [synonym.da]) if (!answers.some(a=>normalize(a)===normalize(answer))) answers.push(answer);
         }
       }

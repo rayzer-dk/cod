@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 
-export function makeServiceWorker(manifest){
- const source=`const MANIFEST=${JSON.stringify(manifest)};\nconst CACHE='__DANSKDAG_CACHE_KEY__';
+export function makeServiceWorker(manifest,{networkTimeoutMs=3000}={}){
+ const source=`const MANIFEST=${JSON.stringify(manifest)};\nconst CACHE='__DANSKDAG_CACHE_KEY__',NETWORK_TIMEOUT=${Number(networkTimeoutMs)};
 async function loadAsset(path,cache){
  const response=await fetch(new URL(path,self.location.origin).href,{cache:'reload',credentials:'same-origin'});
  if(!response.ok||response.redirected)throw Error('Static asset unavailable: '+path);
@@ -11,6 +11,12 @@ async function loadAsset(path,cache){
  const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
  if(hash!==MANIFEST[path])throw Error('Static asset hash mismatch: '+path);
  await cache.put(path,response.clone());return response;
+}
+// A slow or hanging connection must not keep the learner waiting: after NETWORK_TIMEOUT the verified cached copy is used.
+async function fetchWithTimeout(href,options){
+ if(typeof AbortController!=='function'||typeof setTimeout!=='function')return fetch(href,options);
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),NETWORK_TIMEOUT);
+ try{return await fetch(href,{...options,signal:controller.signal});}finally{clearTimeout(timer);}
 }
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  try{const cache=await caches.open(CACHE);await Promise.all(Object.keys(MANIFEST).map(path=>loadAsset(path,cache)));await self.skipWaiting();}
@@ -27,7 +33,7 @@ self.addEventListener('fetch',event=>{
  event.respondWith((async()=>{
   if(pathname==='/index.html'){
    try{
-    const response=await fetch(url.href,{cache:'no-store',credentials:'same-origin'});
+    const response=await fetchWithTimeout(url.href,{cache:'no-cache',credentials:'same-origin'});
     if(response.ok&&!response.redirected&&/^\\d+\\.\\d+\\.\\d+$/.test(response.headers.get('x-danskdag-version')||''))return response;
    }catch{}
   }

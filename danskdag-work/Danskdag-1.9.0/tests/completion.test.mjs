@@ -4,7 +4,7 @@ import {existsSync} from 'node:fs';
 import {createState} from '../dist/engine.mjs';
 import {lessons,importedItems,getCatalog,trainingPool} from '../dist/course.mjs';
 import {vocabulary} from '../dist/vocabulary.mjs';
-import {createTasks,checkTask} from '../dist/learning.mjs';
+import {createTasks,checkTask,isFunctionWord} from '../dist/learning.mjs';
 import {illustrationFor,renderIllustration} from '../dist/illustrations.mjs';
 
 test('every verified imported word has an authored context and memory association while source IDs survive',()=>{
@@ -15,7 +15,11 @@ test('every verified imported word has an authored context and memory associatio
   if(raw.verified){assert.ok(item.exampleDa?.trim(),raw.da);assert.ok(item.exampleRu?.trim(),raw.da);assert.ok(item.association?.trim(),raw.da);}
  }
  const items=importedItems.filter(p=>p.verified),reviews=Object.fromEntries(items.map(p=>[p.id,{box:1,due:0,seen:2,recognition:2}]));
- for(const task of createTasks(items,trainingPool(createState()),'auto',reviews))assert.ok(task.completeDa,task.itemId);
+ // A function word (da, jo, fra...) fits several gaps, so its recall is a translation, not a one-sentence cloze.
+ const byId=Object.fromEntries(items.map(p=>[p.id,p]));
+ for(const task of createTasks(items,trainingPool(createState()),'auto',reviews)){
+  if(isFunctionWord(byId[task.itemId]))assert.equal(task.kind,'type',task.itemId);else assert.ok(task.completeDa,task.itemId);
+ }
 });
 test('new advanced and spoken lessons expand practice without replacing old identities',()=>{
  assert.ok(lessons.filter(l=>l.id.startsWith('g-')&&l.level==='B2').length>=14);

@@ -1,0 +1,32 @@
+const MANIFEST={"/index.html":"53fac1d7437c554699678947654ad622293a2b543d3d773dfdb92aa9406cc2b6","/manifest.webmanifest":"25e2319e90c0bbac080ff11a74678cd97256df3985c1afd5c603517a6fd31ece","/icon.svg":"a6e623571b7305903abbe9059384dcc233b6ebee7451d90eee27ed981bd44b91","/icon-192.png":"5c2587d996df4c5abb4bffead54c821743aed45fa8e5e13e8c9fe37e09983bf2","/icon-512.png":"dbb222bda4cd44b333509afec4848d33aec4432f4095683c8c8dcc0e831e575e","/flag-dk.svg":"a9db2939c6736db071b3cf6f01a435ccf310d020b6c8e7371bbbfc2e88a714ce"};
+const CACHE='danskdag-static-350d5ced8eb52a5d2316';
+async function loadAsset(path,cache){
+ const response=await fetch(new URL(path,self.location.origin).href,{cache:'reload',credentials:'same-origin'});
+ if(!response.ok||response.redirected)throw Error('Static asset unavailable: '+path);
+ const digest=await crypto.subtle.digest('SHA-256',await response.clone().arrayBuffer());
+ const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+ if(hash!==MANIFEST[path])throw Error('Static asset hash mismatch: '+path);
+ await cache.put(path,response.clone());return response;
+}
+self.addEventListener('install',event=>event.waitUntil((async()=>{
+ try{const cache=await caches.open(CACHE);await Promise.all(Object.keys(MANIFEST).map(path=>loadAsset(path,cache)));await self.skipWaiting();}
+ catch(error){await caches.delete(CACHE);throw error;}
+})()));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{
+ for(const key of await caches.keys())if(key.startsWith('danskdag-static-')&&key!==CACHE)await caches.delete(key);
+ await self.clients.claim();
+})()));
+self.addEventListener('fetch',event=>{
+ if(event.request.method!=='GET')return;
+ const url=new URL(event.request.url),pathname=['/','/open'].includes(url.pathname)?'/index.html':url.pathname;
+ if(url.origin!==self.location.origin||!Object.hasOwn(MANIFEST,pathname))return;
+ event.respondWith((async()=>{
+  if(pathname==='/index.html'){
+   try{
+    const response=await fetch(url.href,{cache:'no-store',credentials:'same-origin'});
+    if(response.ok&&!response.redirected&&/^\d+\.\d+\.\d+$/.test(response.headers.get('x-danskdag-version')||''))return response;
+   }catch{}
+  }
+  const cache=await caches.open(CACHE);return await cache.match(pathname)||loadAsset(pathname,cache);
+ })());
+});

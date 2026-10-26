@@ -1,0 +1,11 @@
+{
+  "name": "danskdag",
+  "version": "1.9.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "build": "node tools/build-worker.mjs",
+    "start": "node tools/start-local.mjs"
+  }
+}

@@ -9,7 +9,7 @@ import {MODES, startRun, getPair, sideWord, otherSide, choose, hintChoice, hintW
 const T = {
   addFailed: 'Не удалось добавить слово.', tooMany: 'В «Мои слова» уже слишком много слов.', added: 'Слово добавлено в «Мои слова».', already: 'Это слово уже есть в словаре.',
   needAnswer: 'Напиши ответ или нажми «Не знаю».', fewPairs: 'В этой теме пока мало пар для тренировки.', notPair: 'Эти слова не пара.', maxLen: 'Достигнута максимальная длина ответа.',
-  inWords: 'в моих словах', toWords: 'в мои слова', allThemes: 'Все темы', say: 'Приблизительно; слушай озвучку. Stød и мягкое d на письме не передаются.',
+  inWords: 'уже в словаре', toWords: 'в мои слова', allThemes: 'Все темы', say: 'Приблизительно; слушай озвучку. Stød и мягкое d на письме не передаются.',
   training: 'Тренировка', pickTheme: '. Выбери тему в списке ниже, чтобы тренировать только её.', xpNote: 'За верный ответ без подсказки — 10 XP, как в обычных занятиях. С подсказкой или самопроверкой XP нет.',
   byTheme: 'Результаты по темам', examples: 'Примеры',
   about: 'О произношении', aboutText: 'Нажми на слово, чтобы услышать его. Подсказки со знаком ≈ — приблизительные, в них нет всех звуков: слушай озвучку. Значок ˀ после слова — stød (короткое гортанное прерывание); его, как и мягкое d, на письме не видно. Подсказки даны только там, где они надёжны.',
@@ -36,8 +36,13 @@ const stod = w => w.stod ? '<sup class="antonym-stod" title="stød" aria-label="
 const sayLine = w => w.say ? `<small class="antonym-say" title="${h(T.say)}">≈ ${h(w.say)}</small>` : '';
 
 // ---- List in the reference tab ---------------------------------------------------------------------------------
+// Like spoken(), but the stød mark sits inside the button right after the word.
+function wordButton(w) {
+  const label = h(`${T.listen}: ${w.da}`);
+  return `<button type="button" class="spoken-unit audio-phrase" data-action="speak-text" data-text="${h(w.da)}" title="${label}" aria-label="${label}"><span lang="da" data-audio-ready>${h(w.da)}${stod(w)}</span>${icon('sound')}</button>`;
+}
 function wordBlock(w) {
-  return `<div class="antonym-word"><span class="antonym-main">${spoken(w.da)}${stod(w)}</span><small class="antonym-ru">${h(w.ru)}</small>${sayLine(w)}</div>`;
+  return `<div class="antonym-word"><span class="antonym-main">${wordButton(w)}</span><small class="antonym-ru">${h(w.ru)}</small>${sayLine(w)}</div>`;
 }
 function addButton(pair, side, has) {
   const w = sideWord(pair, side), added = has(w.da);

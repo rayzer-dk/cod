@@ -4,7 +4,7 @@
 import {h,icon,plural} from './ui.mjs';
 import {backButton,pageHead,lettersBar,clock,checkbox} from './pd3-ui.mjs';
 import {
-  GRAMMAR_MINUTES,GRAMMAR_MIN_ANSWERED,clozeGaps,fixTokens,orderText,answerText,correctAnswer,checkItem,categoryOf,categoryRows,weakCategory,
+  GRAMMAR_MINUTES,GRAMMAR_MIN_ANSWERED,clozeGaps,fixTokens,answerText,correctAnswer,checkItem,categoryOf,categoryRows,weakCategory,
   frequentMistakes,categoryCount,grammarSets,grammarCategories,recommendations,linksFor,countsForXp
 } from './pd3-grammar.mjs';
 
@@ -87,13 +87,13 @@ const mark=(ok,words=true)=>ok?`<b class="pd3-mark">${icon('check')}${words?' в
 function gapBody(item,answer,checked){
   return `<fieldset class="pd3-q"><legend><span class="pd3-gram-stem" lang="da">${slot(item.stem)}</span></legend>${item.options.map((option,i)=>{
     const right=checked&&i===item.answer,wrong=checked&&i===answer&&i!==item.answer;
-    return `<label class="pd3-option ${right?'is-right':''} ${wrong?'is-wrong':''}" for="pd3-gram-opt-${i}"><input type="radio" id="pd3-gram-opt-${i}" name="pd3-gram-opt" data-pd3-gram="opt" value="${i}" ${answer===i?'checked':''} ${checked?'disabled':''}><span lang="da">${h(option)}</span>${right?mark(true):wrong?mark(false):''}</label>`;
+    return `<label class="pd3-option ${right?'is-right':''} ${wrong?'is-wrong':''}" for="pd3-gram-opt-${i}"><input type="radio" id="pd3-gram-opt-${i}" name="pd3-gram-opt" data-pd3-gram="opt" value="${i}" ${answer===i?'checked':''} ${checked?'disabled':''}><span lang="da" data-audio-ready>${h(option)}</span>${right?mark(true):wrong?mark(false):''}</label>`;
   }).join('')}</fieldset>`;
 }
 function clozeBody(item,answer,checked){
   const chosen=answer||{};
   const parts=item.segments.map(part=>{
-    if(typeof part==='string')return `<span lang="da">${h(part)}</span>`;
+    if(typeof part==='string')return `<span lang="da" data-audio-ready>${h(part)}</span>`;
     const key=String(part.gap),value=chosen[key],ok=checked&&value===part.answer;
     return `<span class="pd3-cloze-gap ${checked?(ok?'is-right':'is-wrong'):''}"><label class="sr-only" for="pd3-gram-gap-${key}">Пропуск ${key}</label><select id="pd3-gram-gap-${key}" data-pd3-gram="gap" data-gap="${key}" lang="da" ${checked?'disabled':''}><option value="">— ${key} —</option>${part.options.map((option,i)=>`<option value="${i}" ${value===i?'selected':''}>${h(option)}</option>`).join('')}</select>${checked?`${mark(ok,false)}<span class="sr-only">${ok?' (верно)':' (неверно)'}</span>`:''}</span>`;
   }).join('');
@@ -105,7 +105,7 @@ function fixBody(item,answer,checked){
     const right=checked&&i===item.errorIndex,wrong=checked&&i===picked&&i!==item.errorIndex;
     return `<button type="button" class="pd3-word ${picked===i?'selected':''} ${right?'is-right':''} ${wrong?'is-wrong':''}" data-action="pd3-gram-word" data-pos="${i}" aria-pressed="${picked===i}" lang="da" ${checked?'disabled':''}>${h(token)}${right?'<span class="sr-only"> (здесь ошибка)</span>':''}</button>`;
   }).join(' ');
-  const field=picked===undefined?'':`<label for="pd3-gram-input" class="answer-label">Как правильно вместо «<span lang="da">${h(tokens[picked])}</span>»?</label><input type="text" id="pd3-gram-input" data-pd3-gram="text" ${FIELD} maxlength="60" value="${h(answer?.t||'')}" ${checked?'disabled':''}>${checked?'':lettersBar('Датские буквы')}`;
+  const field=picked===undefined?'':`<label for="pd3-gram-input" class="answer-label">Как правильно вместо «<span lang="da" data-audio-ready>${h(tokens[picked])}</span>»?</label><input type="text" id="pd3-gram-input" data-pd3-gram="text" ${FIELD} maxlength="60" value="${h(answer?.t||'')}" ${checked?'disabled':''}>${checked?'':lettersBar('Датские буквы')}`;
   return `<div class="pd3-fix-words" role="group" aria-label="Предложение: выбери неверное слово">${words}</div>${field}`;
 }
 function transformBody(item,answer,checked){

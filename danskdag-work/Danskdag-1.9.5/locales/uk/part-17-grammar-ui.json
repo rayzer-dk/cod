@@ -56,7 +56,7 @@
  "542bf34ad858622e": " (вірно)",
  "eb570f6d86f835a7": " (невірно)",
  "0c17dacc5ac1c590": "<span class=\"sr-only\"> (тут помилка)</span>",
- "0c238a6018fd343e": "<label for=\"pd3-gram-input\" class=\"answer-label\">Як правильно замість «<span lang=\"da\">",
+ "c470a1f258515160": "<label for=\"pd3-gram-input\" class=\"answer-label\">Як правильно замість «<span lang=\"da\" data-audio-ready>",
  "9b684490d9d4c2e9": "<div class=\"pd3-fix-words\" role=\"group\" aria-label=\"Речення: обери неправильне слово\">",
  "e6276920c6922c79": "</p><p class=\"pd3-gram-instr\"><b>Завдання:</b> ",
  "562898baa677e9e3": "</p><label for=\"pd3-gram-input\" class=\"answer-label\">Твоє речення</label><textarea id=\"pd3-gram-input\" data-pd3-gram=\"text\" ",

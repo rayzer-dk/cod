@@ -294,3 +294,33 @@ test('snapshot, validation and restore of an unfinished set',()=>{
   assert.equal(fresh.phase,'run');assert.deepEqual(fresh.answers,clean.answers);assert.equal(fresh.index,3);assert.equal(fresh.deadline,T0+900000);
   assert.equal(secondsLeft(fresh,T0+1000),899);assert.equal(secondsLeft(fresh,T0+10**7),0);assert.equal(secondsLeft({timerOn:false},T0),null);
 });
+
+test('the real sets work with the checker: every right answer is accepted, every wrong one rejected, every order answer can be built from the tiles',async()=>{
+  const {pd3Data}=await import('../dist/pd3-data.mjs');
+  const {normalize}=await import('../dist/engine.mjs');
+  assert.ok(pd3Data.grammarSets.length>=12);assert.equal(pd3Data.grammarCategories.length,12);
+  let orders=0;
+  for(const set of pd3Data.grammarSets)for(const it of set.items){
+    switch(it.type){
+      case 'gap':assert.equal(checkItem(it,it.answer).ok,true,it.id);for(let i=0;i<it.options.length;i++)if(i!==it.answer)assert.equal(checkItem(it,i).ok,false,it.id);break;
+      case 'cloze':assert.equal(checkItem(it,Object.fromEntries(it.segments.filter(s=>typeof s==='object').map(g=>[g.gap,g.answer]))).ok,true,it.id);break;
+      case 'fix':for(const fix of it.fixes)assert.equal(checkItem(it,{i:it.errorIndex,t:fix}).ok,true,it.id);
+        assert.equal(checkItem(it,{i:(it.errorIndex+1)%it.sentence.split(' ').length,t:it.fixes[0]}).ok,false,it.id);break;
+      case 'transform':for(const a of it.answers)assert.equal(checkItem(it,a).ok,true,it.id+': '+a);assert.equal(checkItem(it,it.prompt).ok,false,it.id+' the source sentence is not an answer');break;
+      case 'order':{
+        orders++;
+        for(const answer of it.answers){
+          const used=new Set(),picked=[];
+          for(const word of answer.split(' ')){
+            const i=it.tokens.findIndex((t,k)=>!used.has(k)&&normalize(t)===normalize(word));
+            assert.ok(i>=0,`${it.id}: "${word}" of "${answer}" has a tile`);used.add(i);picked.push(i);
+          }
+          assert.equal(used.size,it.tokens.length,`${it.id}: the answer uses every tile`);
+          assert.equal(checkItem(it,picked).ok,true,`${it.id}: ${answer}`);
+          assert.equal(checkItem(it,[...picked].reverse()).ok,it.answers.some(x=>normalize(x)===normalize(orderText(it,[...picked].reverse()))),it.id);
+        }
+        break;}
+    }
+  }
+  assert.ok(orders>=20);
+});

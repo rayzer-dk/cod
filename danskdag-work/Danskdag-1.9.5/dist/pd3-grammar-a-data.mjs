@@ -2,7 +2,7 @@ export const grammarSetsA=[
 {id:'gram-1',title:'Grammatik 1: På arbejde og derhjemme',level:'B2',minutes:15,items:[
 {id:'g1-01',cat:'v2',type:'order',
  tokens:['kan','chefen','Desværre','ikke','komme','i','dag.'],
- answers:['Desværre kan chefen ikke komme i dag.','Chefen kan desværre ikke komme i dag.'],
+ answers:['Desværre kan chefen ikke komme i dag.','Chefen kan desværre ikke komme i dag.','I dag kan chefen desværre ikke komme.'],
  why:'В главном предложении глагол всегда на втором месте: если впереди наречие (Desværre), подлежащее идёт после глагола. Если начать с подлежащего, наречия desværre и ikke стоят после глагола.'},
 {id:'g1-02',cat:'tenses',type:'gap',
  stem:'Jeg ___ aldrig været i Aalborg, før jeg flyttede dertil.',
@@ -37,7 +37,7 @@ export const grammarSetsA=[
  answers:['Vi skal sende svaret i dag.','Vi må sende svaret i dag.'],
  why:'После модальных глаголов (skal, må) инфинитив стоит без at: Vi skal sende. Оба глагола передают необходимость.'},
 {id:'g1-10',cat:'connect',type:'cloze',
- segments:['Mette havde glædet sig til sommerferien, ',{gap:1,options:['selvom','hvis','fordi','medmindre'],answer:2},' hun skulle til Bornholm med sin familie. Den første uge regnede det hele tiden. ',{gap:2,options:['Derfor','Fordi','Selvom','Medmindre'],answer:0},' blev de i sommerhuset og spillede kort. ',{gap:3,options:['Fordi','Selvom','Medmindre','Mens'],answer:3},' børnene lavede puslespil, læste Mette en bog. Til sidst blev vejret bedre, men de måtte tage hjem, ',{gap:4,options:['selvom','fordi','mens','medmindre'],answer:1},' hendes mand skulle på arbejde igen. ',{gap:5,options:['Derfor','Fordi','Alligevel','Medmindre'],answer:2},' var hun glad for turen.'],
+ segments:['Mette havde glædet sig til sommerferien, ',{gap:1,options:['selvom','hvis','fordi','medmindre'],answer:2},' hun skulle til Bornholm med sin familie. Den første uge regnede det hele tiden. ',{gap:2,options:['Derfor','Fordi','Selvom','Medmindre'],answer:0},' blev de i sommerhuset og spillede kort. ',{gap:3,options:['Derfor','Selvom','Medmindre','Mens'],answer:3},' børnene lavede puslespil, læste Mette en bog. Til sidst blev vejret bedre, men de måtte tage hjem, ',{gap:4,options:['selvom','fordi','mens','medmindre'],answer:1},' hendes mand skulle på arbejde igen. ',{gap:5,options:['Derfor','Fordi','Alligevel','Medmindre'],answer:2},' var hun glad for turen.'],
  why:'Fordi даёт причину, derfor и alligevel — связки главного предложения (после них порядок V2: Derfor blev de), mens означает «пока», selvom — «хотя», medmindre — «если только не». Нужно подобрать связку по смыслу.'}
 ]}
 ,{id:'gram-2',title:'Grammatik 2: Rejser, vaner og planer',level:'B2',minutes:15,items:[
@@ -57,13 +57,13 @@ export const grammarSetsA=[
  why:'Если на первое место выходит обстоятельство, подлежащее и глагол меняются местами (инверсия): глагол остаётся на втором месте. Skal min søster …, а не min søster skal.'},
 {id:'g2-04',cat:'bisaet',type:'order',
  tokens:['er','Selvom','ofte','han','arbejder','sent,','han','altid','frisk','om','morgenen.'],
- answers:['Selvom han ofte arbejder sent, er han altid frisk om morgenen.'],
+ answers:['Selvom han ofte arbejder sent, er han altid frisk om morgenen.','Selvom han altid arbejder sent, er han ofte frisk om morgenen.'],
  why:'В придаточном (selvom) наречие ofte стоит перед глаголом: han ofte arbejder. Главное предложение после придаточного в начале начинается с глагола (инверсия): …, er han altid frisk.'},
 {id:'g2-05',cat:'passive',type:'fix',
  sentence:'Huset blev bygges i 1990 af en lokal murer.',errorIndex:2,fixes:['bygget'],
  why:'Пассив с blive требует причастия: blev bygget. Форма на -s (bygges) не сочетается с blev: нельзя смешивать два способа образования пассива.'},
 {id:'g2-06',cat:'tenses',type:'cloze',
- segments:['Indtil for et år siden ',{gap:1,options:['har','havde','var','blev'],answer:1},' Jens aldrig arbejdet i en café, men så ',{gap:2,options:['åbnede','åbner','har åbnet','havde åbnet'],answer:0},' han sin egen i Odense. I begyndelsen kom der få gæster, men i dag ',{gap:3,options:['havde','er','blev','har'],answer:3},' han allerede fået mange faste kunder. Da journalisten kom på besøg i går, ',{gap:4,options:['var','havde','blev','har'],answer:1},' han lige bagt en ny kage. I morgen ',{gap:5,options:['skrev','har skrevet','skriver','havde skrevet'],answer:2},' avisen om caféen.'],
+ segments:['Indtil for et år siden ',{gap:1,options:['har','havde','var','blev'],answer:1},' Jens aldrig arbejdet i en café, men så ',{gap:2,options:['åbnede','åbner','har åbnet','havde åbnet'],answer:0},' han sin egen i Odense. I begyndelsen kom der få gæster, men i dag ',{gap:3,options:['havde','er','blev','har'],answer:3},' han allerede fået mange faste kunder. Da journalisten kom på besøg i går, ',{gap:4,options:['var','havde','blev','har'],answer:1},' han lige bagt en ny kage. I morgen ',{gap:5,options:['skrev','skrevet','skriver','havde skrevet'],answer:2},' avisen om caféen.'],
  why:'Pluskvamperfektum (havde arbejdet, havde bagt) — действие до другого момента в прошлом; præteritum (åbnede) — завершённое действие в повествовании; perfektum (har fået) — результат, важный сейчас; с i morgen будущее выражается настоящим временем (skriver).'},
 {id:'g2-07',cat:'relative',type:'gap',
  stem:'Hun spurgte, ___ af de to huse vi ville købe.',
@@ -125,7 +125,7 @@ export const grammarSetsA=[
 ,{id:'gram-4',title:'Grammatik 4: By, natur og transport',level:'B2',minutes:15,items:[
 {id:'g4-01',cat:'v2',type:'order',
  tokens:['fandt','Heldigvis','vi','hurtigt','en','ledig','parkeringsplads.'],
- answers:['Heldigvis fandt vi hurtigt en ledig parkeringsplads.','Vi fandt heldigvis hurtigt en ledig parkeringsplads.'],
+ answers:['Heldigvis fandt vi hurtigt en ledig parkeringsplads.','Vi fandt heldigvis hurtigt en ledig parkeringsplads.','Heldigvis fandt vi en ledig parkeringsplads hurtigt.','Vi fandt heldigvis en ledig parkeringsplads hurtigt.'],
  why:'Если предложение начинается с наречия (Heldigvis), глагол стоит на втором месте, а подлежащее — после него. Если начать с подлежащего, наречие следует за глаголом: Vi fandt heldigvis …'},
 {id:'g4-02',cat:'agree',type:'gap',
  stem:'Den ___ bog, som jeg fik i fødselsdagsgave, er meget spændende.',
@@ -206,7 +206,7 @@ export const grammarSetsA=[
 ]}
 ,{id:'gram-6',title:'Grammatik 6: Sundhed og arbejdsliv',level:'B2',minutes:15,items:[
 {id:'g6-01',cat:'connect',type:'gap',
- stem:'Vi tager ikke afsted, ___ vejret bliver bedre.',
+ stem:'Vi tager ikke afsted, ___ vejret bliver bedre, for vi vil ikke køre i regnvejr.',
  options:['medmindre','selvom','fordi','efter'],answer:0,
  why:'Medmindre означает «если только не»: поездка отменяется, если погода не улучшится. Selvom — «хотя», fordi — «потому что», а как союз efter требует at (efter at).'},
 {id:'g6-02',cat:'passive',type:'transform',
@@ -235,7 +235,7 @@ export const grammarSetsA=[
  why:'Значение «чей» в относительном придаточном передаёт слово hvis: nabo, hvis hund … Hvem вопросительное слово и принадлежность не выражает.'},
 {id:'g6-08',cat:'modal',type:'order',
  tokens:['gjort','ikke','Vi','uden','have','dig.','kunne','det'],
- answers:['Vi kunne ikke have gjort det uden dig.','Det kunne vi ikke have gjort uden dig.'],
+ answers:['Vi kunne ikke have gjort det uden dig.','Det kunne vi ikke have gjort uden dig.','Uden dig kunne vi ikke have gjort det.'],
  why:'После модального глагола kunne идёт инфинитив перфекта без at: kunne ikke have gjort. Дополнение det можно вынести на первое место — тогда подлежащее идёт после глагола: Det kunne vi …'},
 {id:'g6-09',cat:'prep',type:'gap',
  stem:'Jeg er virkelig træt ___ at vente på svar.',

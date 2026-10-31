@@ -6,7 +6,7 @@ const cyrillic=/[А-Яа-яЁёІіЇїЄєҐґ]/;
 const categories=['v2','bisaet','passive','tenses','relative','connect','prep','agree','reflex','modal','compare','cond'];
 const isText=value=>typeof value==='string'&&value.trim().length>0;
 const norm=text=>text.toLowerCase().replace(/[.!?]+$/,'').trim();
-const sortedTokens=text=>text.toLowerCase().split(' ').sort();
+const sortedTokens=text=>text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu,' ').split(/\s+/).filter(Boolean).sort();
 const allItems=()=>grammarSetsA.flatMap(set=>set.items);
 
 test('grammar sets A have the contract structure',()=>{
@@ -78,7 +78,7 @@ test('order items use exactly the shown tokens in every answer',()=>{
   for(const item of allItems().filter(item=>item.type==='order')){
     assert.ok(item.tokens.length>=5&&item.tokens.length<=12,item.id);
     assert.ok(item.answers.length>=1);
-    const expected=[...item.tokens].map(t=>t.toLowerCase()).sort();
+    const expected=sortedTokens(item.tokens.join(' '));
     for(const answer of item.answers)assert.deepEqual(sortedTokens(answer),expected,item.id+' '+answer);
     assert.ok(!item.answers.some(a=>a.toLowerCase()===item.tokens.join(' ').toLowerCase()),item.id+' already ordered');
     assert.equal(new Set(item.answers.map(norm)).size,item.answers.length,item.id);

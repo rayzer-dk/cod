@@ -55,6 +55,7 @@ test('the suggestion follows one rule: not started, then left for 7+ days, then 
   if(r)recordScore(d.reading,reading,r[0],null,ago(r[1]));
   if(l)recordScore(d.listening,listening,l[0],null,ago(l[1]));
   if(w)d.writing[first(data.writingEmail)]={draft:'x',option:'A',updatedAt:ago(w[1]),done:true,req:[],check:[],self:{content:w[0]}};
+  d.grammar={sets:{[first(data.grammarSets)]:{best:90,last:90,attempts:1,at:ago(0)}},cats:{},updatedAt:0};// grammar is the fifth skill: practised, recent and good, so it does not change the rule under test
   if(o)d.oral['mono-'+first(data.oralMonologue)]={keywords:[],self:{fluency:o[0]},done:true,updatedAt:ago(o[1])};
  });
  const stale=recommendSkill(skillRows(mk({r:[90,1],w:[5,STALE_DAYS+2],l:[90,0],o:[5,2]}),data,NOW));

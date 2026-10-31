@@ -313,7 +313,7 @@ html[data-theme=dark]{
 .pd3-gram-task textarea,.pd3-gram-task input[type=text]{width:100%;max-width:640px}
 .pd3-gram-task textarea{min-height:92px;line-height:1.6;font-size:1rem}
 .pd3-fix-words{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;font-size:1.05rem}
-.pd3-word,.pd3-tile{display:inline-flex;align-items:center;justify-content:center;max-width:100%;padding:10px 14px;min-height:44px;background:var(--panel);color:var(--ink);border:1px solid var(--field-line);border-bottom-width:3px;border-radius:11px;font-size:.98rem;font-weight:590;line-height:1.4;overflow-wrap:anywhere;cursor:pointer}
+.pd3-word,.pd3-tile{display:inline-flex;align-items:center;justify-content:center;max-width:100%;padding:10px 14px;min-height:44px;min-width:44px;background:var(--panel);color:var(--ink);border:1px solid var(--field-line);border-bottom-width:3px;border-radius:11px;font-size:.98rem;font-weight:590;line-height:1.4;overflow-wrap:anywhere;cursor:pointer}
 .pd3-word.selected{background:var(--accent-soft);border-color:var(--accent-ink);color:var(--accent-ink);box-shadow:inset 0 -3px 0 var(--accent-ink)}
 .pd3-word.is-right{background:var(--pd3-right-bg);border-color:var(--mint-ink);color:var(--ink)}
 .pd3-word.is-wrong{background:var(--pd3-wrong-bg);border-color:var(--danger);color:var(--ink)}

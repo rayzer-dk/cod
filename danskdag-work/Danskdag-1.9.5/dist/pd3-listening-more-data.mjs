@@ -78,7 +78,7 @@ export const listeningMore=[
    {da: "Birgitte: Det var vores største problem i starten. Nu kører en frivillig det hele til en genbrugsbutik, når markedet er slut.", ru: "Биргитте: Вначале это была наша самая большая проблема. Теперь один из волонтёров отвозит всё это в магазин секонд-хенда, когда рынок заканчивается."},
    {da: "Søren: Hvornår er der byttemarked næste gang?", ru: "Серен: Когда следующий обменный рынок?"},
    {da: "Birgitte: På lørdag, fra klokken ti til klokken tolv, i fælleshuset på Rosenvej. Det er gratis, og alle er velkomne.", ru: "Биргитте: В субботу, с десяти до двенадцати, в общинном доме на Розенвей. Вход бесплатный, и все приглашаются."},
-   {da: "Søren: Hvad håber du, at lytterne vil gøre?", ru: "Серен: На что вы надеетесь, обращаясь к слушателям?"},
+   {da: "Søren: Hvad håber du, at lytterne vil gøre?", ru: "Серен: Что, как вы надеетесь, сделают слушатели?"},
    {da: "Birgitte: Jeg håber, at nogen bliver inspireret til at starte noget lignende i deres eget område. Det kræver kun lidt tid og en seddel i opgangen.", ru: "Биргитте: Надеюсь, что кто-нибудь вдохновится и начнёт что-то подобное в своём районе. Для этого нужно совсем немного времени и объявление в подъезде."}
   ],
   questions: [
@@ -277,7 +277,7 @@ export const listeningMore=[
    },
    {
     q: "Hvem får især glæde af den nye bro?",
-    options: ["Børn på vej til skole","Bilister på den store vej","Turister ved åen"],
+    options: ["Bilister på den store vej","Børn på vej til skole","Turister ved åen"],
     answer: 1,
     why: "Мост должен облегчить детям дорогу в школу, так как им не придётся пересекать большую дорогу. Автомобилисты и туристы не упоминаются."
    },
@@ -365,7 +365,7 @@ export const listeningMore=[
    {da: "Jeg var lige kommet hjem fra arbejde og var i gang med at lave aftensmad, da alle lysene pludselig gik ud.", ru: "Я только что пришёл с работы и готовил ужин, как вдруг весь свет погас."},
    {da: "Først troede jeg, at det kun var vores lejlighed, så jeg gik ud på trappen med min telefon som lommelygte.", ru: "Сначала я подумал, что это только в нашей квартире, и вышел на лестницу с телефоном вместо фонарика."},
    {da: "Dér stod næsten hele opgangen. Naboerne stod med stearinlys og snakkede højt, og jeg kendte kun to af dem i forvejen.", ru: "Там стоял почти весь подъезд. Соседи стояли со свечами и громко разговаривали, а я знал из них раньше только двоих."},
-   {da: "Manden fra anden sal, som aldrig siger hej, kom med en termokande fuld af varm te.", ru: "Мужчина со второго этажа, который никогда не здоровается, пришёл с термосом, полным горячего чая."},
+   {da: "Manden fra første sal, som aldrig siger hej, kom med en termokande fuld af varm te.", ru: "Мужчина со второго этажа, который никогда не здоровается, пришёл с термосом, полным горячего чая."},
    {da: "En kvinde fra stuen hentede nogle gamle brætspil, og snart sad vi på trappen og spillede.", ru: "Женщина с первого этажа принесла старые настольные игры, и вскоре мы уже сидели на лестнице и играли."},
    {da: "Børnene syntes, at det var det mest spændende, der nogensinde var sket, og de løb op og ned ad trapperne med deres lommelygter.", ru: "Детям казалось, что это самое захватывающее событие на свете, и они бегали вверх и вниз по лестнице со своими фонариками."},
    {da: "Efter halvanden time kom strømmen tilbage, og vi gik tilbage til hver vores lejlighed.", ru: "Через полтора часа электричество вернулось, и мы разошлись по своим квартирам."},
@@ -392,7 +392,7 @@ export const listeningMore=[
     why: "Он знал из соседей раньше только двоих, то есть совсем немногих. «Всех хорошо» или «никого» не подходит."
    },
    {
-    q: "Hvad bidrog manden fra anden sal med?",
+    q: "Hvad bidrog manden fra første sal med?",
     options: ["Lys til hele opgangen","Et brætspil til børnene","Noget varmt at drikke"],
     answer: 2,
     why: "Мужчина со второго этажа принёс термос с горячим чаем. Игры принесла женщина с первого этажа, а свечи были у соседей."
@@ -446,7 +446,7 @@ export const listeningMore=[
    },
    {
     q: "Hvad siger lægen om blodtrykket?",
-    options: ["Det er normalt","Det skal måles igen","Det er for højt"],
+    options: ["Det skal måles igen","Det er for højt","Det er normalt"],
     answer: 2,
     why: "Врач говорит, что давление абсолютно нормальное, поэтому серьёзной проблемы он не видит."
    },
@@ -511,7 +511,7 @@ export const listeningMore=[
    },
    {
     q: "Hvem tænker Rasmus især på, når han nævner indkøbsposerne?",
-    options: ["Ældre mennesker","Børnefamilier","Turister"],
+    options: ["Børnefamilier","Ældre mennesker","Turister"],
     answer: 1,
     why: "Расмус просит подумать о пожилых, которые не могут далеко идти с сумками. Семьи с детьми упоминала Пия, а туристов нет."
    },
@@ -523,7 +523,7 @@ export const listeningMore=[
    },
    {
     q: "Hvad bliver de enige om til sidst?",
-    options: ["At lave en prøveperiode med hjælp til butikkerne","At bygge en ny bro til fodgængere","At droppe hele ideen"],
+    options: ["At bygge en ny bro til fodgængere","At droppe hele ideen","At lave en prøveperiode med hjælp til butikkerne"],
     answer: 2,
     why: "Пия предлагает шесть месяцев пробного периода, а Расмус соглашается при условии помощи магазинам; ведущий подтверждает, что они могут договориться об эксперименте."
    }
@@ -563,7 +563,7 @@ export const listeningMore=[
    },
    {
     q: "Hvad var det største problem med leveringen?",
-    options: ["Mændene var uvenlige","Sofaen kom først efter det lovede tidsrum","Sofaen kom ikke den dag, der var aftalt"],
+    options: ["Mændene var uvenlige","Sofaen kom ikke den dag, der var aftalt","Sofaen kom først efter det lovede tidsrum"],
     answer: 2,
     why: "Диван обещали с восьми до двенадцати, а привезли только в два. Рабочие были приветливыми, а день был назван верно, во вторник."
    },
@@ -575,13 +575,13 @@ export const listeningMore=[
    },
    {
     q: "Hvordan løste butikken problemet med pletten?",
-    options: ["De sendte en medarbejder, som gjorde sofaen ren","De gav ham pengene tilbage","De byttede sofaen med en ny"],
+    options: ["De byttede sofaen med en ny","De sendte en medarbejder, som gjorde sofaen ren","De gav ham pengene tilbage"],
     answer: 1,
     why: "Служба поддержки ответила на следующий день и прислала сотрудника, который бесплатно убрал пятно. Возврата денег и замены дивана не было."
    },
    {
     q: "Hvad råder kunden andre til?",
-    options: ["At vælge en anden farve end han selv gjorde","At regne med, at leveringen kan blive forsinket","At købe en sofa i en anden butik"],
+    options: ["At vælge en anden farve end han selv gjorde","At købe en sofa i en anden butik","At regne med, at leveringen kan blive forsinket"],
     answer: 2,
     why: "В конце он рекомендует диван, но советует учитывать возможную задержку доставки. Другой магазин и другой цвет не предлагаются."
    }

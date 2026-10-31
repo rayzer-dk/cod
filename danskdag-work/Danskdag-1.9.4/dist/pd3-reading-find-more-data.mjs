@@ -370,7 +370,7 @@ export const readingExamFindMore = [
     title: 'Kollegiet Åparken',
     paragraphs: [
      'Kollegiet Åparken har hundrede og tyve værelser til studerende og unge under uddannelse. Hvert værelse har eget bad, og køkkenet deles af otte beboere på hver gang. Huslejen inkluderer vand, varme og internet, men ikke el, som man betaler efter forbrug.',
-     'Når man flytter ind, får man udleveret nøgle og adgangskort til fælleslokalerne på kontoret mellem ti og tolv. Man skal selv medbringe sengetøj og køkkenting, men kollegiet har en byttehylde i kælderen, hvor beboerne efterlader det, de ikke skal bruge mere.',
+     'Når man flytter ind, får man udleveret nøgle og adgangskort til fælleslokalerne på kontoret mellem ti og tolv. Man skal selv medbringe sengetøj og køkkenting, men kollegiet har en byttehylde i kælderen, hvor beboerne efterlader det, de ikke skal bruge mere. Cykler kan stilles i cykelskuret bag huset, og der er en vaskekælder med fire vaskemaskiner, som kan bookes på en tavle ved indgangen.',
      'Beboerrådet arrangerer en filmaften hver torsdag i fælleslokalet, og alle beboere kan foreslå en film. Efter klokken 22 skal der være ro i opgangene, og fester skal anmeldes til beboerrådet på forhånd. Hvis man vil have gæster til at overnatte, må de højst blive tre nætter i træk.'
     ]
    },

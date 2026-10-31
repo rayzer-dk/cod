@@ -1,4 +1,6 @@
-# Danskdag 1.9.4
+# Danskdag 1.9.5
+
+Six distinct PD3 reading sets: see `docs/release-1.9.5.md`.
 
 PD3 mock exam and dictation-error review cards: see `docs/release-1.9.4.md`.
 

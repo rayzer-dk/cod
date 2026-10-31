@@ -170,7 +170,7 @@ export const readingExamFindMore = [
     paragraphs: [
      'Aftenskolen i Søndersø har åbnet for tilmelding til efterårets hold. Der er kurser i fotografering, spansk for begyndere, keramik og madlavning fra det sydlige Europa. De fleste hold mødes en aften om ugen i ti uger, og der er plads til tolv deltagere på hvert hold. Man kan tilmelde sig på skolens hjemmeside eller ved at komme forbi kontoret.',
      'Kursusgebyret skal betales, når man tilmelder sig, og det dækker undervisningen, men ikke materialerne. Til keramikholdet koster ler og glasur ekstra, og man betaler direkte til læreren. Hvis et hold ikke får nok deltagere, bliver det aflyst, og så får man hele gebyret tilbage.',
-     'Hvis man bliver forhindret i at deltage, kan man ikke få gebyret tilbage, men man kan overdrage sin plads til en anden. Mange hold har ventelister, så det er rart, hvis pladsen bliver brugt. Undervisningen foregår på skolen i de gamle klasseværelser, og de fleste hold slutter med en lille udstilling eller en fælles middag på sidste aften.'
+     'Hvis man bliver forhindret i at deltage, kan man ikke få gebyret tilbage, men man kan overdrage sin plads til en anden. Mange hold har ventelister, så det er rart, hvis pladsen bliver brugt. Undervisningen foregår på skolen i de gamle klasseværelser, og de fleste hold slutter med en lille udstilling eller en fælles middag på den sidste aften.'
     ]
    },
    {
@@ -204,14 +204,14 @@ export const readingExamFindMore = [
     id: 's10',
     title: 'Haveforeningen Lærkehaven',
     paragraphs: [
-     'Haveforeningen Lærkehaven har lige nu fire ledige haver. Hver have er på cirka tre hundrede kvadratmeter og har et lille havehus. Interesserede kan skrive sig på ventelisten, men der er cirka to års ventetid. Man skal være medlem af foreningen for at få en have, og medlemmerne betaler et årligt kontingent. Når man overtager en have, betaler man den tidligere ejer for havehuset og beplantningen, og prisen bliver fastsat af en uvildig vurderingsmand.',
+     'Haveforeningen Lærkehaven har i alt fyrre haver. Hver have er på cirka tre hundrede kvadratmeter og har et lille havehus. Interesserede kan skrive sig på ventelisten, men der er cirka to års ventetid. Man skal være medlem af foreningen for at få en have, og medlemmerne betaler et årligt kontingent. Når man overtager en have, betaler man den tidligere ejer for havehuset og beplantningen, og prisen bliver fastsat af en uvildig vurderingsmand.',
      'Alle medlemmer skal deltage i fællesarbejdet to gange om året, hvor man klipper hække, rydder stier og gør fælleshuset rent. Hvis man ikke kan møde op, kan man betale et beløb i stedet. Græsset i haven skal slås mindst hver anden uge i sommerhalvåret, og hækken må ikke være højere end halvanden meter.',
      'Om sommeren holder foreningen sankthansaften med bål og fælles aftensmad på græsplænen foran fælleshuset. Alle er velkomne, også gæster, og børnene kan lege på legepladsen. Foreningen har en regel om, at hunde skal være i snor, og at man ikke må tænde bål i haverne uden for fælles arrangementer.'
     ]
    }
   ],
   questions: [
-   {id: 'find-4-q1', q: 'Hvor kan man læse, at man skal aflyse en aftale dagen før for ikke at få en ekstra regning?', section: 's1', evidence: 'give afbud senest dagen før, ellers skal man betale et gebyr', why: 'В разделе о стоматологической клинике: отменить приём нужно не позднее чем за день, иначе придётся заплатить сбор.'},
+   {id: 'find-4-q1', q: 'Hvor kan man læse, at man skal melde fra dagen før for ikke at få en ekstra regning?', section: 's1', evidence: 'give afbud senest dagen før, ellers skal man betale et gebyr', why: 'В разделе о стоматологической клинике: отменить приём нужно не позднее чем за день, иначе придётся заплатить сбор.'},
    {id: 'find-4-q2', q: 'Hvor står der, at man får en påmindelse om sin aftale to dage før?', section: 's1', evidence: 'sender en påmindelse på sms to dage før hver tid', why: 'В разделе о стоматологической клинике: за два дня до каждого приёма приходит напоминание по смс. В разделе о почте смс приходит с кодом для автомата, а не с напоминанием.'},
    {id: 'find-4-q3', q: 'Hvor står der, at man kan få en snak om sin nye medicin uden at have aftalt en tid?', section: 's2', evidence: 'man behøver ikke at bestille tid', why: 'В разделе об аптеке: бесплатная беседа о новом лекарстве занимает около пятнадцати минут, и записываться заранее не нужно.'},
    {id: 'find-4-q4', q: 'Hvor står der, at man kan få målt sit blodtryk?', section: 's3', evidence: 'få målt sit blodtryk', why: 'В разделе о доме здоровья: в день открытых дверей можно измерить давление, поговорить с медсестрой и получить советы по физической активности.'},
@@ -264,7 +264,7 @@ export const readingExamFindMore = [
     id: 's4',
     title: 'Fritidsklubben Fyret',
     paragraphs: [
-     'Fritidsklubben Fyret er et tilbud til børn og unge fra fjerde til syvende klasse. Klubben holder åbent hver eftermiddag fra klokken fjorten til atten, men onsdag er den forbeholdt de ældste i sjette og syvende klasse. Der er billard, bordfodbold og et værksted med træklodser og værktøj.',
+     'Fritidsklubben Fyret er et tilbud til børn og unge fra fjerde til syvende klasse. Klubben holder åbent hver eftermiddag fra klokken fjorten til atten, men om onsdagen er den forbeholdt de ældste i sjette og syvende klasse. Der er billard, bordfodbold og et værksted med træklodser og værktøj.',
      'Medlemskabet koster hundrede kroner om året, og det dækker også udflugter. Hvis familiens økonomi er presset, kan man søge om nedsat pris hos klubbens leder. Forældre er velkomne til at kigge forbi, men de bedes give personalet besked, så de unge ikke bliver forstyrret under en aktivitet.',
      'En gang om måneden holder klubben en aften med film og pizza. De unge, der har lyst, kan hjælpe med at lave maden og vælge filmen. Klubben har regler om, at mobiltelefoner skal ligge i en kasse under spil og værkstedsarbejde, og at man skal sige til, før man går hjem. Personalet ringer til forældrene, hvis en ung udebliver fra en aftalt aktivitet.'
     ]
@@ -327,19 +327,19 @@ export const readingExamFindMore = [
   questions: [
    {id: 'find-5-q1', q: 'Hvor kan man læse om et sted, der leder efter folk, som vil besøge ensomme mennesker?', section: 's1', evidence: 'frivillige besøgsvenner, som vil bruge et par timer om ugen', why: 'В разделе о центре для пожилых: центр ищет добровольцев-«друзей по визитам», которые будут по паре часов в неделю навещать одиноких пожилых людей.'},
    {id: 'find-5-q2', q: 'Hvor står der, hvad man skal gøre, hvis man ikke selv kan komme hen til et sted?', section: 's1', evidence: 'ringe og høre om kørselsordningen', why: 'В разделе о центре для пожилых: тем, кто не может добраться сам, нужно позвонить и узнать о системе развозки.'},
-   {id: 'find-5-q3', q: 'Hvor står der, at man får en rabat, hvis der skal skiftes nogle dele?', section: 's2', evidence: 'man får en rabat på reservedele', why: 'В разделе о велосипедной мастерской: после осеннего осмотра дают скидку на запчасти, если что-то нужно заменить.'},
+   {id: 'find-5-q3', q: 'Hvor står der, at man får en rabat, hvis der skal skiftes nogle dele?', section: 's2', evidence: 'man får en rabat på reservedele', why: 'В разделе о велосипедной мастерской: при предзимнем осмотре дают скидку на запчасти, если что-то нужно заменить.'},
    {id: 'find-5-q4', q: 'Hvor kan man læse, at ting, som ingen henter, til sidst bliver solgt?', section: 's2', evidence: 'bliver solgt til dækning af regningen', why: 'В разделе о велосипедной мастерской: велосипеды, которые не забрали в течение трёх месяцев, продают в счёт оплаты, но сначала мастерская пытается связаться с владельцем.'},
    {id: 'find-5-q5', q: 'Hvor står der, at forældrene selv skal medbringe nogle ting til de mindste børn?', section: 's3', evidence: 'forældrene skal selv sørge for bleer og skiftetøj', why: 'В разделе о яслях: родители сами должны позаботиться о подгузниках и сменной одежде.'},
    {id: 'find-5-q6', q: 'Hvor står der, at telefoner ikke må bruges under bestemte aktiviteter?', section: 's4', evidence: 'mobiltelefoner skal ligge i en kasse under spil og værkstedsarbejde', why: 'В разделе о молодёжном клубе: во время игр и работы в мастерской мобильные телефоны должны лежать в ящике.'},
    {id: 'find-5-q7', q: 'Hvor kan man læse, at vandet ikke er tilgængeligt hele dagen?', section: 's5', evidence: 'Vandet bliver lukket fra klokken otte til femten på hverdage', why: 'В разделе о ремонте ванных комнат: по будням с восьми до пятнадцати часов воду отключают.'},
    {id: 'find-5-q8', q: 'Hvor står der, at man skal give sin nøgle til en anden, hvis man ikke er hjemme, når håndværkerne kommer?', section: 's5', evidence: 'aflevere en nøgle til viceværten', why: 'В разделе о ремонте ванных комнат: тем, кого не будет дома, нужно сдать ключ коменданту, чтобы рабочие попали в квартиру.'},
    {id: 'find-5-q9', q: 'Hvor kan man læse, at en virksomhed retter fejl uden ekstra betaling i flere år efter arbejdet?', section: 's6', evidence: 'to års garanti på alt arbejde', why: 'В разделе о ремонтной фирме: фирма даёт двухлетнюю гарантию на все работы и исправляет ошибки бесплатно.'},
-   {id: 'find-5-q10', q: 'Hvor står der, at en bestilling af sæder kun gælder indtil kort før begyndelsen?', section: 's7', evidence: 'reservationen gælder til femten minutter før filmen begynder', why: 'В разделе о кинотеатре: бронь мест действует до пятнадцати минут до начала фильма.'},
+   {id: 'find-5-q10', q: 'Hvor står der, at en pladsreservation kun gælder indtil kort før filmen begynder?', section: 's7', evidence: 'reservationen gælder til femten minutter før filmen begynder', why: 'В разделе о кинотеатре: бронь мест действует до пятнадцати минут до начала фильма.'},
    {id: 'find-5-q11', q: 'Hvor kan man læse, at man gerne må tage noget at drikke med ind?', section: 's7', evidence: 'man må gerne tage drikkevarer med ind i salen', why: 'В разделе о кинотеатре: напитки можно проносить в зал, а горячую еду нельзя.'},
    {id: 'find-5-q12', q: 'Hvor står der, at man selv skal gøre rent, hvis man ikke har bestilt hjælp til det?', section: 's8', evidence: 'ellers skal lejeren selv gøre rent', why: 'В разделе о летних домах: итоговую уборку можно заказать за фиксированную плату, иначе арендатор убирает сам перед отъездом.'},
    {id: 'find-5-q13', q: 'Hvor kan man læse, at man skal betale ekstra, hvis man køber sin billet ombord?', section: 's9', evidence: 'et tillæg på tyve kroner', why: 'В разделе о поездах: за билет, купленный в поезде, берут доплату в двадцать крон.'},
-   {id: 'find-5-q14', q: 'Hvor står der, at man kan træne sig i at tale med en mulig arbejdsgiver?', section: 's10', evidence: 'øve en jobsamtale', why: 'В разделе о центре поиска работы: там помогут написать резюме, потренироваться в собеседовании и найти вакансии.'},
-   {id: 'find-5-q15', q: 'Hvor kan man læse, at man kan give sine papirer direkte til dem, der leder efter medarbejdere?', section: 's10', evidence: 'aflevere deres CV direkte til virksomhederne', why: 'В разделе о центре поиска работы: раз в месяц приходят предприятия, и участники могут отдать им своё резюме напрямую.'}
+   {id: 'find-5-q14', q: 'Hvor står der, at man kan øve sig i at tale med en mulig arbejdsgiver?', section: 's10', evidence: 'øve en jobsamtale', why: 'В разделе о центре поиска работы: там помогут написать резюме, потренироваться в собеседовании и найти вакансии.'},
+   {id: 'find-5-q15', q: 'Hvor kan man læse, at man kan give sine ansøgningspapirer direkte til dem, der leder efter medarbejdere?', section: 's10', evidence: 'aflevere deres CV direkte til virksomhederne', why: 'В разделе о центре поиска работы: раз в месяц приходят предприятия, и участники могут отдать им своё резюме напрямую.'}
   ]
  },
  {
@@ -360,7 +360,7 @@ export const readingExamFindMore = [
     id: 's2',
     title: 'Mobilselskabet Telefix',
     paragraphs: [
-     'Telefix har nye abonnementer til mobiltelefon. Der er tre størrelser, som adskiller sig ved mængden af data, og alle abonnementer inkluderer ubegrænsede opkald i Danmark. Man kan ændre sit abonnement, når man vil, og den nye pris gælder fra næste måned.',
+     'Telefix har nye abonnementer til mobiltelefon. Der er tre størrelser, hvor mængden af data er forskellig, og alle abonnementer inkluderer ubegrænsede opkald i Danmark. Man kan ændre sit abonnement, når man vil, og den nye pris gælder fra næste måned.',
      'Når man bliver kunde, kan man få en ny telefon på afbetaling. Så betaler man hver måned en lille del, og aftalen løber i tyve måneder. Hvis man vil afslutte aftalen tidligere, skal man betale resten af beløbet. Selve abonnementet kan opsiges med tredive dages varsel.',
      'Hvis man rejser til udlandet, skal man huske at tjekke, om data i udlandet er med i abonnementet. Telefix sender en sms, når man krydser grænsen, med oplysninger om, hvad opkald og data koster. Kundeservice kan kontaktes på telefon eller i en chat, og nye kunder får hjælp til at flytte kontakter og billeder fra den gamle telefon.'
     ]
@@ -416,7 +416,7 @@ export const readingExamFindMore = [
     paragraphs: [
      'Kommunen rydder sne og salter vejene om vinteren, men der er en fast rækkefølge. Først bliver de store veje og busruter ryddet, derefter de veje, hvor der kører mange cyklister, og til sidst boligvejene. Det kan derfor tage et par dage, før sneen er væk på de mindre veje.',
      'I Vestby har husejerne ansvaret for at fjerne sne og is på fortovet foran deres ejendom. Fortovet skal være ryddet senest klokken syv om morgenen, og hvis det sner i løbet af dagen, skal man rydde igen. I lejeboliger er det ofte viceværten, der gør det, men det står i lejekontrakten.',
-     'Der står gule kasser med salt og grus ved de fleste busstoppesteder og ved trapper i parken. Alle borgere må tage en spand salt til eget brug, men man må ikke tage mere end to spande ad gangen, så der er nok til de andre. Man kan melde glatte steder via kommunens app, og så sender kommunen en bil ud, så hurtigt det er muligt.'
+     'Der står gule kasser med salt og grus ved de fleste busstoppesteder og ved trapper i parken. Alle borgere må tage salt til eget brug, men man må ikke tage mere end to spande ad gangen, så der er nok til de andre. Man kan melde glatte steder via kommunens app, og så sender kommunen en bil ud, så hurtigt det er muligt.'
     ]
    },
    {

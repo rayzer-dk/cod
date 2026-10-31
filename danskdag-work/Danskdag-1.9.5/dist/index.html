@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="uk" data-offline="true">
+<html lang="uk" data-offline="false">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="theme-color" content="#192720"><meta name="application-name" content="Danskdag"><meta name="danskdag-version" content="1.9.4">
-<title>Danskdag 1.9.4 — датский без интернета</title>
+<meta name="danskdag-script-sha256" content="sha256-2dtY666ZTp+uX89yy7NJs4GR+gtPrVn/Spv7nFwPfLs=">
+<meta name="theme-color" content="#192720"><meta name="application-name" content="Danskdag"><meta name="danskdag-version" content="1.9.5">
+<title>Danskdag — датский каждый день</title><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48ZGVmcz48Y2xpcFBhdGggaWQ9ImFwcCI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0NCIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNhcHApIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgZmlsbD0iI0M4MTAyRSIvPjxwYXRoIGQ9Ik01NiAwaDI0djE5Mkg1NnogTTAgODRoMTkydjI0SDB6IiBmaWxsPSIjZmZmIi8+PC9nPjwvc3ZnPgo=" type="image/svg+xml">
 <style>:root{
   --reading-size:18px;
@@ -36412,7 +36412,7 @@ function wordCard(p,s){const difficult=isMarked(p,s.difficult),saved=isMarked(p,
 function dictionary(c){const s=c.state,tabs=[['file',__danskdagText("Из твоего файла","Із твого файлу")],['all',__danskdagText("Все слова","Усі слова")],['illustrated',__danskdagText("С картинками","Із зображеннями")],['personal',__danskdagText("Добавленные","Додані")],['difficult',__danskdagText("Не запомнил","Не запам’ятав")],['saved',__danskdagText("Избранное","Обране")],['check',__danskdagText("Проверить записи","Перевірити записи")]];return `${heading(__danskdagText("Слова становятся твоими.","Слова стають твоїми."),__danskdagText("Твои переводы, личные ассоциации и фразы в контексте.","Твої переклади, особисті асоціації та фрази в контексті."),btn(`${icon('plus')}${__danskdagText(" Добавить слово"," Додати слово")}`,'add-word'))}<div class="reference-shortcuts">${btn(__danskdagText("Лексика по ситуациям","Лексика за ситуаціями"),'open-daily','secondary')}${btn(__danskdagText("Классы частых слов","Частини мови частих слів"),'open-common','secondary')}${btn(__danskdagText("Таблица глаголов","Таблиця дієслів"),'open-verbs','secondary')}</div><button class="wordlab-entry compact" data-page="wordlab"><span class="wordlab-entry-icon">${icon('layers')}${__danskdagText("</span><span><b>Значения и классы слов</b><small>Разбери слово в контексте и проверь себя</small></span>","</span><span><b>Значення й класи слів</b><small>Розбери слово в контексті й перевір себе</small></span>")}${icon('arrow')}</button><div class="import-strip"><span class="file-icon">${icon('cards')}${__danskdagText("</span><div><b>Твои учебные словари</b><p>Первый файл: ","</span><div><b>Твої навчальні словники</b><p>Перший файл: ")}${importSummary.imported}${__danskdagText(" записей · два новых словаря: "," записів · два нові словники: ")}${documentImportSummary.importedEntries}${__danskdagText(" проверенных слов и выражений · повторы объединены</p></div><button class=\"text-button\" data-action=\"start-file\">Тренировать "," перевірених слів і виразів · повтори об’єднано</p></div><button class=\"text-button\" data-action=\"start-file\">Тренувати ")}${icon('arrow')}${__danskdagText("</button></div><div class=\"filter-tabs\" role=\"group\" aria-label=\"Группа слов\">","</button></div><div class=\"filter-tabs\" role=\"group\" aria-label=\"Група слів\">")}${tabs.map(([id,label])=>`<button class="${c.wordFilter===id?'active':''}" data-action="word-filter" data-value="${id}" aria-pressed="${c.wordFilter===id}">${label}</button>`).join('')}</div>${c.wordFilter==='check'?`<div class="notice warning">${icon('info')}${__danskdagText("<span>Неоднозначные записи и заметки без надёжного датского написания не используются в заданиях. Верное слово можно добавить вручную.</span></div><div class=\"source-review\">","<span>Неоднозначні записи й нотатки без надійного данського написання не використовуються в завданнях. Правильне слово можна додати вручну.</span></div><div class=\"source-review\">")}${[...needsReview,...documentNeedsReview].slice(0,c.wordLimit).map(p=>`<details class="panel"><summary>${h(String(p.original||__danskdagText("Запись","Запис")).slice(0,150))}</summary><p>${h(p.original)}</p><small>${h(p.note||p.reason)}</small></details>`).join('')}</div>${needsReview.length+documentNeedsReview.length>c.wordLimit?`<div class="load-more">${btn(__danskdagText("Показать ещё","Показати ще"),'more-words','secondary')}</div>`:''}`:`<div class="dictionary-toolbar"><label class="search-box">${icon('search')}<input id="word-search" type="search" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" enterkeyhint="search" value="${h(c.query)}${__danskdagText("\" placeholder=\"Слово или перевод\" aria-label=\"Поиск слова\"></label><span>","\" placeholder=\"Слово або переклад\" aria-label=\"Пошук слова\"></label><span>")}${count(c.words.length)}</span>${btn(__danskdagText("Тренировать группу","Тренувати групу"),'train-filter','secondary')}</div><div class="word-grid">${c.words.slice(0,c.wordLimit).map(p=>wordCard(p,s)).join('')||empty(__danskdagText("Пока ничего нет.","Поки нічого немає."),__danskdagText("Добавь слово или измени поиск.","Додай слово або зміни пошук."))}</div>${c.words.length>c.wordLimit?`<div class="load-more">${btn(__danskdagText("Показать ещё 24","Показати ще 24"),'more-words','secondary')}</div>`:''}`}`;}
 function review(c){const s=c.state;return `${heading(__danskdagText("Закрепляй в нужный момент.","Закріплюй у потрібний момент."),__danskdagText("Небольшие наборы с переходом от узнавания к самостоятельному ответу.","Невеликі набори з переходом від упізнавання до самостійної відповіді."))}${renderMemoryPlan(c)}${renderMemoryStats(c)}${__danskdagText("<div class=\"section-title space-top\"><h2>Выбрать материал самому</h2></div><div class=\"review-options\"><button class=\"quick-card peach\" data-action=\"practice-difficult\">","<div class=\"section-title space-top\"><h2>Вибрати матеріал самостійно</h2></div><div class=\"review-options\"><button class=\"quick-card peach\" data-action=\"practice-difficult\">")}${icon('brain')}${__danskdagText("<span><b>Не запомнил</b><small>","<span><b>Не запам’ятав</b><small>")}${count(s.difficult.length)}${__danskdagText(" отмечено вручную</small></span>"," позначено вручну</small></span>")}${icon('arrow')}</button><button class="quick-card mint" data-action="practice-saved">${icon('bookmark')}${__danskdagText("<span><b>Избранное</b><small>Сохранённые тобой слова</small></span>","<span><b>Обране</b><small>Збережені тобою слова</small></span>")}${icon('arrow')}</button></div><div class="button-row">${btn(__danskdagText("Знакомые задания","Знайомі завдання"),'practice-known','secondary')}${btn(__danskdagText("Слова из файла","Слова з файлу"),'start-file','secondary')}${__danskdagText("</div><p class=\"field-note\">Для этих тренировок действует выбранный в настройках ручной режим. Они доступны и после дневного предела нового материала.</p>","</div><p class=\"field-note\">Для цих тренувань діє вибраний у налаштуваннях ручний режим. Вони доступні й після денного обмеження нового матеріалу.</p>")}${c.due.length?`${__danskdagText("<div class=\"section-title space-top\"><h2>Сейчас в повторении</h2></div><div class=\"word-grid\">","<div class=\"section-title space-top\"><h2>Зараз на повторенні</h2></div><div class=\"word-grid\">")}${c.due.slice(0,8).map(p=>wordCard(p,s)).join('')}</div>`:''}`;}
 function progress(c){const s=c.state,learner=getLearnerLevel(s.xp),awards=getAchievements(s),done=Object.keys(s.completed).filter(id=>lessonById[id]);return `${heading(__danskdagText("Видно, что уже получилось.","Видно, що вже вдалося."),__danskdagText("Пройденные темы, накопленные XP и достижения сохраняются.","Пройдені теми, накопичені XP і досягнення зберігаються."))}<div class="level-panel"><div class="level-medal">${icon('spark')}<b>${learner.level}${__danskdagText("</b></div><div><span class=\"eyebrow\">УРОВЕНЬ ОПЫТА</span><h2>","</b></div><div><span class=\"eyebrow\">РІВЕНЬ ДОСВІДУ</span><h2>")}${h(learner.name)}</h2><p>${learner.into} / ${learner.next}${__danskdagText(" XP до следующего</p><div class=\"meter\"><span style=\"width:"," XP до наступного</p><div class=\"meter\"><span style=\"width:")}${learner.progress*100}%"></span></div></div><span class="level-total">${s.xp}${__danskdagText("<small>ВСЕГО XP</small></span></div><div class=\"stats-grid\">","<small>УСЬОГО XP</small></span></div><div class=\"stats-grid\">")}${[[done.length,__danskdagText("уроков пройдено","уроків пройдено"),'book'],[done.filter(id=>mastered(lessonById[id],s)).length,__danskdagText("закреплено на 80%+","закріплено на 80%+"),'check'],[activeStreak(s),__danskdagText("дней в текущей серии","днів у поточній серії"),'flame'],[Object.keys(s.reviews).length,__danskdagText("фраз в повторении","фраз у повторенні"),'cards']].map(([n,label,ic])=>`<div class="panel stat-card">${icon(ic)}<b>${n}</b><span>${label}</span></div>`).join('')}</div>${renderCompletedProgress(s)}${pd3ProgressSection(s.pd3,c.pd3Data)}${spellProgressLine(c.spell)}${renderMemoryStats(c)}${__danskdagText("<div class=\"section-title space-top\"><h2>Достижения</h2><span>","<div class=\"section-title space-top\"><h2>Досягнення</h2><span>")}${awards.filter(a=>a.earned).length} / ${awards.length}</span></div><div class="achievement-grid">${awards.map(b=>`<article class="achievement panel ${b.earned?'earned':''}"><span class="achievement-icon">${icon(b.icon)}</span><div><h3>${h(b.title)}</h3><p>${h(b.description)}</p><div class="meter"><span style="width:${b.progress/b.target*100}%"></span></div><small>${b.progress} / ${b.target}${b.earned?__danskdagText(" · Получено"," · Отримано"):''}</small></div></article>`).join('')}${__danskdagText("</div><div class=\"section-title space-top\"><h2>Твоя карта тем</h2></div><div class=\"topic-progress\">","</div><div class=\"section-title space-top\"><h2>Твоя карта тем</h2></div><div class=\"topic-progress\">")}${Object.keys(levels).map(level=>{const ls=lessons.filter(l=>l.level===level),n=ls.filter(l=>mastered(l,s)).length;return `<button class="panel topic-progress-row" data-action="open-level" data-value="${level}"><b>${level}</b><span>${levels[level].name}</span><div class="meter"><span style="width:${n/ls.length*100}%"></span></div><small>${n} / ${ls.length}</small>${icon('arrow')}</button>`;}).join('')}${__danskdagText("</div><p class=\"fine-print\">Уровень опыта и сложность A1–C1 — разные показатели. Можно сразу открыть подходящую тему.</p>","</div><p class=\"fine-print\">Рівень досвіду й складність A1–C1 — різні показники. Можна одразу відкрити відповідну тему.</p>")}`;}
-function settings(c){const s=c.state;return `${heading(__danskdagText("Удобно читать. Удобно учиться.","Зручно читати. Зручно вчитися."),__danskdagText("Настройки применяются сразу и сохраняются.","Налаштування застосовуються відразу й зберігаються."))}${c.cloudPlan||''}${__danskdagText("<div class=\"settings-grid\"><section class=\"panel settings-card\"><h2>Текст и оформление</h2><label for=\"font-size\">Размер основного текста</label><select id=\"font-size\" data-setting=\"fontSize\">","<div class=\"settings-grid\"><section class=\"panel settings-card\"><h2>Текст і оформлення</h2><label for=\"font-size\">Розмір основного тексту</label><select id=\"font-size\" data-setting=\"fontSize\">")}${[16,18,20].map(n=>`<option value="${n}" ${s.settings.fontSize===n?'selected':''}>${n} px${n===18?__danskdagText(" — стандартный"," — стандартний"):''}</option>`).join('')}${__danskdagText("</select><p class=\"text-preview\" lang=\"da\">Jeg lærer dansk i mit eget tempo.<small lang=\"ru\">Я учу датский в своём темпе.</small></p><label for=\"theme\">Тема</label><select id=\"theme\" data-setting=\"theme\"><option value=\"light\" ","</select><p class=\"text-preview\" lang=\"da\">Jeg lærer dansk i mit eget tempo.<small lang=\"ru\">Я вчу данську у своєму темпі.</small></p><label for=\"theme\">Тема</label><select id=\"theme\" data-setting=\"theme\"><option value=\"light\" ")}${s.settings.theme==='light'?'selected':''}${__danskdagText(">Светлая</option><option value=\"dark\" ",">Світла</option><option value=\"dark\" ")}${s.settings.theme==='dark'?'selected':''}${__danskdagText(">Тёмная</option></select><label for=\"goal\">Дневная цель</label><select id=\"goal\" data-setting=\"goal\">",">Темна</option></select><label for=\"goal\">Денна ціль</label><select id=\"goal\" data-setting=\"goal\">")}${[30,60,100].map(n=>`<option value="${n}" ${s.settings.goal===n?'selected':''}>${n} XP</option>`).join('')}${__danskdagText("</select><label for=\"new-limit\">Новых заданий в день · практика памяти</label><select id=\"new-limit\" data-setting=\"newPerDay\">","</select><label for=\"new-limit\">Нових завдань на день · практика пам’яті</label><select id=\"new-limit\" data-setting=\"newPerDay\">")}${[3,6,10].map(n=>`<option value="${n}" ${s.settings.newPerDay===n?'selected':''}>${n}${__danskdagText(" новых</option>"," нових</option>")}`).join('')}${__danskdagText("</select><p class=\"field-note\">Повторения идут первыми. Новое вводится небольшими порциями, до двух за один набор. Ручные уроки не ограничены этим планом.</p><h3 class=\"space-top\">Режим упражнений</h3>","</select><p class=\"field-note\">Повторення йдуть першими. Нове вводиться невеликими порціями, до двох за один набір. Ручні уроки не обмежені цим планом.</p><h3 class=\"space-top\">Режим вправ</h3>")}${modes(s)}${__danskdagText("<p class=\"field-note\">С вариантами — лёгкий вход. Смешанный — ещё письмо, аудирование и сборка. Без подсказок — самостоятельный ввод, включая B2 и C1.</p></section><div class=\"settings-column\"><section class=\"panel settings-card\"><h2>Произношение</h2><p class=\"voice-status ","<p class=\"field-note\">Із варіантами — легкий початок. Змішаний — ще письмо, аудіювання й складання. Без підказок — самостійне введення, включно з B2 і C1.</p></section><div class=\"settings-column\"><section class=\"panel settings-card\"><h2>Вимова</h2><p class=\"voice-status ")}${getDanishVoices().length?'available':''}">${icon('sound')}${h(voiceStatus(s.settings.voiceUri))}${__danskdagText("</p><label for=\"voice\">Датский голос устройства</label><select id=\"voice\" data-setting=\"voiceUri\">","</p><label for=\"voice\">Данський голос пристрою</label><select id=\"voice\" data-setting=\"voiceUri\">")}${voiceOptions(s.settings.voiceUri)}${__danskdagText("</select><label for=\"rate\">Скорость речи</label><select id=\"rate\" data-setting=\"rate\">","</select><label for=\"rate\">Швидкість мовлення</label><select id=\"rate\" data-setting=\"rate\">")}${[[0.7,__danskdagText("Медленно","Повільно")],[0.85,__danskdagText("Комфортно","Комфортно")],[1,__danskdagText("Обычная скорость","Звичайна швидкість")]].map(([v,n])=>`<option value="${v}" ${s.settings.rate===v?'selected':''}>${n}</option>`).join('')}</select>${btn(`${icon('sound')}${__danskdagText(" Проверить голос"," Перевірити голос")}`,'test-sound','secondary')}${__danskdagText("<button class=\"btn secondary\" data-page=\"pronunciation\">Практика произношения</button><p class=\"field-note\">Нужен датский голос браузера или системы. Если его нет, задания доступны с текстом. В разделе произношения можно записать себя и сравнить вручную. Запись не отправляется на сервер; автоматической оценки акцента нет. Кириллические записи из заметок не выдаются за точную транскрипцию.</p></section><section class=\"panel settings-card\"><h2>Твой прогресс</h2><p>","<button class=\"btn secondary\" data-page=\"pronunciation\">Практика вимови</button><p class=\"field-note\">Потрібен данський голос браузера або системи. Якщо його немає, завдання доступні з текстом. У розділі вимови можна записати себе й порівняти вручну. Запис не надсилається на сервер; автоматичної оцінки акценту немає. Кириличні записи з нотаток не видаються за точну транскрипцію.</p></section><section class=\"panel settings-card\"><h2>Твій прогрес</h2><p>")}${c.offlineEdition?__danskdagText("Сохраняются уроки, ошибки, избранное, личные слова и настройки в этом браузере. Облачной синхронизации у HTML-файла нет. Для переноса результатов выгрузи JSON и загрузи его на другом устройстве.","Зберігаються уроки, помилки, обране, особисті слова й налаштування в цьому браузері. Хмарної синхронізації в HTML-файлу немає. Для перенесення результатів вивантаж JSON і завантаж його на іншому пристрої."):__danskdagText("Сохраняются уроки, ошибки, избранное, личные слова и настройки. Синхронизация работает в опубликованном приложении после входа в тот же аккаунт. При отсутствии сети остаётся копия устройства.","Зберігаються уроки, помилки, обране, особисті слова й налаштування. Синхронізація працює в опублікованому застосунку після входу в той самий акаунт. За відсутності мережі залишається копія пристрою.")}</p><div class="button-row">${btn(`${icon('download')}${__danskdagText(" Выгрузить"," Експортувати")}`,'export','secondary')}${btn(`${icon('upload')}${__danskdagText(" Загрузить"," Завантажити")}`,'import','secondary')}${!c.localCopies&&c.recovery?btn(__danskdagText("Исходная копия","Початкова копія"),'export-recovery','secondary'):''}</div>${renderLocalCopies(c.localCopies)}${__danskdagText("<input id=\"progress-file\" type=\"file\" accept=\".json,application/json\" hidden><p class=\"field-note\">Очистка данных браузера удаляет локальный прогресс. JSON-файл позволяет перенести его на другое устройство.</p></section></div></div>","<input id=\"progress-file\" type=\"file\" accept=\".json,application/json\" hidden><p class=\"field-note\">Очищення даних браузера видаляє локальний прогрес. JSON-файл дозволяє перенести його на інший пристрій.</p></section></div></div>")}${c.offlineEdition?`${__danskdagText("<section class=\"panel install-panel\"><div><h3>Один HTML-файл</h3><p>На ПК открой Danskdag.html в Chrome или Edge. Для значка на рабочем столе в полном архиве есть «Создать_ярлык.cmd». На телефоне открытие локального HTML зависит от браузера; для значка приложения открой сайт и добавь его на главный экран.</p></div><a class=\"btn secondary\" href=\"","<section class=\"panel install-panel\"><div><h3>Один HTML-файл</h3><p>На ПК відкрий Danskdag.html у Chrome або Edge. Для значка на робочому столі в повному архіві є «Создать_ярлык.cmd». На телефоні відкриття локального HTML залежить від браузера; для значка застосунку відкрий сайт і додай його на головний екран.</p></div><a class=\"btn secondary\" href=\"")}${hostedUrl}${__danskdagText("\" target=\"_blank\" rel=\"noopener noreferrer\">Открыть сайт</a></section>","\" target=\"_blank\" rel=\"noopener noreferrer\">Відкрити сайт</a></section>")}`:`${__danskdagText("<section class=\"panel install-panel\"><div><h3>Значок приложения на телефоне и ПК</h3><p>На Android: меню Chrome → «Установить приложение» или «Добавить на главный экран». На iPhone: Safari → «Поделиться» → «На экран Домой». На ПК: меню браузера → «Установить страницу как приложение». Для первого запуска нужен интернет.</p><p class=\"field-note\" data-offline-status>","<section class=\"panel install-panel\"><div><h3>Значок застосунку на телефоні й ПК</h3><p>На Android: меню Chrome → «Встановити застосунок» або «Додати на головний екран». На iPhone: Safari → «Поділитися» → «На початковий екран». На ПК: меню браузера → «Встановити сторінку як застосунок». Для першого запуску потрібен інтернет.</p><p class=\"field-note\" data-offline-status>")}${h(offlineCacheMessage(c.offlineReady))}</p></div>${c.installEvent?btn(__danskdagText("Установить","Встановити"),'install','secondary'):''}</section>`}${__danskdagText("<section class=\"panel install-panel\"><div><h3>Поделиться с друзьями</h3><p>Ссылка одна, а личный прогресс у каждого свой. Если доступ закрыт, владелец разрешает вход через настройки доступа Sites.</p></div>","<section class=\"panel install-panel\"><div><h3>Поділитися з друзями</h3><p>Посилання одне, а особистий прогрес у кожного свій. Якщо доступ закрито, власник дозволяє вхід через налаштування доступу Sites.</p></div>")}${btn(__danskdagText("Копировать ссылку","Копіювати посилання"),'copy-link','secondary')}</section><p class="fine-print">Danskdag 1.9.4 · ${lessons.length} ${plural(lessons.length,[__danskdagText("урок","урок"),__danskdagText("урока","уроки"),__danskdagText("уроков","уроків")])}${__danskdagText(" · грамматика A1–C1 · личный словарь</p>"," · граматика A1–C1 · особистий словник</p>")}`;}
+function settings(c){const s=c.state;return `${heading(__danskdagText("Удобно читать. Удобно учиться.","Зручно читати. Зручно вчитися."),__danskdagText("Настройки применяются сразу и сохраняются.","Налаштування застосовуються відразу й зберігаються."))}${c.cloudPlan||''}${__danskdagText("<div class=\"settings-grid\"><section class=\"panel settings-card\"><h2>Текст и оформление</h2><label for=\"font-size\">Размер основного текста</label><select id=\"font-size\" data-setting=\"fontSize\">","<div class=\"settings-grid\"><section class=\"panel settings-card\"><h2>Текст і оформлення</h2><label for=\"font-size\">Розмір основного тексту</label><select id=\"font-size\" data-setting=\"fontSize\">")}${[16,18,20].map(n=>`<option value="${n}" ${s.settings.fontSize===n?'selected':''}>${n} px${n===18?__danskdagText(" — стандартный"," — стандартний"):''}</option>`).join('')}${__danskdagText("</select><p class=\"text-preview\" lang=\"da\">Jeg lærer dansk i mit eget tempo.<small lang=\"ru\">Я учу датский в своём темпе.</small></p><label for=\"theme\">Тема</label><select id=\"theme\" data-setting=\"theme\"><option value=\"light\" ","</select><p class=\"text-preview\" lang=\"da\">Jeg lærer dansk i mit eget tempo.<small lang=\"ru\">Я вчу данську у своєму темпі.</small></p><label for=\"theme\">Тема</label><select id=\"theme\" data-setting=\"theme\"><option value=\"light\" ")}${s.settings.theme==='light'?'selected':''}${__danskdagText(">Светлая</option><option value=\"dark\" ",">Світла</option><option value=\"dark\" ")}${s.settings.theme==='dark'?'selected':''}${__danskdagText(">Тёмная</option></select><label for=\"goal\">Дневная цель</label><select id=\"goal\" data-setting=\"goal\">",">Темна</option></select><label for=\"goal\">Денна ціль</label><select id=\"goal\" data-setting=\"goal\">")}${[30,60,100].map(n=>`<option value="${n}" ${s.settings.goal===n?'selected':''}>${n} XP</option>`).join('')}${__danskdagText("</select><label for=\"new-limit\">Новых заданий в день · практика памяти</label><select id=\"new-limit\" data-setting=\"newPerDay\">","</select><label for=\"new-limit\">Нових завдань на день · практика пам’яті</label><select id=\"new-limit\" data-setting=\"newPerDay\">")}${[3,6,10].map(n=>`<option value="${n}" ${s.settings.newPerDay===n?'selected':''}>${n}${__danskdagText(" новых</option>"," нових</option>")}`).join('')}${__danskdagText("</select><p class=\"field-note\">Повторения идут первыми. Новое вводится небольшими порциями, до двух за один набор. Ручные уроки не ограничены этим планом.</p><h3 class=\"space-top\">Режим упражнений</h3>","</select><p class=\"field-note\">Повторення йдуть першими. Нове вводиться невеликими порціями, до двох за один набір. Ручні уроки не обмежені цим планом.</p><h3 class=\"space-top\">Режим вправ</h3>")}${modes(s)}${__danskdagText("<p class=\"field-note\">С вариантами — лёгкий вход. Смешанный — ещё письмо, аудирование и сборка. Без подсказок — самостоятельный ввод, включая B2 и C1.</p></section><div class=\"settings-column\"><section class=\"panel settings-card\"><h2>Произношение</h2><p class=\"voice-status ","<p class=\"field-note\">Із варіантами — легкий початок. Змішаний — ще письмо, аудіювання й складання. Без підказок — самостійне введення, включно з B2 і C1.</p></section><div class=\"settings-column\"><section class=\"panel settings-card\"><h2>Вимова</h2><p class=\"voice-status ")}${getDanishVoices().length?'available':''}">${icon('sound')}${h(voiceStatus(s.settings.voiceUri))}${__danskdagText("</p><label for=\"voice\">Датский голос устройства</label><select id=\"voice\" data-setting=\"voiceUri\">","</p><label for=\"voice\">Данський голос пристрою</label><select id=\"voice\" data-setting=\"voiceUri\">")}${voiceOptions(s.settings.voiceUri)}${__danskdagText("</select><label for=\"rate\">Скорость речи</label><select id=\"rate\" data-setting=\"rate\">","</select><label for=\"rate\">Швидкість мовлення</label><select id=\"rate\" data-setting=\"rate\">")}${[[0.7,__danskdagText("Медленно","Повільно")],[0.85,__danskdagText("Комфортно","Комфортно")],[1,__danskdagText("Обычная скорость","Звичайна швидкість")]].map(([v,n])=>`<option value="${v}" ${s.settings.rate===v?'selected':''}>${n}</option>`).join('')}</select>${btn(`${icon('sound')}${__danskdagText(" Проверить голос"," Перевірити голос")}`,'test-sound','secondary')}${__danskdagText("<button class=\"btn secondary\" data-page=\"pronunciation\">Практика произношения</button><p class=\"field-note\">Нужен датский голос браузера или системы. Если его нет, задания доступны с текстом. В разделе произношения можно записать себя и сравнить вручную. Запись не отправляется на сервер; автоматической оценки акцента нет. Кириллические записи из заметок не выдаются за точную транскрипцию.</p></section><section class=\"panel settings-card\"><h2>Твой прогресс</h2><p>","<button class=\"btn secondary\" data-page=\"pronunciation\">Практика вимови</button><p class=\"field-note\">Потрібен данський голос браузера або системи. Якщо його немає, завдання доступні з текстом. У розділі вимови можна записати себе й порівняти вручну. Запис не надсилається на сервер; автоматичної оцінки акценту немає. Кириличні записи з нотаток не видаються за точну транскрипцію.</p></section><section class=\"panel settings-card\"><h2>Твій прогрес</h2><p>")}${c.offlineEdition?__danskdagText("Сохраняются уроки, ошибки, избранное, личные слова и настройки в этом браузере. Облачной синхронизации у HTML-файла нет. Для переноса результатов выгрузи JSON и загрузи его на другом устройстве.","Зберігаються уроки, помилки, обране, особисті слова й налаштування в цьому браузері. Хмарної синхронізації в HTML-файлу немає. Для перенесення результатів вивантаж JSON і завантаж його на іншому пристрої."):__danskdagText("Сохраняются уроки, ошибки, избранное, личные слова и настройки. Синхронизация работает в опубликованном приложении после входа в тот же аккаунт. При отсутствии сети остаётся копия устройства.","Зберігаються уроки, помилки, обране, особисті слова й налаштування. Синхронізація працює в опублікованому застосунку після входу в той самий акаунт. За відсутності мережі залишається копія пристрою.")}</p><div class="button-row">${btn(`${icon('download')}${__danskdagText(" Выгрузить"," Експортувати")}`,'export','secondary')}${btn(`${icon('upload')}${__danskdagText(" Загрузить"," Завантажити")}`,'import','secondary')}${!c.localCopies&&c.recovery?btn(__danskdagText("Исходная копия","Початкова копія"),'export-recovery','secondary'):''}</div>${renderLocalCopies(c.localCopies)}${__danskdagText("<input id=\"progress-file\" type=\"file\" accept=\".json,application/json\" hidden><p class=\"field-note\">Очистка данных браузера удаляет локальный прогресс. JSON-файл позволяет перенести его на другое устройство.</p></section></div></div>","<input id=\"progress-file\" type=\"file\" accept=\".json,application/json\" hidden><p class=\"field-note\">Очищення даних браузера видаляє локальний прогрес. JSON-файл дозволяє перенести його на інший пристрій.</p></section></div></div>")}${c.offlineEdition?`${__danskdagText("<section class=\"panel install-panel\"><div><h3>Один HTML-файл</h3><p>На ПК открой Danskdag.html в Chrome или Edge. Для значка на рабочем столе в полном архиве есть «Создать_ярлык.cmd». На телефоне открытие локального HTML зависит от браузера; для значка приложения открой сайт и добавь его на главный экран.</p></div><a class=\"btn secondary\" href=\"","<section class=\"panel install-panel\"><div><h3>Один HTML-файл</h3><p>На ПК відкрий Danskdag.html у Chrome або Edge. Для значка на робочому столі в повному архіві є «Создать_ярлык.cmd». На телефоні відкриття локального HTML залежить від браузера; для значка застосунку відкрий сайт і додай його на головний екран.</p></div><a class=\"btn secondary\" href=\"")}${hostedUrl}${__danskdagText("\" target=\"_blank\" rel=\"noopener noreferrer\">Открыть сайт</a></section>","\" target=\"_blank\" rel=\"noopener noreferrer\">Відкрити сайт</a></section>")}`:`${__danskdagText("<section class=\"panel install-panel\"><div><h3>Значок приложения на телефоне и ПК</h3><p>На Android: меню Chrome → «Установить приложение» или «Добавить на главный экран». На iPhone: Safari → «Поделиться» → «На экран Домой». На ПК: меню браузера → «Установить страницу как приложение». Для первого запуска нужен интернет.</p><p class=\"field-note\" data-offline-status>","<section class=\"panel install-panel\"><div><h3>Значок застосунку на телефоні й ПК</h3><p>На Android: меню Chrome → «Встановити застосунок» або «Додати на головний екран». На iPhone: Safari → «Поділитися» → «На початковий екран». На ПК: меню браузера → «Встановити сторінку як застосунок». Для першого запуску потрібен інтернет.</p><p class=\"field-note\" data-offline-status>")}${h(offlineCacheMessage(c.offlineReady))}</p></div>${c.installEvent?btn(__danskdagText("Установить","Встановити"),'install','secondary'):''}</section>`}${__danskdagText("<section class=\"panel install-panel\"><div><h3>Поделиться с друзьями</h3><p>Ссылка одна, а личный прогресс у каждого свой. Если доступ закрыт, владелец разрешает вход через настройки доступа Sites.</p></div>","<section class=\"panel install-panel\"><div><h3>Поділитися з друзями</h3><p>Посилання одне, а особистий прогрес у кожного свій. Якщо доступ закрито, власник дозволяє вхід через налаштування доступу Sites.</p></div>")}${btn(__danskdagText("Копировать ссылку","Копіювати посилання"),'copy-link','secondary')}</section><p class="fine-print">Danskdag 1.9.5 · ${lessons.length} ${plural(lessons.length,[__danskdagText("урок","урок"),__danskdagText("урока","уроки"),__danskdagText("уроков","уроків")])}${__danskdagText(" · грамматика A1–C1 · личный словарь</p>"," · граматика A1–C1 · особистий словник</p>")}`;}
 function renderView(page,context){return ({learn:home,grammar,dictionary,review,conversation,progress,settings,basics:c=>renderBasics(c,renderLessonCollection),pronunciation:renderPronunciation,method:renderMethod,wordlab:c=>renderWordLab(c,modes(c.state)),forms:c=>renderReference(c,renderLessonCollection),pd3:c=>c.pd3View()}[page]||home)(context);}
 
 function voiceOptions(preferred){return `${__danskdagText("<option value=\"\">Автоматически</option>","<option value=\"\">Автоматично</option>")}${getDanishVoices().map(v=>`<option value="${h(v.voiceURI)}" ${preferred===v.voiceURI?'selected':''}>${h(v.name)}</option>`).join('')}`;}
@@ -40692,6 +40692,1571 @@ return {readingExamFind,readingExamText};
 })();
 
 const __danskdag_module_81=(()=>{
+// PD3 reading data: additional Del 1 sets (find-3 to find-6). Plain data, no imports. Danish text is original learner-level text; names, firms, places, addresses and numbers are fictional.
+const readingExamFindMore = [
+ {
+  id: 'find-3',
+  title: 'Service i Nordby: find svaret',
+  minutes: 25,
+  sections: [
+   {
+    id: 's1',
+    title: 'Fitnesscentret Pulsen',
+    paragraphs: [
+     'Fitnesscentret Pulsen åbner i år en ny sal til holdtræning. Her kan man deltage i spinning, yoga og rygtræning, og alle hold er inkluderet i medlemskabet. Man skal dog booke sin plads i centrets app senest to timer før holdet starter, ellers går pladsen til en anden på ventelisten.',
+     'Nye medlemmer får en gratis introduktion, hvor en træner viser, hvordan maskinerne virker, og hjælper med at lave et træningsprogram. Medlemskabet løber uden binding og kan opsiges med en måneds varsel til udgangen af en måned. Hvis man vil prøve centret først, kan man købe et prøveforløb på ti dage.',
+     'Omklædningsrummene bliver gjort rene hver aften, og alle medlemmer har adgang til saunaen. Man skal selv medbringe håndklæde og lås til skabet. Centret har en café, hvor man kan købe proteinbarer, frugt og kaffe, men den holder lukket om søndagen. Børn under femten år må ikke træne alene i maskinsalen.'
+    ]
+   },
+   {
+    id: 's2',
+    title: 'Håndboldklubben i Nordby',
+    paragraphs: [
+     'Nordby Håndboldklub søger nye spillere til den kommende sæson. Klubben har hold for alle fra seks år og opefter, og alle kan komme og prøve tre gange uden at betale. Træningen foregår i hallen ved skolen, og de yngste træner kun én gang om ugen.',
+     'Kontingentet betales to gange om året, i august og i januar. Medlemskabet gælder for hele sæsonen, og man kan ikke få penge tilbage, hvis man stopper midt i den. Til gengæld indgår spillertrøjer i prisen, så forældrene slipper for at købe dem. Man skal selv købe håndboldsko, som er egnede til indendørs brug.',
+     'Mange af forældrene hjælper med at køre til kampene, når holdene skal spille i nabobyerne. Klubben laver en kørselsliste ved sæsonstart, så det er nemt at se, hvem der skal køre i hvilken weekend. Efter hver hjemmekamp sælger de ældste spillere kaffe og kage i hallen for at tjene penge til en fælles træningstur.'
+    ]
+   },
+   {
+    id: 's3',
+    title: 'Nordbyskolen',
+    paragraphs: [
+     'Skoleåret på Nordbyskolen begynder mandag i uge 33. Børnene i de yngste klasser møder klokken otte, mens de ældste først skal være der klokken halv ni de første to dage. Alle forældre får en besked i skolens app, hvor de også kan se klassens skema.',
+     'Hvis et barn er sygt, skal forældrene melde fra i appen eller ringe til skolens kontor, før undervisningen begynder. Ønsker man at holde barnet hjemme for at tage på ferie, skal man skrive til klasselæreren i god tid. Skolen anbefaler, at børnene så vidt muligt kommer hver dag, fordi det er vigtigt for både trivsel og læring.',
+     'Skolen har indført en frokostordning, hvor eleverne kan købe en varm ret hver dag til en fast pris. Forældrene bestiller og betaler for en hel måned ad gangen i appen. Børn med madpakke kan sidde sammen med klassen i spisesalen. På skolen er der også en lektiecafé, hvor en lærer hjælper eleverne to eftermiddage om ugen.'
+    ]
+   },
+   {
+    id: 's4',
+    title: "SFO'en Solsikken",
+    paragraphs: [
+     "SFO'en Solsikken har åbent alle hverdage fra klokken halv syv om morgenen til klokken sytten. Børn i 0. til 3. klasse kan komme i SFO'en, og forældrene betaler en fast pris om måneden. Prisen dækker også en lille eftermiddagsmad med brød og frugt.",
+     'Hvis en anden voksen end forældrene skal hente barnet, skal forældrene give personalet besked på forhånd. Det kan man gøre i appen eller ved at skrive på en seddel, som barnet afleverer om morgenen. Børnene må ikke gå hjem alene, medmindre forældrene har givet skriftlig tilladelse til det.',
+     "I skolens ferie holder SFO'en åbent som feriefritidsordning, men man skal tilmelde sig senest to uger i forvejen. Det er muligt at melde sig til enkelte uger, og der er fri leg, bålhygge og udflugter til stranden. I sommerferien holder SFO'en lukket i de første tre uger, fordi personalet selv har ferie."
+    ]
+   },
+   {
+    id: 's5',
+    title: 'Ejerforeningen Havnevænget',
+    paragraphs: [
+     'Ejerforeningen Havnevænget indkalder til ordinær generalforsamling onsdag den 18. marts klokken 19 i fælleshuset. På dagsordenen står regnskabet, budgettet for næste år og valg af en ny formand. Alle ejere har ret til at stille forslag, men forslagene skal være sendt til bestyrelsen senest fire uger før mødet.',
+     'I sommer skal ejendommens facade renoveres. Arbejdet starter i maj og forventes at vare til september, og der bliver sat stillads op på bagsiden af begge blokke. Ejerne bedes tage altankasser og møbler ind fra altanerne, før stilladset kommer op. Under arbejdet kan der være støj fra klokken syv om morgenen.',
+     'Fællesudgifterne stiger fra næste kvartal med cirka fem procent på grund af dyrere vand og varme. Bestyrelsen har også foreslået at indføre en fast betaling for dem, der bruger de gule parkeringspladser i gården. Referatet fra det sidste bestyrelsesmøde hænger i alle opgange, og man kan altid skrive til viceværten, hvis man har spørgsmål.'
+    ]
+   },
+   {
+    id: 's6',
+    title: 'Udlejningsselskabet Nordbolig',
+    paragraphs: [
+     'Nordbolig udlejer flere hundrede lejligheder i Nordby og omegn. Når man flytter ind, skal man betale tre måneders husleje i depositum og en måneds husleje forud. Lejeren får en indflytningsrapport, som skal gennemgås og sendes tilbage inden for fjorten dage. Her skriver man alle fejl og mangler, som man ser i lejligheden.',
+     'Hvis noget går i stykker, skal lejeren kontakte ejendomskontoret, som har telefontid hver formiddag. Akutte skader, for eksempel et vandrør, der springer læk, kan meldes døgnet rundt til selskabets vagttelefon. Lejeren må ikke selv hyre en håndværker uden at have aftalt det med udlejeren, for ellers risikerer man selv at skulle betale regningen.',
+     'Ved fraflytning skal lejligheden være rengjort og afleveret med alle nøgler. En medarbejder gennemgår lejligheden sammen med lejeren og sammenligner med indflytningsrapporten. Man kan ikke tage hvidevarerne med, for de hører til lejligheden. Hvis man vil opsige lejemålet, er varslet tre måneder, og opsigelsen skal være skriftlig.'
+    ]
+   },
+   {
+    id: 's7',
+    title: 'Internet og fiber',
+    paragraphs: [
+     'Fibernet Nord har nu lagt fiber til alle huse i den nordlige del af byen. Når man bestiller internet, kommer en installatør hjem til kunden og sætter et stik op i stuen. Det tager som regel en times tid, og man skal selv være hjemme. Selve installationen er gratis, hvis man vælger et abonnement med tolv måneders binding.',
+     'Hastigheden afhænger af, hvilket abonnement man vælger, men alle kunder får en router med i prisen. Hvis forbindelsen er langsom, kan det hjælpe at flytte routeren til et mere åbent sted i hjemmet. Mange oplever også et bedre signal, hvis de bruger et netværkskabel til tv eller computer.',
+     'Ved driftsforstyrrelser bliver kunderne informeret med en sms. Kundeservice har åbent alle hverdage mellem otte og tyve, og i weekenden kan man skrive til dem i en chat på hjemmesiden. Hvis man flytter, kan man tage sit abonnement med til den nye adresse, så længe der er fiber i området. Man skal give besked mindst fjorten dage før flytningen.'
+    ]
+   },
+   {
+    id: 's8',
+    title: 'Indboforsikring og skader',
+    paragraphs: [
+     'En indboforsikring dækker ens ting derhjemme, hvis de bliver stjålet eller ødelagt af brand eller vandskade. Hos Tilliden Forsikring skal man selv betale en selvrisiko på tusind kroner for hver skade. Forsikringen gælder også for cykler, men kun hvis de var låst, da de blev stjålet.',
+     'Hvis uheldet er ude, skal man melde skaden så hurtigt som muligt på selskabets hjemmeside. Man skal vedhæfte billeder af skaden og, hvis det er muligt, kvitteringer for de ting, der er gået tabt. Ved et indbrud kræver selskabet også en politianmeldelse, som skal sendes med.',
+     'Når man flytter, er det en god idé at give selskabet den nye adresse, så forsikringen stadig passer. Prisen afhænger af, hvor stor lejligheden er, og hvor mange der bor der. Forsikringen fornyes automatisk hvert år, men man kan ændre eller opsige den en måned før fornyelsen. Studerende, der bor på kollegium, får en lavere pris.'
+    ]
+   },
+   {
+    id: 's9',
+    title: 'Rejsebureauet Solrejser',
+    paragraphs: [
+     'Rejsebureauet Solrejser har udsendt sit katalog til sommer. Der er pakkerejser til Grækenland, Spanien og Portugal, og man kan vælge mellem ophold på en uge eller to uger. Hvis man booker inden den første marts, får man en rabat på otte procent, og børn under to år rejser gratis.',
+     'Hvis man vil afbestille sin rejse, skal man give bureauet besked skriftligt. Afbestiller man mere end fire uger før afrejsen, får man det meste af pengene tilbage, men man betaler et gebyr på femhundrede kroner. Senere end det mister man en del af prisen. Det kan derfor betale sig at tegne en afbestillingsforsikring, når man bestiller.',
+     'Rejsedokumenterne sendes på mail en uge før afrejsen. Man skal selv sørge for, at passet er gyldigt under hele rejsen. Bureauets rejseleder møder gæsterne i lufthavnen og kan træffes på telefon hele ugen. Bagagen må veje højst tyve kilo pr. person, og man kan købe ekstra kilo, når man bestiller.'
+    ]
+   },
+   {
+    id: 's10',
+    title: 'Økonomi som studerende',
+    paragraphs: [
+     'Som studerende kan man søge SU, som er en månedlig støtte til dem, der tager en uddannelse. Støtten gives normalt kun til uddannelser, der er godkendt, og beløbet kan afhænge af, om man bor hjemme eller på egen hånd. Reglerne ændres fra tid til anden, så man bør altid tjekke de nyeste oplysninger hos myndighederne.',
+     'Mange studerende har også et studiejob ved siden af. Hvis man tjener for meget, kan det påvirke støtten, og derfor er det vigtigt at holde øje med sin indtægt og give besked, hvis den ændrer sig. Studievejlederne på skolen kan svare på spørgsmål om, hvordan studiejob og støtte hænger sammen.',
+     'Ud over SU findes der private legater og stipendier, som man kan søge. Mange af dem har en ansøgningsfrist om efteråret, og de kræver ofte en kort begrundelse og dokumentation for ens økonomi. Man skal være opmærksom på, at ikke alle legater er åbne for alle, for nogle er forbeholdt studerende fra en bestemt egn eller uddannelse.'
+    ]
+   }
+  ],
+  questions: [
+   {id: 'find-3-q1', q: 'Hvor står der, at man skal sikre sig en plads på et hold kort tid, før det begynder?', section: 's1', evidence: 'senest to timer før holdet starter', why: __danskdagText("В разделе о фитнес-центре: место на групповое занятие нужно забронировать в приложении не позднее чем за два часа до начала.","У розділі про фітнес-центр: місце на групове заняття потрібно забронювати в застосунку не пізніше ніж за дві години до початку.")},
+   {id: 'find-3-q2', q: 'Hvor står der, at man ikke forpligter sig til at være medlem i en bestemt periode?', section: 's1', evidence: 'Medlemskabet løber uden binding', why: __danskdagText("В разделе о фитнес-центре: членство действует без обязательного срока («uden binding»). В разделе о гандбольном клубе, наоборот, членство действует весь сезон.","У розділі про фітнес-центр: членство діє без обов’язкового строку («uden binding»). У розділі про гандбольний клуб, навпаки, членство діє весь сезон.")},
+   {id: 'find-3-q3', q: 'Hvor står der, at man ikke får penge tilbage, hvis man holder op midt i en sæson?', section: 's2', evidence: 'man kan ikke få penge tilbage, hvis man stopper midt i den', why: __danskdagText("В разделе о гандбольном клубе: членство действует весь сезон, и деньги не возвращают, если бросить посреди сезона.","У розділі про гандбольний клуб: членство діє весь сезон, і гроші не повертають, якщо кинути посеред сезону.")},
+   {id: 'find-3-q4', q: 'Hvor kan man læse, at forældrene deler ansvaret for at transportere børnene til kampe i andre byer?', section: 's2', evidence: 'Mange af forældrene hjælper med at køre til kampene', why: __danskdagText("В разделе о гандбольном клубе: многие родители помогают возить команды на матчи в соседние города, для этого составляется список.","У розділі про гандбольний клуб: багато батьків допомагають возити команди на матчі в сусідні міста, для цього складають список.")},
+   {id: 'find-3-q5', q: 'Hvor står der, at man køber en varm ret til sit barn for en hel måned ad gangen?', section: 's3', evidence: 'Forældrene bestiller og betaler for en hel måned ad gangen i appen', why: __danskdagText("В разделе о школе: родители заказывают и оплачивают горячие обеды сразу на целый месяц через приложение.","У розділі про школу: батьки замовляють і сплачують гарячі обіди одразу на цілий місяць через застосунок.")},
+   {id: 'find-3-q6', q: 'Hvor kan man læse, at eleverne kan få hjælp til at lave deres lektier?', section: 's3', evidence: 'en lektiecafé, hvor en lærer hjælper eleverne to eftermiddage om ugen', why: __danskdagText("В разделе о школе: в «lektiecafé» учитель помогает ученикам с домашними заданиями два дня в неделю после обеда.","У розділі про школу: у «lektiecafé» вчитель допомагає учням із домашніми завданнями два дні на тиждень по обіді.")},
+   {id: 'find-3-q7', q: 'Hvor står der, at børn kun må gå hjem uden en voksen, hvis forældrene har givet lov skriftligt?', section: 's4', evidence: 'Børnene må ikke gå hjem alene, medmindre forældrene har givet skriftlig tilladelse til det', why: __danskdagText("В разделе о группе продлённого дня: дети не могут идти домой одни без письменного разрешения родителей.","У розділі про групу подовженого дня: діти не можуть іти додому самі без письмового дозволу батьків.")},
+   {id: 'find-3-q8', q: 'Hvor står der, at man skal tilmelde sit barn to uger i forvejen, hvis det skal passes i skolens ferie?', section: 's4', evidence: 'man skal tilmelde sig senest to uger i forvejen', why: __danskdagText("В разделе о группе продлённого дня: на каникулы нужно записаться не позднее чем за две недели; в разделе о школе речь идёт лишь о том, чтобы заранее написать классному руководителю.","У розділі про групу подовженого дня: на канікули потрібно записатися не пізніше ніж за два тижні; у розділі про школу йдеться лише про те, щоб заздалегідь написати класному керівникові.")},
+   {id: 'find-3-q9', q: 'Hvor kan man læse, at forslag til et møde skal sendes ind flere uger i forvejen?', section: 's5', evidence: 'senest fire uger før mødet', why: __danskdagText("В разделе о товариществе собственников: предложения для общего собрания нужно отправить правлению не позднее чем за четыре недели до собрания.","У розділі про товариство власників: пропозиції для загальних зборів потрібно надіслати правлінню не пізніше ніж за чотири тижні до зборів.")},
+   {id: 'find-3-q10', q: 'Hvor står der, at man skal fjerne ting fra sin altan på grund af et byggearbejde?', section: 's5', evidence: 'Ejerne bedes tage altankasser og møbler ind fra altanerne', why: __danskdagText("В разделе о товариществе собственников: перед установкой строительных лесов владельцев просят убрать с балконов ящики для цветов и мебель.","У розділі про товариство власників: перед встановленням будівельних риштувань власників просять прибрати з балконів ящики для квітів і меблі.")},
+   {id: 'find-3-q11', q: 'Hvor kan man læse, hvordan man skal melde en akut skade midt om natten?', section: 's6', evidence: 'kan meldes døgnet rundt til selskabets vagttelefon', why: __danskdagText("В разделе о компании-арендодателе: срочные повреждения можно сообщить круглосуточно на дежурный телефон компании.","У розділі про компанію-орендодавця: термінові пошкодження можна повідомити цілодобово на черговий телефон компанії.")},
+   {id: 'find-3-q12', q: 'Hvor står der, hvordan kunderne får besked, når nettet ligger nede?', section: 's7', evidence: 'Ved driftsforstyrrelser bliver kunderne informeret med en sms', why: __danskdagText("В разделе об интернет-провайдере: при сбоях клиентам отправляют смс.","У розділі про інтернет-провайдера: у разі збоїв клієнтам надсилають смс.")},
+   {id: 'find-3-q13', q: 'Hvor står der, at man skal sende billeder med, når man anmelder en skade?', section: 's8', evidence: 'Man skal vedhæfte billeder af skaden', why: __danskdagText("В разделе о страховке имущества: к заявлению об ущербе нужно приложить фотографии, а по возможности и чеки.","У розділі про страхування майна: до заяви про збиток потрібно додати фотографії, а за можливості й чеки.")},
+   {id: 'find-3-q14', q: 'Hvor kan man læse om en rabat, hvis man bestiller tidligt?', section: 's9', evidence: 'Hvis man booker inden den første marts, får man en rabat på otte procent', why: __danskdagText("В разделе о турагентстве: при бронировании до первого марта скидка составляет восемь процентов.","У розділі про туристичне агентство: у разі бронювання до першого березня знижка становить вісім відсотків.")},
+   {id: 'find-3-q15', q: 'Hvor står der, at nogle økonomiske støttemuligheder kun er for folk fra et bestemt område?', section: 's10', evidence: 'forbeholdt studerende fra en bestemt egn eller uddannelse', why: __danskdagText("В разделе о финансах студентов: некоторые частные гранты предназначены только для студентов из определённого региона или с определённой специальностью.","У розділі про фінанси студентів: деякі приватні гранти призначені лише для студентів з певного регіону або з певною спеціальністю.")}
+  ]
+ },
+ {
+  id: 'find-4',
+  title: 'Praktisk info fra Søndersø: find svaret',
+  minutes: 25,
+  sections: [
+   {
+    id: 's1',
+    title: 'Tandklinikken',
+    paragraphs: [
+     'Tandklinikken i Søndersø har fået en ny tandlæge, som starter første mandag i april. Klinikken tager imod nye patienter, og man kan bestille tid på telefonen eller på klinikkens hjemmeside. Ved den første undersøgelse tager tandlægen røntgenbilleder, og bagefter får man en plan for, hvad der eventuelt skal laves.',
+     'Hvis man ikke kan komme til sin tid, skal man give afbud senest dagen før, ellers skal man betale et gebyr. Det gælder også for børn, så det er en god idé at skrive tiden ind i kalenderen. Klinikken sender en påmindelse på sms to dage før hver tid.',
+     'Klinikken har et legehjørne og en tandplejer, som er særlig god til at tale med børn, der er nervøse for at komme til tandlægen. Hvis man har meget ondt i en tand, kan man ringe om morgenen og få en akut tid samme dag. Det er en fordel at ringe, så snart klinikken åbner, for der er kun få akutte tider hver dag. Uden for åbningstiden henviser telefonsvareren til en vagttelefon.'
+    ]
+   },
+   {
+    id: 's2',
+    title: 'Apoteket',
+    paragraphs: [
+     'Apoteket i Søndersø har åbent fra ni til atten på hverdage og fra ti til tretten om lørdagen. Man kan bestille sin medicin på apotekets hjemmeside, og så er den klar til afhentning efter en time. Hvis medicinen ikke er på lager, kan apoteket som regel skaffe den næste hverdag.',
+     'Recepter fra lægen ligger i et fælles system, så man behøver ikke at tage papir med. Man skal blot vise sit sundhedskort ved disken. Hvis man tager mange slags medicin, kan apoteket pakke tabletterne i små poser, så der er en pose til hver dosis. Det gør det lettere at huske, hvad man skal tage, og hvornår.',
+     'Apotekets farmaceuter tilbyder en gratis samtale om medicin til dem, der er begyndt på ny medicin. Her får man at vide, hvordan medicinen virker, og hvad man skal være opmærksom på. Samtalen varer cirka femten minutter, og man behøver ikke at bestille tid. Håndkøbsmedicin, for eksempel smertestillende tabletter, står bag disken, så man skal bede personalet om hjælp.'
+    ]
+   },
+   {
+    id: 's3',
+    title: 'Sundhedshuset',
+    paragraphs: [
+     'Sundhedshuset i Søndersø tilbyder kurser for borgere, der gerne vil leve sundere. Huset ligger tæt på stationen, så det er let at komme dertil med tog eller bus. Man kan deltage i et rygestopforløb, som varer otte uger, og i et forløb om kost og motion for dem, der gerne vil tabe sig. Begge forløb foregår på hold, og man skal tilmelde sig, før holdet er fyldt op.',
+     'Forløbene er gratis for borgere i kommunen, og man behøver ikke at have en henvisning fra sin læge. Til gengæld er det vigtigt at møde op hver gang, fordi forløbet bygger på, at deltagerne mødes og hjælper hinanden. Hvis man udebliver, kan man blive ringet op af en medarbejder, som hører, hvordan det går.',
+     'Sundhedshuset holder også åbent hus den første torsdag i hver måned. Her kan man få målt sit blodtryk, tale med en sygeplejerske og få råd om motion. Der er ingen tilmelding, og man kan komme forbi, når det passer. I sommerferien holder sundhedshuset lukket i fire uger, men der bliver oprettet nye hold i august.'
+    ]
+   },
+   {
+    id: 's4',
+    title: 'Genbrugspladsen',
+    paragraphs: [
+     'Genbrugspladsen i Søndersø har nye åbningstider fra 1. maj. Der er åbent fra klokken ni til sytten på hverdage og fra ni til femten i weekenden, men pladsen holder lukket på helligdage. I de to sidste uger før jul er der åbent til klokken nitten på hverdage.',
+     'Affaldet skal sorteres i de rigtige containere. Pap og papir skal ligge i hver sin container, og glas lægges i de grønne kasser ved indgangen. Farligt affald som maling og batterier skal afleveres til personalet i den lille hytte, og man må ikke smide det i containerne. Elektronik, for eksempel gamle telefoner og ledninger, har sin egen container nær udgangen.',
+     'Hvis man kommer med en anhænger, skal man vise sit adgangskort til personalet, som tæller, hvor mange gange man har været der. Hver husstand må komme med anhænger højst ti gange om året. Personalet hjælper gerne med at løfte tunge ting, men de kan ikke tage ansvar for ting, som man selv taber. Små børn skal blive i bilen under hele besøget.'
+    ]
+   },
+   {
+    id: 's5',
+    title: 'Pakker og post',
+    paragraphs: [
+     'Pakkeautomaten ved indkøbscentret i Søndersø er blevet udvidet, så der nu er plads til flere pakker. Når en pakke er kommet, får man en sms med en kode, som man taster i automaten. Pakken kan ligge i automaten i syv dage, og derefter bliver den sendt tilbage til afsenderen.',
+     'Hvis man ikke er hjemme, når postbuddet kommer med en pakke, lægger han en seddel i postkassen. Så kan man selv hente pakken i posthuset, som ligger inde i supermarkedet, men man skal have legitimation med. Navnet skal stå tydeligt på postkassen, ellers kan postbuddet ikke aflevere breve og pakker.',
+     'Hvis man vil sende en pakke, kan man aflevere den i posthuset. Man kan også printe en etiket hjemmefra og lægge pakken i automaten, så slipper man for at stå i kø. Det er billigst at sende små pakker, og prisen til udlandet afhænger af vægten. Man bør pakke tingene godt ind, især hvis de kan gå i stykker. Når man flytter, skal man selv huske at give posten den nye adresse.'
+    ]
+   },
+   {
+    id: 's6',
+    title: 'Aftenskolen',
+    paragraphs: [
+     'Aftenskolen i Søndersø har åbnet for tilmelding til efterårets hold. Der er kurser i fotografering, spansk for begyndere, keramik og madlavning fra det sydlige Europa. De fleste hold mødes en aften om ugen i ti uger, og der er plads til tolv deltagere på hvert hold. Man kan tilmelde sig på skolens hjemmeside eller ved at komme forbi kontoret.',
+     'Kursusgebyret skal betales, når man tilmelder sig, og det dækker undervisningen, men ikke materialerne. Til keramikholdet koster ler og glasur ekstra, og man betaler direkte til læreren. Hvis et hold ikke får nok deltagere, bliver det aflyst, og så får man hele gebyret tilbage.',
+     'Hvis man bliver forhindret i at deltage, kan man ikke få gebyret tilbage, men man kan overdrage sin plads til en anden. Mange hold har ventelister, så det er rart, hvis pladsen bliver brugt. Undervisningen foregår på skolen i de gamle klasseværelser, og de fleste hold slutter med en lille udstilling eller en fælles middag på den sidste aften.'
+    ]
+   },
+   {
+    id: 's7',
+    title: 'Elselskabet Nordlys',
+    paragraphs: [
+     'Elselskabet Nordlys beder alle kunder om at aflæse deres elmåler den første i hvert kvartal. Det kan gøres i selskabets app, hvor man blot taster tallet fra måleren. Hvis man ikke aflæser selv, regner selskabet forbruget ud på baggrund af tidligere år, og så kan regningen blive for høj eller for lav.',
+     'Elregningen kommer hver måned, og man kan vælge at få den på mail eller i sin netbank. Mange kunder er tilmeldt automatisk betaling, så beløbet bliver trukket fra kontoen den femte i måneden. Hvis man ikke kan betale til tiden, skal man kontakte selskabet, før fristen udløber, så man kan aftale en betalingsplan.',
+     'Selskabet har en prisoversigt, hvor man kan se, hvornår strømmen er billigst i løbet af døgnet. Det kan betale sig at starte vaskemaskinen om natten, hvis man har et abonnement med timepris. Når man flytter, skal man melde det til selskabet mindst en uge før, så man får en slutafregning, og den nye beboer kan overtage aftalen.'
+    ]
+   },
+   {
+    id: 's8',
+    title: 'Bildeling Søndersø',
+    paragraphs: [
+     'Bildeling Søndersø er en forening, hvor medlemmerne deler fem biler. Foreningen er åben for alle, der bor i kommunen. Bilerne står på en fast plads ved stationen, og man booker dem på foreningens hjemmeside eller i en app. Det koster to hundrede kroner at blive medlem, og derefter betaler man for hver tur efter tid og kilometer.',
+     'Nøglen ligger i en nøgleboks ved bilen, og koden får man tilsendt, når bookingen er bekræftet. Bilen skal afleveres på samme plads, og tanken skal være mindst halv fuld, når man afleverer den. Rygning er forbudt i alle bilerne, og dyr må kun transporteres i en kasse.',
+     'Hvis man opdager en skade på bilen, skal man skrive det på formularen i handskerummet, inden man kører. Sker der et uheld under turen, skal man ringe til foreningens vagttelefon med det samme. Foreningen har en forsikring, men medlemmet betaler selvrisikoen på fem tusind kroner, hvis uheldet skyldes medlemmets egen fejl.'
+    ]
+   },
+   {
+    id: 's9',
+    title: 'Turistkontoret',
+    paragraphs: [
+     'Turistkontoret i Søndersø holder åbent hver dag fra klokken ti til seksten i sommerhalvåret. Her kan gæster få kort over byen, tips til spisesteder og hjælp med at finde overnatning. Medarbejderne taler dansk, engelsk og tysk, og om sommeren er der også en medarbejder, der taler fransk.',
+     'Turistkontoret arrangerer en guidet byvandring hver lørdag klokken elleve. Turen varer halvanden time og starter ved det gamle rådhus. Deltagerne betaler hundrede kroner, men børn under tolv år går gratis med. Man behøver ikke at tilmelde sig, men ved dårligt vejr kan turen blive aflyst, og så står der en besked på kontorets hjemmeside.',
+     'På kontoret kan man leje en bycykel for en dag eller en weekend. Cyklerne har kurv og lås, og man skal aflevere dem, inden kontoret lukker. Man kan også købe et museumskort, som giver adgang til byens tre museer i tre dage. Kortet er billigere end at købe tre enkeltbilletter, og det kan købes både på nettet og på kontoret.'
+    ]
+   },
+   {
+    id: 's10',
+    title: 'Haveforeningen Lærkehaven',
+    paragraphs: [
+     'Haveforeningen Lærkehaven har i alt fyrre haver. Hver have er på cirka tre hundrede kvadratmeter og har et lille havehus. Interesserede kan skrive sig på ventelisten, men der er cirka to års ventetid. Man skal være medlem af foreningen for at få en have, og medlemmerne betaler et årligt kontingent. Når man overtager en have, betaler man den tidligere ejer for havehuset og beplantningen, og prisen bliver fastsat af en uvildig vurderingsmand.',
+     'Alle medlemmer skal deltage i fællesarbejdet to gange om året, hvor man klipper hække, rydder stier og gør fælleshuset rent. Hvis man ikke kan møde op, kan man betale et beløb i stedet. Græsset i haven skal slås mindst hver anden uge i sommerhalvåret, og hækken må ikke være højere end halvanden meter.',
+     'Om sommeren holder foreningen sankthansaften med bål og fælles aftensmad på græsplænen foran fælleshuset. Alle er velkomne, også gæster, og børnene kan lege på legepladsen. Foreningen har en regel om, at hunde skal være i snor, og at man ikke må tænde bål i haverne uden for fælles arrangementer.'
+    ]
+   }
+  ],
+  questions: [
+   {id: 'find-4-q1', q: 'Hvor kan man læse, at man skal melde fra dagen før for ikke at få en ekstra regning?', section: 's1', evidence: 'give afbud senest dagen før, ellers skal man betale et gebyr', why: __danskdagText("В разделе о стоматологической клинике: отменить приём нужно не позднее чем за день, иначе придётся заплатить сбор.","У розділі про стоматологічну клініку: скасувати прийом потрібно не пізніше ніж за день, інакше доведеться заплатити збір.")},
+   {id: 'find-4-q2', q: 'Hvor står der, at man får en påmindelse om sin aftale to dage før?', section: 's1', evidence: 'sender en påmindelse på sms to dage før hver tid', why: __danskdagText("В разделе о стоматологической клинике: за два дня до каждого приёма приходит напоминание по смс. В разделе о почте смс приходит с кодом для автомата, а не с напоминанием.","У розділі про стоматологічну клініку: за два дні до кожного прийому надходить нагадування по смс. У розділі про пошту смс надходить із кодом для автомата, а не з нагадуванням.")},
+   {id: 'find-4-q3', q: 'Hvor står der, at man kan få en snak om sin nye medicin uden at have aftalt en tid?', section: 's2', evidence: 'man behøver ikke at bestille tid', why: __danskdagText("В разделе об аптеке: бесплатная беседа о новом лекарстве занимает около пятнадцати минут, и записываться заранее не нужно.","У розділі про аптеку: безкоштовна розмова про нові ліки триває близько п’ятнадцяти хвилин, і записуватися заздалегідь не потрібно.")},
+   {id: 'find-4-q4', q: 'Hvor står der, at man kan få målt sit blodtryk?', section: 's3', evidence: 'få målt sit blodtryk', why: __danskdagText("В разделе о доме здоровья: в день открытых дверей можно измерить давление, поговорить с медсестрой и получить советы по физической активности.","У розділі про будинок здоров’я: у день відкритих дверей можна виміряти тиск, поговорити з медсестрою та отримати поради щодо фізичної активності.")},
+   {id: 'find-4-q5', q: 'Hvor kan man læse, at man skal aflevere farlige ting til en medarbejder i stedet for at smide dem i en container?', section: 's4', evidence: 'Farligt affald som maling og batterier skal afleveres til personalet', why: __danskdagText("В разделе о пункте переработки: опасные отходы — краску и батарейки — отдают сотруднику, а не бросают в контейнер.","У розділі про пункт переробки: небезпечні відходи — фарбу та батарейки — віддають працівникові, а не кидають у контейнер.")},
+   {id: 'find-4-q6', q: 'Hvor står der, at en husstand kun må komme med en anhænger et vist antal gange om året?', section: 's4', evidence: 'højst ti gange om året', why: __danskdagText("В разделе о пункте переработки: с прицепом одно домохозяйство может приезжать не более десяти раз в год, сотрудник ведёт счёт.","У розділі про пункт переробки: з причепом одне домогосподарство може приїжджати не більше десяти разів на рік, працівник веде облік.")},
+   {id: 'find-4-q7', q: 'Hvor står der, hvor længe man har til at hente sin pakke, før den bliver sendt tilbage?', section: 's5', evidence: 'Pakken kan ligge i automaten i syv dage', why: __danskdagText("В разделе о посылках: посылка может лежать в автомате семь дней, потом её отправляют обратно отправителю.","У розділі про посилки: посилка може лежати в автоматі сім днів, потім її відправляють назад відправникові.")},
+   {id: 'find-4-q8', q: 'Hvor står der, hvad der skal stå på postkassen, for at post kan blive leveret?', section: 's5', evidence: 'Navnet skal stå tydeligt på postkassen', why: __danskdagText("В разделе о почте: имя должно быть чётко написано на почтовом ящике, иначе почтальон не сможет доставить письма и посылки.","У розділі про пошту: ім’я має бути чітко написане на поштовій скриньці, інакше листоноша не зможе доставити листи й посилки.")},
+   {id: 'find-4-q9', q: 'Hvor står der, at nogle udgifter til et kursus ikke er med i prisen?', section: 's6', evidence: 'det dækker undervisningen, men ikke materialerne', why: __danskdagText("В разделе о вечерней школе: плата покрывает обучение, но не материалы; на керамике глину и глазурь оплачивают отдельно.","У розділі про вечірню школу: плата покриває навчання, але не матеріали; на кераміці глину та глазур оплачують окремо.")},
+   {id: 'find-4-q10', q: 'Hvor kan man læse, at man kan give sin plads videre til en anden?', section: 's6', evidence: 'man kan overdrage sin plads til en anden', why: __danskdagText("В разделе о вечерней школе: если не можешь прийти, сбор не вернут, но место можно передать другому человеку.","У розділі про вечірню школу: якщо не можеш прийти, збір не повернуть, але місце можна передати іншій людині.")},
+   {id: 'find-4-q11', q: 'Hvor står der, hvad der sker, hvis kunden ikke selv sender selskabet sit forbrug?', section: 's7', evidence: 'regner selskabet forbruget ud på baggrund af tidligere år', why: __danskdagText("В разделе об электрокомпании: если клиент сам не снимает показания счётчика, компания рассчитывает расход по прошлым годам, и счёт может оказаться неточным.","У розділі про електрокомпанію: якщо клієнт сам не знімає показники лічильника, компанія розраховує витрату за минулі роки, і рахунок може виявитися неточним.")},
+   {id: 'find-4-q12', q: 'Hvor står der, hvor meget brændstof der skal være tilbage, når man afleverer en delt bil?', section: 's8', evidence: 'tanken skal være mindst halv fuld, når man afleverer den', why: __danskdagText("В разделе о каршеринге: при возврате машины бак должен быть заполнен не меньше чем наполовину.","У розділі про каршерінг: під час повернення машини бак має бути заповнений не менше ніж наполовину.")},
+   {id: 'find-4-q13', q: 'Hvor kan man læse om en billet, der giver adgang til flere seværdigheder?', section: 's9', evidence: 'museumskort, som giver adgang til byens tre museer', why: __danskdagText("В разделе о туристическом бюро: музейная карта даёт доступ к трём музеям города на три дня и дешевле трёх отдельных билетов.","У розділі про туристичне бюро: музейна картка дає доступ до трьох музеїв міста на три дні й дешевша за три окремі квитки.")},
+   {id: 'find-4-q14', q: 'Hvor står der, at man kan slippe for en fælles opgave ved at betale?', section: 's10', evidence: 'Hvis man ikke kan møde op, kan man betale et beløb i stedet', why: __danskdagText("В разделе об объединении садоводов: тот, кто не может прийти на совместную работу, может заплатить определённую сумму вместо этого.","У розділі про об’єднання садівників: той, хто не може прийти на спільну роботу, може заплатити певну суму замість цього.")},
+   {id: 'find-4-q15', q: 'Hvor står der, at man må vente flere år for at få en have?', section: 's10', evidence: 'cirka to års ventetid', why: __danskdagText("В разделе об объединении садоводов: в списке ожидания нужно ждать примерно два года, чтобы получить участок.","У розділі про об’єднання садівників: у списку очікування потрібно чекати приблизно два роки, щоб отримати ділянку.")}
+  ]
+ },
+ {
+  id: 'find-5',
+  title: 'Livet i kvarteret: find svaret',
+  minutes: 25,
+  sections: [
+   {
+    id: 's1',
+    title: 'Seniorcentret Lindehaven',
+    paragraphs: [
+     'Seniorcentret Lindehaven inviterer til morgenkaffe hver tirsdag og torsdag klokken ti. Her kan man møde andre pensionister, læse dagens avis og høre om, hvad der sker i kvarteret. Der er ingen tilmelding, og kaffen er gratis for dem, der bor i området.',
+     'Centret har en række faste aktiviteter, blandt andet bridge, gymnastik på stole og en gåtur i parken hver onsdag formiddag. De, der har svært ved at gå langt, kan komme med i en gruppe, hvor man går i et roligere tempo. Hvis man ikke selv kan komme til centret, kan man ringe og høre om kørselsordningen.',
+     'Centret søger frivillige besøgsvenner, som vil bruge et par timer om ugen på at besøge en ældre, der føler sig ensom. Besøgsvennerne får et kort kursus, inden de starter, og de bestemmer selv, hvilken dag der passer dem bedst. Alle frivillige får en lille gave til jul som tak for indsatsen.'
+    ]
+   },
+   {
+    id: 's2',
+    title: 'Cykelværkstedet på Torvegade',
+    paragraphs: [
+     'Cykelværkstedet på Torvegade har åbent alle hverdage fra otte til sytten, og om lørdagen kan man komme forbi mellem ti og tolv. Her kan man få repareret sin cykel, mens man venter, hvis det kun drejer sig om en punktering eller en løs kæde. Ved større reparationer skal cyklen blive i værkstedet, og så ringer mekanikeren, når den er færdig.',
+     'Nye dæk og slanger kan købes i butikken, og værkstedet sætter dem på uden ekstra betaling, hvis man har købt dem der. Mekanikeren giver altid et prisoverslag, før han går i gang, så ingen får en ubehagelig overraskelse, når de kommer og henter cyklen.',
+     'Før vinteren tilbyder værkstedet et serviceeftersyn, hvor mekanikeren tjekker bremser, lys og gear. Eftersynet tager cirka en time, og man får en rabat på reservedele, hvis der er noget, der skal skiftes. Cykler, som ikke bliver hentet inden for tre måneder, bliver solgt til dækning af regningen, og værkstedet prøver altid at kontakte ejeren først.'
+    ]
+   },
+   {
+    id: 's3',
+    title: 'Vuggestuen Regnbuen',
+    paragraphs: [
+     'Vuggestuen Regnbuen har åbent fra klokken syv til sytten på hverdage. Den tager imod børn fra otte måneder, og der er plads til tredive børn fordelt på to stuer. Man kan skrive sit barn op på ventelisten, så snart det er født, og kommunen giver besked, når der er en ledig plads.',
+     'De første to uger er indkøringsperioden, hvor forældrene er med på stuen i et par timer ad gangen. Det er vigtigt, at barnet lærer pædagogerne at kende, mens mor eller far stadig er i nærheden. Efterhånden forlader forældrene stuen for en kort tid ad gangen, indtil barnet er trygt ved at være alene med de voksne.',
+     'Børnene får frokost i vuggestuen, men forældrene skal selv sørge for bleer og skiftetøj. Hver dag hænger der en seddel på døren med oplysninger om, hvad børnene har spist, og hvor længe de har sovet. Vuggestuen holder lukket mellem jul og nytår og fredagen efter Kristi himmelfartsdag.'
+    ]
+   },
+   {
+    id: 's4',
+    title: 'Fritidsklubben Fyret',
+    paragraphs: [
+     'Fritidsklubben Fyret er et tilbud til børn og unge fra fjerde til syvende klasse. Klubben holder åbent hver eftermiddag fra klokken fjorten til atten, men om onsdagen er den forbeholdt de ældste i sjette og syvende klasse. Der er billard, bordfodbold og et værksted med træklodser og værktøj.',
+     'Medlemskabet koster hundrede kroner om året, og det dækker også udflugter. Hvis familiens økonomi er presset, kan man søge om nedsat pris hos klubbens leder. Forældre er velkomne til at kigge forbi, men de bedes give personalet besked, så de unge ikke bliver forstyrret under en aktivitet.',
+     'En gang om måneden holder klubben en aften med film og pizza. De unge, der har lyst, kan hjælpe med at lave maden og vælge filmen. Klubben har regler om, at mobiltelefoner skal ligge i en kasse under spil og værkstedsarbejde, og at man skal sige til, før man går hjem. Personalet ringer til forældrene, hvis en ung udebliver fra en aftalt aktivitet.'
+    ]
+   },
+   {
+    id: 's5',
+    title: 'Nye badeværelser i Skovparken',
+    paragraphs: [
+     'Boligselskabet Skovparken skal i efteråret renovere badeværelserne i blok C. Arbejdet starter den 1. oktober og forventes at tage to uger i hver lejlighed. Hele renoveringen varer cirka seks måneder. Beboerne får et brev, hvor det står, hvilken uge deres badeværelse bliver lavet.',
+     'Mens badeværelset er under renovering, kan beboerne bruge et midlertidigt toilet og bad i en container på gårdspladsen. Vandet bliver lukket fra klokken otte til femten på hverdage, så beboerne bør tage bad tidligt om morgenen. Håndværkerne har brug for adgang til lejligheden, og beboerne skal derfor aflevere en nøgle til viceværten, hvis de ikke selv er hjemme.',
+     'Beboerne kan stille spørgsmål på et informationsmøde i beboerhuset den 25. september klokken 18. Her kan man også møde afdelingens beboerrepræsentant, som arbejder for, at renoveringen ikke bliver dyrere end planlagt. Efter renoveringen stiger huslejen med et mindre beløb, som varierer efter lejlighedens størrelse.'
+    ]
+   },
+   {
+    id: 's6',
+    title: 'Håndværkerfirmaet Kvist og Søn',
+    paragraphs: [
+     'Kvist og Søn er et lokalt håndværkerfirma, som laver alt fra maling til nye køkkener. Firmaet kommer gerne ud og giver et gratis tilbud, og tilbuddet gælder i tredive dage. Prisen er fast, så den ændrer sig ikke undervejs, medmindre kunden selv vil have noget ændret.',
+     'Når et køkken skal laves om, tager arbejdet som regel tre til fire uger. Firmaet sætter en midlertidig køkkenvask op i stuen, så familien kan vaske op og lave simpel mad i perioden. Kunden skal selv tømme skabene, men firmaet sørger for at fjerne de gamle skabe og køre dem til genbrugspladsen.',
+     'Håndværkerne kommer mellem klokken syv og femten og rydder op, inden de tager hjem. Firmaet giver to års garanti på alt arbejde, så hvis der opstår fejl, retter det dem uden ekstra betaling. Kunden får en fast kontaktperson, som kunden kan ringe til under hele forløbet.'
+    ]
+   },
+   {
+    id: 's7',
+    title: 'Biografen Lyset',
+    paragraphs: [
+     'Biografen Lyset viser i oktober en række danske film, og mange af dem har danske undertekster til dem, der ikke hører så godt. Billetter kan købes på nettet eller i billetlugen, som åbner en time før den første forestilling. Man kan reservere sæder, og reservationen gælder til femten minutter før filmen begynder.',
+     'Pensionister og studerende får rabat på billetten mandag til torsdag. Børnefilm koster det samme for alle, og børn under fire år kommer gratis ind. Hvis man vil se mange film, kan man købe et klippekort med ti klip, som kan deles med venner og familie, og som gælder i et år.',
+     'En gang om måneden holder biografen filmklub, hvor en gæst fortæller om filmen før visningen, og bagefter er der tid til at snakke over et glas vin. Biografens café har åbent fra en time før den første film, og man må gerne tage drikkevarer med ind i salen, men ikke varm mad. Hvis en forestilling bliver aflyst, får man billetpengene tilbage eller en ny billet.'
+    ]
+   },
+   {
+    id: 's8',
+    title: 'Feriehuse ved Vesterstrand',
+    paragraphs: [
+     'Feriehusene ved Vesterstrand udlejes fra lørdag til lørdag i sommerhalvåret. Man kan komme ind i huset fra klokken seksten på ankomstdagen og skal være ude klokken ti på afrejsedagen. Husene ligger tæt på stranden, og de fleste har brændeovn og terrasse.',
+     'Ved bestillingen betaler man en tredjedel af lejen som forudbetaling, og resten skal betales otte uger før ankomsten. Hvis man afbestiller, får man kun forudbetalingen tilbage, hvis huset kan lejes ud igen. Sengelinned og håndklæder kan lejes for en fast pris pr. person, men mange tager deres eget med.',
+     'Slutrengøring kan bestilles for en fast pris, ellers skal lejeren selv gøre rent, før huset forlades. Husdyr er tilladt i enkelte af husene, men hunde skal være i snor på stranden i sommermånederne. Der er trådløst internet i alle husene, men signalet kan være svagt i udhusene. Nøglen ligger i en nøgleboks ved døren, og koden får man på mail.'
+    ]
+   },
+   {
+    id: 's9',
+    title: 'Østbanen: tog og billetter',
+    paragraphs: [
+     'Østbanen indfører en ny køreplan fra december. Mellem Ellebæk og Kystby kører der nu tog hvert kvarter i myldretiden, og om aftenen kører de hver halve time. Rejsetiden bliver kortere, fordi nogle af togene ikke længere stopper ved de mindste stationer.',
+     'Billetter kan købes i automaten på stationen eller i Østbanens app. Køber man billet ombord på toget, er der et tillæg på tyve kroner. Månedskort kan bestilles på nettet og sendes som en digital billet til telefonen. Pensionister og børn rejser til halv pris.',
+     'Cykler må tages med i toget uden for myldretiden, og man skal købe en cykelbillet. I myldretiden er der ikke plads til cykler. Når der er sporarbejde, kører der busser i stedet for tog, og så står der en oversigt på hjemmesiden. Ved forsinkelser på mere end tyve minutter kan man søge om at få en del af billetprisen tilbage ved at udfylde en formular.'
+    ]
+   },
+   {
+    id: 's10',
+    title: 'Jobcaféen i kulturhuset',
+    paragraphs: [
+     'Hver tirsdag klokken ni åbner kommunens jobcafé i kulturhuset. Her kan man få hjælp til at skrive sit CV, øve en jobsamtale eller finde ledige stillinger på nettet. Caféen er åben for alle, også for dem, der har et arbejde, men gerne vil skifte job.',
+     'Der er to konsulenter til stede, og de kan også svare på spørgsmål om, hvordan man skriver en ansøgning, så den bliver set. Man kan komme med sin egen computer, og der er trådløst net, men caféen har også to computere, som man må låne. Konsulenterne har tavshedspligt, så man kan roligt tale om sin situation.',
+     'En gang om måneden inviterer jobcaféen virksomheder fra området, som fortæller om deres arbejdspladser og om, hvilke medarbejdere de leder efter. Deltagerne kan stille spørgsmål og aflevere deres CV direkte til virksomhederne. Næste gang er den femtende, og her kommer et sygehus, en byggevirksomhed og en stor dagligvarekæde.'
+    ]
+   }
+  ],
+  questions: [
+   {id: 'find-5-q1', q: 'Hvor kan man læse om et sted, der leder efter folk, som vil besøge ensomme mennesker?', section: 's1', evidence: 'frivillige besøgsvenner, som vil bruge et par timer om ugen', why: __danskdagText("В разделе о центре для пожилых: центр ищет добровольцев-«друзей по визитам», которые будут по паре часов в неделю навещать одиноких пожилых людей.","У розділі про центр для літніх людей: центр шукає добровольців-«друзів з візитів», які щотижня по кілька годин відвідуватимуть самотніх літніх людей.")},
+   {id: 'find-5-q2', q: 'Hvor står der, hvad man skal gøre, hvis man ikke selv kan komme hen til et sted?', section: 's1', evidence: 'ringe og høre om kørselsordningen', why: __danskdagText("В разделе о центре для пожилых: тем, кто не может добраться сам, нужно позвонить и узнать о системе развозки.","У розділі про центр для літніх людей: тим, хто не може дістатися сам, потрібно зателефонувати й дізнатися про систему розвезення.")},
+   {id: 'find-5-q3', q: 'Hvor står der, at man får en rabat, hvis der skal skiftes nogle dele?', section: 's2', evidence: 'man får en rabat på reservedele', why: __danskdagText("В разделе о велосипедной мастерской: при предзимнем осмотре дают скидку на запчасти, если что-то нужно заменить.","У розділі про велосипедну майстерню: під час передзимового огляду дають знижку на запчастини, якщо щось потрібно замінити.")},
+   {id: 'find-5-q4', q: 'Hvor kan man læse, at ting, som ingen henter, til sidst bliver solgt?', section: 's2', evidence: 'bliver solgt til dækning af regningen', why: __danskdagText("В разделе о велосипедной мастерской: велосипеды, которые не забрали в течение трёх месяцев, продают в счёт оплаты, но сначала мастерская пытается связаться с владельцем.","У розділі про велосипедну майстерню: велосипеди, які не забрали протягом трьох місяців, продають на покриття рахунку, але спочатку майстерня намагається зв’язатися з власником.")},
+   {id: 'find-5-q5', q: 'Hvor står der, at forældrene selv skal medbringe nogle ting til de mindste børn?', section: 's3', evidence: 'forældrene skal selv sørge for bleer og skiftetøj', why: __danskdagText("В разделе о яслях: родители сами должны позаботиться о подгузниках и сменной одежде.","У розділі про ясла: батьки самі мають подбати про підгузки та змінний одяг.")},
+   {id: 'find-5-q6', q: 'Hvor står der, at telefoner ikke må bruges under bestemte aktiviteter?', section: 's4', evidence: 'mobiltelefoner skal ligge i en kasse under spil og værkstedsarbejde', why: __danskdagText("В разделе о молодёжном клубе: во время игр и работы в мастерской мобильные телефоны должны лежать в ящике.","У розділі про молодіжний клуб: під час ігор і роботи в майстерні мобільні телефони мають лежати в ящику.")},
+   {id: 'find-5-q7', q: 'Hvor kan man læse, at vandet ikke er tilgængeligt hele dagen?', section: 's5', evidence: 'Vandet bliver lukket fra klokken otte til femten på hverdage', why: __danskdagText("В разделе о ремонте ванных комнат: по будням с восьми до пятнадцати часов воду отключают.","У розділі про ремонт ванних кімнат: у будні з восьмої до п’ятнадцятої години воду відключають.")},
+   {id: 'find-5-q8', q: 'Hvor står der, at man skal give sin nøgle til en anden, hvis man ikke er hjemme, når håndværkerne kommer?', section: 's5', evidence: 'aflevere en nøgle til viceværten', why: __danskdagText("В разделе о ремонте ванных комнат: тем, кого не будет дома, нужно сдать ключ коменданту, чтобы рабочие попали в квартиру.","У розділі про ремонт ванних кімнат: тим, кого не буде вдома, потрібно здати ключ коменданту, щоб робітники потрапили до квартири.")},
+   {id: 'find-5-q9', q: 'Hvor kan man læse, at en virksomhed retter fejl uden ekstra betaling i flere år efter arbejdet?', section: 's6', evidence: 'to års garanti på alt arbejde', why: __danskdagText("В разделе о ремонтной фирме: фирма даёт двухлетнюю гарантию на все работы и исправляет ошибки бесплатно.","У розділі про ремонтну фірму: фірма дає дворічну гарантію на всі роботи та виправляє помилки безкоштовно.")},
+   {id: 'find-5-q10', q: 'Hvor står der, at en pladsreservation kun gælder indtil kort før filmen begynder?', section: 's7', evidence: 'reservationen gælder til femten minutter før filmen begynder', why: __danskdagText("В разделе о кинотеатре: бронь мест действует до пятнадцати минут до начала фильма.","У розділі про кінотеатр: бронь місць діє до п’ятнадцяти хвилин до початку фільму.")},
+   {id: 'find-5-q11', q: 'Hvor kan man læse, at man gerne må tage noget at drikke med ind?', section: 's7', evidence: 'man må gerne tage drikkevarer med ind i salen', why: __danskdagText("В разделе о кинотеатре: напитки можно проносить в зал, а горячую еду нельзя.","У розділі про кінотеатр: напої можна проносити до зали, а гарячу їжу не можна.")},
+   {id: 'find-5-q12', q: 'Hvor står der, at man selv skal gøre rent, hvis man ikke har bestilt hjælp til det?', section: 's8', evidence: 'ellers skal lejeren selv gøre rent', why: __danskdagText("В разделе о летних домах: итоговую уборку можно заказать за фиксированную плату, иначе арендатор убирает сам перед отъездом.","У розділі про літні будинки: підсумкове прибирання можна замовити за фіксовану плату, інакше орендар прибирає сам перед від’їздом.")},
+   {id: 'find-5-q13', q: 'Hvor kan man læse, at man skal betale ekstra, hvis man køber sin billet ombord?', section: 's9', evidence: 'et tillæg på tyve kroner', why: __danskdagText("В разделе о поездах: за билет, купленный в поезде, берут доплату в двадцать крон.","У розділі про потяги: за квиток, куплений у потязі, беруть доплату в двадцять крон.")},
+   {id: 'find-5-q14', q: 'Hvor står der, at man kan øve sig i at tale med en mulig arbejdsgiver?', section: 's10', evidence: 'øve en jobsamtale', why: __danskdagText("В разделе о центре поиска работы: там помогут написать резюме, потренироваться в собеседовании и найти вакансии.","У розділі про центр пошуку роботи: там допоможуть написати резюме, потренуватися в співбесіді та знайти вакансії.")},
+   {id: 'find-5-q15', q: 'Hvor kan man læse, at man kan give sine ansøgningspapirer direkte til dem, der leder efter medarbejdere?', section: 's10', evidence: 'aflevere deres CV direkte til virksomhederne', why: __danskdagText("В разделе о центре поиска работы: раз в месяц приходят предприятия, и участники могут отдать им своё резюме напрямую.","У розділі про центр пошуку роботи: раз на місяць приходять підприємства, і учасники можуть віддати їм своє резюме напряму.")}
+  ]
+ },
+ {
+  id: 'find-6',
+  title: 'Hverdag og fritid i Vestby: find svaret',
+  minutes: 25,
+  sections: [
+   {
+    id: 's1',
+    title: 'Sparekassen Fjordbo',
+    paragraphs: [
+     'Sparekassen Fjordbo har åbnet en ny afdeling i Vestby. Her kan man få hjælp til at oprette en konto, bestille et betalingskort og tale med en rådgiver om sin økonomi. Afdelingen har åbent fra ti til sytten, og torsdag holder den åbent til klokken atten. Kontanter hæver man bedst i automaten foran indgangen, for afdelingen har ingen kasse.',
+     'Hvis man mister sit betalingskort, skal man spærre det med det samme. Det kan man gøre i netbanken eller ved at ringe til bankens døgnåbne spærretelefon. Bagefter bestiller man et nyt kort, som kommer med posten inden for en uge.',
+     'Banken holder en gratis aften om privatøkonomi den anden tirsdag i måneden. Her kan man lære at lave et budget og at spare op til større indkøb. Der serveres kaffe, og man behøver ikke at være kunde i banken for at deltage. Tilmelding sker i afdelingen eller på bankens hjemmeside.'
+    ]
+   },
+   {
+    id: 's2',
+    title: 'Mobilselskabet Telefix',
+    paragraphs: [
+     'Telefix har nye abonnementer til mobiltelefon. Der er tre størrelser, hvor mængden af data er forskellig, og alle abonnementer inkluderer ubegrænsede opkald i Danmark. Man kan ændre sit abonnement, når man vil, og den nye pris gælder fra næste måned.',
+     'Når man bliver kunde, kan man få en ny telefon på afbetaling. Så betaler man hver måned en lille del, og aftalen løber i tyve måneder. Hvis man vil afslutte aftalen tidligere, skal man betale resten af beløbet. Selve abonnementet kan opsiges med tredive dages varsel.',
+     'Hvis man rejser til udlandet, skal man huske at tjekke, om data i udlandet er med i abonnementet. Telefix sender en sms, når man krydser grænsen, med oplysninger om, hvad opkald og data koster. Kundeservice kan kontaktes på telefon eller i en chat, og nye kunder får hjælp til at flytte kontakter og billeder fra den gamle telefon.'
+    ]
+   },
+   {
+    id: 's3',
+    title: 'Kollegiet Åparken',
+    paragraphs: [
+     'Kollegiet Åparken har hundrede og tyve værelser til studerende og unge under uddannelse. Hvert værelse har eget bad, og køkkenet deles af otte beboere på hver gang. Huslejen inkluderer vand, varme og internet, men ikke el, som man betaler efter forbrug.',
+     'Når man flytter ind, får man udleveret nøgle og adgangskort til fælleslokalerne på kontoret mellem ti og tolv. Man skal selv medbringe sengetøj og køkkenting, men kollegiet har en byttehylde i kælderen, hvor beboerne efterlader det, de ikke skal bruge mere. Cykler kan stilles i cykelskuret bag huset, og der er en vaskekælder med fire vaskemaskiner, som kan bookes på en tavle ved indgangen.',
+     'Beboerrådet arrangerer en filmaften hver torsdag i fælleslokalet, og alle beboere kan foreslå en film. Efter klokken 22 skal der være ro i opgangene, og fester skal anmeldes til beboerrådet på forhånd. Hvis man vil have gæster til at overnatte, må de højst blive tre nætter i træk.'
+    ]
+   },
+   {
+    id: 's4',
+    title: 'Studiestart på Campus Nord',
+    paragraphs: [
+     'Studiestarten på Campus Nord begynder den 25. august med en velkomstdag for alle nye studerende. Dagen starter klokken ni i den store hal, hvor rektor og nogle ældre studerende byder velkommen. Bagefter bliver de nye studerende delt op i hold, og hver gruppe får en tutor, som viser rundt på campus.',
+     'I den første uge er der også kurser i, hvordan man bruger biblioteket og studiets digitale systemer. Alle nye studerende skal tilmelde sig de første eksamener i løbet af september, ellers kan de ikke gå op til dem. Tilmeldingen foregår på studieportalen, og studieservice hjælper dem, der ikke kan finde ud af det.',
+     'Studiekortet bruges som adgangskort til bygningerne og som lånerkort på biblioteket. Man kan hente det i studieservice mod at vise legitimation. Hvis kortet går tabt, koster et nyt kort hundrede kroner. Studiecaféen i kælderen har åbent hver dag, og her kan man arbejde sammen med andre i grupper eller bare drikke en kop kaffe.'
+    ]
+   },
+   {
+    id: 's5',
+    title: 'Dyreklinikken',
+    paragraphs: [
+     'Dyreklinikken i Vestby har åbent for almindelige konsultationer fra otte til femten, og man skal bestille tid. Hvis dyret er akut sygt, kan man komme uden tid, men så skal man være forberedt på ventetid, for dyr med de alvorligste skader bliver set først. Uden for åbningstiden kan man ringe til en vagtdyrlæge, som svarer døgnet rundt.',
+     'Katte og hunde skal have en vaccination hvert år, og dyrlægen minder ejeren om det i en mail. Hvis man skal rejse til udlandet med sit kæledyr, skal dyret have en chip og et pas, og passet skal udfyldes af dyrlægen. Det er vigtigt at bestille tid i god tid, fordi det tager lang tid at få alle papirerne i orden.',
+     'Klinikken tilbyder også kostrådgivning til overvægtige dyr. Dyrlægen vejer dyret og laver en foderplan, som ejeren kan følge derhjemme. Efter en måned kommer man tilbage til en ny vejning. Mange oplever, at deres hunde får mere energi og kommer bedre rundt på gåture, når de taber sig.'
+    ]
+   },
+   {
+    id: 's6',
+    title: 'Hundeskolen Snuden',
+    paragraphs: [
+     'Hundeskolen Snuden starter nye hvalpehold i marts. Hvalpene skal være mellem otte og seksten uger gamle, når de begynder, og de skal have fået mindst én vaccination. Holdet mødes en gang om ugen i en time, og der er højst seks hvalpe på hvert hold, så instruktøren har tid til alle.',
+     'På holdet lærer hvalpene at sidde, gå pænt i snor og komme, når de bliver kaldt. Ejeren lærer at belønne den gode adfærd med godbidder og ros. Instruktøren giver også gode råd til, hvordan man undgår, at hunden ødelægger møbler, når den er alene hjemme.',
+     'Hvis man har en ældre hund, der trækker i snoren eller er bange for andre hunde, kan man komme med på et særligt hold. Her er der færre hunde ad gangen, og man træner på en indhegnet bane. Prisen er ni hundrede kroner for ti gange og skal betales første gang. Hvis hunden bliver syg, kan man flytte sin plads til et senere hold.'
+    ]
+   },
+   {
+    id: 's7',
+    title: 'Røgalarmer og brandsikkerhed',
+    paragraphs: [
+     'Brandvæsenet minder alle om, at en røgalarm kan redde liv. Det anbefales at have mindst én røgalarm på hver etage i boligen, og den skal sidde i loftet, hvor røgen samler sig først. Alarmen skal testes jævnligt ved at trykke på knappen, og batteriet skal skiftes, så snart den bipper.',
+     'Brandvæsenet anbefaler også, at man har en brandslukker i køkkenet og et brandtæppe, som kan lægges over en gryde eller pande, hvis der kommer ild i den. Man må aldrig hælde vand på en brændende pande, for så blusser ilden op. Hvis man ikke kan slukke ilden med det samme, skal man forlade boligen og ringe til alarmcentralen.',
+     'Brandvæsenet holder åbent hus på brandstationen den første lørdag i oktober. Børn kan prøve at sidde i brandbilen og se, hvordan slangerne bruges. Der er også en demonstration af, hvordan man slukker en brand i en pande, og man kan stille spørgsmål til brandfolkene. Der er gratis pølser og saftevand til alle børn.'
+    ]
+   },
+   {
+    id: 's8',
+    title: 'Snerydning og glatføre',
+    paragraphs: [
+     'Kommunen rydder sne og salter vejene om vinteren, men der er en fast rækkefølge. Først bliver de store veje og busruter ryddet, derefter de veje, hvor der kører mange cyklister, og til sidst boligvejene. Det kan derfor tage et par dage, før sneen er væk på de mindre veje.',
+     'I Vestby har husejerne ansvaret for at fjerne sne og is på fortovet foran deres ejendom. Fortovet skal være ryddet senest klokken syv om morgenen, og hvis det sner i løbet af dagen, skal man rydde igen. I lejeboliger er det ofte viceværten, der gør det, men det står i lejekontrakten.',
+     'Der står gule kasser med salt og grus ved de fleste busstoppesteder og ved trapper i parken. Alle borgere må tage salt til eget brug, men man må ikke tage mere end to spande ad gangen, så der er nok til de andre. Man kan melde glatte steder via kommunens app, og så sender kommunen en bil ud, så hurtigt det er muligt.'
+    ]
+   },
+   {
+    id: 's9',
+    title: 'Spejdergruppen Ravnen',
+    paragraphs: [
+     'Spejdergruppen Ravnen i Vestby har plads til nye medlemmer. Børn fra seks til ni år kan komme med i den yngste afdeling, som mødes onsdag klokken 17. De lidt ældre børn mødes torsdag og lærer blandt andet at tænde bål og binde knob. Alle kan prøve at være med tre gange, før de beslutter sig.',
+     'Spejderne tager hvert år på en sommerlejr, hvor de bor i telt i en uge. Prisen for lejren er cirka fem hundrede kroner. Hvis en familie har svært ved at betale, kan gruppen finde en løsning, og ingen børn skal sige nej til lejren på grund af økonomien.',
+     'Gruppen søger også ledere. Man behøver ikke at have været spejder selv, for nye ledere bliver tilbudt et kursus, hvor de lærer det vigtigste. Lederne mødes en gang om måneden til et fælles møde, hvor de planlægger aktiviteterne. Til sommerlejren er der brug for ekstra voksne til at lave mad og holde øje med børnene.'
+    ]
+   },
+   {
+    id: 's10',
+    title: 'Vestby Teater',
+    paragraphs: [
+     'Vestby Teater har sat næste sæsons forestillinger til salg. Der er otte stykker på plakaten, blandt andet en musical for hele familien og en dansk komedie, som har fået gode anmeldelser. Man kan købe billetter til enkelte forestillinger eller et abonnement, som giver adgang til fire forestillinger efter eget valg.',
+     'Abonnenterne får deres faste plads i salen og en rabat på ti procent på drikkevarer i pausen. Hvis man ikke kan komme, kan man bytte sin billet til en anden aften, så længe det sker senest to dage før. Teatrets billetsalg er åbent i hverdagene fra tolv til sytten og hele døgnet på hjemmesiden.',
+     'Før hver forestilling holder teatret en introduktion i foyeren, hvor en dramaturg fortæller om stykket. Den begynder tre kvarter før tæppet går op. Der er elevator og plads til kørestole i salen, og de første rækker har teleslynge til dem, der hører dårligt.'
+    ]
+   }
+  ],
+  questions: [
+   {id: 'find-6-q1', q: 'Hvor står der, hvad man skal gøre, hvis ens betalingskort er forsvundet?', section: 's1', evidence: 'skal man spærre det med det samme', why: __danskdagText("В разделе о сберегательном банке: если потерял платёжную карту, её нужно сразу заблокировать в онлайн-банке или по круглосуточному телефону.","У розділі про ощадний банк: якщо загубив платіжну картку, її потрібно одразу заблокувати в онлайн-банку або за цілодобовим телефоном.")},
+   {id: 'find-6-q2', q: 'Hvor kan man læse, at et gratis arrangement også er åbent for dem, der ikke er kunder?', section: 's1', evidence: 'man behøver ikke at være kunde i banken for at deltage', why: __danskdagText("В разделе о банке: на бесплатный вечер о личных финансах может прийти и тот, кто не является клиентом банка.","У розділі про банк: на безкоштовний вечір про особисті фінанси може прийти й той, хто не є клієнтом банку.")},
+   {id: 'find-6-q3', q: 'Hvor står der, at man kan betale for en ny telefon i rater over længere tid?', section: 's2', evidence: 'få en ny telefon på afbetaling', why: __danskdagText("В разделе о мобильном операторе: новый телефон можно взять в рассрочку, договор рассрочки действует двадцать месяцев.","У розділі про мобільного оператора: новий телефон можна взяти в розстрочку, договір розстрочки діє двадцять місяців.")},
+   {id: 'find-6-q4', q: 'Hvor står der, at man får en besked om priserne, når man kommer til et andet land?', section: 's2', evidence: 'sender en sms, når man krydser grænsen', why: __danskdagText("В разделе о мобильном операторе: при пересечении границы приходит смс со стоимостью звонков и данных.","У розділі про мобільного оператора: після перетину кордону надходить смс зі вартістю дзвінків і даних.")},
+   {id: 'find-6-q5', q: 'Hvor står der, at man selv betaler for den strøm, man bruger?', section: 's3', evidence: 'men ikke el, som man betaler efter forbrug', why: __danskdagText("В разделе об общежитии: в арендную плату входят вода, отопление и интернет, а электричество оплачивают по расходу.","У розділі про гуртожиток: в орендну плату входять вода, опалення та інтернет, а електрику оплачують за витратою.")},
+   {id: 'find-6-q6', q: 'Hvor kan man læse, hvor længe en gæst må blive hos en beboer?', section: 's3', evidence: 'højst blive tre nætter i træk', why: __danskdagText("В разделе об общежитии: гости, которые остаются на ночь, могут жить не больше трёх ночей подряд.","У розділі про гуртожиток: гості, які залишаються на ніч, можуть жити не більше трьох ночей поспіль.")},
+   {id: 'find-6-q7', q: 'Hvor står der, at man skal tilmelde sig noget i september for at kunne deltage i en prøve?', section: 's4', evidence: 'tilmelde sig de første eksamener i løbet af september', why: __danskdagText("В разделе о начале учёбы: на первые экзамены нужно записаться в течение сентября, иначе к ним не допустят.","У розділі про початок навчання: на перші іспити потрібно записатися протягом вересня, інакше до них не допустять.")},
+   {id: 'find-6-q8', q: 'Hvor kan man læse, hvad det koster at få et nyt kort til bygningerne, hvis det er gået tabt?', section: 's4', evidence: 'koster et nyt kort hundrede kroner', why: __danskdagText("В разделе о начале учёбы: новая студенческая карта взамен утерянной стоит сто крон; в разделе о банке цена замены платёжной карты не названа.","У розділі про початок навчання: нова студентська картка замість втраченої коштує сто крон; у розділі про банк ціну заміни платіжної картки не названо.")},
+   {id: 'find-6-q9', q: 'Hvor kan man læse, hvad et kæledyr skal have, før det kan rejse til udlandet?', section: 's5', evidence: 'skal dyret have en chip og et pas', why: __danskdagText("В разделе о ветеринарной клинике: для поездки за границу у животного должны быть чип и паспорт, который заполняет ветеринар.","У розділі про ветеринарну клініку: для поїздки за кордон у тварини мають бути чип і паспорт, який заповнює ветеринар.")},
+   {id: 'find-6-q10', q: 'Hvor står der, at der kun er få deltagere på hvert hold, så læreren har tid til alle?', section: 's6', evidence: 'højst seks hvalpe på hvert hold', why: __danskdagText("В разделе о школе дрессировки: в каждой группе не больше шести щенков, чтобы у инструктора было время на всех.","У розділі про школу дресирування: у кожній групі не більше шести цуценят, щоб в інструктора був час на всіх.")},
+   {id: 'find-6-q11', q: 'Hvor står der, at man ikke må slukke en brand i køkkenet med vand?', section: 's7', evidence: 'Man må aldrig hælde vand på en brændende pande', why: __danskdagText("В разделе о пожарной безопасности: на горящую сковороду нельзя лить воду, пламя только вспыхнет сильнее.","У розділі про пожежну безпеку: на гарячу сковороду не можна лити воду, полум’я лише спалахне сильніше.")},
+   {id: 'find-6-q12', q: 'Hvor kan børn prøve at sidde i et køretøj, som redningsfolk bruger?', section: 's7', evidence: 'prøve at sidde i brandbilen', why: __danskdagText("В разделе о пожарной безопасности: в день открытых дверей дети могут посидеть в пожарной машине и посмотреть, как используют шланги.","У розділі про пожежну безпеку: у день відкритих дверей діти можуть посидіти в пожежній машині й подивитися, як використовують шланги.")},
+   {id: 'find-6-q13', q: 'Hvor står der, hvilke veje der bliver gjort fri for sne først?', section: 's8', evidence: 'Først bliver de store veje og busruter ryddet', why: __danskdagText("В разделе об уборке снега: сначала расчищают большие дороги и автобусные маршруты, потом велосипедные дороги и в конце жилые улицы.","У розділі про прибирання снігу: спочатку розчищають великі дороги та автобусні маршрути, потім велосипедні дороги, а наприкінці житлові вулиці.")},
+   {id: 'find-6-q14', q: 'Hvor står der, at man ikke behøver erfaring for at blive leder?', section: 's9', evidence: 'Man behøver ikke at have været spejder selv', why: __danskdagText("В разделе о скаутской группе: чтобы стать руководителем, не обязательно самому быть скаутом, новым руководителям предлагают курс.","У розділі про скаутську групу: щоб стати керівником, не обов’язково самому бути скаутом, новим керівникам пропонують курс.")},
+   {id: 'find-6-q15', q: 'Hvor står der, at man kan bytte sin billet til en anden dag, hvis man giver besked i tide?', section: 's10', evidence: 'bytte sin billet til en anden aften', why: __danskdagText("В разделе о театре: билет можно обменять на другой вечер, если сообщить не позднее чем за два дня.","У розділі про театр: квиток можна обміняти на інший вечір, якщо повідомити не пізніше ніж за два дні.")}
+  ]
+ }
+];
+
+return {readingExamFindMore};
+})();
+
+const __danskdag_module_82=(()=>{
+// PD3 reading data, extra Del 2 sets (exam-3 ... exam-6). Plain data, no imports. Danish text is original learner-level text; names, firms and places are fictional.
+const readingExamTextMore = [
+ {
+  "id": "exam-3",
+  "minutes": 65,
+  "text1": {
+   "title": "Når cyklen bliver det naturlige valg",
+   "paragraphs": [
+    "Klokken er tyve minutter i otte en tirsdag morgen i oktober, og ved cykelstativerne foran Nørrevig Teknik er der kun få ledige pladser tilbage. Ida Winther låser sin cykel, tager regnbukserne af og hænger jakken til tørre i omklædningsrummet. Hun er bogholder i virksomheden og har cyklet de seks kilometer fra Lerbæk i al slags vejr i fire år.",
+    "Da hun fik jobbet, tog hun bilen, ligesom de fleste af kollegerne. Det ændrede sig, da firmaet flyttede til nye lokaler, hvor der kun var parkeringspladser til halvdelen af de ansatte. »Jeg troede, at jeg ville hade det,« fortæller Ida. »Men efter to uger kunne jeg mærke, at jeg havde mere energi, når jeg kom ind ad døren, end jeg plejede at have.«",
+    "Siden har virksomheden gjort meget for at få flere til at følge hendes eksempel. Der er bygget overdækkede stativer, og i kælderen er der bruser og et tørrerum til vådt tøj. Hvert forår holder firmaet en lille konkurrence, hvor afdelingerne tæller, hvor mange kilometer de tilsammen har cyklet. Præmien er en fælles frokost, men ifølge personalechefen er det ikke den, der betyder mest. »Det er stemningen,« siger hun. »Folk begynder at cykle sammen, og så bliver det en vane.«",
+    "Kommunens trafikplanlægger, Marie Toft, mener, at det ikke kun handler om den enkeltes vilje. »Folk cykler, hvis det er trygt og nemt,« siger hun. »Derfor har vi lavet cykelstier, der ikke holder op midt i et kryds, og sat flere lys op på de strækninger, hvor det er mørkt om vinteren.« Hun erkender dog, at der stadig er steder, hvor cyklisterne må dele vejen med lastbiler, og at det vil tage flere år at ændre dem alle.",
+    "Ikke alle lader sig overbevise. Bent Ravn er sælger og kører rundt til kunder det meste af ugen. Han bor næsten tredive kilometer fra kontoret og har ofte tunge kasser med fliseprøver i bagagerummet. »Jeg ville gerne cykle mere,« siger han, »men jeg kan ikke have en kasse med fliser på cyklen.« I weekenderne cykler han til gengæld ofte en lang tur med sin familie.",
+    "Det argument, som cyklister oftest hører, er vejret. Ida smiler, når hun bliver spurgt. Hun mener, at det vigtigste er det rigtige tøj og lygter, der virker. »Det regner sjældnere, end man tror,« siger hun. »Og når det gør, tager man bare regnbukserne på.« På kontoret har hun en ekstra trøje liggende, hvis den, hun cykler i, bliver våd af sved.",
+    "Et andet argument er økonomien. En bil koster penge til brændstof, forsikring og parkering, mens en god cykel kan holde i mange år, hvis man passer på den. Ida får sin cykel efterset, hver gang vinteren nærmer sig, og hun har lært at lappe en punktering selv. Det sparer hende både tid og penge.",
+    "Marie Toft ser en tydelig udvikling i Nørrevig. Flere børn cykler i skole, og på de store arbejdspladser er der kommet flere cykelstativer. Men hun advarer mod at tro, at alle kan eller bør skifte bilen ud. »Målet er ikke, at ingen skal køre bil,« siger hun. »Målet er, at de, der har et valg, oplever, at cyklen er det nemmeste.« Ida skal ikke overtales. Hun sætter sig ved sit skrivebord, tænder skærmen og glæder sig allerede til turen hjem."
+   ],
+   "questions": [
+    {
+     "q": "Hvor længe har Ida Winther cyklet til arbejde?",
+     "options": [
+      "I cirka to uger.",
+      "I fire år.",
+      "I seks år."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Первый абзац: «cyklet ... i fire år» — Ида ездит на велосипеде четыре года. Шесть — это километры дороги, а две недели — срок, после которого она почувствовала прилив сил.","Перший абзац: «cyklet ... i fire år» — Іда їздить на велосипеді чотири роки. Шість — це кілометри дороги, а два тижні — строк, після якого вона відчула приплив сил.")
+    },
+    {
+     "q": "Hvorfor holdt Ida op med at tage bilen?",
+     "options": [
+      "Firmaet flyttede til lokaler med for få parkeringspladser.",
+      "Hun fik en ny bil, som var for dyr at køre i.",
+      "Kommunen forbød biler i nærheden af kontoret."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Второй абзац: фирма переехала в новое здание, где парковочных мест хватало только для половины сотрудников. О новой машине и о запрете со стороны коммуны в тексте не говорится.","Другий абзац: фірма переїхала в нове приміщення, де місць для паркування вистачало лише для половини працівників. Про нову машину чи про заборону з боку комуни в тексті не йдеться.")
+    },
+    {
+     "q": "Hvad siger personalechefen om firmaets konkurrence?",
+     "options": [
+      "Præmien er det, der får folk til at deltage.",
+      "Den fælles frokost er for dyr for firmaet.",
+      "Stemningen blandt kollegerne betyder mest."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Третий абзац: начальница отдела кадров говорит, что приз не главное: «Det er stemningen». Совместный обед назван призом, а не статьёй расходов.","Третій абзац: керівниця відділу кадрів каже, що приз не головне: «Det er stemningen». Спільний обід названо призом, а не статтею витрат.")
+    },
+    {
+     "q": "Hvad skal der ifølge Marie Toft til, for at folk vil cykle?",
+     "options": [
+      "At cyklerne bliver billigere end bussen.",
+      "At det er trygt og nemt at cykle.",
+      "At arbejdsgiverne kræver det af de ansatte."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Четвёртый абзац: Мария Тофт говорит «Folk cykler, hvis det er trygt og nemt». О цене велосипедов и о требованиях работодателей речи нет.","Четвертий абзац: Марія Тофт каже «Folk cykler, hvis det er trygt og nemt». Про ціну велосипедів і вимоги роботодавців мови немає.")
+    },
+    {
+     "q": "Hvorfor kan Bent Ravn ikke bruge cyklen i sit arbejde?",
+     "options": [
+      "Han mener, at cykelstierne i Nørrevig er for farlige.",
+      "Han har ikke tid til at cykle i weekenderne.",
+      "Han kører langt og har tunge kasser med."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Пятый абзац: Бент Рав ездит к клиентам, живёт почти в тридцати километрах от офиса и возит тяжёлые коробки. По выходным он, наоборот, часто катается на велосипеде.","П’ятий абзац: Бент Рав їздить до клієнтів, живе майже за тридцять кілометрів від офісу й возить важкі коробки. У вихідні він, навпаки, часто катається на велосипеді.")
+    },
+    {
+     "q": "Hvad mener Ida om at cykle i dårligt vejr?",
+     "options": [
+      "Det er sjældent et problem, hvis man har det rigtige tøj.",
+      "Det er bedst at blive hjemme, når det regner.",
+      "Det er kun muligt, hvis man har to cykler."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Шестой абзац: Ида считает, что главное — подходящая одежда, а дождь идёт реже, чем думают. Оставаться дома она не советует, о втором велосипеде речи нет.","Шостий абзац: Іда вважає, що головне — відповідний одяг, а дощ іде рідше, ніж думають. Лишатися вдома вона не радить, про другий велосипед мови немає.")
+    },
+    {
+     "q": "Hvilken økonomisk fordel ved cyklen nævner teksten?",
+     "options": [
+      "Firmaet betaler alle udgifter til reparation.",
+      "Man får penge for hver kilometer, man cykler.",
+      "En cykel kan holde i mange år, hvis man passer på den."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Седьмой абзац: «en god cykel kan holde i mange år, hvis man passer på den». Об оплате ремонта фирмой и о деньгах за километры в тексте ничего нет.","Сьомий абзац: «en god cykel kan holde i mange år, hvis man passer på den». Про оплату ремонту фірмою та гроші за кілометри в тексті нічого немає.")
+    },
+    {
+     "q": "Hvad er målet ifølge Marie Toft?",
+     "options": [
+      "At ingen længere skal køre bil.",
+      "At cyklen skal være det nemmeste valg for dem, der har et valg.",
+      "At alle ansatte skal cykle til arbejde."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Последний абзац: «Målet er, at de, der har et valg, oplever, at cyklen er det nemmeste». Мария Тофт прямо говорит, что цель не в том, чтобы никто не ездил на машине.","Останній абзац: «Målet er, at de, der har et valg, oplever, at cyklen er det nemmeste». Марія Тофт прямо каже, що мета не в тому, щоб ніхто не їздив на машині.")
+    }
+   ]
+  },
+  "text2": {
+   "title": "Byhaven på parkeringspladsen",
+   "parts": [
+    {
+     "t": "Bag boligblokkene på Kastanievej i Lerhavn lå der i mange år en parkeringsplads, som næsten ingen brugte. Asfalten var revnet, og i sprækkerne voksede der ukrudt. I dag står der tolv højbede af træ på stedet, og en lørdag formiddag i maj er der masser af liv. Børn løber rundt med vandkander, og to ældre kvinder diskuterer, om det er sikkert at plante tomaterne ud endnu. Det er byhaven Bagved, og den findes, fordi en enkelt beboer var træt af at se på tom asfalt."
+    },
+    {
+     "gap": 1
+    },
+    {
+     "t": "Til sin egen overraskelse fik hun over tyve mennesker i fælleshuset. De fleste havde aldrig dyrket så meget som en kartoffel før, men de var enige om, at pladsen kunne bruges til noget bedre. Der var dog et problem: Pladsen tilhørte boligforeningen, og ingen vidste, om bestyrelsen ville give lov."
+    },
+    {
+     "gap": 2
+    },
+    {
+     "t": "Så begyndte arbejdet. Asfalten kunne ikke fjernes, så gruppen byggede højbede af træ og købte jord for de penge, som den havde tjent på et loppemarked. I april stod bedene færdige, og i maj kunne man så de første frø."
+    },
+    {
+     "gap": 3
+    },
+    {
+     "t": "De regler har dog ikke altid været nemme at overholde. Den første sommer var tør, og nogle glemte at vande, når det var deres tur. Det førte til skænderier, og tre af deltagerne meldte sig ud."
+    },
+    {
+     "gap": 4
+    },
+    {
+     "t": "Interessen er vokset år for år. I dag er der venteliste til bedene, og den lokale skole har fået sit eget bed, hvor klasserne dyrker kartofler og ærter. Nye interesserede må nu vente et års tid på at få deres eget bed."
+    },
+    {
+     "gap": 5
+    }
+   ],
+   "removed": [
+    {
+     "id": "A",
+     "t": "Bestyrelsen tog sig god tid. Til sidst gav den lov til en prøveperiode på tre år, på den betingelse at haven holdt sig pæn, og at alle beboere fik adgang til den."
+    },
+    {
+     "id": "B",
+     "t": "Alligevel har byhaven givet mere, end nogen havde regnet med. Naboer, der før kun kendte hinanden af udseende, sidder nu sammen og deler opskrifter, og de ældre hjælper de yngre med at finde ud af, hvornår man skal så og høste. Børnene har lært, at gulerødder vokser i jorden og ikke kommer fra en plastikpose."
+    },
+    {
+     "id": "C",
+     "t": "Nadia ville i begyndelsen helst have haven for sig selv og sin familie, og hun var imod, at andre beboere fik adgang til bedene. Derfor blev der sat et højt hegn rundt om pladsen, og kun hun havde nøgle til porten."
+    },
+    {
+     "id": "D",
+     "t": "Beboeren hed Nadia Larsen og arbejdede som sygeplejerske. For tre år siden hængte hun et opslag op i alle opgangene: »Har du lyst til at dyrke grøntsager, men har ingen have? Kom til møde i fælleshuset torsdag klokken nitten.«"
+    },
+    {
+     "id": "E",
+     "t": "Da bedene stod færdige, havde næsten alle deltagerne mange års erfaring med havearbejde. Ingen havde brug for råd, og den første høst blev derfor usædvanlig stor."
+    },
+    {
+     "id": "F",
+     "t": "Nadia ser roligt på fremtiden. Prøveperioden er endnu ikke slut, men bestyrelsen har allerede sagt, at haven gerne må blive. Hun håber, at flere boligområder vil følge eksemplet, for ifølge hende handler en byhave ikke kun om grøntsager, men om at lære sine naboer at kende."
+    },
+    {
+     "id": "G",
+     "t": "Det blev hurtigt klart, at der var brug for regler. Hvert bed har en fast ansvarlig, og alle skal deltage i fælles arbejdsdage to gange om måneden. Vandet kommer fra to store tønder, som samler regnvand fra tagene, og alt haveaffald bliver lagt på en kompost."
+    }
+   ],
+   "solution": {
+    "1": "D",
+    "2": "A",
+    "3": "G",
+    "4": "B",
+    "5": "F"
+   },
+   "why": {
+    "1": __danskdagText("Во вступлении говорится о «en enkelt beboer» — одной жительнице. Абзац D («Beboeren hed Nadia Larsen ...») называет её и рассказывает об объявлении и собрании; следующий абзац («Til sin egen overraskelse ... i fælleshuset») продолжает: на собрание пришло больше двадцати человек.","У вступі йдеться про «en enkelt beboer» — одну мешканку. Абзац D («Beboeren hed Nadia Larsen ...») називає її та розповідає про оголошення й збори; наступний абзац («Til sin egen overraskelse ... i fælleshuset») продовжує: на збори прийшло понад двадцять людей."),
+    "2": __danskdagText("Предыдущий абзац заканчивается тем, что никто не знает, даст ли правление разрешение. Абзац A («Bestyrelsen tog sig god tid ...») отвечает на это: правление разрешает пробный период. После этого логично начинается «Så begyndte arbejdet».","Попередній абзац закінчується тим, що ніхто не знає, чи дасть правління дозвіл. Абзац A («Bestyrelsen tog sig god tid ...») відповідає на це: правління дозволяє пробний період. Після цього логічно починається «Så begyndte arbejdet»."),
+    "3": __danskdagText("Предыдущий абзац заканчивается первым посевом. Абзац G («Det blev hurtigt klart, at der var brug for regler») вводит правила сада, а следующий абзац начинается с «De regler ...» и без G не имел бы, к чему относиться.","Попередній абзац закінчується першим посівом. Абзац G («Det blev hurtigt klart, at der var brug for regler») вводить правила саду, а наступний абзац починається з «De regler ...» і без G не мав би, до чого відноситися."),
+    "4": __danskdagText("Предыдущий абзац рассказывает о трудностях: засуха, ссоры, трое участников вышли. Абзац B начинается с «Alligevel» («всё же») и показывает, что сад дал больше, чем ожидали, — это контраст к трудностям.","Попередній абзац розповідає про труднощі: посуха, сварки, троє учасників пішли. Абзац B починається з «Alligevel» («все ж») і показує, що сад дав більше, ніж чекали, — це контраст до труднощів."),
+    "5": __danskdagText("Последний абзац должен подвести итог. Абзац F говорит о будущем («Nadia ser roligt på fremtiden»): пробный период ещё не закончился, правление уже согласно оставить сад. Это естественное завершение после слов о списке ожидания.","Останній абзац має підсумувати. Абзац F говорить про майбутнє («Nadia ser roligt på fremtiden»): пробний період ще не скінчився, правління вже згодне залишити сад. Це природне завершення після слів про список очікування.")
+   },
+   "distractorWhy": __danskdagText("Абзац C лишний: он говорит, что Надя хотела сад только для себя и поставила забор, а в тексте она сама зовёт всех жильцов и сад открыт для всех. Абзац E тоже лишний: он утверждает, что у всех участников был большой опыт, но в тексте «de fleste havde aldrig dyrket så meget som en kartoffel før» и старшие потом помогают младшим; кроме того, грядки уже построены до этого момента, так что ни в один из пропусков абзац не вписывается.","Абзац C зайвий: він каже, що Надя хотіла сад лише для себе й поставила паркан, а в тексті вона сама запрошує всіх мешканців і сад відкритий для всіх. Абзац E теж зайвий: він стверджує, що в усіх учасників був великий досвід, але в тексті «de fleste havde aldrig dyrket så meget som en kartoffel før», а старші потім допомагають молодшим; крім того, грядки вже побудовано до цього моменту, тож у жоден із пропусків абзац не вписується.")
+  },
+  "text3": {
+   "title": "Pauser og fri",
+   "segments": [
+    "Mange tror, at man får mest fra hånden, hvis man arbejder uden pauser. Det passer sjældent. Når man har siddet i flere timer foran skærmen, ",
+    {
+     "gap": 1,
+     "options": [
+      "mister",
+      "taber",
+      "falder",
+      "sænker"
+     ],
+     "answer": 2
+    },
+    " koncentrationen, og man laver flere fejl. En kort pause kan derfor ",
+    {
+     "gap": 2,
+     "options": [
+      "spare",
+      "sparer",
+      "sparet",
+      "sparede"
+     ],
+     "answer": 0
+    },
+    " mere tid, end den koster. Det gælder især, hvis man rejser sig fra stolen og går en tur ",
+    {
+     "gap": 3,
+     "options": [
+      "på grund af",
+      "på trods af",
+      "ved siden af",
+      "i stedet for"
+     ],
+     "answer": 3
+    },
+    " blot at skifte fra én skærm til en anden. Frokostpausen er et godt eksempel. Mange spiser foran skærmen og læser nyheder, men så får hjernen ingen rigtig hvile. Det er bedre at spise sammen med kolleger eller gå udenfor, selvom det kun er i ti minutter. Lige så vigtigt som pauserne i løbet af dagen er det at have en ",
+    {
+     "gap": 4,
+     "options": [
+      "tydeligt",
+      "tydelig",
+      "tydelige",
+      "tydeligste"
+     ],
+     "answer": 1
+    },
+    " afslutning på arbejdsdagen. Det er ikke altid let, når man har en telefon, ",
+    {
+     "gap": 5,
+     "options": [
+      "der",
+      "hvem",
+      "som",
+      "hvor"
+     ],
+     "answer": 2
+    },
+    " man bruger til at tjekke mails på alle tider af døgnet. Nogle vælger derfor at slå lyden fra efter fyraften. Andre aftaler med deres kolleger, at man ikke forventes at svare før næste morgen, ",
+    {
+     "gap": 6,
+     "options": [
+      "hvis",
+      "medmindre",
+      "fordi",
+      "mens"
+     ],
+     "answer": 1
+    },
+    " det er en nødsituation. Hvile handler ikke kun om at holde op med at arbejde. Man skal også have ",
+    {
+     "gap": 7,
+     "options": [
+      "nogen",
+      "nogle",
+      "ingen",
+      "noget"
+     ],
+     "answer": 3
+    },
+    " andet at tænke på. Derfor har folk, der har en hobby eller en fast aftale om aftenen, ofte lettere ved at lægge arbejdet fra sig. Weekenden er en ny chance for at lade batterierne op, men også her kan arbejdet snige sig ind. Hvis man ofte tjekker mails lørdag formiddag, får hjernen aldrig for alvor ro. Det kan på længere sigt føre til stress. Man bør derfor spørge sig selv, ",
+    {
+     "gap": 8,
+     "options": [
+      "hvilke",
+      "hvilken",
+      "hvilket",
+      "hvad"
+     ],
+     "answer": 0
+    },
+    " opgaver der virkelig haster, og hvilke der sagtens kan vente til mandag. Langt de fleste opgaver kan vente, og de, der ikke kan, er ofte færre, end man tror. Ferie er en anden prøve. Nogle tager computeren med på stranden for en sikkerheds skyld, og så er man ikke rigtig væk. Det er bedre at aftale med en kollega, hvem der tager sig af hvad, mens man har fri. En udhvilet hjerne har det med at finde løsninger, som man slet ikke kunne se, da man var træt."
+   ]
+  }
+ },
+ {
+  "id": "exam-4",
+  "minutes": 65,
+  "text1": {
+   "title": "Tid er ikke noget, man har for meget af",
+   "paragraphs": [
+    "Hver torsdag klokken fjorten går Karl Ejlersen op ad trappen på et plejehjem i Sølvby med en pose småkager i hånden. Han er tidligere havnearbejder, og i to år har han været besøgsven for Agnes, som er firs år og næsten blind. De drikker kaffe, og Karl læser højt af avisen. Nogle gange sidder de bare og taler om gamle dage.",
+    "»Jeg tænkte først, at jeg ikke havde noget at give,« fortæller Karl. »Jeg er ikke god til at holde taler, og jeg ved ikke meget om at pleje mennesker. Men det viste sig, at det vigtigste var at møde op.« Han er ikke den eneste, der har haft den slags tvivl. Lise Dybdal, som er koordinator i foreningen Fælles Fod, hører ofte de samme spørgsmål, når nye mennesker ringer.",
+    "Foreningen har omkring halvfjerds frivillige. Nogle hjælper børn med lektier i skolens bibliotek, andre kører ældre til lægen, og en gruppe holder en genbrugsbutik åben fire dage om ugen. Alle får et kort kursus, før de begynder, så de ved, hvad de må og ikke må. Foreningen dækker udgifter til transport og forsikring, men den betaler ikke løn.",
+    "»Det vigtigste er, at man ikke tager mere på sig, end man kan overkomme,« siger Lise Dybdal. »Frivillige, der lover for meget, brænder ofte ud efter få måneder. Så er det bedre at give en time om ugen i et helt år.« Hun understreger også, at frivillige ikke må overtage de opgaver, som kommunens ansatte er ansat til at løse.",
+    "Det er ikke så let at finde nye frivillige som tidligere. Mange unge har travlt med uddannelse og job og vil helst ikke binde sig i årevis. Derfor har foreningen lavet nogle kortere projekter, for eksempel en weekend, hvor man hjælper med at pakke madkasser, eller nogle uger, hvor man er med på en sommerlejr. Amina Hassan, der læser til lærer, har meldt sig til lektiehjælp. »Jeg kan ikke love at komme hver uge,« siger hun, »men jeg kan love at møde op de måneder, hvor jeg ikke har eksamen.«",
+    "Spørger man de frivillige, hvorfor de gør det, nævner mange noget, de selv får ud af det. Nogle har mistet deres arbejde og vil gerne føle sig nyttige. Andre er flyttet til byen og har brug for at lære nogen at kende. For Karl handler det om, at ugen får et fast holdepunkt. »Når jeg ikke kommer en torsdag, spørger Agnes, hvor jeg var,« siger han. »Det føles godt at blive savnet.«",
+    "Ikke alle er begejstrede for udviklingen. Nogle fagforeninger frygter, at kommunen i længden vil spare på de ansatte, hvis frivillige kan løse en del af arbejdet. Lise Dybdal tager kritikken alvorligt. Hun mener, at frivillige kan give noget, som ansatte sjældent har tid til, nemlig tid uden at skulle se på uret, men at de aldrig bør erstatte professionel omsorg.",
+    "Karl er ved at nå op til Agnes' dør. Han banker på, som han altid gør, to korte og et langt. »Det er vores hemmelige kode,« siger han og smiler. »Så ved hun, at det er mig.«"
+   ],
+   "questions": [
+    {
+     "q": "Hvad laver Karl Ejlersen hver torsdag?",
+     "options": [
+      "Han besøger en ældre kvinde på et plejehjem.",
+      "Han arbejder i genbrugsbutikken fire dage om ugen.",
+      "Han hjælper børn med lektier i skolens bibliotek."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Первый абзац: Карл каждый четверг идёт в дом престарелых к Агнес, пьёт с ней кофе и читает вслух. Магазин секонд-хенда и помощь с уроками — это занятия других добровольцев.","Перший абзац: Карл щочетверга йде до будинку для літніх людей до Агнес, п’є з нею каву й читає вголос. Магазин секонд-хенду й допомога з уроками — це заняття інших волонтерів.")
+    },
+    {
+     "q": "Hvad tænkte Karl i begyndelsen?",
+     "options": [
+      "At han ikke havde tid nok til at komme hver uge.",
+      "At han var for gammel til at blive frivillig i foreningen.",
+      "At han ikke havde noget at give."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Второй абзац: «Jeg tænkte først, at jeg ikke havde noget at give». О нехватке времени и о возрасте он не говорит.","Другий абзац: «Jeg tænkte først, at jeg ikke havde noget at give». Про брак часу та про вік він не говорить.")
+    },
+    {
+     "q": "Hvad betaler foreningen for de frivillige?",
+     "options": [
+      "En lille løn for hver time, de arbejder.",
+      "Udgifter til transport og forsikring.",
+      "Et langt kursus på et universitet i byen."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Третий абзац: «dækker udgifter til transport og forsikring, men den betaler ikke løn». Короткий курс добровольцы проходят перед началом, но это не университетский курс.","Третій абзац: «dækker udgifter til transport og forsikring, men den betaler ikke løn». Короткий курс волонтери проходять перед початком, але це не університетський курс.")
+    },
+    {
+     "q": "Hvorfor advarer Lise Dybdal mod at love for meget?",
+     "options": [
+      "Fordi frivillige, der tager for meget på sig, ofte brænder ud.",
+      "Fordi kommunen ikke vil betale for flere timer end aftalt.",
+      "Fordi de ansatte bliver vrede, når frivillige hjælper til."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Четвёртый абзац: «Frivillige, der lover for meget, brænder ofte ud efter få måneder». Оплата коммуной и гнев сотрудников в тексте не упоминаются.","Четвертий абзац: «Frivillige, der lover for meget, brænder ofte ud efter få måneder». Оплата комуною та гнів працівників у тексті не згадуються.")
+    },
+    {
+     "q": "Hvorfor har foreningen lavet kortere projekter?",
+     "options": [
+      "Fordi de ældre ikke kan klare længere besøg end en time.",
+      "Fordi mange unge ikke vil binde sig i lang tid.",
+      "Fordi kommunen kræver kortere forløb for alle frivillige."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Пятый абзац: молодые заняты учёбой и работой и «vil helst ikke binde sig i årevis», поэтому появились короткие проекты. Требований коммуны и усталости пожилых в тексте нет.","П’ятий абзац: молодь зайнята навчанням і роботою й «vil helst ikke binde sig i årevis», тому з’явилися короткі проєкти. Вимог комуни та втоми літніх людей у тексті немає.")
+    },
+    {
+     "q": "Hvad lover Amina Hassan?",
+     "options": [
+      "At finde nye frivillige til foreningens projekter.",
+      "At komme hver uge, så længe hun studerer.",
+      "At møde op de måneder, hvor hun ikke har eksamen."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Пятый абзац: Амина не может обещать приходить каждую неделю, но обещает приходить в месяцы без экзаменов.","П’ятий абзац: Аміна не може обіцяти приходити щотижня, але обіцяє приходити в місяці без іспитів.")
+    },
+    {
+     "q": "Hvad får Karl selv ud af at være besøgsven?",
+     "options": [
+      "Han tjener lidt ekstra til sin pension hver måned.",
+      "Han lærer at pleje syge og svage mennesker.",
+      "Han føler sig savnet, og ugen får et fast holdepunkt."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Шестой абзац: для Карла неделя получает «fast holdepunkt», и ему приятно, что по нему скучают. Денег объединение не платит, ухаживать за больными он не учится.","Шостий абзац: для Карла тиждень отримує «fast holdepunkt», і йому приємно, що за ним сумують. Грошей об’єднання не платить, доглядати за хворими він не вчиться.")
+    },
+    {
+     "q": "Hvad frygter nogle fagforeninger?",
+     "options": [
+      "At frivillige bliver dårligt behandlet af kommunen.",
+      "At kommunen sparer på de ansatte, hvis frivillige overtager arbejde.",
+      "At foreningen får for få frivillige i fremtiden."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Седьмой абзац: профсоюзы опасаются, что коммуна начнёт экономить на штатных сотрудниках, если добровольцы возьмут на себя часть работы.","Сьомий абзац: профспілки побоюються, що комуна почне економити на штатних працівниках, якщо волонтери візьмуть на себе частину роботи.")
+    }
+   ]
+  },
+  "text2": {
+   "title": "Torvet, der ikke ville dø",
+   "parts": [
+    {
+     "t": "Klokken er halv otte en lørdag i september, og på torvet i Fjordby er de fleste boder allerede klar. En mand triller kasser med æbler hen over brostenene, og ved siden af står en kvinde og skærer i en stor, gul ost. Duften af nybagt brød blander sig med duften af røget fisk. Markedet er i dag byens samlingssted, men for få år siden så det ud til, at det ville forsvinde helt."
+    },
+    {
+     "gap": 1
+    },
+    {
+     "t": "Det var på det tidspunkt, at ostemageren Hanne Lindgren tog affære. Hun havde solgt sine oste på torvet i tyve år, og hun kunne ikke forestille sig byen uden markedet. Hun ringede rundt til de handlende, der var tilbage, og inviterede dem til et møde i sit køkken."
+    },
+    {
+     "gap": 2
+    },
+    {
+     "t": "Den anden del af planen var sværere. Foreningen indførte en regel om, at alt, der blev solgt, skulle være dyrket eller lavet på egnen. Appelsiner og bananer var derfor ikke længere velkomne, og kunderne kunne kun få det, som årstiden gav."
+    },
+    {
+     "gap": 3
+    },
+    {
+     "t": "I dag er der næsten tredive boder. Hanne Lindgren, som stadig er foreningens formand, kan næppe nå at hilse på alle de handlende på en lørdag, men hun forsøger. Mange af kunderne kommer igen hver uge, og det er blevet en tradition i byen at købe sin weekendmad her."
+    },
+    {
+     "gap": 4
+    },
+    {
+     "t": "Succesen har dog også en pris. Varerne på torvet er dyrere end i supermarkedet, og ikke alle har råd til at handle her hver uge. Flere kunder har klaget over det, og foreningen har drøftet, hvordan man kan gøre det billigere."
+    },
+    {
+     "gap": 5
+    }
+   ],
+   "removed": [
+    {
+     "id": "A",
+     "t": "Reglen vakte i begyndelsen modstand, og en handlende, der solgte sydfrugter, forlod markedet. Men der kom hurtigt nye boder til: en bonde med æg og kartofler, en bager med rugbrød og en fisker, der solgte sild lige fra kutteren."
+    },
+    {
+     "id": "B",
+     "t": "Foreningen besluttede derfor at tillade varer fra hele verden, så udvalget kunne blive lige så stort som i supermarkedet. Appelsiner og bananer blev de første nye varer på boderne."
+    },
+    {
+     "id": "C",
+     "t": "Efter mødet dannede de en forening, og planen havde to dele. Den første var at flytte markedet fra en hverdagsformiddag til lørdag morgen, hvor flest har tid. Det virkede næsten med det samme: Allerede den første lørdag kom der flere kunder end i hele den foregående måned."
+    },
+    {
+     "id": "D",
+     "t": "Hanne Lindgren tager kritikken roligt. Hun påpeger, at de handlende selv bestemmer priserne, og at det er dyrt at drive en lille virksomhed. Til gengæld, siger hun, får kunderne varer, der smager af noget. Selv står hun stadig bag sin bod hver lørdag og skærer ost til alle, der vil smage."
+    },
+    {
+     "id": "E",
+     "t": "Hanne solgte efter få år sin ostebod og flyttede til udlandet. Siden da har en anden handlende ledet foreningen, og hun har ikke besøgt torvet igen."
+    },
+    {
+     "id": "F",
+     "t": "Mange fjordbyboere var nemlig begyndt at handle i det store supermarked ved indfaldsvejen, hvor der var gratis parkering, og hvor man kunne købe alt på ét sted. Boderne mistede kunder, og én efter én pakkede de handlende sammen. Til sidst var der kun fire boder tilbage."
+    },
+    {
+     "id": "G",
+     "t": "Mange kommer ikke kun for at handle, men også for at spise. I et hjørne af torvet har en ung kok, Mikkel Dam, åbnet en lille bod, hvor han laver smørrebrød af varer fra de andre handlende. Hans mest populære ret er rugbrød med røget makrel og radiser."
+    }
+   ],
+   "solution": {
+    "1": "F",
+    "2": "C",
+    "3": "A",
+    "4": "G",
+    "5": "D"
+   },
+   "why": {
+    "1": __danskdagText("Вступление заканчивается словами, что рынок мог «forsvinde helt». Абзац F («Mange fjordbyboere var nemlig begyndt at handle i supermarkedet ...») объясняет, почему: покупатели ушли, остались четыре лотка. Следующий абзац начинается с «Det var på det tidspunkt» — то есть в этот самый низший момент.","Вступ закінчується словами, що ринок міг «forsvinde helt». Абзац F («Mange fjordbyboere var nemlig begyndt at handle i supermarkedet ...») пояснює, чому: покупці пішли, лишилося чотири кіоски. Наступний абзац починається з «Det var på det tidspunkt» — тобто в цей найнижчий момент."),
+    "2": __danskdagText("Предыдущий абзац заканчивается приглашением на встречу на кухне у Ханне. Абзац C («Efter mødet dannede de en forening ...») продолжает рассказ о встрече и вводит план из двух частей; следующий абзац начинается с «Den anden del af planen».","Попередній абзац закінчується запрошенням на зустріч на кухні в Ханне. Абзац C («Efter mødet dannede de en forening ...») продовжує розповідь про зустріч і вводить план із двох частин; наступний абзац починається з «Den anden del af planen»."),
+    "3": __danskdagText("Предыдущий абзац вводит правило «только местные товары». Абзац A («Reglen vakte i begyndelsen modstand ...») реагирует на это правило и рассказывает, какие новые лотки появились; без правила слову «Reglen» не к чему относиться.","Попередній абзац вводить правило «лише місцеві товари». Абзац A («Reglen vakte i begyndelsen modstand ...») реагує на це правило й розповідає, які нові кіоски з’явилися; без правила слову «Reglen» нема до чого відноситися."),
+    "4": __danskdagText("Предыдущий абзац сообщает, что сегодня около тридцати лотков и покупатели возвращаются. Абзац G («Mange kommer ikke kun for at handle, men også for at spise») показывает новый успех рынка, а следующий абзац продолжает: «Succesen har dog også en pris».","Попередній абзац повідомляє, що сьогодні близько тридцяти кіосків і покупці повертаються. Абзац G («Mange kommer ikke kun for at handle, men også for at spise») показує новий успіх ринку, а наступний абзац продовжує: «Succesen har dog også en pris»."),
+    "5": __danskdagText("Предыдущий абзац говорит о жалобах на высокие цены. Абзац D («Hanne Lindgren tager kritikken roligt») отвечает на эту критику и завершает текст рассказом о том, что Ханне до сих пор стоит за своим лотком.","Попередній абзац говорить про скарги на високі ціни. Абзац D («Hanne Lindgren tager kritikken roligt») відповідає на цю критику й завершує текст розповіддю про те, що Ханне досі стоїть за своїм кіоском.")
+   },
+   "distractorWhy": __danskdagText("Абзац B лишний: он говорит, что объединение разрешило товары со всего мира и что апельсины и бананы стали первыми новинками, но в тексте действует правило «только с местных ферм», и апельсины с бананами как раз перестали быть желанными. Абзац E тоже лишний: Ханне якобы продала лоток и уехала, но в тексте она до сих пор председатель объединения и стоит за своим лотком.","Абзац B зайвий: він каже, що об’єднання дозволило товари з усього світу й що апельсини та банани стали першими новинками, але в тексті діє правило «лише з місцевих господарств», а апельсини з бананами якраз перестали бути бажаними. Абзац E теж зайвий: Ханне нібито продала кіоск і поїхала, але в тексті вона досі голова об’єднання й стоїть за своїм кіоском.")
+  },
+  "text3": {
+   "title": "Digital hverdag for alle",
+   "segments": [
+    "Digitaliseringen har gjort hverdagen nemmere for mange. Man kan bestille tid hos lægen, ",
+    {
+     "gap": 1,
+     "options": [
+      "betaler",
+      "betale",
+      "betalt",
+      "betalte"
+     ],
+     "answer": 1
+    },
+    " sin skat og få post fra kommunen uden at gå ned til postkassen. Men for nogle ældre føles udviklingen som et kapløb, de ikke kan vinde. De oplever, at de er blevet ",
+    {
+     "gap": 2,
+     "options": [
+      "overhale",
+      "overhaler",
+      "overhalede",
+      "overhalet"
+     ],
+     "answer": 3
+    },
+    " af teknikken, og at de ikke ved, hvem de skal spørge, når en side pludselig ikke virker. Mange henvender sig derfor på biblioteket, ",
+    {
+     "gap": 3,
+     "options": [
+      "hvor",
+      "som",
+      "der",
+      "hvad"
+     ],
+     "answer": 0
+    },
+    " medarbejderne har tid til at hjælpe. En medarbejder sætter sig ved siden af og viser, hvordan man ",
+    {
+     "gap": 4,
+     "options": [
+      "log",
+      "logge",
+      "logger",
+      "logget"
+     ],
+     "answer": 2
+    },
+    " ind og finder sine breve. Der er ikke ",
+    {
+     "gap": 5,
+     "options": [
+      "nogen",
+      "noget",
+      "intet",
+      "ingen"
+     ],
+     "answer": 0
+    },
+    " grund til at skamme sig over at spørge. Systemerne er nemlig ikke altid ",
+    {
+     "gap": 6,
+     "options": [
+      "nemme",
+      "nem",
+      "nemt",
+      "nemmeste"
+     ],
+     "answer": 0
+    },
+    " at forstå, og selv unge, der er vokset op med telefoner, kan blive fortvivlede, når en side ændrer sig. Det er ikke brugerne, men systemerne, der ofte er for indviklede. Det er en god idé at lære det grundlæggende, ",
+    {
+     "gap": 7,
+     "options": [
+      "efter",
+      "siden",
+      "før",
+      "mens"
+     ],
+     "answer": 2
+    },
+    " man for alvor får brug for det. Hvis en frist nærmer sig, er det svært at lære noget nyt. Mange ældre bruger allerede telefonen ",
+    {
+     "gap": 8,
+     "options": [
+      "i",
+      "til",
+      "ved",
+      "af"
+     ],
+     "answer": 1
+    },
+    " at holde kontakt med børnebørn, og det er et godt udgangspunkt. Derfra kan man tage ét skridt ad gangen. En seniorklub i en nabokommune har for eksempel holdt kurser, hvor ældre og børnebørn sidder sammen foran en skærm. Børnebørnene viser, hvordan man gør, og bedsteforældrene fortæller til gengæld om dengang, de selv skulle lære noget nyt. Man bør aldrig give sit kodeord til andre eller svare på mails, hvor nogen beder om det. Samtidig er det vigtigt at huske, at ikke alle kan eller vil bruge digitale løsninger. Nogle har et handicap, andre bor et sted med dårligt internet, og nogle har simpelthen ikke lyst. For dem skal der være et andet valg, for eksempel at ringe eller møde op. Det skal man også tænke på, når man udvikler nye systemer. Digitale løsninger skal være en hjælp, ikke en pligt, og derfor er det vigtigt, at man stadig kan henvende sig personligt, når der er brug for det."
+   ]
+  }
+ },
+ {
+  "id": "exam-5",
+  "minutes": 65,
+  "text1": {
+   "title": "Historierne, børnene vil høre igen",
+   "paragraphs": [
+    "En tirsdag eftermiddag er børneafdelingen på Skovbo Bibliotek fyldt med puder, tæpper og børn, der ligger på maven og kigger op på forfatteren Sofie Lund. Hun sidder på en lav skammel med en billedbog i hånden og læser om en bjørn, der er bange for mørket. Hver gang bjørnen hører en lyd i skoven, sænker hun stemmen, og børnene holder vejret.",
+    "Sofie Lund har skrevet børnebøger i femten år. Før det var hun børnehavepædagog, og hun siger, at det var dér, hun lærte det vigtigste: at børn er de strengeste kritikere, man kan have. »Hvis en historie bliver kedelig, begynder de at pille ved skosnørerne,« siger hun og griner. »Så ved jeg, at jeg skal skynde mig hen til det sjove.«",
+    "Idéerne henter hun ofte hos børnene selv. Hendes bøger handler sjældent om store eventyr, men om små ting, som børn kender: en tand, der vakler, en bedstemor, der har glemt, hvor hun har lagt sine briller, eller en kammerat, der flytter. »Børn vil gerne genkende deres eget liv i bøger,« siger hun. »Men de vil også gerne overraskes.«",
+    "Hun er ikke tilhænger af bøger, der prøver at lære børn noget. »Når en bog begynder at belære, lukker børnene ørerne,« mener hun. I stedet foretrækker hun historier, hvor det er de voksne, der får noget at tænke over, for eksempel at børns bekymringer skal tages alvorligt, selv når de virker små.",
+    "Sofie Lund skriver som regel om formiddagen i et lille havehus bag sit hus. Hun skriver første udkast i hånden og læser det højt for sig selv, inden hun lægger det ind på computeren. »Hvis jeg kommer til at stoppe op midt i en sætning, ved jeg, at den ikke er god nok,« siger hun. Bagefter sender hun teksten til en tegner, som hun har arbejdet sammen med i mange år, og først da begynder bogen for alvor at ligne en bog.",
+    "Arrangementet er bibliotekar Jonna Kruses idé. Hver tirsdag er der højtlæsning for børn mellem tre og otte år, og det er gratis. »Her møder børnene bøger, som de måske ikke selv ville have valgt,« fortæller hun. Flere forældre er kommet til biblioteket for første gang, fordi deres børn har bedt om det. Biblioteket låner desuden kasser med billedbøger ud til børnehaver i kommunen.",
+    "Forældre spørger ofte Sofie Lund, hvordan de får deres børn til at læse mere. Hendes svar er enkelt: Læs højt, så længe børnene vil have det, også efter at de selv kan læse. Og lad dem vælge, selvom de vælger den samme bog tyve gange. Det kan være kedeligt for de voksne, men for børnene er gentagelsen en tryghed. Når man kender slutningen, kan man glæde sig til den.",
+    "Skærme kommer også op i samtalen. Sofie Lund er ikke imod lydbøger eller digitale billedbøger, og hun lytter selv til lydbøger i bilen. Men hun mener, at en trykt bog har en fordel: Man kan holde den, bladre i den og pege på billederne sammen. »En bog blinker ikke og sender ikke beskeder,« siger hun.",
+    "Efter oplæsningen står en lille pige med en stor sløjfe i håret og trækker i Sofies ærme. »Du skal læse den igen,« siger hun. Sofie smiler. »Det er den største ros, en forfatter kan få.«"
+   ],
+   "questions": [
+    {
+     "q": "Hvad sker der i børneafdelingen, da teksten begynder?",
+     "options": [
+      "Børnene ligger på puder og lytter til en forfatter.",
+      "Børnene tegner billeder til en ny bog sammen med forfatteren.",
+      "En bibliotekar fortæller børnene om bibliotekets regler."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Первый абзац: дети лежат на подушках и слушают писательницу Софи Лунд, которая читает вслух о медведе. Рисования и рассказа о правилах библиотеки в тексте нет.","Перший абзац: діти лежать на подушках і слухають письменницю Софі Лунд, яка читає вголос про ведмедя. Малювання й розповіді про правила бібліотеки в тексті немає.")
+    },
+    {
+     "q": "Hvad lærte Sofie Lund, mens hun arbejdede som børnehavepædagog?",
+     "options": [
+      "At børn gerne vil høre de samme historier hver dag.",
+      "At børn er de strengeste kritikere, man kan have.",
+      "At lange bøger passer bedst til små børn."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Второй абзац: в детском саду она поняла, что дети — самые строгие критики. Когда им скучно, они начинают теребить шнурки.","Другий абзац: у дитячому садку вона зрозуміла, що діти — найсуворіші критики. Коли їм нудно, вони починають смикати шнурівки.")
+    },
+    {
+     "q": "Hvad handler Sofie Lunds bøger oftest om?",
+     "options": [
+      "Store eventyr med drager, konger og modige riddere.",
+      "Dyr, der lærer børn at opføre sig pænt og høfligt.",
+      "Små ting, som børn kender fra deres hverdag."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Третий абзац: её книги «sjældent om store eventyr, men om små ting, som børn kender» — шатающийся зуб, потерянные очки, переезд друга.","Третій абзац: її книжки «sjældent om store eventyr, men om små ting, som børn kender» — хиткий зуб, загублені окуляри, переїзд друга.")
+    },
+    {
+     "q": "Hvorfor kan Sofie Lund ikke lide bøger, der belærer?",
+     "options": [
+      "Fordi børn holder op med at lytte, når en bog begynder at belære.",
+      "Fordi forældrene synes, at sådanne bøger bliver alt for lange og kedelige.",
+      "Fordi bibliotekerne ikke vil låne bøger ud, som prøver at lære børn noget."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Четвёртый абзац: «Når en bog begynder at belære, lukker børnene ørerne». О длине книг и о позиции библиотек речи нет.","Четвертий абзац: «Når en bog begynder at belære, lukker børnene ørerne». Про довжину книжок і позицію бібліотек мови немає.")
+    },
+    {
+     "q": "Hvad siger bibliotekar Jonna Kruse om højtlæsningen?",
+     "options": [
+      "Den er kun for børn, der allerede kan læse bøger selv.",
+      "Børnene skal betale en lille pris for at deltage hver gang.",
+      "Børnene får lov at prøve bøger, de ikke selv ville vælge."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Шестой абзац: чтение вслух бесплатное и для детей от трёх до восьми лет; Йонна Крусе говорит, что дети знакомятся с книгами, которые сами бы не выбрали.","Шостий абзац: читання вголос безкоштовне й для дітей від трьох до восьми років; Йонна Крусе каже, що діти знайомляться з книжками, які самі б не вибрали.")
+    },
+    {
+     "q": "Hvilket råd giver Sofie Lund til forældre?",
+     "options": [
+      "De skal købe nye bøger hver uge, så børnene aldrig bliver trætte af dem.",
+      "De skal lade børnene vælge, også den samme bog igen og igen.",
+      "De skal holde op med at læse højt, når børnene selv kan læse."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Седьмой абзац: читать вслух, пока ребёнок хочет, и разрешать ему выбирать, даже если это одна и та же книга двадцать раз. Совет перестать читать вслух она как раз опровергает.","Сьомий абзац: читати вголос, поки дитина хоче, і дозволяти їй вибирати, навіть якщо це одна й та сама книжка двадцять разів. Пораду перестати читати вголос вона якраз заперечує.")
+    },
+    {
+     "q": "Hvad mener Sofie Lund om lydbøger og digitale bøger?",
+     "options": [
+      "Hun er ikke imod dem, men foretrækker trykte bøger.",
+      "Hun synes, at digitale bøger er bedre end trykte bøger.",
+      "Hun mener, at børn aldrig bør høre lydbøger."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Восьмой абзац: она не против аудиокниг (сама слушает их в машине), но считает преимуществом печатной книги то, что её можно держать, листать и показывать картинки вместе.","Восьмий абзац: вона не проти аудіокниг (сама слухає їх у машині), але вважає перевагою друкованої книжки те, що її можна тримати, гортати й разом показувати картинки.")
+    },
+    {
+     "q": "Hvad siger den lille pige efter oplæsningen?",
+     "options": [
+      "At bogen var for uhyggelig.",
+      "At hun gerne vil låne bogen med hjem.",
+      "At Sofie skal læse bogen igen."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Последний абзац: девочка говорит «Du skal læse den igen», а Софи называет это высшей похвалой для писателя.","Останній абзац: дівчинка каже «Du skal læse den igen», а Софі називає це найвищою похвалою для письменника.")
+    }
+   ]
+  },
+  "text2": {
+   "title": "Trøjerne fra Vestrup",
+   "parts": [
+    {
+     "t": "Når man åbner døren til Vestrup Strik, møder man lyden af strikkemaskiner og duften af uld. I en lang sal sidder en snes medarbejdere ved rækker af maskiner, og på hylderne langs væggene ligger sweatre i alle farver. Virksomheden er en af de få tilbageværende strikvirksomheder i området, og den har overlevet både hård konkurrence og modens skiftende luner. Historien begynder i et lille køkken."
+    },
+    {
+     "gap": 1
+    },
+    {
+     "t": "Hendes mand, Aksel, var tømrer, men han kunne se, at der var penge at tjene. Han byggede et skur ved siden af huset, og snart sad der fire kvinder fra byen og strikkede. Det var begyndelsen på firmaet."
+    },
+    {
+     "gap": 2
+    },
+    {
+     "t": "Men så ændrede tiderne sig. Billige trøjer fra udlandet kom på markedet, og det blev svært at konkurrere på prisen. Flere af de ældre medarbejdere blev sendt hjem, og maskinerne stod stille i perioder. Den ene kunde efter den anden sagde nej tak, og i flere år gik virksomheden med underskud."
+    },
+    {
+     "gap": 3
+    },
+    {
+     "t": "Hun valgte at satse på kvalitet. I stedet for mange billige trøjer begyndte virksomheden at lave færre, men dyrere sweatre af dansk uld, og hver trøje fik et lille mærke med navnet på den medarbejder, der havde strikket den."
+    },
+    {
+     "gap": 4
+    },
+    {
+     "t": "I dag sælges det meste af produktionen gennem firmaets egen netbutik, og der er stadig ventetid på nogle af modellerne. Butikken er bygget op af to unge medarbejdere, som kan alt om hjemmesider og billeder. Kunderne kommer nu fra hele landet, og nogle skriver breve til den medarbejder, hvis navn står på mærket."
+    },
+    {
+     "gap": 5
+    }
+   ],
+   "removed": [
+    {
+     "id": "A",
+     "t": "I byen blev beslutningen mødt med skepsis. Mange mente, at ingen ville betale så meget for en trøje. Men de første nye kunder kom fra en uventet kant: unge fra storbyerne, som ville have noget, der holdt længere end en sæson."
+    },
+    {
+     "id": "B",
+     "t": "Her sad Agnete Vinther i begyndelsen af halvtredserne og strikkede trøjer på en lille håndstrikkemaskine. Hun solgte dem til naboer og til en lokal tøjhandler, og hun fik snart flere bestillinger, end hun kunne nå. Om aftenen sad hun ofte oppe til langt over midnat for at blive færdig til næste dag."
+    },
+    {
+     "id": "C",
+     "t": "Aksel var i begyndelsen imod, at hans kone solgte trøjer. Han forbød hende at tage imod bestillinger, og derfor holdt Agnete op med at strikke og blev hjemmegående."
+    },
+    {
+     "id": "D",
+     "t": "Da Agnete blev for gammel til at arbejde, overtog hendes datter, Ruth, firmaet og stod med en vanskelig beslutning. Hun kunne lukke fabrikken, eller hun kunne forsøge at gøre noget helt andet. Hun brugte flere uger på at rejse rundt og se på andre virksomheder."
+    },
+    {
+     "id": "E",
+     "t": "Ruth ville fra første dag lukke fabrikken og sælge maskinerne, og alle medarbejderne fik besked om at finde nyt arbejde. Fabrikken har derfor ikke været i drift siden."
+    },
+    {
+     "id": "F",
+     "t": "Ruth er selv over tres nu, og hun har overladt ledelsen til sin søn, Mads. Han siger, at familien aldrig har set virksomheden som en maskine, der skal give mest muligt i overskud, men som en arbejdsplads, hvor folk kan være stolte af deres arbejde. Det er den tradition, han vil føre videre."
+    },
+    {
+     "id": "G",
+     "t": "I tresserne voksede virksomheden hurtigt. Aksel købte en grund i udkanten af byen og byggede en rigtig fabrik, og i de bedste år arbejdede der næsten firs mennesker. Trøjerne blev solgt i butikker over hele landet."
+    }
+   ],
+   "solution": {
+    "1": "B",
+    "2": "G",
+    "3": "D",
+    "4": "A",
+    "5": "F"
+   },
+   "why": {
+    "1": __danskdagText("Вступление заканчивается словами «Historien begynder i et lille køkken». Абзац B («Her sad Agnete Vinther ...») начинается с «Her» — на этой кухне — и вводит Агнете; следующий абзац говорит «Hendes mand, Aksel», а это возможно только после того, как женщина названа.","Вступ закінчується словами «Historien begynder i et lille køkken». Абзац B («Her sad Agnete Vinther ...») починається з «Her» — на цій кухні — і вводить Агнете; наступний абзац говорить «Hendes mand, Aksel», а це можливо лише після того, як жінку названо."),
+    "2": __danskdagText("Предыдущий абзац заканчивается словами «Det var begyndelsen på firmaet». Абзац G («I tresserne voksede virksomheden hurtigt ...») продолжает хронологию, а следующий абзац начинается с «Men så ændrede tiderne sig» — контраст к росту.","Попередній абзац закінчується словами «Det var begyndelsen på firmaet». Абзац G («I tresserne voksede virksomheden hurtigt ...») продовжує хронологію, а наступний абзац починається з «Men så ændrede tiderne sig» — контраст до зростання."),
+    "3": __danskdagText("Предыдущий абзац описывает кризис и убытки. Абзац D («Da Agnete blev for gammel ...») вводит дочь Рут и её выбор «закрыть или попробовать что-то другое», а следующий абзац начинается с «Hun valgte» — ответа на этот выбор.","Попередній абзац описує кризу й збитки. Абзац D («Da Agnete blev for gammel ...») вводить доньку Рут та її вибір «закрити чи спробувати щось інше», а наступний абзац починається з «Hun valgte» — відповіді на цей вибір."),
+    "4": __danskdagText("Предыдущий абзац рассказывает о стратегии качества и более дорогих свитерах. Абзац A («I byen blev beslutningen mødt med skepsis ...») описывает реакцию на это решение и первых неожиданных покупателей; затем логично идёт «I dag».","Попередній абзац розповідає про стратегію якості й дорожчі светри. Абзац A («I byen blev beslutningen mødt med skepsis ...») описує реакцію на це рішення та перших несподіваних покупців; потім логічно йде «I dag»."),
+    "5": __danskdagText("Последний абзац должен завершить историю. Абзац F рассказывает, что Рут передала руководство сыну Мадсу и что семья видит фирму как место, где можно гордиться работой; это естественное завершение после рассказа о сегодняшнем дне.","Останній абзац має завершити історію. Абзац F розповідає, що Рут передала керівництво синові Мадсу й що родина бачить фірму як місце, де можна пишатися роботою; це природне завершення після розповіді про сьогодення.")
+   },
+   "distractorWhy": __danskdagText("Абзац C лишний: он говорит, что Аксель запретил жене принимать заказы, а в тексте он, наоборот, видит возможность заработать и строит для этого сарай. Абзац E тоже лишний: он утверждает, что Рут сразу хотела закрыть фабрику и что она больше не работает, но в тексте фабрика работает и сегодня и Рут выбирает качество.","Абзац C зайвий: він каже, що Аксель заборонив дружині приймати замовлення, а в тексті він, навпаки, бачить можливість заробити й будує для цього сарай. Абзац E теж зайвий: він стверджує, що Рут одразу хотіла закрити фабрику й що вона більше не працює, але в тексті фабрика працює й сьогодні, а Рут обирає якість.")
+  },
+  "text3": {
+   "title": "Ny i landet",
+   "segments": [
+    "At flytte til et nyt land er en stor beslutning, og mange undervurderer, hvor meget der skal ",
+    {
+     "gap": 1,
+     "options": [
+      "ordner",
+      "ordnet",
+      "ordnes",
+      "ordnede"
+     ],
+     "answer": 2
+    },
+    " i de første uger. Man skal finde et sted at bo, oprette en bankkonto og finde ud af, hvordan sundhedssystemet ",
+    {
+     "gap": 2,
+     "options": [
+      "fungerer",
+      "fungere",
+      "fungeret",
+      "funger"
+     ],
+     "answer": 0
+    },
+    ". Alt dette tager tid, og det kan være ",
+    {
+     "gap": 3,
+     "options": [
+      "svær",
+      "svære",
+      "sværeste",
+      "svært"
+     ],
+     "answer": 3
+    },
+    " at holde overblikket, når man samtidig skal lære et nyt sprog. Mange laver derfor en liste og krydser tingene af, én for én. Det giver ro at kunne se, hvad der allerede er klaret. Ud over det praktiske er der også de følelser, som følger med. Man kan sagtens glæde sig til det nye og samtidig længes ",
+    {
+     "gap": 4,
+     "options": [
+      "over",
+      "efter",
+      "på",
+      "af"
+     ],
+     "answer": 1
+    },
+    " sin familie og sine venner derhjemme. Mange bliver overraskede over, hvor meget ",
+    {
+     "gap": 5,
+     "options": [
+      "tid",
+      "tiden",
+      "tider",
+      "tids"
+     ],
+     "answer": 0
+    },
+    " det tager at få nye venner. I begyndelsen kender man ingen, og man ved ikke, hvor man skal møde nogen. Nogle trækker sig tilbage og er kun sammen med folk fra deres eget land. Det er forståeligt, ",
+    {
+     "gap": 6,
+     "options": [
+      "for",
+      "så",
+      "eller",
+      "men"
+     ],
+     "answer": 3
+    },
+    " det gør det sværere at lære sproget og forstå kulturen. Det kan derfor være en god idé at melde sig til en forening eller et hold, hvor man møder både nye tilflyttere og folk, der har boet i området hele livet. Her kan man også få tips fra dem, der selv har prøvet det, for eksempel om, hvilken læge man skal vælge, og hvor man kan købe brugte møbler. Det er også vigtigt at give ",
+    {
+     "gap": 7,
+     "options": [
+      "sin",
+      "sig",
+      "ham",
+      "den"
+     ],
+     "answer": 1
+    },
+    " selv tid. Man kan ikke forvente at føle sig hjemme efter få uger, og det er helt normalt at have dage, hvor alt føles svært. Dårlige dage betyder ikke, at man har truffet en forkert beslutning. Mange, der har boet i udlandet, har ",
+    {
+     "gap": 8,
+     "options": [
+      "finde",
+      "finder",
+      "fundet",
+      "fandt"
+     ],
+     "answer": 2
+    },
+    " ud af, at den værste tid er de første måneder. Derefter bliver hverdagen gradvist mere kendt, og man begynder at opdage de små ting, man kommer til at holde af ved sit nye hjem: bageren på hjørnet, naboens hilsen eller lyden af sproget på gaden. Det er netop de små ting, der med tiden gør et nyt sted til et hjem."
+   ]
+  }
+ },
+ {
+  "id": "exam-6",
+  "minutes": 65,
+  "text1": {
+   "title": "Fra sofaen til skoven",
+   "paragraphs": [
+    "Det er mandag aften, og det har regnet hele dagen. Alligevel står femogtyve mennesker med pandelamper foran idrætshallen i Rønnevig og venter på, at træneren, Pia Skov, siger, at de kan begynde. Nogle har taget løbetøj på over en vinterjakke, andre har fundet gamle sko frem fra bunden af skabet. Det er sjette uge på holdet »Fra sofaen«, et forløb for voksne, som aldrig har løbet før, eller som ikke har løbet i mange år.",
+    "Pia Skov har trænet begyndere i otte år, og hun har et enkelt princip: Det skal ikke gøre ondt. De første uger løber deltagerne kun halvandet minut ad gangen og går imellem. Derefter bliver løbeperioderne gradvist længere, indtil de efter tolv uger kan løbe i en halv time uden pause. »De fleste begynder alt for hurtigt og giver op efter tre uger,« siger hun. »Kroppen skal have tid til at vænne sig til det.«",
+    "Jonas Mørk er syvogfyrre og har siddet foran en skærm det meste af sit arbejdsliv. Han meldte sig til holdet efter et besøg hos lægen, som sagde, at hans blodtryk var lidt for højt. »Jeg blev ikke bange,« siger han. »Men jeg tænkte, at nu var det nu.« De første gange var han så forpustet, at han måtte stoppe efter få minutter. Hans kone griner af, at han nu står op før hende om lørdagen for at nå en tur, inden resten af familien er vågen.",
+    "Det sociale spiller en stor rolle. Holdet mødes mandag og torsdag, og bagefter drikker de te i hallens klublokale. Mange siger, at aftalen er det, der får dem ud ad døren, også når vejret er dårligt. »Det er svært at blive hjemme, når man ved, at andre venter på én,« siger Kirsten Holt, som flyttede til byen for et halvt år siden og ikke kendte nogen.",
+    "Pia understreger, at man ikke behøver dyrt udstyr. Et par løbesko, der passer, er det vigtigste, og hun anbefaler, at man får dem målt i en sportsforretning. Pia har selv haft en skade, dengang hun begyndte, og hun fortæller det gerne til nye deltagere. Mange skader opstår, fordi folk løber i gamle sko eller øger distancen for hurtigt. Hvis man har smerter, som ikke går væk, skal man gå til lægen i stedet for at løbe videre.",
+    "Deltagerne nævner mange gevinster ved at løbe. De sover bedre, de har mere energi, og flere siger, at de er blevet gladere. Pia er forsigtig med at love for meget. Hun siger, at løb ikke kan løse alle problemer, men at regelmæssig motion for de fleste har en god virkning på både krop og humør.",
+    "Ikke alle gennemfører forløbet. Hvert hold mister nogle deltagere, ofte fordi hverdagen kommer i vejen. Pia prøver ikke at presse dem. I stedet ringer hun og spørger, om de vil være med på næste hold. »Det er ikke et nederlag at holde pause,« siger hun. »Det er først et nederlag, hvis man bliver overbevist om, at man ikke kan.«",
+    "Klokken er otte, og gruppen begynder at løbe. Regnen siler ned, og stien ind i skoven er mudret. Jonas smiler, da han passerer den første bænk. For en måned siden måtte han sætte sig der. Nu løber han forbi uden at stoppe."
+   ],
+   "questions": [
+    {
+     "q": "Hvad er holdet »Fra sofaen«?",
+     "options": [
+      "Et løbehold for voksne, der ikke har løbet før.",
+      "Et motionscenter med kaffe og kage til alle medlemmer.",
+      "En konkurrence for erfarne løbere i Rønnevig."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Первый абзац: «Fra sofaen» — курс для взрослых, которые никогда не бегали или давно не бегали. Опытные бегуны и конкурс в тексте не упоминаются.","Перший абзац: «Fra sofaen» — курс для дорослих, які ніколи не бігали або давно не бігали. Досвідчені бігуни та змагання в тексті не згадуються.")
+    },
+    {
+     "q": "Hvad er Pia Skovs vigtigste princip som træner?",
+     "options": [
+      "At deltagerne skal løbe så hurtigt som muligt fra første dag.",
+      "At det ikke må gøre ondt.",
+      "At deltagerne skal konkurrere mod hinanden."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Второй абзац: принцип Пии — «Det skal ikke gøre ondt», поэтому в первые недели бегут по полторы минуты. Начинать быстро она считает ошибкой.","Другий абзац: принцип Пії — «Det skal ikke gøre ondt», тому в перші тижні бігають по півтори хвилини. Починати швидко вона вважає помилкою.")
+    },
+    {
+     "q": "Hvorfor meldte Jonas Mørk sig til holdet?",
+     "options": [
+      "Fordi hans chef gerne ville have, at de ansatte motionerede.",
+      "Fordi han ville møde nye venner efter en flytning.",
+      "Fordi lægen sagde, at hans blodtryk var lidt for højt."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Третий абзац: после визита к врачу, который сказал, что давление немного повышено. О начальнике в тексте не говорится, а о переезде рассказывает Кирстен, а не Йонас.","Третій абзац: після візиту до лікаря, який сказав, що тиск трохи підвищений. Про начальника в тексті не йдеться, а про переїзд розповідає Кірстен, а не Йонас.")
+    },
+    {
+     "q": "Hvad siger Kirsten Holt om aftalen med holdet?",
+     "options": [
+      "At den gør det svært at blive hjemme.",
+      "At hun hellere vil løbe alene om morgenen.",
+      "At holdet er for stort til, at man kan lære nogen at kende."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Четвёртый абзац: Кирстен говорит «Det er svært at blive hjemme, når man ved, at andre venter på én». Бегать одна она не предпочитает, а команду использует, чтобы познакомиться с людьми.","Четвертий абзац: Кірстен каже «Det er svært at blive hjemme, når man ved, at andre venter på én». Бігати сама вона не воліє, а команду використовує, щоб познайомитися з людьми.")
+    },
+    {
+     "q": "Hvad anbefaler Pia med hensyn til udstyr?",
+     "options": [
+      "At man køber de dyreste sko i en netbutik.",
+      "At man løber i sine gamle sko, indtil de er slidt helt op.",
+      "At man får målt et par løbesko, der passer."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Пятый абзац: дорогое снаряжение не нужно, главное — подходящие кроссовки, которые стоит измерить в спортивном магазине. Старая обувь, наоборот, названа причиной травм.","П’ятий абзац: дороге спорядження не потрібне, головне — відповідні кросівки, які варто виміряти в спортивному магазині. Старе взуття, навпаки, названо причиною травм.")
+    },
+    {
+     "q": "Hvad mener Pia om motionens virkning?",
+     "options": [
+      "At den kan løse alle problemer i livet.",
+      "At den for de fleste har en god virkning på krop og humør.",
+      "At den kun hjælper folk, der løber hurtigt."
+     ],
+     "answer": 1,
+     "why": __danskdagText("Шестой абзац: бег не решает всех проблем, но регулярные нагрузки для большинства хороши и для тела, и для настроения. О скорости речи нет.","Шостий абзац: біг не розв’язує всіх проблем, але регулярні навантаження для більшості корисні і для тіла, і для настрою. Про швидкість мови немає.")
+    },
+    {
+     "q": "Hvordan reagerer Pia, når nogen holder op på holdet?",
+     "options": [
+      "Hun ringer og spørger, om de vil være med på næste hold.",
+      "Hun beder dem om at betale for hele forløbet.",
+      "Hun fjerner dem fra holdets venteliste."
+     ],
+     "answer": 0,
+     "why": __danskdagText("Седьмой абзац: Пия не давит, а звонит и спрашивает, не хотят ли они прийти в следующую группу: «Det er ikke et nederlag at holde pause».","Сьомий абзац: Пія не тисне, а телефонує й питає, чи не хочуть вони прийти в наступну групу: «Det er ikke et nederlag at holde pause».")
+    },
+    {
+     "q": "Hvad er der sket med Jonas i løbet af den seneste måned?",
+     "options": [
+      "Han løber nu kun om sommeren, når vejret er godt.",
+      "Han har fået nye sko og løber hurtigere end Pia.",
+      "Han løber nu forbi bænken, hvor han før måtte sætte sig."
+     ],
+     "answer": 2,
+     "why": __danskdagText("Последний абзац: месяц назад Йонас должен был присесть на первой скамейке, теперь он пробегает мимо, не останавливаясь. Бегает он под дождём, а не только летом.","Останній абзац: місяць тому Йонас мусив присісти на першій лавці, тепер він пробігає повз, не зупиняючись. Бігає він під дощем, а не лише влітку.")
+    }
+   ]
+  },
+  "text2": {
+   "title": "Urmageren i Sølvgade",
+   "parts": [
+    {
+     "t": "Over døren til Sølvgade 12 hænger et skilt med guldskrift på mørkegrøn baggrund: Dahl Ure. Inde i butikken tikker snesevis af ure i kor, og bag disken sidder Peter Dahl med et forstørrelsesglas for øjet og en lillebitte skruetrækker i hånden. Han er tredje generation i familiens urmagerforretning, og han mener, at det er hans opgave at holde et gammelt håndværk i live i en tid, hvor de fleste ser på klokken på deres telefon."
+    },
+    {
+     "gap": 1
+    },
+    {
+     "t": "Peters far, Erik, overtog forretningen efter Viggo, som havde drevet værkstedet i over fyrre år, og flyttede den til Sølvgade, hvor den ligger i dag. Det var også Erik, der begyndte at sælge armbåndsure, og i en periode var butikken byens bedste sted at købe en konfirmationsgave."
+    },
+    {
+     "gap": 2
+    },
+    {
+     "t": "Erik overvejede at lukke, fordi kunderne blev væk, men Peter, som var i gang med at uddanne sig til urmager, overtalte ham til at fortsætte. Han mente, at der ville være kunder, som værdsatte noget, der var lavet i hånden og kunne repareres."
+    },
+    {
+     "gap": 3
+    },
+    {
+     "t": "Det næste skridt kom for fem år siden, da Peters datter, Julie, foreslog, at han skulle lægge forretningen på nettet. I begyndelsen var han skeptisk. Hvordan kunne man reparere et ur, man aldrig havde set?"
+    },
+    {
+     "gap": 4
+    },
+    {
+     "t": "Julie arbejder ikke i butikken til daglig, men hun passer hjemmesiden og skriver korte indlæg om, hvad Peter finder inde i urene. Hun lægger også videoer ud, hvor man kan se, hvordan et ur skilles ad, og nogle af dem er blevet set af mange tusinde mennesker."
+    },
+    {
+     "gap": 5
+    }
+   ],
+   "removed": [
+    {
+     "id": "A",
+     "t": "Viggo Dahl var uddannet bagersvend og begyndte først som urmager, da han gik på pension. Derfor havde han kun få kunder, og værkstedet gik aldrig godt."
+    },
+    {
+     "id": "B",
+     "t": "Peter fik ret. I stedet for at konkurrere med de billige ure begyndte butikken at specialisere sig i gamle ure. Folk kom med ure, de havde arvet efter deres bedsteforældre, og Peter fik ry for at kunne få selv de mest udtjente urværker til at gå igen."
+    },
+    {
+     "id": "C",
+     "t": "Peter ved ikke, om der kommer en fjerde generation. Julie er mest interesseret i computere, men hun har lovet at lære nok af ham til at kunne passe butikken, hvis han en dag bliver for gammel. Indtil da sidder han ved sit bord ved vinduet og lytter til urenes tikken."
+    },
+    {
+     "id": "D",
+     "t": "Så kom kvartsurene. De var billige, præcise og kunne købes i ethvert supermarked, og pludselig var der ikke så mange, der ville have deres ur repareret; de købte i stedet et nyt. På få år mistede forretningen halvdelen af omsætningen."
+    },
+    {
+     "id": "E",
+     "t": "Da kvartsurene kom, steg omsætningen kraftigt, fordi flere ville have et ur. Erik åbnede derfor en ny butik i nabobyen."
+    },
+    {
+     "id": "F",
+     "t": "Løsningen blev, at kunderne sender deres ure med posten i en lille æske, som Julie har designet. Peter vurderer uret og skriver et tilbud, og først når kunden har sagt ja, går han i gang. På den måde kommer der nu ure fra hele landet, og nogle af dem er over hundrede år gamle."
+    },
+    {
+     "id": "G",
+     "t": "Forretningen blev grundlagt af hans bedstefar, Viggo Dahl, som kom til byen som ung svend og åbnede et lille værksted i en baggård. Han reparerede lommeure og vægure, og han fik hurtigt et godt navn, fordi han altid mødte til tiden og aldrig tog for meget betalt."
+    }
+   ],
+   "solution": {
+    "1": "G",
+    "2": "D",
+    "3": "B",
+    "4": "F",
+    "5": "C"
+   },
+   "why": {
+    "1": __danskdagText("Вступление говорит о «tredje generation» в семейной часовой мастерской. Абзац G («Forretningen blev grundlagt af hans bedstefar, Viggo Dahl ...») называет основателя; следующий абзац говорит «overtog forretningen efter Viggo», а это возможно только после того, как Виго представлен.","Вступ говорить про «tredje generation» в сімейній годинникарській майстерні. Абзац G («Forretningen blev grundlagt af hans bedstefar, Viggo Dahl ...») називає засновника; наступний абзац каже «overtog forretningen efter Viggo», а це можливо лише після того, як Віґо представлено."),
+    "2": __danskdagText("Предыдущий абзац рассказывает об успешных годах. Абзац D («Så kom kvartsurene ...») показывает перелом: дешёвые кварцевые часы, упавший оборот. Следующий абзац говорит, что Эрик хотел закрыть, «fordi kunderne blev væk».","Попередній абзац розповідає про успішні роки. Абзац D («Så kom kvartsurene ...») показує перелом: дешеві кварцові годинники, обвал обороту. Наступний абзац каже, що Ерік хотів закрити, «fordi kunderne blev væk»."),
+    "3": __danskdagText("Предыдущий абзац заканчивается убеждением Петера, что найдутся покупатели, ценящие ручную работу. Абзац B («Peter fik ret ...») подтверждает это: мастерская специализируется на старых часах. Затем логично идёт «Det næste skridt».","Попередній абзац закінчується переконанням Петера, що знайдуться покупці, які цінують ручну роботу. Абзац B («Peter fik ret ...») підтверджує це: майстерня спеціалізується на старих годинниках. Потім логічно йде «Det næste skridt»."),
+    "4": __danskdagText("Предыдущий абзац заканчивается вопросом, как чинить часы, которых никогда не видел. Абзац F («Løsningen blev, at kunderne sender deres ure med posten ...») отвечает на этот вопрос; следующий абзац продолжает рассказ о роли Юлии.","Попередній абзац закінчується питанням, як ремонтувати годинник, якого ніколи не бачив. Абзац F («Løsningen blev, at kunderne sender deres ure med posten ...») відповідає на це питання; наступний абзац продовжує розповідь про роль Юлії."),
+    "5": __danskdagText("Последний абзац должен завершить историю. Абзац C говорит о будущем: будет ли четвёртое поколение и что обещала Юлия; он естественно продолжает рассказ о её работе над сайтом.","Останній абзац має завершити історію. Абзац C говорить про майбутнє: чи буде четверте покоління й що пообіцяла Юлія; він природно продовжує розповідь про її роботу над сайтом.")
+   },
+   "distractorWhy": __danskdagText("Абзац A лишний: он утверждает, что Виго стал часовщиком только на пенсии и дела шли плохо, но в тексте мастерская работала у него больше сорока лет. Абзац E тоже лишний: он говорит, что оборот вырос и Эрик открыл вторую лавку, но в тексте покупатели ушли и Эрик хотел закрыть магазин.","Абзац A зайвий: він стверджує, що Віґо став годинникарем лише на пенсії й справи йшли погано, але в тексті майстерня працювала в нього понад сорок років. Абзац E теж зайвий: він каже, що оборот зріс і Ерік відкрив другу крамницю, але в тексті покупці зникли й Ерік хотів закрити магазин.")
+  },
+  "text3": {
+   "title": "Spis efter årstiden",
+   "segments": [
+    "Før i tiden spiste man det, som årstiden gav. Om efteråret var det kål og rødbeder, og om foråret ventede man utålmodigt på de første radiser. I dag kan vi købe jordbær i januar og asparges i november, og det kan lade sig gøre, ",
+    {
+     "gap": 1,
+     "options": [
+      "selvom",
+      "indtil",
+      "fordi",
+      "medmindre"
+     ],
+     "answer": 2
+    },
+    " varerne bliver fløjet ind fra hele verden. Det er bekvemt, men mange føler alligevel, at noget er gået tabt. Børn, der vokser op i dag, ved ofte ikke, hvornår på året noget er modent, fordi hylderne i supermarkedet ser ens ud hele året. Tomater, der får lov at modne på marken, har ofte ",
+    {
+     "gap": 2,
+     "options": [
+      "mest",
+      "mere",
+      "flere",
+      "meget"
+     ],
+     "answer": 1
+    },
+    " smag end dem, der plukkes grønne og sendes langt af sted. Når varerne er i sæson, ",
+    {
+     "gap": 3,
+     "options": [
+      "bliver",
+      "får",
+      "kommer",
+      "lader"
+     ],
+     "answer": 0
+    },
+    " de desuden ofte billigere, fordi der er rigeligt af dem. Man kan altså spare penge ",
+    {
+     "gap": 4,
+     "options": [
+      "af",
+      "under",
+      "efter",
+      "ved"
+     ],
+     "answer": 3
+    },
+    " at købe det, der vokser lige nu. Om vinteren er udvalget mindre, men langt fra kedeligt. Rodfrugter, der er ",
+    {
+     "gap": 5,
+     "options": [
+      "lagre",
+      "lagrer",
+      "lagret",
+      "lagrende"
+     ],
+     "answer": 2
+    },
+    " på et køligt sted, kan holde sig i mange måneder, og de kan bruges til supper, gryderetter og ovnbagte grøntsager. Kål, gulerødder og løg koster ikke meget, og de smager godt, hvis man tager sig tid til at tilberede dem ordentligt. Et godt sted at finde inspiration er det ",
+    {
+     "gap": 6,
+     "options": [
+      "lokalt",
+      "lokale",
+      "lokal",
+      "lokaler"
+     ],
+     "answer": 1
+    },
+    " marked eller en bonde i nærheden, som ofte kan fortælle, hvornår de forskellige sorter er bedst. Det handler ikke om at sige nej ",
+    {
+     "gap": 7,
+     "options": [
+      "for",
+      "på",
+      "ved",
+      "til"
+     ],
+     "answer": 3
+    },
+    " alt, hvad der kommer langvejs fra, men om at kende sin egen mad bedre. ",
+    {
+     "gap": 8,
+     "options": [
+      "Al",
+      "Alt",
+      "Alle",
+      "Hele"
+     ],
+     "answer": 0
+    },
+    " mad smager i øvrigt bedre, når man deler den med andre. Det kan også være sjovt at prøve noget nyt: en grøntsag, man aldrig har smagt, eller en gammel opskrift fra bedsteforældrene. Børn har ofte lettere ved at lade sig fascinere, hvis de selv må plukke, skære eller røre i gryden. Nogle begynder med en kasse grøntsager fra en bonde, så de ikke selv skal vælge. Man behøver ikke at ændre alt på én gang. Det er nok at begynde med én ting om ugen. Så næste gang du står i køkkenet og ikke ved, hvad du skal lave, kan du spørge dig selv, hvad der vokser lige nu."
+   ]
+  }
+ }
+];
+
+return {readingExamTextMore};
+})();
+
+const __danskdag_module_83=(()=>{
 // pd3-listening-data: PD3 practice content (see docs/pd3-schema.md). Plain data module, no imports. All names and organisations are fictional.
 const listening = [
  {
@@ -41315,7 +42880,7 @@ const listening = [
 return {listening};
 })();
 
-const __danskdag_module_82=(()=>{
+const __danskdag_module_84=(()=>{
 // pd3-oral-data: PD3 practice content (see docs/pd3-schema.md). Plain data module, no imports. All names and organisations are fictional.
 const oralMonologue = [
  {
@@ -42331,7 +43896,7 @@ const oralCriteria = [
 return {oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria};
 })();
 
-const __danskdag_module_83=(()=>{
+const __danskdag_module_85=(()=>{
 const writingEmail=[
 {
 id:'email-internet-klage',level:'B2',topic:__danskdagText("Жалоба на услугу","Скарга на послугу"),title:'Klage over internetforbindelsen',
@@ -42621,20 +44186,23 @@ const connectors=[
 return {writingEmail,writingTask,writingCriteria,connectors};
 })();
 
-const __danskdag_module_84=(()=>{
+const __danskdag_module_86=(()=>{
 // All PD3 content in one place for the app. The tests give the page their own fixtures instead.
 const {readingPractice}=__danskdag_module_79;
-const {readingExamFind,readingExamText}=__danskdag_module_80;
+const {readingExamFind:findBase,readingExamText:textBase}=__danskdag_module_80;
+const {readingExamFindMore}=__danskdag_module_81;
+const {readingExamTextMore}=__danskdag_module_82;
+const readingExamFind=[...findBase,...readingExamFindMore],readingExamText=[...textBase,...readingExamTextMore];
 const {dictations}=__danskdag_module_28;
-const {listening}=__danskdag_module_81;
-const {oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria}=__danskdag_module_82;
-const {writingEmail,writingTask,writingCriteria,connectors}=__danskdag_module_83;
+const {listening}=__danskdag_module_83;
+const {oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria}=__danskdag_module_84;
+const {writingEmail,writingTask,writingCriteria,connectors}=__danskdag_module_85;
 const pd3Data={readingPractice,readingExamFind,readingExamText,dictations,listening,oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria,writingEmail,writingTask,writingCriteria,connectors};
 
 return {pd3Data};
 })();
 
-const __danskdag_module_85=(()=>{
+const __danskdag_module_87=(()=>{
 const {renderLevelSelect}=__danskdag_module_35;
 const {nextPathLesson}=__danskdag_module_34;
 const {renderNumberResult}=__danskdag_module_37;
@@ -42675,7 +44243,7 @@ const {vocabKey,newOwnWords}=__danskdag_module_68;
 const {FOCUSABLE,captureFocus,restoreFocus,focusPageStart,pageTitle,createAnnouncer,debounce,insertAtSelection,keepFieldFocus}=__danskdag_module_69;
 const {createPd3Page}=__danskdag_module_78;
 const {createPd3Store}=__danskdag_module_64;
-const {pd3Data}=__danskdag_module_84;
+const {pd3Data}=__danskdag_module_86;
 
 const referenceData={common:commonWords,categories:commonCategories,verbs:verbForms,adjectives:adjectiveForms,families:particleFamilies,informal:[...informalExpressions,...extraInformal],spoken:spokenEntries,spokenCategories,daily:dailyLexicon,dailyCategories};
 const $=selector=>document.querySelector(selector),root=$('#app');
@@ -42713,7 +44281,7 @@ const renderSearch=debounce(()=>render(),120);
 const recorder=createRecorder({changed:value=>{const controls=$('#recording-controls');if(coach&&controls)controls.innerHTML=recordingControls(value);}});
 const audioFeedback=createAudioFeedback((phase,text)=>{const status=$('#speech-status');if(!status)return;status.textContent=phase==='idle'?'':`${({loading:__danskdagText("Подготовка озвучки","Підготовка озвучення"),speaking:__danskdagText("Звучит","Звучить"),error:__danskdagText("Не удалось озвучить","Не вдалося озвучити")})[phase]}: ${text}`;status.classList.toggle('visible',phase!=='idle');});
 const say=(text,rate=state.settings.rate,control=null)=>{if(['requesting','recording','stopping'].includes(recorder.snapshot().phase)){toast(__danskdagText("Сначала останови запись.","Спочатку зупини запис."));return false;}return speak(text,rate,toast,state.settings.voiceUri,audioFeedback.begin(control,text));};
-// PD3 results used to live under their own key (versions 1.9.4 and earlier). They move into the progress once; the old content is kept under another key.
+// PD3 results used to live under their own key (versions 1.9.5 and earlier). They move into the progress once; the old content is kept under another key.
 if(!unreadable)try{
  const moved=migrateLegacyPd3(localStorage,state,next=>{const previous=state;state=validateState(next);if(persist(false))return true;state=previous;return false;});
  if(moved.status==='migrated')catalog=getCatalog(state);
@@ -42840,7 +44408,7 @@ function render(){
  const filtered=memo(words),fileTotal=memo(()=>trainingPool(state).filter(p=>p.source==='file').length),following=memo(nextLesson),copies=memo(cloudCopies),stored=memo(localCopies);
  const view=theme===state.settings.theme?state:{...state,settings:{...state.settings,theme}};
  const context={pd3View:()=>pd3.view(),pd3Data,get pd3Totals(){return pd3Totals(state.pd3,pd3Data);},get spell(){return spellSummary(state,Date.now());},basicsTab,numberValue,offlineEdition,offlineReady,referenceTab,referenceCategory,referenceQuery,referencePage,referenceData,referenceLessons:{forms:formLessons,quantity:patternLessons.filter(l=>l.kind==='grammar'),particles:patternLessons.filter(l=>l.kind==='pattern')},state:view,session,catalog,due,get next(){return following();},todayXP:state.activity[dayKey()]?.xp||0,get fileCount(){return fileTotal();},get words(){return filtered();},wordFilter,wordLimit,query,recovery,installEvent,labTab,labSelection,labQuery,labCategory,cloudStatus,cloudConflict,get cloudPlan(){return cloudSettings(cloudStatus,cloudConflict,copies());},get memoryPlan(){return plan();},get memorySummary(){return summary();},get localCopies(){return stored();}};
- root.innerHTML=`${__danskdagText("<a class=\"skip\" href=\"#content\">К содержимому</a><aside class=\"sidebar\"><button type=\"button\" class=\"brand\" data-page=\"learn\" aria-label=\"Danskdag, на главную\" title=\"На главную\"><img src=\"","<a class=\"skip\" href=\"#content\">До вмісту</a><aside class=\"sidebar\"><button type=\"button\" class=\"brand\" data-page=\"learn\" aria-label=\"Danskdag, на головну\" title=\"На головну\"><img src=\"")}${assetUrl('/icon.svg?v=1.9.4')}${__danskdagText("\" alt=\"Флаг Дании\"><span>Dansk<span>dag</span></span></button><nav aria-label=\"Разделы\">","\" alt=\"Прапор Данії\"><span>Dansk<span>dag</span></span></button><nav aria-label=\"Розділи\">")}${navigation.map(([id,ic,name])=>`<button class="nav-item ${page===id?'active':''} ${page==='wordlab'&&id==='dictionary'?'parent-active':''} ${['conversation','wordlab','forms','basics','pronunciation','pd3'].includes(id)?'desktop-nav':''}" data-page="${id}" title="${name}" ${id==='pd3'?__danskdagText("aria-label=\"PD3, подготовка к экзамену\"","aria-label=\"PD3, підготовка до іспиту\""):''} ${page===id?'aria-current="page"':''}>${icon(ic)}<span class="nav-label">${name}</span><span class="nav-mobile-label">${({grammar:__danskdagText("Правила","Правила"),dictionary:__danskdagText("Слова","Слова"),review:__danskdagText("Повтор","Повторення")})[id]||name}</span>${id==='review'&&due.length?`<b class="nav-count">${due.length}</b>`:''}</button>`).join('')}</nav><div class="sidebar-end"><div class="rank-mini"><span class="rank-icon">${icon('spark')}${__danskdagText("</span><div><strong>Опыт ","</span><div><strong>Досвід ")}${learner.level}</strong><small>${h(learner.name)}</small></div></div><div class="meter"><span style="width:${learner.progress*100}%"></span></div><button class="nav-item ${page==='settings'?'active':''}" data-page="settings">${icon('gear')}${__danskdagText("<span>Настройки</span></button></div></aside><div class=\"app-shell\"><header class=\"app-header\"><button type=\"button\" class=\"header-title\" data-page=\"learn\" aria-label=\"РУССКИЙ → DANSK, ","<span>Налаштування</span></button></div></aside><div class=\"app-shell\"><header class=\"app-header\"><button type=\"button\" class=\"header-title\" data-page=\"learn\" aria-label=\"УКРАЇНСЬКА → DANSK, ")}${sectionName(page)}${__danskdagText(". На главную\" title=\"На главную\"><span class=\"eyebrow\"><img class=\"danish-flag\" src=\"",". На головну\" title=\"На головну\"><span class=\"eyebrow\"><img class=\"danish-flag\" src=\"")}${assetUrl('/flag-dk.svg')}${__danskdagText("\" alt=\"Флаг Дании\"> РУССКИЙ → DANSK</span><strong>","\" alt=\"Прапор Данії\"> УКРАЇНСЬКА → DANSK</span><strong>")}${sectionName(page)}</strong></button><div class="header-actions">${themeToggle(theme)}${__danskdagText("<button class=\"metric orange\" data-page=\"progress\" title=\"Серия занятий\">","<button class=\"metric orange\" data-page=\"progress\" title=\"Серія занять\">")}${icon('flame')}<b>${activeStreak(state)}</b><span>${plural(activeStreak(state),[__danskdagText("день","день"),__danskdagText("дня","дні"),__danskdagText("дней","днів")])}${__danskdagText("</span></button><button class=\"metric purple\" data-page=\"progress\" title=\"Очки за завершённые занятия\">","</span></button><button class=\"metric purple\" data-page=\"progress\" title=\"Бали за завершені заняття\">")}${icon('bolt')}<b>${state.xp}${__danskdagText("</b><span>XP</span></button><button class=\"icon-button settings-mobile\" data-page=\"settings\" title=\"Настройки\">","</b><span>XP</span></button><button class=\"icon-button settings-mobile\" data-page=\"settings\" title=\"Налаштування\">")}${icon('gear')}${__danskdagText("</button><button class=\"profile\" data-page=\"settings\" title=\"Открыть настройки\">","</button><button class=\"profile\" data-page=\"settings\" title=\"Відкрити налаштування\">")}${h(Array.from(state.settings.name||'D')[0].toUpperCase())}${__danskdagText("</button></div></header><nav class=\"mobile-sections\" aria-label=\"Слова и речь\">","</button></div></header><nav class=\"mobile-sections\" aria-label=\"Слова й мовлення\">")}${[['forms','cards',__danskdagText("Справочники","Довідники")],['conversation','chat',__danskdagText("Речь","Мовлення")],['wordlab','search',__danskdagText("Значения","Значення")],['pronunciation','sound',__danskdagText("Звуки","Звуки")],['pd3','target','PD3']].map(([id,ic,label])=>`<button data-page="${id}" class="${page===id?'active':''}" ${page===id?'aria-current="page"':''} ${id==='pd3'?__danskdagText("aria-label=\"PD3, подготовка к экзамену\"","aria-label=\"PD3, підготовка до іспиту\""):''}>${icon(ic)}${label}</button>`).join('')}</nav><main id="content" tabindex="-1">${unreadable?unreadableNotice():''}${warning?`<div class="notice warning">${icon('info')}<span>${h(warning)}${__danskdagText("</span><button data-page=\"settings\">Настройки</button></div>","</span><button data-page=\"settings\">Налаштування</button></div>")}`:''}${renderView(page,context)}</main></div>`;if(page==='settings')root.querySelector('.settings-card').insertAdjacentHTML('afterbegin',profileSetting()+languageSetting()+renderLevelSelect(state,'settings-level')+(offlineEdition?'':`${__danskdagText("<button type=\"button\" class=\"btn secondary check-update\" data-action=\"check-update\">Проверить обновление</button>","<button type=\"button\" class=\"btn secondary check-update\" data-action=\"check-update\">Перевірити оновлення</button>")}`));addDanishAudio(root);
+ root.innerHTML=`${__danskdagText("<a class=\"skip\" href=\"#content\">К содержимому</a><aside class=\"sidebar\"><button type=\"button\" class=\"brand\" data-page=\"learn\" aria-label=\"Danskdag, на главную\" title=\"На главную\"><img src=\"","<a class=\"skip\" href=\"#content\">До вмісту</a><aside class=\"sidebar\"><button type=\"button\" class=\"brand\" data-page=\"learn\" aria-label=\"Danskdag, на головну\" title=\"На головну\"><img src=\"")}${assetUrl('/icon.svg?v=1.9.5')}${__danskdagText("\" alt=\"Флаг Дании\"><span>Dansk<span>dag</span></span></button><nav aria-label=\"Разделы\">","\" alt=\"Прапор Данії\"><span>Dansk<span>dag</span></span></button><nav aria-label=\"Розділи\">")}${navigation.map(([id,ic,name])=>`<button class="nav-item ${page===id?'active':''} ${page==='wordlab'&&id==='dictionary'?'parent-active':''} ${['conversation','wordlab','forms','basics','pronunciation','pd3'].includes(id)?'desktop-nav':''}" data-page="${id}" title="${name}" ${id==='pd3'?__danskdagText("aria-label=\"PD3, подготовка к экзамену\"","aria-label=\"PD3, підготовка до іспиту\""):''} ${page===id?'aria-current="page"':''}>${icon(ic)}<span class="nav-label">${name}</span><span class="nav-mobile-label">${({grammar:__danskdagText("Правила","Правила"),dictionary:__danskdagText("Слова","Слова"),review:__danskdagText("Повтор","Повторення")})[id]||name}</span>${id==='review'&&due.length?`<b class="nav-count">${due.length}</b>`:''}</button>`).join('')}</nav><div class="sidebar-end"><div class="rank-mini"><span class="rank-icon">${icon('spark')}${__danskdagText("</span><div><strong>Опыт ","</span><div><strong>Досвід ")}${learner.level}</strong><small>${h(learner.name)}</small></div></div><div class="meter"><span style="width:${learner.progress*100}%"></span></div><button class="nav-item ${page==='settings'?'active':''}" data-page="settings">${icon('gear')}${__danskdagText("<span>Настройки</span></button></div></aside><div class=\"app-shell\"><header class=\"app-header\"><button type=\"button\" class=\"header-title\" data-page=\"learn\" aria-label=\"РУССКИЙ → DANSK, ","<span>Налаштування</span></button></div></aside><div class=\"app-shell\"><header class=\"app-header\"><button type=\"button\" class=\"header-title\" data-page=\"learn\" aria-label=\"УКРАЇНСЬКА → DANSK, ")}${sectionName(page)}${__danskdagText(". На главную\" title=\"На главную\"><span class=\"eyebrow\"><img class=\"danish-flag\" src=\"",". На головну\" title=\"На головну\"><span class=\"eyebrow\"><img class=\"danish-flag\" src=\"")}${assetUrl('/flag-dk.svg')}${__danskdagText("\" alt=\"Флаг Дании\"> РУССКИЙ → DANSK</span><strong>","\" alt=\"Прапор Данії\"> УКРАЇНСЬКА → DANSK</span><strong>")}${sectionName(page)}</strong></button><div class="header-actions">${themeToggle(theme)}${__danskdagText("<button class=\"metric orange\" data-page=\"progress\" title=\"Серия занятий\">","<button class=\"metric orange\" data-page=\"progress\" title=\"Серія занять\">")}${icon('flame')}<b>${activeStreak(state)}</b><span>${plural(activeStreak(state),[__danskdagText("день","день"),__danskdagText("дня","дні"),__danskdagText("дней","днів")])}${__danskdagText("</span></button><button class=\"metric purple\" data-page=\"progress\" title=\"Очки за завершённые занятия\">","</span></button><button class=\"metric purple\" data-page=\"progress\" title=\"Бали за завершені заняття\">")}${icon('bolt')}<b>${state.xp}${__danskdagText("</b><span>XP</span></button><button class=\"icon-button settings-mobile\" data-page=\"settings\" title=\"Настройки\">","</b><span>XP</span></button><button class=\"icon-button settings-mobile\" data-page=\"settings\" title=\"Налаштування\">")}${icon('gear')}${__danskdagText("</button><button class=\"profile\" data-page=\"settings\" title=\"Открыть настройки\">","</button><button class=\"profile\" data-page=\"settings\" title=\"Відкрити налаштування\">")}${h(Array.from(state.settings.name||'D')[0].toUpperCase())}${__danskdagText("</button></div></header><nav class=\"mobile-sections\" aria-label=\"Слова и речь\">","</button></div></header><nav class=\"mobile-sections\" aria-label=\"Слова й мовлення\">")}${[['forms','cards',__danskdagText("Справочники","Довідники")],['conversation','chat',__danskdagText("Речь","Мовлення")],['wordlab','search',__danskdagText("Значения","Значення")],['pronunciation','sound',__danskdagText("Звуки","Звуки")],['pd3','target','PD3']].map(([id,ic,label])=>`<button data-page="${id}" class="${page===id?'active':''}" ${page===id?'aria-current="page"':''} ${id==='pd3'?__danskdagText("aria-label=\"PD3, подготовка к экзамену\"","aria-label=\"PD3, підготовка до іспиту\""):''}>${icon(ic)}${label}</button>`).join('')}</nav><main id="content" tabindex="-1">${unreadable?unreadableNotice():''}${warning?`<div class="notice warning">${icon('info')}<span>${h(warning)}${__danskdagText("</span><button data-page=\"settings\">Настройки</button></div>","</span><button data-page=\"settings\">Налаштування</button></div>")}`:''}${renderView(page,context)}</main></div>`;if(page==='settings')root.querySelector('.settings-card').insertAdjacentHTML('afterbegin',profileSetting()+languageSetting()+renderLevelSelect(state,'settings-level')+(offlineEdition?'':`${__danskdagText("<button type=\"button\" class=\"btn secondary check-update\" data-action=\"check-update\">Проверить обновление</button>","<button type=\"button\" class=\"btn secondary check-update\" data-action=\"check-update\">Перевірити оновлення</button>")}`));addDanishAudio(root);
  if(page==='pd3')pd3.mount();
  if(focus)restoreFocus(root,focus);
 }
@@ -43141,7 +44709,7 @@ function showAppUpdate(){
  const notice=document.createElement('div');notice.id='app-update';notice.className='app-update';notice.setAttribute('role','status');
  notice.innerHTML=__danskdagText("<span>Доступна новая версия</span><button class=\"btn secondary\" data-action=\"reload-app\">Обновить</button>","<span>Доступна нова версія</span><button class=\"btn secondary\" data-action=\"reload-app\">Оновити</button>");document.body.append(notice);
 }
-const APP_VERSION='1.9.4';let availableRelease=null,lastUpdateCheck=0,checkingUpdate=false;
+const APP_VERSION='1.9.5';let availableRelease=null,lastUpdateCheck=0,checkingUpdate=false;
 async function findUpdate(manual=false){
  if(offlineEdition||checkingUpdate||!manual&&Date.now()-lastUpdateCheck<300000)return;
  checkingUpdate=true;lastUpdateCheck=Date.now();

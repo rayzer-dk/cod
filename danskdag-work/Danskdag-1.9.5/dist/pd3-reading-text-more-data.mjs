@@ -135,7 +135,7 @@ export const readingExamTextMore = [
    "removed": [
     {
      "id": "A",
-     "t": "Bestyrelsen tog sig god tid. Til sidst gav den lov til en prøveperiode på to år, på den betingelse at haven holdt sig pæn, og at alle beboere fik adgang til den."
+     "t": "Bestyrelsen tog sig god tid. Til sidst gav den lov til en prøveperiode på tre år, på den betingelse at haven holdt sig pæn, og at alle beboere fik adgang til den."
     },
     {
      "id": "B",
@@ -262,14 +262,14 @@ export const readingExamTextMore = [
     {
      "gap": 8,
      "options": [
-      "hvad",
-      "hvem",
-      "hvor",
-      "hvornår"
+      "hvilke",
+      "hvilken",
+      "hvilket",
+      "hvad"
      ],
      "answer": 0
     },
-    " der virkelig haster, og hvad der sagtens kan vente til mandag. Langt de fleste opgaver kan vente, og de, der ikke kan, er ofte færre, end man tror. Ferie er en anden prøve. Nogle tager computeren med på stranden for en sikkerheds skyld, og så er man ikke rigtig væk. Det er bedre at aftale med en kollega, hvem der tager sig af hvad, mens man har fri. En udhvilet hjerne har det med at finde løsninger, som man slet ikke kunne se, da man var træt."
+    " opgaver der virkelig haster, og hvilke der sagtens kan vente til mandag. Langt de fleste opgaver kan vente, og de, der ikke kan, er ofte færre, end man tror. Ferie er en anden prøve. Nogle tager computeren med på stranden for en sikkerheds skyld, og så er man ikke rigtig væk. Det er bedre at aftale med en kollega, hvem der tager sig af hvad, mens man har fri. En udhvilet hjerne har det med at finde løsninger, som man slet ikke kunne se, da man var træt."
    ]
   }
  },
@@ -498,7 +498,7 @@ export const readingExamTextMore = [
      ],
      "answer": 2
     },
-    " ind og finder sine breve. Der er ",
+    " ind og finder sine breve. Der er ikke ",
     {
      "gap": 5,
      "options": [
@@ -507,7 +507,7 @@ export const readingExamTextMore = [
       "intet",
       "ingen"
      ],
-     "answer": 3
+     "answer": 0
     },
     " grund til at skamme sig over at spørge. Systemerne er nemlig ikke altid ",
     {
@@ -516,7 +516,7 @@ export const readingExamTextMore = [
       "nemme",
       "nem",
       "nemt",
-      "nemmere"
+      "nemmeste"
      ],
      "answer": 0
     },
@@ -556,7 +556,7 @@ export const readingExamTextMore = [
     "Sofie Lund har skrevet børnebøger i femten år. Før det var hun børnehavepædagog, og hun siger, at det var dér, hun lærte det vigtigste: at børn er de strengeste kritikere, man kan have. »Hvis en historie bliver kedelig, begynder de at pille ved skosnørerne,« siger hun og griner. »Så ved jeg, at jeg skal skynde mig hen til det sjove.«",
     "Idéerne henter hun ofte hos børnene selv. Hendes bøger handler sjældent om store eventyr, men om små ting, som børn kender: en tand, der vakler, en bedstemor, der har glemt, hvor hun har lagt sine briller, eller en kammerat, der flytter. »Børn vil gerne genkende deres eget liv i bøger,« siger hun. »Men de vil også gerne overraskes.«",
     "Hun er ikke tilhænger af bøger, der prøver at lære børn noget. »Når en bog begynder at belære, lukker børnene ørerne,« mener hun. I stedet foretrækker hun historier, hvor det er de voksne, der får noget at tænke over, for eksempel at børns bekymringer skal tages alvorligt, selv når de virker små.",
-    "Sofie Lund skriver som regel om formiddagen i et lille skrivehus i sin have. Hun skriver første udkast i hånden og læser det højt for sig selv, inden hun lægger det ind på computeren. »Hvis jeg kommer til at stoppe op midt i en sætning, ved jeg, at den ikke er god nok,« siger hun. Bagefter sender hun teksten til en tegner, som hun har arbejdet sammen med i mange år, og først da begynder bogen for alvor at ligne en bog.",
+    "Sofie Lund skriver som regel om formiddagen i et lille havehus bag sit hus. Hun skriver første udkast i hånden og læser det højt for sig selv, inden hun lægger det ind på computeren. »Hvis jeg kommer til at stoppe op midt i en sætning, ved jeg, at den ikke er god nok,« siger hun. Bagefter sender hun teksten til en tegner, som hun har arbejdet sammen med i mange år, og først da begynder bogen for alvor at ligne en bog.",
     "Arrangementet er bibliotekar Jonna Kruses idé. Hver tirsdag er der højtlæsning for børn mellem tre og otte år, og det er gratis. »Her møder børnene bøger, som de måske ikke selv ville have valgt,« fortæller hun. Flere forældre er kommet til biblioteket for første gang, fordi deres børn har bedt om det. Biblioteket låner desuden kasser med billedbøger ud til børnehaver i kommunen.",
     "Forældre spørger ofte Sofie Lund, hvordan de får deres børn til at læse mere. Hendes svar er enkelt: Læs højt, så længe børnene vil have det, også efter at de selv kan læse. Og lad dem vælge, selvom de vælger den samme bog tyve gange. Det kan være kedeligt for de voksne, men for børnene er gentagelsen en tryghed. Når man kender slutningen, kan man glæde sig til den.",
     "Skærme kommer også op i samtalen. Sofie Lund er ikke imod lydbøger eller digitale billedbøger, og hun lytter selv til lydbøger i bilen. Men hun mener, at en trykt bog har en fordel: Man kan holde den, bladre i den og pege på billederne sammen. »En bog blinker ikke og sender ikke beskeder,« siger hun.",
@@ -611,7 +611,7 @@ export const readingExamTextMore = [
       "Børnene får lov at prøve bøger, de ikke selv ville vælge."
      ],
      "answer": 2,
-     "why": "Пятый абзац: чтение вслух бесплатное и для детей от трёх до восьми лет; Йонна Крусе говорит, что дети знакомятся с книгами, которые сами бы не выбрали."
+     "why": "Шестой абзац: чтение вслух бесплатное и для детей от трёх до восьми лет; Йонна Крусе говорит, что дети знакомятся с книгами, которые сами бы не выбрали."
     },
     {
      "q": "Hvilket råd giver Sofie Lund til forældre?",
@@ -621,7 +621,7 @@ export const readingExamTextMore = [
       "De skal holde op med at læse højt, når børnene selv kan læse."
      ],
      "answer": 1,
-     "why": "Шестой абзац: читать вслух, пока ребёнок хочет, и разрешать ему выбирать, даже если это одна и та же книга двадцать раз. Совет перестать читать вслух она как раз опровергает."
+     "why": "Седьмой абзац: читать вслух, пока ребёнок хочет, и разрешать ему выбирать, даже если это одна и та же книга двадцать раз. Совет перестать читать вслух она как раз опровергает."
     },
     {
      "q": "Hvad mener Sofie Lund om lydbøger og digitale bøger?",
@@ -631,7 +631,7 @@ export const readingExamTextMore = [
       "Hun mener, at børn aldrig bør høre lydbøger."
      ],
      "answer": 0,
-     "why": "Седьмой абзац: она не против аудиокниг (сама слушает их в машине), но считает преимуществом печатной книги то, что её можно держать, листать и показывать картинки вместе."
+     "why": "Восьмой абзац: она не против аудиокниг (сама слушает их в машине), но считает преимуществом печатной книги то, что её можно держать, листать и показывать картинки вместе."
     },
     {
      "q": "Hvad siger den lille pige efter oplæsningen?",
@@ -649,7 +649,7 @@ export const readingExamTextMore = [
    "title": "Trøjerne fra Vestrup",
    "parts": [
     {
-     "t": "Når man åbner døren til Vestrup Strik, møder man lyden af strikkemaskiner og duften af uld. I en lang sal sidder en snes medarbejdere ved rækker af maskiner, og på hylderne langs væggene ligger sweatre i alle farver. Virksomheden er en af de få tilbageværende strikvirksomheder i området, og den har overlevet både hård konkurrence og skiftende modeluner. Historien begynder i et lille køkken."
+     "t": "Når man åbner døren til Vestrup Strik, møder man lyden af strikkemaskiner og duften af uld. I en lang sal sidder en snes medarbejdere ved rækker af maskiner, og på hylderne langs væggene ligger sweatre i alle farver. Virksomheden er en af de få tilbageværende strikvirksomheder i området, og den har overlevet både hård konkurrence og modens skiftende luner. Historien begynder i et lille køkken."
     },
     {
      "gap": 1
@@ -1005,7 +1005,7 @@ export const readingExamTextMore = [
     {
      "gap": 1,
      "options": [
-      "mens",
+      "selvom",
       "indtil",
       "fordi",
       "medmindre"
@@ -1052,7 +1052,7 @@ export const readingExamTextMore = [
       "lagre",
       "lagrer",
       "lagret",
-      "lagrede"
+      "lagrende"
      ],
      "answer": 2
     },

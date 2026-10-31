@@ -72,7 +72,7 @@ export function finishSession(state, event, now = new Date()) {
 }
 // XP for finished PD3 activities. Each activity is worth at most this much in total (a share of it per percent of the best result),
 // nothing below PD3_MIN_PERCENT, and no more than PD3_DAY_XP a day from PD3 altogether.
-export const PD3_XP = {reading:10,listening:10,dictation:12,'exam-find':20,'exam-text':25,writing:15,oral:8,mock:30};
+export const PD3_XP = {reading:10,listening:10,dictation:12,'exam-find':20,'exam-text':25,writing:15,oral:8,mock:30,grammar:15};
 export const PD3_MIN_PERCENT = 30, PD3_DAY_XP = 60;
 /** Counts a finished PD3 activity: {kind,id,percent,minutes}. The result must already be stored in state.pd3 by the caller.
  * XP is paid for the first completion and for an improved best result only (state.pd3.xp remembers the percent already paid),
@@ -146,7 +146,7 @@ export const PD3_LIMITS={draft:12000,items:300,bytes:900000,importBytes:1500000,
 /** Error kinds counted in the dictation statistics (the same list as ERROR_KINDS in pd3-diff.mjs). */
 export const PD3_STAT_KINDS=['aeoa','double','silent','ending','case','other','punctuation','missing','extra','order'];
 /** Fields of `state.pd3` that validatePd3 knows; anything else a newer version wrote is carried in `_unknown` by engine.mjs. */
-export const PD3_KEYS=new Set(['version','updatedAt','settings','reading','listening','dictation','exam','writing','oral','plan','stats','xp','mocks','spell','_unknown']);
+export const PD3_KEYS=new Set(['version','updatedAt','settings','reading','listening','dictation','exam','writing','oral','plan','stats','xp','mocks','spell','grammar','_unknown']);
 const PD3_ID=/^[a-z0-9-]{1,60}$/;
 const PD3_SCORE_MAPS=['reading','listening','dictation'];
 const PD3_RATES=[0.6,0.75,0.9,1];
@@ -250,6 +250,20 @@ function pd3CleanMocks(source){
   return capPd3Mocks(result);
 }
 
+/** Grammar practice (state.pd3.grammar): {sets:{<setId>:{best,last,attempts,at}},cats:{<catId>:{ok,all}},updatedAt}. `cats` counts the answers given
+ * to the tasks of each grammar category over all attempts (ok <= all). Null (field absent) while nothing is stored. */
+const PD3_GRAMMAR_CATS=40;
+function pd3CleanGrammar(value){
+  if(!pd3Object(value))return null;
+  const sets=pd3CleanMap(value.sets,pd3CleanScore),cats={};
+  for(const entry of Object.values(sets))delete entry.parts;
+  if(pd3Object(value.cats))for(const [id,entry] of Object.entries(value.cats).slice(0,PD3_GRAMMAR_CATS)){
+    if(!PD3_ID.test(id)||!pd3Object(entry))continue;
+    const all=pd3Int(entry.all,0,1000000,0);
+    if(all)cats[id]={ok:Math.min(all,pd3Int(entry.ok,0,1000000,0)),all};
+  }
+  return Object.keys(sets).length||Object.keys(cats).length?{sets,cats,updatedAt:pd3Stamp(value.updatedAt)}:null;
+}
 function pd3CleanScore(value){
   if(!pd3Object(value))return null;
   const entry={best:pd3Pct(value.best),last:pd3Pct(value.last),attempts:pd3Int(value.attempts,0,100000),at:pd3Stamp(value.at)};
@@ -313,6 +327,9 @@ export function validatePd3(raw){
   // Optional: absent until a dictation with mistakes is checked, so progress that never used it stays as it was.
   const spell=pd3CleanSpell(raw.spell);
   if(spell.length)data.spell=spell;
+  // Optional: absent until a grammar set is finished.
+  const grammar=pd3CleanGrammar(raw.grammar);
+  if(grammar)data.grammar=grammar;
   return data;
 }
 
@@ -338,6 +355,7 @@ export function sealPd3(data,unknown=null,max=PD3_LIMITS.state){
   for(const name of PD3_SCORE_MAPS)for(const [id,entry] of Object.entries(data[name]))records.push([entry.at,data[name],id]);
   for(const name of ['find','text'])for(const [id,entry] of Object.entries(data.exam[name]))records.push([entry.at,data.exam[name],id]);
   for(const name of ['writing','oral'])for(const [id,entry] of Object.entries(data[name]))records.push([entry.updatedAt,data[name],id]);
+  if(data.grammar)for(const [id,entry] of Object.entries(data.grammar.sets))records.push([entry.at,data.grammar.sets,id]);
   records.sort((a,b)=>a[0]-b[0]);
   for(const [,map,id] of records){
     delete map[id];

@@ -71,6 +71,20 @@ function mergeSettings(base,ours,theirs){
   return result;
 }
 
+function mergeGrammarTabs(base,ours,theirs,known){
+  if(!ours&&!theirs)return undefined;
+  const e={sets:{},cats:{},updatedAt:0},b=base||e,o=ours||e,t=theirs||e;
+  const cats={};
+  for(const id of new Set([...Object.keys(o.cats),...Object.keys(t.cats)])){
+    const c=(x)=>x.cats?.[id]||{ok:0,all:0};
+    // The same counters seen from both tabs are one and the same answers.
+    if(same(c(o),c(t))){cats[id]={...c(o)};continue;}
+    const all=total(known,c(b).all,c(o).all,c(t).all);
+    cats[id]={ok:Math.min(all,total(known,c(b).ok,c(o).ok,c(t).ok)),all};
+  }
+  return {sets:mergeKeyed(b.sets,o.sets,t.sets,mergeScore(known)),cats,updatedAt:Math.max(o.updatedAt,t.updatedAt)};
+}
+
 /** Three-way merge of `state.pd3`. `hasBase` tells whether the whole progress had a common ancestor at all. */
 export function mergePd3Tabs(base,ours,theirs,hasBase=true){
   if(!ours&&!theirs)return undefined;
@@ -105,6 +119,9 @@ export function mergePd3Tabs(base,ours,theirs,hasBase=true){
   // Mock exams: a record added or changed in either tab is kept; the same exam seen in both tabs takes the one saved later.
   const mocks=mergeMocks(null,mergeKeyed(b.mocks||{},ours.mocks||{},theirs.mocks||{},(bb,o,t)=>mergeMocks({x:o},{x:t}).x));
   if(Object.keys(mocks).length)merged.mocks=mocks;else delete merged.mocks;
+  // Grammar: sets like the other score maps; the category counters only grow, so each tab's new answers add up (as for the dictation statistics).
+  const grammar=mergeGrammarTabs(b.grammar,ours.grammar,theirs.grammar,known);
+  if(grammar)merged.grammar=grammar;else delete merged.grammar;
   merged.updatedAt=Math.max(ours.updatedAt,theirs.updatedAt);
   if(ours._unknown||theirs._unknown)merged._unknown={...ours._unknown,...theirs._unknown};
   return sealPd3(merged,merged._unknown,LIMITS.state);

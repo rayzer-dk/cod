@@ -6,13 +6,13 @@ import {createTasks,checkTask} from '../dist/learning.mjs';
 
 test('expanded course has separate grammar and conversation across A1-C1',()=>{
  const core=lessons.filter(l=>['grammar','context','conversation'].includes(l.kind));
- assert.equal(core.length,106);
+ assert.equal(core.length,108);
  assert.equal(new Set(lessons.map(l=>l.id)).size,lessons.length);
- for(const level of ['A1','A2','B1','B2','C1'])assert.equal(lessons.filter(l=>l.kind==='grammar'&&l.level===level).length,({A1:7,A2:8,B1:5,B2:14,C1:14})[level]);
+ for(const level of ['A1','A2','B1','B2','C1'])assert.equal(lessons.filter(l=>l.kind==='grammar'&&l.level===level).length,({A1:7,A2:9,B1:6,B2:14,C1:14})[level]);
  assert.equal(lessons.filter(l=>l.kind==='conversation').length,46);
  const items=core.flatMap(l=>l.items);
- assert.equal(items.length,618);
- assert.equal(new Set(items.map(p=>p.id)).size,618);
+ assert.equal(items.length,634);
+ assert.equal(new Set(items.map(p=>p.id)).size,634);
 });
 test('every generated course exercise is solvable in every difficulty mode',()=>{
  const s=createState(),pool=trainingPool(s);

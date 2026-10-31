@@ -5,6 +5,7 @@ import {playerHtml,textHtml,sentenceHtml} from './pd3-reader-view.mjs';
 import {annotate} from './pd3-diff.mjs';
 import {canMock} from './pd3-mock.mjs';
 import {planView,weakView,mockHistoryView,spellView} from './pd3-system-view.mjs';
+import {grammarCardInfo,grammarWeakView} from './pd3-grammar-view.mjs';
 
 export const DISCLAIMER='Это тренировка по мотивам формата PD3 (уровень B2), не официальный экзамен. Провайдеры описывают устную часть по-разному, поэтому задания приблизительные.';
 const wordCount=item=>item.sentences.reduce((sum,s)=>sum+s.da.split(/\s+/).filter(Boolean).length,0);
@@ -14,6 +15,7 @@ const empty=(text)=>`<div class="info-panel">${text}</div>`;
 export function hubView({data,d,error,now=new Date(),spell=null}){
   const done=(map,list)=>list.filter(item=>map[item.id]?.attempts).length;
   const oralCount=data.oralMonologue.length+data.oralInterview.length+data.oralInteraction.length+data.oralDiscussion.length;
+  const gram=grammarCardInfo(data,d);
   const cards=[
     ['reading','sound','Чтение вслух','Длинные тексты озвучиваются по предложениям с подсветкой слов, затем вопросы и словарик.',data.readingPractice.length?`Пройдено ${done(d.reading,data.readingPractice)} из ${data.readingPractice.length}`:'',data.readingPractice.length],
     ['dictation','target','Диктанты','Слушай, пиши и сравнивай: программа покажет ошибки по словам и типичные причины.',data.dictations.length?`Пройдено ${done(d.dictation,data.dictations)} из ${data.dictations.length}`:'',data.dictations.length],
@@ -21,13 +23,14 @@ export function hubView({data,d,error,now=new Date(),spell=null}){
     ['exam','book','Чтение (экзамен)','Del 1 и Del 2 с таймером: разделы, пропущенные абзацы и пропуски в тексте.',data.readingExamFind.length+data.readingExamText.length?`Попыток: ${Object.values(d.exam.find).concat(Object.values(d.exam.text)).reduce((n,e)=>n+e.attempts,0)}`:'',data.readingExamFind.length+data.readingExamText.length],
     ['writing','cards','Письмо','Письмо и сочинение: счётчик слов, проверки, образец и самооценка.',data.writingEmail.length+data.writingTask.length?`Черновиков: ${Object.values(d.writing).filter(w=>w.draft).length}`:'',data.writingEmail.length+data.writingTask.length],
     ['oral','chat','Устная часть','Монолог, интервью, взаимодействие и дискуссия с записью себя и самооценкой.',oralCount?`Отмечено самооценок: ${Object.keys(d.oral).length}`:'',oralCount],
+    ...(gram.count?[['grammar','layers','Грамматика B2',gram.text,gram.progress,gram.count]]:[]),
     ['mock','trophy','Пробный экзамен','Полный прогон по формату с таймером: чтение, письмо и устная часть по этапам, затем отчёт по навыкам.',Object.keys(d.mocks||{}).length?`Пройдено пробных экзаменов: ${Object.keys(d.mocks).length}`:'Ещё не проходили',canMock(data)?1:0]
   ];
   return `${pageHead('PD3: подготовка к экзамену','Практика уровня B2: читать, слушать, писать и говорить.')}
 <div class="notice pd3-disclaimer">${icon('info')}<span>${DISCLAIMER}</span></div>
 ${error?`<div class="notice warning" role="alert">${icon('info')}<span>${error}</span></div>`:''}
-<div class="pd3-hub">${cards.map(([view,ic,title,text,progress,count])=>`<button type="button" class="panel pd3-card" data-action="${view==='mock'?'pd3-mock-open':'pd3-open'}" data-value="${view}" ${count?'':'disabled'}><span class="topic-icon">${icon(ic)}</span><span class="pd3-card-body"><b>${title}</b><span>${text}</span><small>${count?progress:'Материалы появятся позже'}</small></span>${icon('arrow')}</button>`).join('')}</div>
-${planView({d,data,now})}${mockHistoryView({d})}${weakView({d,data,label:errorLabel})}${spellView({spell})}
+<div class="pd3-hub">${cards.map(([view,ic,title,text,progress,count])=>`<button type="button" class="panel pd3-card" data-action="${view==='mock'?'pd3-mock-open':view==='grammar'?'pd3-gram-open':'pd3-open'}" data-value="${view}" ${count?'':'disabled'}><span class="topic-icon">${icon(ic)}</span><span class="pd3-card-body"><b>${title}</b><span>${text}</span><small>${count?progress:'Материалы появятся позже'}</small></span>${icon('arrow')}</button>`).join('')}</div>
+${planView({d,data,now})}${mockHistoryView({d})}${weakView({d,data,label:errorLabel})}${grammarWeakView({d,data})}${spellView({spell})}
 <section class="panel pd3-backup"><h2>Копия результатов PD3</h2><p>Результаты, черновики писем и настройки PD3 входят в общий прогресс и в его резервные копии. Отдельный файл удобен, чтобы перенести только PD3 на другое устройство. При загрузке лучшие результаты и более новые черновики объединяются с текущими.</p><div class="button-row"><button type="button" class="btn secondary" data-action="pd3-export">${icon('download')} Скачать копию PD3</button><button type="button" class="btn secondary" data-action="pd3-import">${icon('upload')} Загрузить</button></div><input id="pd3-file" type="file" accept=".json,application/json" hidden><p class="field-note">Аудиозаписи твоего голоса нигде не сохраняются и в копию не попадают.</p></section>`;
 }
 

@@ -162,7 +162,77 @@ const adjectiveRows = [
   ['klog', 'klogere', 'klogest', 'умный; мудрый', 'Klogere / klogest: умнее, мудрее.'],
   ['kold', 'koldere', 'koldest', 'холодный', 'Сравнение температуры; есть также переносные значения.'],
   ['kort', 'kortere', 'kortest', 'короткий', 'О длине или длительности: en kortere pause.'],
-  ['kraftig', 'kraftigere', 'kraftigst', 'сильный; мощный; интенсивный', 'О силе или интенсивности: kraftigere regn, en kraftigere motor.']
+  ['kraftig', 'kraftigere', 'kraftigst', 'сильный; мощный; интенсивный', 'О силе или интенсивности: kraftigere regn, en kraftigere motor.'],
+  // Irregular and frequent comparisons added in the antonym update. Adverbs carry wordClass 'adverb'; forms with mere / mest are listed in full.
+  ['tidlig', 'tidligere', 'tidligst', 'ранний', 'Наречие — tidligt: komme tidligt. Tidligere также значит «прежний; раньше»: min tidligere chef. Противоположность: sen.'],
+  ['sen', 'senere', 'senest', 'поздний', 'Наречие — sent: komme for sent. Senere — «позже», senest — «самое позднее»: senest klokken otte. Противоположность: tidlig.'],
+  ['lav', 'lavere', 'lavest', 'низкий', 'О высоте, уровне, цене: lavere priser. О человеке — невысокого роста. Противоположность: høj.'],
+  ['nær', 'nærmere', 'nærmest', 'близкий; рядом', 'Den nærmeste station — ближайшая станция; nærmere oplysninger — подробности. Для расстояния чаще tæt.'],
+  ['fjern', 'fjernere', 'fjernest', 'далёкий; дальний', 'О расстоянии и времени: en fjern fremtid, et fjernt land. В разговоре «далеко» чаще langt væk.'],
+  ['tung', 'tungere', 'tungest', 'тяжёлый', 'Tungere end... — тяжелее, чем... Переносно: en tung dag, tung musik. Противоположность по весу: let.'],
+  ['tyk', 'tykkere', 'tykkest', 'толстый', 'Удваивается k: tykkere, tykkest. О человеке звучит грубо, мягче — kraftig. Противоположность: tynd.'],
+  ['tynd', 'tyndere', 'tyndest', 'тонкий; худой', 'Об одежде, книге, слое: en tynd bog. Противоположность: tyk.'],
+  ['nem', 'nemmere', 'nemmest', 'лёгкий; нетрудный', 'Удваивается m: nemmere, nemmest. Близкие слова: let, enkel. Противоположность: svær.'],
+  ['svær', 'sværere', 'sværest', 'трудный', 'О трудности задачи, языка, решения: en svær opgave. Вес вещи — tung, не svær. Противоположность: nem.'],
+  ['tæt', 'tættere', 'tættest', 'близкий; плотный', 'Удваивается t. Tæt på — рядом: tættere på stationen. Также «плотный»: tæt skov.'],
+  ['sjælden', 'sjældnere', 'sjældnest', 'редкий', 'Выпадает e: sjældnere, sjældnest. Наречие — sjældent. Противоположность: almindelig.'],
+  ['almindelig', 'almindeligere', 'almindeligst', 'обычный; распространённый', 'Den almindeligste måde — самый распространённый способ.'],
+  ['populær', 'mere populær', 'mest populær', 'популярный', 'Через mere / mest, а не -ere: den mest populære film.'],
+  ['farlig', 'farligere', 'farligst', 'опасный', 'Прилагательные на -lig обычно берут -ere / -st. Противоположность: ufarlig.'],
+  ['sikker', 'sikrere', 'sikrest', 'надёжный; безопасный; уверенный', 'Выпадает e: sikrere, sikrest. Jeg er sikker på det — я в этом уверен; en sikker vej — безопасная дорога.'],
+  ['glad', 'gladere', 'gladest', 'радостный; довольный', 'Glad for... — рад чему-то; glad i... — любить кого-то. Противоположность: trist.'],
+  ['rolig', 'roligere', 'roligst', 'спокойный', 'Vær rolig! — Успокойся! Противоположность: urolig.'],
+  ['smuk', 'smukkere', 'smukkest', 'красивый', 'Удваивается k: smukkere, smukkest. Pæn и flot — другие слова для «красивый; приятный на вид».'],
+  ['pæn', 'pænere', 'pænest', 'красивый; аккуратный', 'О внешности, одежде, поведении: en pæn kjole. Det ser pænt ud — выглядит аккуратно.'],
+  ['rar', 'rarere', 'rarest', 'приятный; милый', 'О человеке и ощущении: en rar nabo. Rart at møde dig — приятно познакомиться.'],
+  ['sjov', 'sjovere', 'sjovest', 'забавный; весёлый', 'En sjov film — забавный фильм; Det var sjovt — было весело. Противоположность: kedelig.'],
+  ['kedelig', 'kedeligere', 'kedeligst', 'скучный', 'Также «досадный»: Det er kedeligt, at... — жаль, что... Противоположность: spændende.'],
+  ['vigtig', 'vigtigere', 'vigtigst', 'важный', 'Det vigtigste — самое важное. Противоположность: uvæsentlig.'],
+  ['let', 'lettere', 'lettest', 'лёгкий по весу; нетрудный', 'О весе: en let taske. Также «нетрудно»: Det er let. Удваивается t: lettere, lettest.'],
+  ['langsom', 'langsommere', 'langsomst', 'медленный', 'Удваивается m: langsommere, langsomst. Наречие — langsomt. Противоположность: hurtig.'],
+  ['stærk', 'stærkere', 'stærkest', 'сильный; крепкий', 'О силе, кофе, запахе: stærk kaffe. Противоположность: svag.'],
+  ['svag', 'svagere', 'svagest', 'слабый', 'О силе, здоровье, сигнале: en svag stemme. Противоположность: stærk.'],
+  ['hård', 'hårdere', 'hårdest', 'твёрдый; жёсткий', 'О поверхности и характере: et hårdt gulv, hård kritik. Противоположность: blød.'],
+  ['blød', 'blødere', 'blødest', 'мягкий', 'О материале и характере: en blød seng, blødt brød. Противоположность: hård.'],
+  ['ren', 'renere', 'renest', 'чистый', 'Rent vand — чистая вода; gøre rent — убирать. Противоположность: beskidt.'],
+  ['tør', 'tørrere', 'tørrest', 'сухой', 'Удваивается r: tørrere, tørrest. Противоположность: våd.'],
+  ['våd', 'vådere', 'vådest', 'мокрый', 'Vådt tøj — мокрая одежда. Противоположность: tør.'],
+  ['dyr', 'dyrere', 'dyrest', 'дорогой по цене', 'Dyrere end... — дороже, чем... Противоположность: billig. Et dyr — животное.'],
+  ['ny', 'nyere', 'nyest', 'новый', 'Nyere также значит «сравнительно новый»: nyere bøger. Противоположность: gammel.'],
+  ['bred', 'bredere', 'bredest', 'широкий', 'О дороге, плечах, улыбке: en bred gade. Противоположность: smal.'],
+  ['smal', 'smallere', 'smallest', 'узкий', 'Удваивается l: smallere, smallest. Противоположность: bred.'],
+  ['dyb', 'dybere', 'dybest', 'глубокий', 'О воде, яме, сне, чувстве: en dyb sø, dyb søvn.'],
+  ['mørk', 'mørkere', 'mørkest', 'тёмный', 'О цвете и освещении: mørk chokolade. Противоположность: lys.'],
+  ['lys', 'lysere', 'lysest', 'светлый', 'О цвете и освещении: en lys stue. Lys — также существительное: et lys, свеча.'],
+  ['hvid', 'hvidere', 'hvidest', 'белый', 'Hvidvin — белое вино. Противоположность: sort.'],
+  ['stejl', 'stejlere', 'stejlest', 'крутой', 'О склоне и лестнице: en stejl trappe. Противоположность: flad.'],
+  ['skarp', 'skarpere', 'skarpest', 'острый; резкий', 'О ноже, вкусе, мысли: en skarp kniv. Противоположность: sløv.'],
+  ['sund', 'sundere', 'sundest', 'здоровый о питании и образе жизни', 'Sund mad — здоровая еда. О самочувствии человека обычно rask; больной — syg.'],
+  ['ærlig', 'ærligere', 'ærligst', 'честный', 'Ærligt talt — честно говоря. Противоположность: uærlig.'],
+  ['venlig', 'venligere', 'venligst', 'дружелюбный; любезный', 'Venligst — «пожалуйста» в вежливой просьбе: Luk døren venligst. Противоположность: uvenlig.'],
+  ['modig', 'modigere', 'modigst', 'смелый', 'Mod — смелость; modig — смелый. Противоположность по смыслу: bange.'],
+  ['høflig', 'høfligere', 'høfligst', 'вежливый', 'Det er høfligt at sige tak. Противоположность: uhøflig.'],
+  ['flittig', 'flittigere', 'flittigst', 'прилежный; трудолюбивый', 'Об учёбе и работе: en flittig elev. Противоположность: doven.'],
+  ['forsigtig', 'forsigtigere', 'forsigtigst', 'осторожный', 'Vær forsigtig! — Будь осторожен! Наречие — forsigtigt.'],
+  ['heldig', 'heldigere', 'heldigst', 'везучий; удачливый', 'Jeg var heldig — мне повезло. Не путай с glad «радостный».'],
+  ['nysgerrig', 'nysgerrigere', 'nysgerrigst', 'любопытный', 'Nysgerrig på noget — любопытный к чему-то.'],
+  ['alvorlig', 'alvorligere', 'alvorligst', 'серьёзный', 'О человеке, болезни, ошибке: en alvorlig fejl.'],
+  ['gerne', 'hellere', 'helst', 'охотно', 'Gerne — охотно: Jeg vil gerne have kaffe. Hellere — лучше бы: Jeg vil hellere have te. Helst — больше всего: Jeg vil helst blive hjemme.', 'adverb'],
+  ['snart', 'snarere', 'snarest', 'скоро', 'Vi ses snart — скоро увидимся. Snarere — «скорее; точнее»; snarest muligt — как можно скорее.', 'adverb'],
+  ['ofte', 'oftere', 'oftest', 'часто', 'Jeg går ofte tur. Oftere — чаще; oftest — чаще всего. Противоположность: sjældent.', 'adverb'],
+  ['sjældent', 'sjældnere', 'sjældnest', 'редко', 'Выпадает e: sjældnere, sjældnest. Противоположность: ofte.', 'adverb'],
+  ['længe', 'længere', 'længst', 'долго', 'О времени: Jeg har ventet længe. Не путай с langt «далеко».', 'adverb'],
+  ['langt', 'længere', 'længst', 'далеко', 'О расстоянии: Det er langt herfra. Не путай с længe «долго».', 'adverb'],
+  ['spændende', 'mere spændende', 'mest spændende', 'захватывающий; интересный', 'Причастие на -ende сравнивают через mere / mest: en mere spændende bog.'],
+  ['interessant', 'mere interessant', 'mest interessant', 'интересный', 'Слова на -ant / -ent обычно сравнивают через mere / mest.'],
+  ['praktisk', 'mere praktisk', 'mest praktisk', 'практичный', 'Прилагательные на -isk сравнивают через mere / mest.'],
+  ['typisk', 'mere typisk', 'mest typisk', 'типичный', 'Прилагательные на -isk: mere typisk, mest typisk.'],
+  ['dansk', 'mere dansk', 'mest dansk', 'датский', 'Прилагательные на -sk: mere dansk, mest dansk. Название языка и национальность пишут с маленькой буквы.'],
+  ['energisk', 'mere energisk', 'mest energisk', 'энергичный', 'Прилагательные на -isk: mere energisk, mest energisk.'],
+  ['fantastisk', 'mere fantastisk', 'mest fantastisk', 'потрясающий', 'На -isk: mere fantastisk. Разговорно: Det er fantastisk!'],
+  ['moderne', 'mere moderne', 'mest moderne', 'современный', 'Заимствованное прилагательное на -e: mere moderne, mest moderne.'],
+  ['kendt', 'mere kendt', 'mest kendt', 'известный', 'Причастие на -t сравнивают через mere / mest: den mest kendte forfatter.'],
+  ['tilfreds', 'mere tilfreds', 'mest tilfreds', 'довольный', 'Прилагательное на -s: mere tilfreds. Tilfreds med noget — доволен чем-то.']
 ];
 export const adjectiveForms = adjectiveRows.map(([positive, comparative, superlative, ru, note, wordClass = 'adjective']) => ({
   id: `adjective-form-${stableSlug(positive)}`, positive, comparative, superlative, ru, note, wordClass
@@ -245,5 +315,50 @@ export const formLessons = [
     exercise('skrive', 'Førdatid · письмо до встречи', 'Hun havde skrevet brevet, før mødet begyndte.', 'Она написала письмо ещё до начала встречи.', 'Før mødet begyndte задаёт второй прошлый момент. Более раннее завершённое действие: havde skrevet.', 'Hun ___ brevet, før mødet begyndte.', 'havde skrevet', ['har skrevet', 'skrev', 'skriver']),
     exercise('være', 'Førdatid · опыт до переезда', 'Før jeg flyttede, havde jeg aldrig været i Aarhus.', 'До переезда я ни разу не бывал в Орхусе.', 'Опыт до прошлого переезда: havde været. У være вспомогательный have, поэтому havde, не var været.', 'Før jeg flyttede, ___.', 'havde jeg aldrig været i Aarhus', ['har jeg aldrig været i Aarhus', 'var jeg aldrig været i Aarhus', 'er jeg aldrig været i Aarhus']),
     exercise('begynde', 'Førdatid · уже началось', 'Da vi ankom, var mødet allerede begyndt.', 'Когда мы приехали, встреча уже началась.', 'Начало было раньше приезда: var begyndt. Begyndte означало бы начало в тот момент; здесь русское «уже» и førdatid задают более раннее действие.', 'Da vi ankom, ___.', 'var mødet allerede begyndt', ['er mødet allerede begyndt', 'begyndte mødet', 'begynder mødet'])
+  ])
+];
+
+// Practice for the three degrees of comparison ("choose the form"). They are separate from formLessons (verb tenses) and are shown under the comparison tab.
+const adjectiveByWord = Object.fromEntries(adjectiveForms.map(a => [a.positive, a]));
+const compareHelp = (word, note) => {
+  const a = adjectiveByWord[word];
+  return [
+    {label: 'Положительная', text: a.positive},
+    {label: 'Сравнительная', text: a.comparative},
+    {label: 'Превосходная', text: a.superlative},
+    ...(note ? [{label: 'Контекст', text: note}] : [])
+  ];
+};
+const compareExercise = (word, formLabel, da, ru, note, text, answer, wrong) => ({
+  da, ru, note, type: 'gap', daAnswers: [da], ruAnswers: [ru], formLabel, formHelp: compareHelp(word, note),
+  gap: {text, answers: [answer], options: [answer, ...wrong]}
+});
+const compareLesson = (id, level, title, subtitle, rule, rows) => ({
+  id, level, kind: 'grammar', color: 'violet', icon: 'layers', title, subtitle, rule,
+  items: rows.map((row, index) => ({...row, id: `${id}-${index + 1}`, lessonId: id}))
+});
+
+export const comparisonLessons = [
+  compareLesson('compare-lesson-regular', 'A2', 'Больше, чем... и самый...', 'Сравнительная и превосходная степень: -ere, -est',
+    'Сравнение двух предметов: сравнительная степень + end: større end, hurtigere end. Самый из всех: превосходная степень, с определённой формой после den / det: den højeste bygning. Предикатив без существительного: Hun er dygtigst. Mere + положительная форма используют только там, где нет формы на -ere: mere spændende, mere populær.', [
+    compareExercise('stor', 'Сравнительная степень · end', 'Mit hus er større end dit.', 'Мой дом больше твоего.', 'Сравниваем два дома: større end. Stor — положительная, størst — превосходная степень.', 'Mit hus er ___ end dit.', 'større', ['stor', 'størst', 'mere stor']),
+    compareExercise('hurtig', 'Сравнительная степень · end', 'Toget er hurtigere end bussen.', 'Поезд быстрее автобуса.', 'У hurtig обычная пара -ere / -st; mere hurtig не используется.', 'Toget er ___ end bussen.', 'hurtigere', ['hurtig', 'hurtigst', 'mere hurtig']),
+    compareExercise('dyr', 'Сравнительная степень · end', 'Kaffen er dyrere end teen.', 'Кофе дороже чая.', 'Dyr → dyrere → dyrest. Сравнение цены двух напитков.', 'Kaffen er ___ end teen.', 'dyrere', ['dyr', 'dyrest', 'mere dyr']),
+    compareExercise('varm', 'Сравнительная степень · end', 'I dag er det varmere end i går.', 'Сегодня теплее, чем вчера.', 'Сравниваем два дня: varmere end. Varmest нужно при выборе из многих.', 'I dag er det ___ end i går.', 'varmere', ['varm', 'varmest', 'mere varm']),
+    compareExercise('gammel', 'Сравнительная степень · особая форма', 'Min bror er ældre end min søster.', 'Мой брат старше моей сестры.', 'Gammel имеет особые формы: ældre, ældst. Gammelere не бывает.', 'Min bror er ___ end min søster.', 'ældre', ['gammel', 'ældst', 'mere gammel']),
+    compareExercise('god', 'Сравнительная степень · особая форма', 'Den nye telefon er bedre end den gamle.', 'Новый телефон лучше старого.', 'God → bedre → bedst. Форма godere не существует.', 'Den nye telefon er ___ end den gamle.', 'bedre', ['god', 'bedst', 'godere']),
+    compareExercise('høj', 'Превосходная степень · den + -este', 'Det er den højeste bygning i byen.', 'Это самое высокое здание в городе.', 'После den + существительное: определённая форма превосходной степени højeste. Højere использовали бы для сравнения двух зданий.', 'Det er den ___ bygning i byen.', 'højeste', ['højere', 'høj', 'mest høj']),
+    compareExercise('dygtig', 'Превосходная степень · den + -este', 'Hun er den dygtigste i klassen.', 'Она самая способная в классе.', 'После den в значении «самая»: dygtigste. Dygtigere сравнивало бы двух учениц.', 'Hun er den ___ i klassen.', 'dygtigste', ['dygtigere', 'dygtig', 'mest dygtig'])
+  ]),
+  compareLesson('compare-lesson-special', 'B1', 'Особые случаи сравнения', 'Mere · mest, flere · flest, hellere · helst',
+    'Многосложные слова на -isk, -sk, -ende, -et, причастия и заимствованные слова обычно сравнивают через mere и mest: mere spændende, mest interessant. Для количества: mere — вещество (mere trafik), flere — считаемое множество (flere biler). Gerne → hellere → helst выражает степень предпочтения. Lille → mindre, gammel → ældre, god → bedre — особые формы.', [
+    compareExercise('mange', 'Количество · считаемое множество', 'Der er flere biler end sidste år.', 'Машин больше, чем в прошлом году.', 'Biler можно посчитать: flere. Mere трафик — вещество, поэтому mere trafik.', 'Der er ___ biler end sidste år.', 'flere', ['mere', 'mange', 'flest']),
+    compareExercise('meget', 'Количество · вещество', 'Der er mere trafik i dag.', 'Сегодня больше движения.', 'Trafik — вещество без счёта единиц: mere. Flere подошло бы к biler.', 'Der er ___ trafik i dag.', 'mere', ['flere', 'meget', 'mest']),
+    compareExercise('spændende', 'Mere · mest · после den', 'Det her er den mest spændende bog, jeg har læst.', 'Это самая захватывающая книга из тех, что я читал.', 'Spændende сравнивают через mest: den mest spændende. Формы spændendest нет.', 'Det her er den ___ spændende bog, jeg har læst.', 'mest', ['mere', 'spændendest', 'flest']),
+    compareExercise('interessant', 'Mere · mest · сравнение двух', 'Filmen var mere interessant end bogen.', 'Фильм был интереснее книги.', 'Interessant сравнивают через mere: mere interessant end. Формы interessantere не используют.', 'Filmen var ___ interessant end bogen.', 'mere', ['interessantere', 'mest', 'flere']),
+    compareExercise('gerne', 'Gerne · hellere · helst', 'Jeg vil hellere have te end kaffe.', 'Я скорее выпью чай, чем кофе.', 'Hellere ... end — предпочтение между двумя вариантами. Helst — предпочтение среди всех возможных.', 'Jeg vil ___ have te end kaffe.', 'hellere', ['gerne', 'helst', 'bedre']),
+    compareExercise('gerne', 'Gerne · hellere · helst', 'Jeg vil helst blive hjemme.', 'Больше всего я хочу остаться дома.', 'Helst — предпочтение «больше всего», когда нет прямого «чем».', 'Jeg vil ___ blive hjemme.', 'helst', ['hellere', 'mest', 'bedst']),
+    compareExercise('lille', 'Особая форма · размер', 'Det lille hus er mindre end det store.', 'Маленький дом меньше большого.', 'Lille → mindre → mindst. Lillere не бывает.', 'Det lille hus er ___ end det store.', 'mindre', ['lillere', 'mindst', 'mere lille']),
+    compareExercise('gammel', 'Превосходная степень · особая форма', 'Han er den ældste af os.', 'Он самый старший из нас.', 'Gammel → ældre → ældst; после den — ældste. Mest gammel звучит неестественно.', 'Han er den ___ af os.', 'ældste', ['ældre', 'gammelste', 'mest gammel'])
   ])
 ];

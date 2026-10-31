@@ -8,14 +8,15 @@ import {spellFindings} from './pd3-spell.mjs';
 import {recordScore,LIMITS} from './pd3-store.mjs';
 import {createRunStore,snapshotRun,validateRun,applyRun} from './pd3-run.mjs';
 import {createMockController} from './pd3-mock-page.mjs';
+import {createGrammarController} from './pd3-grammar-page.mjs';
 import {vocabExample} from './pd3-vocab.mjs';
 import {countWords} from './pd3-writing-check.mjs';
 import {applyReaderState,statusText} from './pd3-reader-view.mjs';
 import {hubView,readingListView,readingItemView,dictationListView,dictationItemView,listeningListView,listeningItemView} from './pd3-views.mjs';
 import {examListView,examIntroView,examFindView,examTextView,writingListView,writingItemView,wordMeter,oralView,recorderHtml} from './pd3-practice-views.mjs';
 
-const EMPTY_DATA={readingPractice:[],readingExamFind:[],readingExamText:[],dictations:[],listening:[],oralMonologue:[],oralInterview:[],oralInteraction:[],oralDiscussion:[],oralPhrases:[],oralCriteria:[],writingEmail:[],writingTask:[],writingCriteria:[],connectors:[]};
-const TITLES={hub:'PD3',reading:'PD3 — чтение вслух',dictation:'PD3 — диктанты',listening:'PD3 — аудирование',exam:'PD3 — чтение (экзамен)',writing:'PD3 — письмо',oral:'PD3 — устная часть',mock:'PD3 — пробный экзамен'};
+const EMPTY_DATA={readingPractice:[],readingExamFind:[],readingExamText:[],dictations:[],listening:[],oralMonologue:[],oralInterview:[],oralInteraction:[],oralDiscussion:[],oralPhrases:[],oralCriteria:[],writingEmail:[],writingTask:[],writingCriteria:[],connectors:[],grammarSets:[],grammarCategories:[]};
+const TITLES={hub:'PD3',reading:'PD3 — чтение вслух',dictation:'PD3 — диктанты',listening:'PD3 — аудирование',exam:'PD3 — чтение (экзамен)',writing:'PD3 — письмо',oral:'PD3 — устная часть',mock:'PD3 — пробный экзамен',grammar:'PD3 — грамматика B2'};
 const REC_LIMITS={monologue:150,interview:60,interaction:60,discussion:90};
 const ORAL_PREFIX={monologue:'mono',interview:'intv',interaction:'inter',discussion:'disc'};
 const interactive='button,a[href],input,textarea,select,summary,audio,[role=button]';
@@ -38,6 +39,12 @@ export function createPd3Page({data,store,deps}){
     render:options=>render(options),title:()=>title(),saveRun:()=>saveRun(),scheduleRunSave:()=>scheduleRunSave(),
     resetMedia:()=>{stopTimer();clearRecorder();stopSpeech();},
     open:(...args)=>open(...args),openHub:()=>open('hub',null,null,{force:true}),openTarget:(view,id,tab)=>openTarget(view,id,tab)
+  });
+  // Grammar practice (sets of ten tasks with a review and a result) lives in pd3-grammar-page.mjs, on this page's run object and screen.
+  const gramCtl=createGrammarController({
+    D,deps,now,d:()=>store.get(),persist:change=>persist(change),container:()=>container(),
+    getRun:()=>run,getUi:()=>ui,setUi:value=>{ui=value;},render:options=>render(options),title:()=>title(),saveRun:()=>saveRun(),scheduleRunSave:()=>scheduleRunSave(),
+    open:(...args)=>open(...args),complete:(kind,id,percent)=>complete(kind,id,percent)
   });
 
   /* ---------- helpers ---------- */
@@ -70,6 +77,7 @@ export function createPd3Page({data,store,deps}){
     const record=validateRun(raw,{data:D,now:now()});
     if(!record){runStore.clear();return false;}
     if(record.view==='mock')return restoreMock(record);
+    if(record.view==='grammar')return restoreGrammar(record);
     teardown();
     ui={view:record.view,id:record.id,kind:record.kind};
     run=makeRun();applyRun(run,record);
@@ -86,6 +94,16 @@ export function createPd3Page({data,store,deps}){
     }
     if(run.timeUp)finishExam();else render({keepScroll:false});
     title();
+    focusPageStart(container(),'h1');
+    deps.toast(message);
+    return true;
+  }
+  function restoreGrammar(record){
+    teardown();
+    ui={view:'grammar',id:record.id,kind:null};
+    run=makeRun();applyRun(run,record);
+    const message=gramCtl.afterRestore(record);
+    render({keepScroll:false});title();
     focusPageStart(container(),'h1');
     deps.toast(message);
     return true;
@@ -122,7 +140,7 @@ export function createPd3Page({data,store,deps}){
   function destroyReader(){reader?.destroy();reader=null;}
   function clearRecorder(){rec?.clear();rec=null;if(run?.rec)run.rec={phase:'idle',url:'',message:''};}
   function teardown(){
-    flushDraft();stopTimer();destroyReader();clearRecorder();stopSpeech();mockCtl.stop();
+    flushDraft();stopTimer();destroyReader();clearRecorder();stopSpeech();mockCtl.stop();gramCtl.stop();
   }
 
   /* ---------- rendering ---------- */
@@ -132,6 +150,7 @@ export function createPd3Page({data,store,deps}){
     const ctx={data:D,d:settings,run,error,now:new Date(now()),known:deps.vocab?.has,spell:deps.spell?.summary?.()||null};
     if(view==='hub')return hubView(ctx);
     if(view==='mock'&&run)return mockCtl.html();
+    if(view==='grammar'&&run)return gramCtl.html();
     if(view==='reading')return it?readingItemView({item:it,d:settings,run,known:deps.vocab?.has}):readingListView(ctx);
     if(view==='dictation')return it?dictationItemView({item:it,d:settings,run}):dictationListView(ctx);
     if(view==='listening')return it?listeningItemView({item:it,d:settings,run}):listeningListView(ctx);
@@ -153,6 +172,7 @@ export function createPd3Page({data,store,deps}){
     if(reader)paintReader(reader.snapshot());
     if(timer)paintTimer();
     if(ui.view==='mock'&&run)mockCtl.after();
+    if(ui.view==='grammar'&&run)gramCtl.after();
   }
   function render({keepScroll=true}={}){
     const el=container();
@@ -163,7 +183,7 @@ export function createPd3Page({data,store,deps}){
     if(focus)restoreFocus(el,focus);
     if(keepScroll)globalThis.scrollTo?.({top:y,behavior:'instant'});
   }
-  function title(){deps.setTitle?.(ui.view==='mock'?mockCtl.titleText():(TITLES[ui.view]||TITLES.hub));}
+  function title(){deps.setTitle?.(ui.view==='mock'?mockCtl.titleText():ui.view==='grammar'&&run?gramCtl.titleText():(TITLES[ui.view]||TITLES.hub));}
 
   /** The markup for the app's page renderer. */
   function view(){return `<div id="pd3-root">${wrap()}</div>`;}
@@ -198,6 +218,7 @@ export function createPd3Page({data,store,deps}){
         return {phase:'write',option:ui.kind==='task'?(stored.option||'A'):'A',text:stored.draft||'',remaining:null,timerOn:false};
       }
       case 'mock':return mockCtl.createRun();
+      case 'grammar':return gramCtl.createRun();
       case 'oral':return {tab:'monologue',id:null,key:'',step:0,started:false,kw:[],rec:{phase:'idle',url:'',message:''},remaining:null,timerOn:false};
       default:return null;
     }
@@ -475,9 +496,12 @@ export function createPd3Page({data,store,deps}){
   function click(el){
     const action=el.dataset.action,value=el.dataset.value,id=el.dataset.id,pos=el.dataset.pos;
     if(ui.view==='mock'&&run&&mockCtl.click(el))return true;
+    if(ui.view==='grammar'&&run&&gramCtl.click(el))return true;
     switch(action){
       case 'pd3-open':case 'pd3-advice':open(value);return true;
       case 'pd3-mock-open':open('mock');return true;
+      case 'pd3-gram-open':open('grammar');return true;
+      case 'pd3-gram-practice':open('grammar');gramCtl.practice(id);return true;
       case 'pd3-pick':
         if(ui.view==='reading')openReading(id);
         else if(ui.view==='dictation')openDictation(id);
@@ -581,6 +605,7 @@ export function createPd3Page({data,store,deps}){
   }
   function input(target){
     if(ui.view==='mock'&&mockCtl.input(target))return true;
+    if(ui.view==='grammar'&&run&&gramCtl.input(target))return true;
     if(target.id==='pd3-write'&&run){
       run.text=target.value;updateWritingMeter();
       clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,700);
@@ -593,6 +618,7 @@ export function createPd3Page({data,store,deps}){
   }
   function change(target){
     if(ui.view==='mock'&&run&&mockCtl.change(target))return true;
+    if(ui.view==='grammar'&&run&&gramCtl.change(target))return true;
     if(target.id==='pd3-file'){importFile(target);return true;}
     if(target.id==='pd3-exam-date'){persist(s=>{s.plan.examDate=target.value;});render();return true;}
     const setting=target.dataset?.pd3Setting;
@@ -649,6 +675,7 @@ export function createPd3Page({data,store,deps}){
   }
   function keydown(event){
     if(ui.view==='mock'&&run&&mockCtl.keydown(event))return true;
+    if(ui.view==='grammar'&&run&&gramCtl.keydown(event))return true;
     // Enter in a dictation sentence field goes to the next sentence (the keyboard's "next" key does the same); an IME candidate is not Enter.
     if(event.key==='Enter'&&!event.isComposing&&event.keyCode!==229&&!event.defaultPrevented&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.shiftKey&&event.target?.matches?.('input[data-pd3-field]')){
       const fields=[...container()?.querySelectorAll('input[data-pd3-field]')||[]],next=fields[fields.indexOf(event.target)+1];

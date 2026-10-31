@@ -52,9 +52,10 @@ test('irregular forms and movement auxiliaries retain the reviewed distinctions'
   assert.match(byVerb.lide.note, /kan lide/);
 });
 
-test('all forty source adjective rows distinguish number, quantity and legitimate variants', () => {
-  assert.equal(adjectiveForms.length, 40);
-  assert.equal(new Set(adjectiveForms.map(a => a.id)).size, 40);
+test('all source adjective rows distinguish number, quantity and legitimate variants', () => {
+  // The first forty rows are the original selection; the comparison update added more (see the test below).
+  assert.ok(adjectiveForms.length >= 40);
+  assert.equal(new Set(adjectiveForms.map(a => a.id)).size, adjectiveForms.length);
   for (const a of adjectiveForms) {
     for (const key of ['id', 'positive', 'comparative', 'superlative', 'ru', 'note', 'wordClass']) assert.ok(typeof a[key] === 'string' && a[key].trim(), `${a.id}: ${key}`);
   }

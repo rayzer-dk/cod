@@ -1,6 +1,7 @@
 // What the learner has done in PD3, computed from `state.pd3` and the PD3 content: per activity, per skill, the exam plan and weak spots.
 // Pure functions (no DOM, no storage). Titles are in Russian like the rest of the interface and are translated at build time.
 import {dayKey,DAY} from './engine.mjs';
+import {weakCategory,grammarCategories} from './pd3-grammar.mjs';
 
 const ORAL_PREFIX={monologue:'mono',interview:'intv',interaction:'inter',discussion:'disc'};
 const list=(data,name)=>Array.isArray(data?.[name])?data[name]:[];
@@ -11,6 +12,10 @@ const average=values=>values.length?values.reduce((sum,value)=>sum+value,0)/valu
 export const ACTIVITIES=[
   ['reading','Чтение вслух'],['dictation','Диктанты'],['listening','Аудирование'],['exam','Чтение (экзамен)'],['writing','Письмо'],['oral','Устная часть']
 ];
+/** Grammar practice is listed after these (activity row and fifth skill) only when the content has grammar sets. */
+export const GRAMMAR_ACTIVITY=['grammar','Грамматика B2'];
+export const GRAMMAR_SKILL=['grammar','Грамматика B2',['grammar']];
+const hasGrammar=data=>list(data,'grammarSets').length>0;
 /** Skills of the exam plan: which activities belong to which skill. */
 export const SKILLS=[
   ['reading','Чтение',['reading','exam']],['writing','Письмо',['writing']],['listening','Аудирование и диктанты',['listening','dictation']],['oral','Устная часть',['oral']]
@@ -36,6 +41,7 @@ const selfPercent=entries=>{
 export function activityRows(pd3,data){
   const rows={};
   for(const [id,name] of [['reading','readingPractice'],['dictation','dictations'],['listening','listening']])rows[id]=scoreActivity(pd3?.[id],list(data,name));
+  rows.grammar=scoreActivity(pd3?.grammar?.sets,list(data,'grammarSets'));
   const find=list(data,'readingExamFind'),text=list(data,'readingExamText');
   const examEntries=[...find.map(item=>pd3?.exam?.find?.[item.id]),...text.map(item=>pd3?.exam?.text?.[item.id])].filter(entry=>entry?.attempts>0);
   rows.exam={total:find.length+text.length,done:examEntries.length,best:examEntries.length?max(examEntries.map(entry=>entry.best)):null,lastAt:max(examEntries.map(entry=>entry.at)),last:latest(examEntries)};
@@ -46,7 +52,7 @@ export function activityRows(pd3,data){
   for(const [name,prefix] of Object.entries(ORAL_PREFIX))for(const item of list(data,'oral'+name[0].toUpperCase()+name.slice(1)))oralKeys.push(`${prefix}-${item.id}`.slice(0,60));
   const oral=oralKeys.map(key=>pd3?.oral?.[key]).filter(Boolean);
   rows.oral={total:oralKeys.length,done:oral.filter(entry=>entry.done).length,best:null,lastAt:max(oral.map(entry=>entry.updatedAt)),last:null,self:selfPercent(oral)};
-  return ACTIVITIES.map(([id,title])=>({id,title,...rows[id]}));
+  return [...ACTIVITIES,...(hasGrammar(data)?[GRAMMAR_ACTIVITY]:[])].map(([id,title])=>({id,title,...rows[id]}));
 }
 
 /** Totals for the compact line on the home page; null while PD3 is unused. */
@@ -71,7 +77,7 @@ export function daysUntil(examDate,now=new Date()){
 /** The four exam skills with their latest and best result and how long ago they were practised. */
 export function skillRows(pd3,data,now=new Date()){
   const rows=activityRows(pd3,data);
-  return SKILLS.map(([id,title,parts])=>{
+  return [...SKILLS,...(hasGrammar(data)?[GRAMMAR_SKILL]:[])].map(([id,title,parts])=>{
     const own=rows.filter(row=>parts.includes(row.id)&&row.total>0);
     const scored=own.filter(row=>row.last);
     const lastRow=scored.reduce((found,row)=>!found||row.last.at>=found.last.at?row:found,null);
@@ -81,7 +87,9 @@ export function skillRows(pd3,data,now=new Date()){
     return {
       id,title,available:own.length>0,
       last:lastRow?lastRow.last.percent:null,best,self:self.length?Math.round(average(self)):null,
-      lastAt,daysAgo:daysSince(lastAt,now),done:own.reduce((sum,row)=>sum+row.done,0),total:own.reduce((sum,row)=>sum+row.total,0)
+      lastAt,daysAgo:daysSince(lastAt,now),done:own.reduce((sum,row)=>sum+row.done,0),total:own.reduce((sum,row)=>sum+row.total,0),
+      // Grammar: the category with the lowest share of right answers (at least 5 answers), where to practise next.
+      ...(id==='grammar'?{weak:weakCategory(pd3?.grammar,grammarCategories(data))}:{})
     };
   });
 }

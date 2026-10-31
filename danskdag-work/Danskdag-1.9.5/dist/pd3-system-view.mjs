@@ -12,7 +12,7 @@ export function dateText(at){
   return `${day}.${month}.${year}`;
 }
 const ago=n=>n===0?'сегодня':n===1?'вчера':`${days(n)} назад`;
-const OPEN_VIEW={reading:'reading',writing:'writing',listening:'listening',oral:'oral'};
+const OPEN_VIEW={reading:'reading',writing:'writing',listening:'listening',oral:'oral',grammar:'grammar'};
 
 function skillLine(skill){
   if(!skill.available)return 'Материалы появятся позже.';
@@ -21,12 +21,19 @@ function skillLine(skill){
   else if(skill.self!==null)parts.push(`самооценка: ${skill.self}%`);
   else parts.push('результатов пока нет');
   parts.push(skill.daysAgo===null?'занятий пока не было':`последнее занятие: ${ago(skill.daysAgo)}`);
+  if(skill.weak)parts.push(`слабая тема: ${skill.weak.title}`);
   return parts.join(' · ');
 }
 function reasonText(reason,skill){
   if(reason==='new')return 'Этим навыком ещё не занимались.';
   if(reason==='stale')return `К нему не возвращались ${days(skill.daysAgo)}.`;
   return 'Здесь результат ниже, чем по другим навыкам.';
+}
+
+/** The button of the suggestion; for grammar with a weak category it starts practice of that category. */
+function adviceButton(skill){
+  if(skill.id==='grammar')return `<button type="button" class="btn primary" ${skill.weak?`data-action="pd3-gram-practice" data-id="${h(skill.weak.id)}"`:'data-action="pd3-gram-open" data-value="grammar"'}>${skill.weak?'Потренировать слабую тему':'Открыть раздел'} ${icon('arrow')}</button>`;
+  return `<button type="button" class="btn primary" data-action="pd3-advice" data-value="${OPEN_VIEW[skill.id]}">Открыть раздел ${icon('arrow')}</button>`;
 }
 
 /** The exam plan: optional date with a countdown, the four skills and one suggestion with its rule. */
@@ -38,7 +45,7 @@ export function planView({d,data,now}){
 <div class="pd3-plan-date"><label for="pd3-exam-date">Дата экзамена (необязательно)</label><div class="pd3-plan-field"><input type="date" id="pd3-exam-date" value="${h(date)}" min="2020-01-01" max="2100-12-31">${date?`<button type="button" class="btn secondary" data-action="pd3-plan-clear">Очистить дату</button>`:''}</div></div>
 <p class="pd3-countdown" role="status" aria-live="polite">${countdown}</p>
 <ul class="pd3-skills">${skills.map(skill=>`<li><b>${h(skill.title)}</b><span>${skillLine(skill)}</span></li>`).join('')}</ul>
-${advice?`<div class="pd3-advice"><p><b>Что делать дальше:</b> ${h(advice.skill.title)}. ${reasonText(advice.reason,advice.skill)}</p><button type="button" class="btn primary" data-action="pd3-advice" data-value="${OPEN_VIEW[advice.skill.id]}">Открыть раздел ${icon('arrow')}</button></div>`:''}
+${advice?`<div class="pd3-advice"><p><b>Что делать дальше:</b> ${h(advice.skill.title)}. ${reasonText(advice.reason,advice.skill)}${advice.skill.weak?` Слабая тема: ${h(advice.skill.weak.title)}.`:''}</p>${adviceButton(advice.skill)}</div>`:''}
 ${mockAdviceView({d,data,now})}
 <p class="field-note">Как выбирается подсказка: сначала навык, которым ещё не занимались, затем тот, к которому не возвращались ${days(STALE_DAYS)} и больше, иначе навык с самым низким результатом. Это ориентир для тренировки, а не прогноз результата на экзамене.</p></section>`;
 }

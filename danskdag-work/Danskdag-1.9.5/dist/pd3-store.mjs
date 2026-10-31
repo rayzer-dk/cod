@@ -1,5 +1,6 @@
 import {validatePd3,sealPd3,emptyPd3,PD3_VERSION,PD3_LIMITS,PD3_STAT_KINDS,PD3_KEYS,capPd3Mocks} from './engine.mjs';
 import {mergeSpell} from './pd3-spell.mjs';
+import {mergeGrammar} from './pd3-grammar.mjs';
 // Data of the PD3 section. Since 1.9.3 it lives in the learner's progress as the optional field `state.pd3` (see engine.mjs);
 // PD3_KEY is the storage key of versions 1.9.2 and earlier, still read once to migrate old results (pd3-migrate.mjs).
 // The data schema (validatePd3, defaults, size limits) lives in engine.mjs, which the Worker bundles; this module re-exports it under the names the app and the tests use.
@@ -45,6 +46,9 @@ export function mergePd3(current,incoming){
   if(spell.length)result.spell=spell;
   const mocks=mergeMocks(result.mocks,incoming.mocks);
   if(Object.keys(mocks).length)result.mocks=mocks;
+  // Grammar: higher best result and attempts per set; per category the entry with more answers (the same copy imported twice counts once).
+  const grammar=mergeGrammar(result.grammar,incoming.grammar);
+  if(grammar)result.grammar=grammar;
   result.updatedAt=Math.max(current.updatedAt,incoming.updatedAt);
   return result;
 }

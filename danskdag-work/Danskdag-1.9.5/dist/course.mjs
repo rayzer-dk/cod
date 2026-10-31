@@ -7,7 +7,7 @@ import {visualLessons} from './visual-data.mjs';
 import {advancedLessons,extraConversationLessons} from './extended-curriculum.mjs';
 import {normalize} from './engine.mjs';
 import {meaningLessons,classLessons} from './wordlab.mjs';
-import {formLessons} from './forms-data.mjs';
+import {formLessons,comparisonLessons} from './forms-data.mjs';
 import {commonItems} from './common-words.mjs';
 import {spokenLessons} from './spoken-practice.mjs';
 import {dialogueLessons} from './dialogue-data.mjs';
@@ -31,6 +31,7 @@ export const lessons = [
   ...grammarLessons,
   ...advancedLessons,
   ...formLessons,
+  ...comparisonLessons,
   ...patternLessons,
   ...contextual.map(l=>({...l,kind:'context',color:'cyan'})),
   ...conversationLessons,

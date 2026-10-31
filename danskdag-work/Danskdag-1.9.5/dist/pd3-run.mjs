@@ -2,6 +2,7 @@
 // It is temporary, device-only state, like an unfinished lesson: it lives under its own localStorage key, never in the shared
 // progress, the PD3 copy or the cloud. Pure functions (no DOM); the page controller decides when to save, restore and clear.
 import {snapshotMock,applyMock,validateMockRun} from './pd3-mock.mjs';
+import {snapshotGrammar,validateGrammarFields,applyGrammar} from './pd3-grammar.mjs';
 export const RUN_KEY='danskdag.pd3.run.v1';
 // Version 2 is the schema with the mock exam (view 'mock'). The other views are still written as version 1, so the older schema stays readable
 // (and an older app version reads them); a record of one version is never read as the other's view.
@@ -10,7 +11,8 @@ export const RUN_LEGACY_VERSION=1;
 export const RUN_MAX_AGE=24*60*60*1000;
 export const RUN_MAX_BYTES=32768;
 export const MOCK_RUN_MAX_BYTES=65536;
-const RUN_VIEWS=new Set(['reading','dictation','listening','exam','mock']);
+// 'grammar' (a set of grammar tasks) is written as version 1 like the other practice views; older app versions simply do not know the view.
+const RUN_VIEWS=new Set(['reading','dictation','listening','exam','mock','grammar']);
 const MAX_TEXT=3000,MAX_KEYS=200,MAX_PLAYS=99;
 const isRecord=value=>!!value&&typeof value==='object'&&!Array.isArray(value)&&[Object.prototype,null].includes(Object.getPrototypeOf(value));
 const finite=value=>typeof value==='number'&&Number.isFinite(value);
@@ -19,7 +21,7 @@ const integer=(value,max)=>Number.isInteger(value)&&value>=0&&value<=max;
 /** Which list of the content holds the item of a task. */
 export function itemOf(data,view,kind,id){
   const list=view==='reading'?data.readingPractice:view==='dictation'?data.dictations:view==='listening'?data.listening
-    :view==='exam'?(kind==='find'?data.readingExamFind:kind==='text'?data.readingExamText:null):null;
+    :view==='exam'?(kind==='find'?data.readingExamFind:kind==='text'?data.readingExamText:null):view==='grammar'?data.grammarSets:null;
   return Array.isArray(list)?list.find(item=>item.id===id)||null:null;
 }
 
@@ -51,6 +53,10 @@ export function snapshotRun(ui,run,now){
     case 'exam':{
       if(run.phase!=='run')return null;
       return {...record,answers:answers(run.answers),task:run.task,timerOn:!!run.timerOn,deadline:run.timerOn&&finite(run.deadline)?run.deadline:null};
+    }
+    case 'grammar':{
+      const fields=snapshotGrammar(run);
+      return fields?{...record,...fields}:null;
     }
     case 'mock':{
       const snap=snapshotMock(run);
@@ -98,6 +104,10 @@ export function validateRun(raw,{data,now}){
     const item=itemOf(data,raw.view,kind,raw.id);
     if(!item)return null;
     const record={v:RUN_LEGACY_VERSION,savedAt:raw.savedAt,view:raw.view,kind,id:raw.id,t0:finite(raw.t0)&&raw.t0<=now&&raw.t0>=raw.savedAt-RUN_MAX_AGE?raw.t0:raw.savedAt};
+    if(raw.view==='grammar'){
+      const fields=validateGrammarFields(raw,item,now);
+      return fields?{...record,...fields}:null;
+    }
     if(raw.view==='dictation'){
       if(!isRecord(raw.inputs)||!isRecord(raw.plays)||Object.keys(raw.inputs).length>MAX_KEYS||Object.keys(raw.plays).length>MAX_KEYS)return null;
       record.inputs={};record.plays={};
@@ -142,6 +152,7 @@ export function applyRun(run,record){
     case 'dictation':run.inputs={...record.inputs};run.plays={...record.plays};break;
     case 'listening':run.plays=record.plays;run.answers={...record.answers};break;
     case 'mock':applyMock(run,record);break;
+    case 'grammar':applyGrammar(run,record);break;
     case 'exam':run.phase='run';run.answers={...record.answers};run.task=record.task;run.timerOn=record.timerOn;run.deadline=record.deadline;run.timeUp=false;break;
   }
   return run;

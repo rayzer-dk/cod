@@ -1,5 +1,5 @@
-const MANIFEST={"/index.html":"976a7322e3e8e838f327638d3e1f60a9170cb8816efc6cdfc1ea8d59f8f24a13","/manifest.webmanifest":"25e2319e90c0bbac080ff11a74678cd97256df3985c1afd5c603517a6fd31ece","/icon.svg":"a6e623571b7305903abbe9059384dcc233b6ebee7451d90eee27ed981bd44b91","/icon-192.png":"5c2587d996df4c5abb4bffead54c821743aed45fa8e5e13e8c9fe37e09983bf2","/icon-512.png":"dbb222bda4cd44b333509afec4848d33aec4432f4095683c8c8dcc0e831e575e","/flag-dk.svg":"a9db2939c6736db071b3cf6f01a435ccf310d020b6c8e7371bbbfc2e88a714ce"};
-const CACHE='danskdag-static-a58bbebe8a207fdf9ed7',NETWORK_TIMEOUT=3000;
+const MANIFEST={"/index.html":"69c210d8dad982594de2f3ec205fb5d06ee3e034f75397b462363f47b617ac52","/manifest.webmanifest":"8f23a4d933dae6ba2c43d4bcbffe4e922e6db353b7e0048f50087b908e762cbd","/icon.svg":"a6e623571b7305903abbe9059384dcc233b6ebee7451d90eee27ed981bd44b91","/icon-192.png":"5c2587d996df4c5abb4bffead54c821743aed45fa8e5e13e8c9fe37e09983bf2","/icon-512.png":"dbb222bda4cd44b333509afec4848d33aec4432f4095683c8c8dcc0e831e575e","/flag-dk.svg":"a9db2939c6736db071b3cf6f01a435ccf310d020b6c8e7371bbbfc2e88a714ce"};
+const CACHE='danskdag-static-9e7d904089b3f8056817',NETWORK_TIMEOUT=3000;
 async function loadAsset(path,cache){
  const response=await fetch(new URL(path,self.location.origin).href,{cache:'reload',credentials:'same-origin'});
  if(!response.ok||response.redirected)throw Error('Static asset unavailable: '+path);

@@ -30,18 +30,18 @@ export const antonymConfusable = [
   ['nem', 'let', 'enkel'], ['svær', 'kompliceret'], ['stor', 'høj', 'lang'], ['lille', 'lav', 'kort'], ['tyk', 'bred'], ['tynd', 'smal'],
   ['stærk', 'hård', 'tung'], ['svag', 'blød', 'let'], ['billig', 'fattig'], ['dyr', 'rig'], ['rask', 'sund'], ['syg', 'usund'],
   ['sikker', 'tryg'], ['farlig', 'utryg'], ['klar', 'gennemsigtig'], ['uklar', 'uigennemsigtig'], ['sort', 'mørk', 'mørkeblå', 'mørkhåret'],
-  ['hvid', 'lys', 'lyseblå', 'lyshåret'], ['altid', 'ofte'], ['aldrig', 'sjældent'], ['tidlig', 'snart'], ['sen', 'senere'], ['hurtig', 'snart'],
+  ['hvid', 'lys', 'lyseblå', 'lyshåret'], ['altid', 'ofte'], ['aldrig', 'sjældent'], ['sen', 'senere'],
   ['glad', 'tilfreds', 'munter'], ['trist', 'utilfreds'], ['give', 'sende'], ['tage', 'modtage'], ['købe', 'tage'], ['sælge', 'give'],
-  ['miste', 'tabe'], ['slutte', 'stoppe'], ['begynde', 'fortsætte'], ['lukke', 'slukke'], ['åbne', 'tænde'], ['tillade', 'acceptere'], ['forbyde', 'afvise'],
+  ['miste', 'tabe'], ['mæt', 'fuld'], ['slutte', 'stoppe'], ['begynde', 'fortsætte'], ['lukke', 'slukke'], ['åbne', 'tænde'], ['tillade', 'acceptere'], ['forbyde', 'afvise'],
   ['stige', 'løfte'], ['falde', 'sænke'], ['komme', 'ankomme'], ['gå', 'afgå'], ['fjerne', 'sprede'], ['tilføje', 'fylde'], ['stå op', 'vågne'],
   ['lægge sig', 'falde i søvn'], ['sætte sig', 'stå op'],
   ['kvinde', 'pige', 'datter', 'søster', 'mor'], ['mand', 'dreng', 'søn', 'bror', 'far'], ['nat', 'aften', 'vinter'], ['dag', 'morgen', 'sommer'],
-  ['ulempe', 'nederlag', 'problem', 'løgn'], ['fordel', 'succes', 'løsning', 'sandhed'], ['sorg', 'fjendskab', 'krig'], ['glæde', 'venskab', 'fred'],
+  ['ulempe', 'fiasko', 'problem', 'løgn'], ['fordel', 'succes', 'løsning', 'sandhed'], ['sorg', 'fjendskab', 'krig'], ['glæde', 'venskab', 'fred'],
   ['over', 'foran', 'op'], ['under', 'bag', 'ned'], ['her', 'indenfor'], ['der', 'udenfor'], ['højre', 'frem'], ['venstre', 'tilbage'], ['til', 'ind'], ['fra', 'ud'],
   ['tæt på', 'her'], ['langt væk', 'der']
 ];
 export const antonymAlso = {
-  nem: ['let'], svær: ['vanskelig'], let: ['nem'], tage: ['modtage'], modtage: ['få'], miste: ['tabe'], slutte: ['stoppe', 'holde op'], trist: ['ked af det']
+  nem: ['let'], svær: ['vanskelig'], tage: ['modtage'], modtage: ['få'], miste: ['tabe'], slutte: ['stoppe', 'holde op'], trist: ['ked af det']
 };
 
 // [pos, a, a in Russian, b, b in Russian, example of a, its translation, example of b, its translation, note]
@@ -75,7 +75,7 @@ const rows = {
     ['adj', 'tålmodig', 'терпеливый', 'utålmodig', 'нетерпеливый', 'Læreren er meget tålmodig.', 'Учитель очень терпеливый.', 'Jeg bliver utålmodig, når jeg venter.', 'Я теряю терпение, когда жду.'],
     ['adj', 'høflig', 'вежливый', 'uhøflig', 'невежливый', 'Servitricen er meget høflig.', 'Официантка очень вежлива.', 'Det er uhøfligt at afbryde.', 'Перебивать невежливо.'],
     ['adj', 'ærlig', 'честный', 'uærlig', 'нечестный', 'Hun er altid ærlig.', 'Она всегда честна.', 'Det er uærligt at tage pengene.', 'Брать эти деньги нечестно.'],
-    ['adj', 'genert', 'застенчивый', 'udadvendt', 'общительный; открытый', 'Min datter er genert.', 'Моя дочь застенчива.', 'Han er meget udadvendt.', 'Он очень общительный.'],
+    ['adj', 'indadvendt', 'интровертный; замкнутый', 'udadvendt', 'общительный; открытый', 'Min datter er indadvendt.', 'Моя дочь интровертна.', 'Han er meget udadvendt.', 'Он очень общительный.'],
     ['adj', 'tilfreds', 'довольный', 'utilfreds', 'недовольный', 'Kunden er tilfreds.', 'Клиент доволен.', 'Chefen er utilfreds med rapporten.', 'Начальник недоволен отчётом.'],
     ['adj', 'interesseret', 'заинтересованный', 'uinteresseret', 'незаинтересованный', 'Hun er interesseret i musik.', 'Она интересуется музыкой.', 'Han virker uinteresseret.', 'Он кажется незаинтересованным.'],
     ['adj', 'sulten', 'голодный', 'mæt', 'сытый', 'Jeg er meget sulten efter træning.', 'После тренировки я очень голоден.', 'Tak, jeg er helt mæt.', 'Спасибо, я совсем сыт.'],
@@ -111,7 +111,7 @@ const rows = {
     ['noun', 'en morgen', 'утро', 'en aften', 'вечер', 'Om morgenen læser jeg avisen.', 'Утром я читаю газету.', 'Om aftenen ser vi tv.', 'Вечером мы смотрим телевизор.'],
     ['adv', 'nu', 'сейчас', 'senere', 'позже', 'Jeg har tid nu.', 'Сейчас у меня есть время.', 'Vi snakker sammen senere.', 'Мы поговорим позже.'],
     ['adj', 'hurtig', 'быстрый', 'langsom', 'медленный', 'Toget er hurtigt.', 'Поезд быстрый.', 'Forbindelsen er langsom.', 'Соединение медленное.'],
-    ['adv', 'snart', 'скоро', 'for længe siden', 'давно', 'Vi ses snart.', 'Скоро увидимся.', 'Det skete for længe siden.', 'Это случилось давно.'],
+    ['adv', 'for nylig', 'недавно', 'for længe siden', 'давно', 'Jeg har for nylig skiftet job.', 'Я недавно сменил работу.', 'Det skete for længe siden.', 'Это случилось давно.'],
     ['adv', 'stadig', 'всё ещё', 'ikke længere', 'больше не', 'Han bor stadig i Aarhus.', 'Он всё ещё живёт в Орхусе.', 'Han arbejder ikke længere her.', 'Он больше здесь не работает.'],
     ['adv', 'allerede', 'уже', 'endnu ikke', 'ещё не', 'Toget er allerede kørt.', 'Поезд уже ушёл.', 'Jeg har ikke spist endnu.', 'Я ещё не ел.', 'В предложении порядок другой: ikke ... endnu.'],
     ['noun', 'en fortid', 'прошлое', 'en fremtid', 'будущее', 'Vi kan ikke ændre fortiden.', 'Мы не можем изменить прошлое.', 'Fremtiden er uvis.', 'Будущее неопределённо.'],
@@ -119,7 +119,7 @@ const rows = {
     ['adj', 'pludselig', 'внезапный', 'gradvis', 'постепенный', 'Ændringen var pludselig.', 'Изменение было внезапным.', 'Forbedringen var gradvis.', 'Улучшение было постепенным.'],
     ['adv', 'længe', 'долго', 'kort tid', 'недолго', 'Vi ventede længe.', 'Мы долго ждали.', 'Pausen varer kun kort tid.', 'Перерыв длится недолго.'],
     ['noun', 'en hverdag', 'будний день', 'en weekend', 'выходные', 'På hverdage arbejder jeg.', 'В будни я работаю.', 'I weekenden sover jeg længe.', 'В выходные я долго сплю.'],
-    ['noun', 'en sommer', 'лето', 'en vinter', 'зима', 'Om sommeren er der lyst længe.', 'Летом долго светло.', 'Om vinteren er det koldt.', 'Зимой холодно.'],
+    ['noun', 'en sommer', 'лето', 'en vinter', 'зима', 'Om sommeren er det lyst længe.', 'Летом долго светло.', 'Om vinteren er det koldt.', 'Зимой холодно.'],
     ['noun', 'et forår', 'весна', 'et efterår', 'осень', 'Om foråret blomstrer træerne.', 'Весной деревья цветут.', 'Om efteråret falder bladene.', 'Осенью листья опадают.']
   ],
   state: [
@@ -128,7 +128,7 @@ const rows = {
     ['adj', 'billig', 'дешёвый', 'dyr', 'дорогой', 'Billetten er billig.', 'Билет дешёвый.', 'Taxaen er dyr.', 'Такси дорогое.', 'Et dyr — животное; dyr как прилагательное значит «дорогой».'],
     ['adj', 'ren', 'чистый', 'beskidt', 'грязный', 'Gulvet er rent.', 'Пол чистый.', 'Dine sko er beskidte.', 'Твоя обувь грязная.'],
     ['adj', 'rask', 'здоровый; выздоровевший', 'syg', 'больной', 'Jeg er rask igen.', 'Я снова здоров.', 'Min søn er syg i dag.', 'Мой сын сегодня болен.'],
-    ['adj', 'sund', 'полезный для здоровья', 'usund', 'вредный для здоровья', 'Havregrød er sund mad.', 'Овсяная каша — здоровая еда.', 'Det er usundt at sidde hele dagen.', 'Весь день сидеть вредно.'],
+    ['adj', 'sund', 'полезный для здоровья', 'usund', 'вредный для здоровья', 'Havregrød er sund mad.', 'Овсяная каша — здоровая еда.', 'Det er usundt at sidde hele dagen.', 'Весь день сидеть вредно.', 'Sund — о том, что полезно для здоровья: sund mad. Здоров ли человек: rask — syg.'],
     ['adj', 'rig', 'богатый', 'fattig', 'бедный', 'Han er en rig mand.', 'Он богатый человек.', 'Familien er meget fattig.', 'Семья очень бедная.'],
     ['adj', 'sikker', 'безопасный', 'farlig', 'опасный', 'Området er sikkert.', 'Район безопасный.', 'Krydset er farligt.', 'Перекрёсток опасный.', 'Sikker значит и «уверенный»: Jeg er sikker på det.'],
     ['adj', 'åben', 'открытый', 'lukket', 'закрытый', 'Butikken er åben.', 'Магазин открыт.', 'Banken er lukket.', 'Банк закрыт.'],
@@ -184,7 +184,7 @@ const rows = {
     ['verb', 'at spørge', 'спрашивать', 'at svare', 'отвечать', 'Jeg vil spørge om vejen.', 'Я хочу спросить дорогу.', 'Han svarer ikke.', 'Он не отвечает.'],
     ['verb', 'at elske', 'любить', 'at hade', 'ненавидеть', 'Jeg elsker sommeren.', 'Я люблю лето.', 'Jeg hader at vente.', 'Я ненавижу ждать.', 'Для спокойного «нравится» говорят kan lide.'],
     ['verb', 'at sende', 'отправлять', 'at modtage', 'получать', 'Jeg sender en mail.', 'Я отправляю письмо по электронной почте.', 'Jeg modtager mange mails.', 'Я получаю много писем.'],
-    ['verb', 'at tale', 'говорить', 'at lytte', 'слушать', 'Han taler for meget.', 'Он слишком много говорит.', 'Jeg lytter til radioen.', 'Я слушаю радио.'],
+    ['verb', 'at råbe', 'кричать', 'at hviske', 'шептать', 'Børnene råber på legepladsen.', 'Дети кричат на площадке.', 'Hun hvisker i mit øre.', 'Она шепчет мне на ухо.'],
     ['verb', 'at vågne', 'просыпаться', 'at falde i søvn', 'засыпать', 'Jeg vågner klokken seks.', 'Я просыпаюсь в шесть.', 'Barnet falder hurtigt i søvn.', 'Ребёнок быстро засыпает.'],
     ['verb', 'at stå op', 'вставать с постели', 'at lægge sig', 'ложиться', 'Jeg står op klokken syv.', 'Я встаю в семь.', 'Jeg lægger mig klokken elleve.', 'Я ложусь в одиннадцать.'],
     ['verb', 'at sætte sig', 'садиться', 'at rejse sig', 'вставать; подниматься', 'Jeg sætter mig ved vinduet.', 'Я сажусь у окна.', 'Jeg rejser mig, når hun kommer ind.', 'Я встаю, когда она входит.'],
@@ -208,7 +208,7 @@ const rows = {
     ['noun', 'en krig', 'война', 'en fred', 'мир', 'Krigen varede i fem år.', 'Война длилась пять лет.', 'Alle ønsker fred.', 'Все хотят мира.'],
     ['noun', 'en sygdom', 'болезнь', 'en sundhed', 'здоровье', 'Sygdom kan ramme alle.', 'Болезнь может коснуться каждого.', 'Sundhed er det vigtigste.', 'Здоровье — самое важное.'],
     ['noun', 'en glæde', 'радость', 'en sorg', 'горе; скорбь', 'Hun græder af glæde.', 'Она плачет от радости.', 'Familien er i sorg.', 'Семья скорбит.'],
-    ['noun', 'en succes', 'успех', 'et nederlag', 'поражение', 'Festen blev en succes.', 'Праздник удался.', 'Holdet led et nederlag.', 'Команда потерпела поражение.'],
+    ['noun', 'en succes', 'успех', 'en fiasko', 'провал', 'Festen blev en succes.', 'Праздник удался.', 'Festen blev en fiasko.', 'Праздник обернулся провалом.'],
     ['noun', 'et lys', 'свет; свеча', 'et mørke', 'темнота', 'Der er lys i vinduet.', 'В окне горит свет.', 'Børnene er bange for mørket.', 'Дети боятся темноты.'],
     ['noun', 'en larm', 'шум', 'en stilhed', 'тишина', 'Jeg kan ikke sove for larm.', 'Я не могу уснуть из-за шума.', 'Der er stilhed på biblioteket.', 'В библиотеке тишина.'],
     ['noun', 'et spørgsmål', 'вопрос', 'et svar', 'ответ', 'Jeg har et spørgsmål.', 'У меня есть вопрос.', 'Jeg kender svaret.', 'Я знаю ответ.'],

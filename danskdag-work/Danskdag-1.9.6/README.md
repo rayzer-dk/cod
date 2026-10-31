@@ -1,4 +1,6 @@
-# Danskdag 1.9.5
+# Danskdag 1.9.6
+
+B2 grammar, antonyms, more listening and dictations: see `docs/release-1.9.6.md`.
 
 Six distinct PD3 reading sets: see `docs/release-1.9.5.md`.
 

@@ -13,4 +13,4 @@ const server=createServer(async(req,res)=>{
  }catch{res.writeHead(500,{'content-type':'text/plain; charset=utf-8'});res.end('Не удалось открыть файл приложения.');}
 });
 server.on('error',error=>{console.error(error.code==='EADDRINUSE'?'Порт занят. Пример другого порта: node tools/start-local.mjs 8766':error.message);process.exitCode=1;});
-server.listen(port,'127.0.0.1',()=>console.log(`Danskdag 1.9.5: открой ${origin}\nДля остановки нажми Ctrl+C. Прогресс сохраняется в этом браузере.`));
+server.listen(port,'127.0.0.1',()=>console.log(`Danskdag 1.9.6: открой ${origin}\nДля остановки нажми Ctrl+C. Прогресс сохраняется в этом браузере.`));

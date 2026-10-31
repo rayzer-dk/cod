@@ -1,0 +1,20 @@
+# Заголовки для Netlify и Cloudflare Pages (оба читают файл _headers из корня загруженной папки).
+# Хостинги без поддержки _headers (например, GitHub Pages) работают и без него, см. DEPLOY.md.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: microphone=(self), camera=(), geolocation=()
+  X-Frame-Options: DENY
+
+/
+  Cache-Control: no-cache
+
+/index.html
+  Cache-Control: no-cache
+
+/service-worker.js
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Cache-Control: no-cache
+  Content-Type: application/manifest+json

@@ -1,4 +1,6 @@
-# Danskdag 1.9.6
+# Danskdag 1.9.7
+
+Static hosting build (`npm run build:static`): see `docs/release-1.9.7.md`.
 
 B2 grammar, antonyms, more listening and dictations: see `docs/release-1.9.6.md`.
 

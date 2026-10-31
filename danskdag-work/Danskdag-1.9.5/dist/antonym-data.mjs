@@ -34,7 +34,7 @@ export const antonymConfusable = [
   ['glad', 'tilfreds', 'munter'], ['trist', 'utilfreds'], ['give', 'sende'], ['tage', 'modtage'], ['købe', 'tage'], ['sælge', 'give'],
   ['miste', 'tabe'], ['slutte', 'stoppe'], ['begynde', 'fortsætte'], ['lukke', 'slukke'], ['åbne', 'tænde'], ['tillade', 'acceptere'], ['forbyde', 'afvise'],
   ['stige', 'løfte'], ['falde', 'sænke'], ['komme', 'ankomme'], ['gå', 'afgå'], ['fjerne', 'sprede'], ['tilføje', 'fylde'], ['stå op', 'vågne'],
-  ['lægge sig', 'falde i søvn'], ['sætte sig', 'stå op'], ['ven', 'fjende'],
+  ['lægge sig', 'falde i søvn'], ['sætte sig', 'stå op'],
   ['kvinde', 'pige', 'datter', 'søster', 'mor'], ['mand', 'dreng', 'søn', 'bror', 'far'], ['nat', 'aften', 'vinter'], ['dag', 'morgen', 'sommer'],
   ['ulempe', 'nederlag', 'problem', 'løgn'], ['fordel', 'succes', 'løsning', 'sandhed'], ['sorg', 'fjendskab', 'krig'], ['glæde', 'venskab', 'fred'],
   ['over', 'foran', 'op'], ['under', 'bag', 'ned'], ['her', 'indenfor'], ['der', 'udenfor'], ['højre', 'frem'], ['venstre', 'tilbage'], ['til', 'ind'], ['fra', 'ud'],

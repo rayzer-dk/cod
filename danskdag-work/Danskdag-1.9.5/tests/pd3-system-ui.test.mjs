@@ -48,7 +48,7 @@ test('days: calendar days since a time stamp and until the exam, by the Copenhag
 
 test('the suggestion follows one rule: not started, then left for 7+ days, then the lowest result',()=>{
  const none=skillRows(undefined,data,NOW);
- assert.equal(none.length,4);assert.ok(none.every(s=>s.available));
+ assert.equal(none.length,5,'four exam skills and grammar');assert.ok(none.every(s=>s.available));
  assert.deepEqual([recommendSkill(none).reason,recommendSkill(none).skill.id],['new','reading'],'with nothing done the first skill is suggested');
  const reading=first(data.readingPractice),listening=first(data.listening);
  const mk=({r,w,l,o})=>pd3Of(d=>{
@@ -89,7 +89,7 @@ test('frequent mistakes: the top five by count, with a practice link only where 
 test('exam plan: countdown, four skills, one suggestion with its rule, no promises',()=>{
  const empty=planView({d:defaults(),data,now:NOW});
  assert.match(empty,/id="pd3-exam-date"/);assert.match(empty,/Укажи дату экзамена/);assert.doesNotMatch(empty,/pd3-plan-clear/);
- assert.equal((empty.match(/<li><b>/g)||[]).length,4);
+ assert.equal((empty.match(/<li><b>/g)||[]).length,5,'four exam skills and grammar');
  assert.match(empty,/Как выбирается подсказка/);assert.match(empty,/не прогноз результата на экзамене/);
  assert.doesNotMatch(empty,/гарант|обязательно сдаш|точно сдаш/i);
  const set=planView({d:pd3Of(x=>{x.plan.examDate='2026-11-30';}),data,now:NOW});
@@ -115,10 +115,10 @@ test('progress page section: every activity with done/total, best result, last a
  const reading=first(data.readingPractice);
  const d=pd3Of(x=>recordScore(x.reading,reading,85,null,Date.parse('2026-10-24T12:00:00Z')));
  const html=pd3ProgressSection(d,data);
- assert.equal((html.match(/data-action="open-pd3"/g)||[]).length,6);
+ assert.equal((html.match(/data-action="open-pd3"/g)||[]).length,7,'six activities and grammar');
  assert.match(html,new RegExp(`data-value="reading"`));assert.match(html,/Чтение вслух/);assert.match(html,new RegExp(`1 / ${data.readingPractice.length}`));
  assert.match(html,/лучший результат: 85%/);assert.match(html,/последняя активность: 24\.10\.2026/);assert.match(html,/результатов пока нет/);
- assert.equal((html.match(/<button/g)||[]).length,6,'rows are single buttons');
+ assert.equal((html.match(/<button/g)||[]).length,7,'rows are single buttons');
 });
 
 test('home status line: shown only once something is finished, one compact button with a full accessible name',()=>{

@@ -123,7 +123,7 @@ const pd3Spell={
  },
  summary:()=>spellSummary(state,Date.now())
 };
-const pd3=createPd3Page({data:pd3Data,store:pd3Store,deps:{container:()=>$('#pd3-root'),voiceUri:()=>state.settings.voiceUri,toast:text=>toast(text),announce:text=>announcer.say(text),enhance:scope=>addDanishAudio(scope),setTitle:text=>{document.title=pageTitle(text);},say:(text,rate,control)=>say(text,rate,control),offline:offlineEdition,award:awardPd3Activity,vocab:pd3Vocab,spell:pd3Spell,grammarLinks:{lesson:id=>lessonById[id]?.title||null,reference:name=>name==='tenses'}}});
+const pd3=createPd3Page({data:pd3Data,store:pd3Store,deps:{container:()=>$('#pd3-root'),voiceUri:()=>state.settings.voiceUri,toast:text=>toast(text),announce:text=>announcer.say(text),enhance:scope=>addDanishAudio(scope),setTitle:text=>{document.title=pageTitle(text);},say:(text,rate,control)=>say(text,rate,control),offline:offlineEdition,award:awardPd3Activity,vocab:pd3Vocab,grammarLinks:{lesson:id=>lessonById[id]?.title||null,reference:name=>name==="tenses"},spell:pd3Spell}});
 const dueItems=()=>getWordEntries(state).filter(p=>p.verified===true&&getReviewFor(p,state.reviews)?.due<=Date.now());
 const nextLesson=()=>nextPathLesson(lessons,state);
 function toast(text){const el=$('#toast');el.textContent=text;el.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('visible'),4500);}

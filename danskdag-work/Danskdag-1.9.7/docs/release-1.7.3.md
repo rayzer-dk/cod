@@ -1,0 +1,11 @@
+# Danskdag 1.7.3
+
+The whole upper-left brand and the header flag/title return to the home route. A body-level feedback controller holds the accent background, inset outline and short scale animation for 500 ms, including after navigation replaces the app markup. Repeated taps restart the timer. Both themes use their existing accent tokens; reduced motion retains the colour/outline without movement. Buttons support keyboard activation and have accessible home labels.
+
+The previous service worker could keep serving an older entry page. The hosted entry is now one coherent generated HTML bundle, with its CSS, JavaScript and illustrations embedded, while cloud features stay enabled. The independent HTML retains its offline CSP and disabled cloud mode. `/open` is an additional same-origin entry alias that old cache manifests do not intercept; it uses the same browser progress as the root address.
+
+New service workers try the network for entry navigation and accept only a successful nonredirected response carrying the app's release header. Failed requests and authentication pages fall back to the hash-verified bundled entry. Progress APIs remain uncached. Controller replacement offers a manual update button rather than reloading automatically. It persists progress and the unfinished session before reload. Open form dialogs cover the notice and trap keyboard focus, so an update cannot discard a form in progress through ordinary interaction.
+
+Validation: all 199 Node tests pass. Added tests first failed for the missing timer, hosted bundle, entry alias, fresh-navigation policy and update notification. Browser QA checked desktop flag navigation, keyboard activation of the sidebar brand, mobile flag/title navigation at 360 px, both theme accents and no horizontal overflow (345 px document and client widths excluding the scrollbar). The half-second duration and repeated-tap extension are checked with deterministic timers. Independent code review found no critical or important issues.
+
+Actual device TTS quality and real two-device account synchronization were not retested in this maintenance release. The course, review state format, storage keys and content identities are unchanged.

@@ -61,7 +61,7 @@ test('mock: schedules follow the formats (150 min written + about 15 min oral; t
 test('mock: sets rotate through the content and the least used set is offered first',()=>{
   assert.ok(canMock(data));assert.equal(canMock({...data,oralCriteria:[]}),false);assert.deepEqual(mockSets({}),[]);
   assert.equal(sets.length,6);assert.equal(new Set(sets.map(s=>s.id)).size,6);
-  assert.equal(sets[0].find,data.readingExamFind[0].id);assert.equal(sets[1].find,data.readingExamFind[1].id);assert.equal(sets[2].find,data.readingExamFind[0].id);
+  assert.equal(sets[0].find,data.readingExamFind[0].id);assert.equal(sets[1].find,data.readingExamFind[1].id);assert.equal(sets[2].find,data.readingExamFind[2].id);assert.equal(new Set(sets.map(s=>s.find)).size,6,'six different Del 1 sets');assert.equal(new Set(sets.map(s=>s.text)).size,6,'six different Del 2 sets');
   assert.equal(defaultSetId(sets,undefined),'set-1');assert.equal(defaultSetId([],null),'');
   const pd3=emptyPd3();
   pd3.exam.find[sets[0].find]={best:80,last:80,attempts:2,at:1};

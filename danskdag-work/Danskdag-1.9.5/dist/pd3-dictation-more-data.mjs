@@ -52,7 +52,7 @@ export const dictationsMore=[
    {da: "Naboen har malet hegnet, og nu har han også tømt garagen.", ru: "Сосед покрасил забор, а теперь ещё и освободил гараж."},
    {da: "De ventede og ventede, men toget kom aldrig, så de gik hjem.", ru: "Они ждали и ждали, но поезд так и не пришёл, поэтому они пошли домой."}
   ],
-  tip: "Слабые глаголы делятся на две группы: -ede / -et (boede — boet, savnede, lavede — lavet, ryddede — ryddet, malede — malet, ventede) и -te / -t (købte — købt, sendte — sendt, hørte — hørt, tænkte — tænkt, kørte — kørt, tømte — tømt, spiste — spist). Формы идут парами: -ede даёт -et, а -te даёт -t, поэтому причастие подскажет, как писать прошедшее время."
+  tip: "Слабые глаголы делятся на две группы. Группа -ede / -et: boede, savnede, tegnede, snakkede, ventede; har lavet, ryddet, vasket, malet. Группа -te / -t: købte, sendte, hørte, tænkte, spiste; har kørt, tømt. Формы идут парами (-ede даёт -et, -te даёт -t), поэтому причастие подскажет, как писать прошедшее время."
  },
  {
   id: "flertal-med-er-ere-ne-ene",
@@ -106,7 +106,7 @@ export const dictationsMore=[
    {da: "Vi kendte dem ikke i forvejen, men vi talte sammen hele aftenen.", ru: "Мы не знали их раньше, но разговаривали весь вечер."},
    {da: "Nogle gange glemmer jeg nøglen hjemme, men det sker ikke så ofte.", ru: "Иногда я забываю ключ дома, но это случается не так часто."}
   ],
-  tip: "Раздельно пишутся: i dag, i går, i morgen, hver dag (каждый день), i stedet for, til sidst, for eksempel, på grund af, i forvejen, nogle gange, talte sammen. Слитно: hverdag (будни, повседневность), alligevel, bagefter, derfor, desværre, bestemt. Сравните hver dag и hverdagen."
+  tip: "Раздельно пишутся: i dag, i morgen, hver dag (каждый день), i stedet for, til sidst, for eksempel, på grund af, i forvejen, nogle gange, talte sammen. Слитно: hverdag (будни, повседневность), alligevel, bagefter, derfor, desværre, bestemt. Сравните hver dag и hverdagen."
  },
  {
   id: "store-og-smaa-bogstaver",
@@ -143,5 +143,81 @@ export const dictationsMore=[
    {da: "Max' storebror har lånt Mettes computer, men han har glemt opladeren.", ru: "Старший брат Макса взял на время компьютер Метте, но забыл зарядное устройство."}
   ],
   tip: "Родительный падеж образуется добавлением -s без апострофа: Annas bror, Peters cykel, mors have, børnenes værelse, dets vinduer. Апостроф ставится только после имён на -s, -x, -z: Hans' kone, Jens' kone, Thomas' bog, Max' storebror. Не путайте hans «его» (строчная) и Hans' «Ханса»."
+ },
+ {
+  id: "aabent-hus-paa-musikskolen",
+  level: "B2",
+  topic: "Числа, даты и время прописью: объявление",
+  title: "Åbent hus på musikskolen",
+  mode: "text",
+  sentences: [
+   {da: "Musikskolen holder åbent hus lørdag den femtende november.", ru: "Музыкальная школа проводит день открытых дверей в субботу, пятнадцатого ноября."},
+   {da: "Dørene åbner klokken ti, og de første børn spiller klokken kvart over ti.", ru: "Двери открываются в десять часов, а первые дети играют в четверть одиннадцатого."},
+   {da: "Koncerten i den store sal begynder klokken halv tolv og varer fyrre minutter.", ru: "Концерт в большом зале начинается в половине двенадцатого и длится сорок минут."},
+   {da: "Bagefter kan alle prøve instrumenterne, og lærerne er til stede indtil klokken tre.", ru: "После этого все могут попробовать инструменты, а учителя будут на месте до трёх часов."},
+   {da: "Det koster ikke noget at komme, men man skal tilmelde sig senest torsdag den trettende.", ru: "Прийти можно бесплатно, но записаться нужно не позднее четверга, тринадцатого числа."},
+   {da: "Skolen har godt hundrede og halvtreds elever, og den yngste er kun seks år.", ru: "В школе около ста пятидесяти учеников, а самому младшему всего шесть лет."},
+   {da: "Den ældste elev er femoghalvfjerds år og spiller trommer hver tirsdag.", ru: "Самому старшему ученику семьдесят пять лет, и он каждый вторник играет на барабанах."},
+   {da: "Du kan ringe på telefonnummer enogtredive, toogtyve, nul syv, otteogfirs.", ru: "Вы можете позвонить по номеру телефона тридцать один, двадцать два, ноль семь, восемьдесят восемь."},
+   {da: "Vi glæder os til at se jer.", ru: "Мы с нетерпением ждём вас."}
+  ],
+  tip: "В тексте много числительных прописью: femtende, trettende, fyrre, halvtreds, femoghalvfjerds, otteogfirs. Единицы стоят перед десятками и пишутся слитно через og: enogtredive, toogtyve. Время: halv tolv — половина двенадцатого (11:30), kvart over ti — 10:15. Названия месяцев и дней недели пишутся со строчной буквы."
+ },
+ {
+  id: "konference-og-laaneord",
+  level: "B2",
+  topic: "Заимствования на -tion и -ere: конференция",
+  title: "Konference om kommunikation",
+  mode: "text",
+  sentences: [
+   {da: "Sidste uge organiserede vi en konference om kommunikation på arbejdspladsen.", ru: "На прошлой неделе мы организовали конференцию о коммуникации на рабочем месте."},
+   {da: "Først skulle vi reservere en sal og bestille frokost til alle deltagerne.", ru: "Сначала нам нужно было забронировать зал и заказать обед для всех участников."},
+   {da: "Receptionen på hotellet var meget hjælpsom og kontrollerede vores reservation to gange.", ru: "Ресепшен отеля был очень услужлив и дважды проверил наше бронирование."},
+   {da: "Dagen før testede vi mikrofonerne og projektoren, og alt fungerede perfekt.", ru: "За день до этого мы проверили микрофоны и проектор, и всё работало отлично."},
+   {da: "Om morgenen kom en fotograf for at dokumentere arrangementet.", ru: "Утром пришёл фотограф, чтобы запечатлеть мероприятие."},
+   {da: "Den første taler præsenterede en ny løsning, og publikum stillede mange spørgsmål.", ru: "Первый докладчик представил новое решение, и публика задала много вопросов."},
+   {da: "Efter frokosten diskuterede vi i små grupper, hvordan vi kan forbedre informationen mellem afdelingerne.", ru: "После обеда мы обсуждали в небольших группах, как улучшить информирование между отделами."},
+   {da: "Til sidst skulle alle udfylde en evaluering, før de gik hjem.", ru: "В конце все должны были заполнить анкету оценки, прежде чем идти домой."},
+   {da: "Vi var trætte, men enige om, at konferencen havde været en stor succes.", ru: "Мы устали, но сошлись во мнении, что конференция прошла очень успешно."}
+  ],
+  tip: "Заимствованные слова на -tion пишутся с t: kommunikation, reception, reservation, information; слово konference пишется с -ence. Глаголы на -ere в прошедшем времени получают -de: organiserede, kontrollerede (с двойным l), præsenterede, diskuterede, fungerede. В инфинитиве остаётся -ere: reservere, dokumentere."
+ },
+ {
+  id: "flytning-i-weekenden",
+  level: "B1",
+  topic: "Множественное число и удвоение согласных: переезд",
+  title: "Flytning i weekenden",
+  mode: "text",
+  sentences: [
+   {da: "Lørdag flyttede vi fra den gamle lejlighed til et større hus.", ru: "В субботу мы переехали из старой квартиры в дом побольше."},
+   {da: "Vi havde pakket bøgerne i tunge kasser, og tallerkenerne lå i aviser.", ru: "Мы упаковали книги в тяжёлые коробки, а тарелки лежали в газетах."},
+   {da: "Mine brødre kom med to store biler og hjalp med møblerne.", ru: "Мои братья приехали на двух больших машинах и помогли с мебелью."},
+   {da: "Trapperne var smalle, og den tykke sofa ville ikke komme rundt om hjørnet.", ru: "Лестницы были узкими, и толстый диван не хотел поворачивать за угол."},
+   {da: "Børnene løb rundt mellem kasserne og legede, at de boede i et slot.", ru: "Дети бегали между коробками и играли, будто живут в замке."},
+   {da: "Min mor fandt nogle gamle tasker og et par tomme flasker på loftet.", ru: "Моя мама нашла на чердаке несколько старых сумок и пару пустых бутылок."},
+   {da: "Naboerne kom med varme boller, og vi drak te af de samme kopper.", ru: "Соседи принесли тёплые булочки, и мы пили чай из тех же чашек."},
+   {da: "Om aftenen sad vi på gulvet og spiste pizza, mens kasserne stod omkring os.", ru: "Вечером мы сидели на полу и ели пиццу, а коробки стояли вокруг нас."},
+   {da: "Det var hårdt, men vi var glade, og nu skal vi bare pakke ud.", ru: "Было тяжело, но мы были рады, и теперь нам осталось только распаковать вещи."}
+  ],
+  tip: "В словах с кратким гласным согласная удваивается перед -e и -er: tyk — tykke, tom — tomme, kop — kopper. В tung — tunge удвоения нет, потому что уже есть сочетание ng. Множественное число: bog — bøger — bøgerne, kasse — kasser — kasserne, bror — brødre — brødrene, bil — biler, tallerken — tallerkener — tallerkenerne."
+ },
+ {
+  id: "weekend-hos-hans-familie",
+  level: "B2",
+  topic: "Заглавные буквы и родительный падеж: поездка к семье",
+  title: "Weekend hos Hans' familie",
+  mode: "text",
+  sentences: [
+   {da: "I oktober besøgte jeg Hans' familie i Nordjylland.", ru: "В октябре я навестил семью Ханса в Северной Ютландии."},
+   {da: "Vi kørte hjemmefra fredag aften og kom frem lidt efter klokken ti.", ru: "Мы выехали из дома в пятницу вечером и приехали чуть позже десяти часов."},
+   {da: "Hans' mor havde lavet aftensmad, og hans søster dækkede bord.", ru: "Мать Ханса приготовила ужин, а его сестра накрывала на стол."},
+   {da: "Lørdag morgen gik vi en lang tur langs kysten med familiens hund.", ru: "В субботу утром мы пошли на долгую прогулку вдоль берега с собакой семьи."},
+   {da: "Hunden hedder Max, og Max' yndlingsleg er at hente pinde i vandet.", ru: "Собаку зовут Макс, и любимая игра Макса — приносить палки из воды."},
+   {da: "Om eftermiddagen mødte vi nogle danskere og et par svenskere, der også var på ferie.", ru: "После обеда мы встретили нескольких датчан и пару шведов, которые тоже были в отпуске."},
+   {da: "Søndag spiste vi frokost hos Hans' bror, og hans kone viste os huset.", ru: "В воскресенье мы обедали у брата Ханса, и его жена показала нам дом."},
+   {da: "Før vi tog hjem mandag, takkede jeg for gæstfriheden.", ru: "Прежде чем уехать домой в понедельник, я поблагодарил за гостеприимство."},
+   {da: "Det var en dejlig weekend, og jeg glæder mig til næste gang.", ru: "Это были прекрасные выходные, и я с нетерпением жду следующего раза."}
+  ],
+  tip: "Родительный падеж — это -s без апострофа (familiens hund); с апострофом только после имён на -s, -x, -z: Hans' familie, Hans' mor, Max' yndlingsleg. Не путайте hans «его» и Hans' «Ханса». С заглавной пишутся имена и названия (Hans, Max, Nordjylland), со строчной — месяцы, дни недели и национальности (oktober, fredag, danskere, svenskere)."
  }
 ];

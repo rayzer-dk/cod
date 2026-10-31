@@ -8,4 +8,7 @@ import {dictations} from './pd3-dictation-data.mjs';
 import {listening} from './pd3-listening-data.mjs';
 import {oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria} from './pd3-oral-data.mjs';
 import {writingEmail,writingTask,writingCriteria,connectors} from './pd3-writing-data.mjs';
-export const pd3Data={readingPractice,readingExamFind,readingExamText,dictations,listening,oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria,writingEmail,writingTask,writingCriteria,connectors};
+import {grammarSetsA} from './pd3-grammar-a-data.mjs';
+import {grammarSetsB,grammarCategories} from './pd3-grammar-b-data.mjs';
+const grammarSets=[...grammarSetsA,...grammarSetsB];
+export const pd3Data={readingPractice,readingExamFind,readingExamText,dictations,listening,oralMonologue,oralInterview,oralInteraction,oralDiscussion,oralPhrases,oralCriteria,writingEmail,writingTask,writingCriteria,connectors,grammarSets,grammarCategories};

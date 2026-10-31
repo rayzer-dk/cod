@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  checkItem,cleanAnswer,hasAnswer,isComplete,answerText,correctAnswer,tileAdd,tileRemove,scoreSet,countsForXp,recordGrammar,emptyGrammar,categoryRows,weakCategory,
+  checkItem,orderText,cleanAnswer,hasAnswer,isComplete,answerText,correctAnswer,tileAdd,tileRemove,scoreSet,countsForXp,recordGrammar,emptyGrammar,categoryRows,weakCategory,
   frequentMistakes,practiceSetFor,recommendations,linksFor,mergeGrammar,snapshotGrammar,validateGrammarFields,applyGrammar,secondsLeft,sameText,GRAMMAR_LINKS
 } from '../dist/pd3-grammar.mjs';
 import {awardPd3,createState,validateState,validatePd3,sealPd3,emptyPd3,PD3_XP,PD3_KEYS,PD3_LIMITS} from '../dist/engine.mjs';
@@ -67,6 +67,25 @@ test('order: every listed ordering is accepted, a partial or wrong one is not',(
   assert.equal(cleanAnswer(it,[0,0]),undefined,'a tile twice');assert.equal(cleanAnswer(it,[0,9]),undefined);assert.equal(cleanAnswer(it,[0,1,2,3,4,0]),undefined);
   assert.equal(hasAnswer(it,[]),false);assert.equal(hasAnswer(it,[2]),true);
   assert.equal(answerText(it,[2,0,1]),'I dag har');
+});
+
+test('order: the answer is compared by normalised words — case, punctuation (also the comma at the end of a tile) and invisible characters do not matter, word order does',()=>{
+  const it={id:'o-1',cat:'connect',type:'order',tokens:['jeg','har','derfor','ikke,','Derfor','tid.','haft'],
+    answers:['Derfor har jeg ikke haft tid.','Jeg har derfor ikke haft tid.'],why:'x'};
+  const pick=words=>words.map(w=>it.tokens.indexOf(w));
+  // the fronted adverbial: the tile "Derfor" is capitalised, "ikke," carries the comma, "tid." the full stop
+  assert.equal(checkItem(it,pick(['Derfor','har','jeg','ikke,','haft','tid.'])).ok,false,'one tile left over: not complete');
+  const six={...it,tokens:['jeg','har','Derfor','ikke,','haft','tid.']};
+  const pick6=words=>words.map(w=>six.tokens.indexOf(w));
+  assert.equal(checkItem(six,pick6(['Derfor','har','jeg','ikke,','haft','tid.'])).ok,true,'first listed variant');
+  assert.equal(checkItem(six,pick6(['jeg','har','Derfor','ikke,','haft','tid.'])).ok,true,'second variant: the capital tile in the middle');
+  assert.equal(checkItem({...six,answers:['Derfor har jeg ikke haft tid']},pick6(['Derfor','har','jeg','ikke,','haft','tid.'])).ok,true,'an answer without the full stop');
+  assert.equal(checkItem({...six,answers:['derfor, har jeg, ikke haft tid!']},pick6(['Derfor','har','jeg','ikke,','haft','tid.'])).ok,true,'commas at other places');
+  assert.equal(checkItem(six,pick6(['har','Derfor','jeg','ikke,','haft','tid.'])).ok,false,'word order matters');
+  assert.equal(checkItem(six,pick6(['Derfor','har','ikke,','jeg','haft','tid.'])).ok,false);
+  assert.equal(isComplete(six,pick6(['Derfor','har','jeg','ikke,','haft','tid.'])),true);
+  assert.equal(orderText(six,pick6(['Derfor','har','jeg'])),'Derfor har jeg');
+  assert.equal(checkItem({...six,answers:['Derfor\u200b har jeg ikke haft tid.']},pick6(['Derfor','har','jeg','ikke,','haft','tid.'])).ok,true,'invisible characters in the data');
 });
 
 test('tiles move between the bank and the answer zone without duplicates',()=>{

@@ -36,7 +36,7 @@ export const listeningMore=[
    },
    {
     q: "Hvorfor kan de pynte, uden at Lene opdager det?",
-    options: ["Hun har fri hele fredagen","Hun sidder i et møde uden for kontoret","Hun kommer først efter frokost"],
+    options: ["Hun har fri hele fredagen","Hun er optaget af et kundemøde om formiddagen","Hun kommer først efter frokost"],
     answer: 1,
     why: "Анна говорит, что у Лене встреча с клиентом всё утро, поэтому зал можно украсить, пока её нет. Выходного у неё нет: в восемь она уже в офисе."
    },
@@ -563,7 +563,7 @@ export const listeningMore=[
    },
    {
     q: "Hvad var det største problem med leveringen?",
-    options: ["Mændene var uvenlige","Sofaen kom flere timer efter det lovede tidsrum","Sofaen kom ikke den dag, der var aftalt"],
+    options: ["Mændene var uvenlige","Sofaen kom først efter det lovede tidsrum","Sofaen kom ikke den dag, der var aftalt"],
     answer: 2,
     why: "Диван обещали с восьми до двенадцати, а привезли только в два. Рабочие были приветливыми, а день был назван верно, во вторник."
    },

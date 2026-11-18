@@ -1,0 +1,47 @@
+name: Website source integrity and language QA
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-qa-\${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - name: Check first-party Python, JS, JSON, SVG and UTF-8
+        run: python3 tools/quality/lint_repository.py
+      - name: PHP syntax if tracked PHP appears
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files '*.php' | grep -q .; then
+            git ls-files -z '*.php' | xargs -0 -r -n1 php -l
+          else
+            echo 'No tracked PHP source; PHPStan is not applicable.'
+          fi
+      - name: Report Twig applicability
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files '*.twig' | grep -q .; then
+            echo 'Twig templates detected; dedicated Twig linter required.' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo 'No tracked Twig templates.' >> "$GITHUB_STEP_SUMMARY"

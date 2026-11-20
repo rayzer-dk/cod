@@ -1,0 +1,63 @@
+name: Cross-file source quality audit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: crossfile-quality-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  references:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check audit script syntax
+        run: python -m py_compile tools/quality/audit_cross_references.py
+      - name: Cross-file unused reference and workaround candidates
+        run: python tools/quality/audit_cross_references.py --directories content js css tools --out build/quality/cross-references.json
+      - name: Upload inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-file-reference-inventory
+          path: build/quality/cross-references.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  duplicate-blocks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Scan first-party duplicate source blocks (advisory)
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p build/quality
+          set +e
+          npx --yes jscpd@5.4.1 --min-lines 15 --min-tokens 120 --threshold 15 --format python,javascript,css --ignore "**/vendor/**,**/node_modules/**,**/dist/**,**/build/**" content js css tools > build/quality/duplication.txt 2>&1
+          status=$?
+          set -e
+          tail -n 35 build/quality/duplication.txt
+          echo "jscpd exit status: $status. Advisory until duplicated code is classified." >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload duplicate inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-party-duplication
+          path: build/quality/duplication.txt
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,2 @@
+const labels={noun:'Существительное · substantiv',verb:'Глагол · verbum',adjective:'Прилагательное · adjektiv',adverb:'Наречие · adverbium',pronoun:'Местоимение · pronomen',preposition:'Предлог · præposition',conjunction:'Союз · konjunktion',article:'Артикль · artikel',numeral:'Числительное · talord',interjection:'Междометие · interjektion',phrase:'Выражение · udtryk'};
+export const wordClassLabel=id=>labels[id]||'';

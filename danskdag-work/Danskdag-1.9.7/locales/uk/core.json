@@ -1,0 +1,9 @@
+{
+  "b3973dbbd388aa02": "Danskdag — данська щодня",
+  "49b324583c45f0d6": "<button type=\"button\" class=\"btn secondary check-update\" data-action=\"check-update\">Перевірити оновлення</button>",
+  "67110375ef3adfb6": "<div class=\"language-setting\"><label for=\"learning-language\">Мова навчання</label><select id=\"learning-language\" data-setting=\"language\"><option value=\"uk\" ",
+  "fd19b22dbd9a78a7": ">Українська</option><option value=\"ru\" ",
+  "a107cb4115f9991e": ">Русский</option></select></div>",
+  "8c52cb1bfeb5b136": "Не вдалося перевірити оновлення. Перевір підключення та спробуй ще раз.",
+  "3ece65731e58a463": "Встановлено актуальну версію "
+}

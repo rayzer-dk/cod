@@ -1,0 +1,11 @@
+# Danskdag 1.6.0 validation
+
+Source validation on 25 October 2026: 152 automated tests passed, zero failures; 72 JavaScript modules passed syntax checks. Worker build contains 86 static assets and retains the authenticated D1 progress API. Root and built hosting manifests retain the same project, DB binding and existing public audience, with no static-only deployment field.
+
+Content: 146 lessons, 783 fixed exercises, 2,510 deduplicated dictionary entries (including sentences/classification tasks); 468 daily-topic lemmas in 18 situations, 90 new standard-spelling spoken entries in 18 five-item lessons, 30 manual coarse/informal entries. A new lesson contract ensures each lesson fits the six-task session limit, so no tail items are silently omitted. Same-class word distractors avoid trivially distinguishable full sentences. Existing lesson/state IDs are retained.
+
+Browser validation through managed preview: 390px and 360px iframe layouts with font20; document client/scroll widths match (375/375 and345/345 respectively). Reference rows collapsed at about73px high at font20. Mobile vertical verbs are shown and the wide desktop table is hidden. Danish standard forms retain independent audio controls. New complete HTML reports offline edition, embeds all40 modules and40 images, and completed a new daily-word exercise for10XP; points remained after reload. This exercised HTML via a preview URL with its external-connection-blocking CSP, not native file:// on every OS.
+
+Fresh independent code review found a P2 reference interaction: saving a bookmark/difficult mark rebuilt the page and collapsed details. Reproduced in browser (no open details and BODY focus), replaced with in-place controls, then verified open details and button focus remain. Full suite subsequently passed. No further confirmed blocking code issue was reported; the review did not include a complete linguistic audit.
+
+Limitations: installed Danish voice quality/audible playback, native Windows execution, actual Android/iPhone installation and live two-account/two-device cloud synchronization were not verified here. Replacement voices remain deferred. The editorial vocabulary is finite and not corpus-ranked; broad conversational competence requires practice beyond card completion. See source/evidence documents for language and research scope.

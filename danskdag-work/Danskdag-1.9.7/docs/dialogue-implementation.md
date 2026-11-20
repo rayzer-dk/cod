@@ -1,0 +1,7 @@
+# Advanced contextual replies, 1.6.1
+
+Continue the existing course with twelve six-item B2/C1 conversation lessons. Each independent micro-dialogue supplies a situation, a partner's Danish line, an optional translation and a concrete communicative task. The learner responds in Danish. Expert mode hides the model until submission; easy offers Danish replies, mixed also uses sentence assembly. Full authored alternatives are accepted. Other suitable paraphrases require existing explicit self-check and receive no automatic verified score.
+
+Use existing task kinds and session schema, progress keys, retries and review scheduling. Partner audio uses its own text, never the model answer. Opening the translation hint counts as assistance. Lesson introduction exposes the partner/task, not the model. A next-roleplay recommendation stays within roleplay lessons and carries the chosen mode. Labels B2/C1 describe editorial difficulty, not verified proficiency or a complete CEFR course. No speech recognition, native-recording provider or semantic AI grader is added.
+
+Verification: test cue/answer language, alternative grading, expert model hiding, partner audio, model feedback and session restoration; validate all authored scenarios and six-task limits; run full existing suite; browser-check typed and easy reply flow at 360px/font20, complete a response and retain progress; build the complete HTML/Worker/PWA from the same source, inspect and test the full ZIP, publish same Site/audience.

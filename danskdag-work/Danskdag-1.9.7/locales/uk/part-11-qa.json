@@ -1,0 +1,14 @@
+{
+ "8d143be8352f367a": "Досягнуто максимальної довжини відповіді.",
+ "d0f956b5aba1b34e": "Складні слова",
+ "83c8e318f4668e1f": "Завдання відновлено.",
+ "eb0352df0d2aab15": "Час іспиту вийшов, поки сторінку було закрито. Відповіді перевірено.",
+ "a3655621f0a775ae": "Ввід задовгий для перевірки. Скороти текст до обсягу диктанту й натисни «Перевірити» знову.",
+ "ce8e69ec262eeff5": "Запис не почався: таймер іде без запису.",
+ "4d183afa6a264f13": "Запис не почався. Таймер іде без запису.",
+ "9ceede54e6d5335b": "Досягнуто максимальної довжини тексту.",
+ "e1b8e00632ace58a": "Ввід задовгий для перевірки. Скороти текст до обсягу диктанту.",
+ "d358d0bfc6dc4785": "\"><label for=\"new-da\">Данською</label><input id=\"new-da\" name=\"da\" type=\"text\" lang=\"da\" autocapitalize=\"none\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" enterkeyhint=\"next\" maxlength=\"220\" required value=\"",
+ "1dfe42ec9f65461e": "\" placeholder=\"Наприклад, en udfordring\"><label for=\"new-ru\">Переклад українською</label><input id=\"new-ru\" name=\"ru\" type=\"text\" lang=\"",
+ "4fbd07545647ff19": " Між реченнями є паузи для запису.</p><label for=\"pd3-dict-text\" class=\"answer-label\">Твій текст</label><textarea id=\"pd3-dict-text\" data-pd3-field=\"all\" lang=\"da\" autocapitalize=\"none\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" rows=\"9\" maxlength=\""
+}
